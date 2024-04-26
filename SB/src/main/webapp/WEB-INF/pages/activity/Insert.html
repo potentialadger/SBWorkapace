@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>新增活動</title>
+	<style>
+	body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+h2 {
+    color: #222;
+    font-size: 2rem; 
+    margin: 10px 0;
+}
+
+form {
+    background-color: #fff;
+    padding: 15px; 
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 5px; 
+    width: 300px; 
+}
+
+label {
+    margin-top: 5px; 
+    color: #555;
+}
+
+input[type="text"],
+input[type="datetime-local"],
+textarea {
+    padding: 6px;
+    margin-top: 3px; 
+    margin-bottom: 10px; 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea {
+    height: 80px; 
+    resize: vertical;
+}
+
+input[type="submit"] {
+    padding: 10px 20px; 
+    margin-top: 10px;
+ 
+}
+
+
+@media (max-width: 600px) {
+    form {
+        width: 90%;
+    }
+}
+	</style>
+</head>
+<body>
+     <div align="center">
+    <h2>新增活動</h2>
+    <form action="InsertEvent" method="post">
+        <label for="title">標題:</label><br>
+        <input type="text" name="title" id="title" required><br>
+        <label for="description">描述:</label><br>
+        <textarea name="description" id="description" required></textarea><br>
+        <label for="activityTime">活動時間:</label><br>
+        <input type="datetime-local" name="activityTime" id="activityTime"><br>
+        <label for="signupStartTime">報名開始時間:</label><br>
+        <input type="datetime-local" name="signupStartTime" id="signupStartTime"><br>
+        <label for="signupEndTime">報名結束時間 :</label><br>
+        <input type="datetime-local" name="signupEndTime" id="signupEndTime"><br>
+        <label for="location">地點:</label><br>
+        <input type="text" name="location" id="location" required><br>
+        <label for="status">狀態:</label><br>
+        <input type="text" name="status" id="status" required><br>
+        <input type="submit" value="確定">
+    </form>
+    </div>
+</body>
+</html>

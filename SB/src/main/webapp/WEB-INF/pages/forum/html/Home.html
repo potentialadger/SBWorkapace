@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>論壇首頁</title>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f4f4f4;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+.sidebar {
+	width: 25%;
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.content {
+	width: 50%;
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.member-info {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
+	padding: 10px;
+	background-color: #007bff;
+	color: #fff;
+	border-radius: 5px;
+}
+
+.member-info a {
+	color: #fff;
+	text-decoration: none;
+}
+
+.member-info input[type="button"], .member-info input[type="submit"] {
+	padding: 8px 16px;
+	background-color: #fff;
+	color: #007bff;
+	border: 2px solid #fff;
+	border-radius: 5px;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.member-info input[type="button"]:hover, .member-info input[type="submit"]:hover
+	{
+	background-color: #007bff;
+	color: #fff;
+}
+</style>
+</head>
+<body>
+
+	<div class="container">
+		<div class="sidebar">
+			<h2>分類</h2>
+		</div>
+		<div class="content">
+			<div class="member-info">
+				
+				<a href="ManagerIndex"><input type="button" value="回首頁"></a>
+				
+				<form method="get" action="/posts/PostAll">
+					<input type="submit" value="查詢全部">
+				</form>
+				
+				<a href="/forum.InsertPosts"><input type="button" value="發文"></a>
+			</div>
+			<h2>所有文章</h2>
+		</div>
+		<div class="sidebar">
+			<h2>會員資料</h2>
+		</div>
+	</div>
+
+</body>
+</html>
