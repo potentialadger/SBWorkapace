@@ -3,7 +3,6 @@ package com.group.service;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -65,20 +64,27 @@ public class GroupService {
 		LocalDateTime startDateTime = LocalDateTime.now();
 		Date startTime = Date.from(startDateTime.atZone(ZoneId.systemDefault()).toInstant());
 	    
-	    String paymentMethod;
+	    String paymentMethod = null;
 		if(pay != null) {
-			if(Arrays.asList(pay).containsAll(Arrays.asList("1","2"))) {
-				paymentMethod = "12";
+			if(Arrays.asList(pay).containsAll(Arrays.asList("1","2","3"))) {
+				paymentMethod = "123";
 			}else if (Arrays.asList(pay).contains("1")) {
 				paymentMethod = "1";
 			}else if (Arrays.asList(pay).contains("2")) {
 				paymentMethod = "2";
-			}else {
-				paymentMethod = "0";
+			}else if (Arrays.asList(pay).contains("3")) {
+				paymentMethod = "3";
+			}else if (Arrays.asList(pay).containsAll(Arrays.asList("1","2"))) {
+				paymentMethod = "12";
+			}else if (Arrays.asList(pay).containsAll(Arrays.asList("1","3"))) {
+				paymentMethod = "13";
+			}else if (Arrays.asList(pay).containsAll(Arrays.asList("2","3"))) {
+				paymentMethod = "23";
 			}
-		} else {
-			paymentMethod= "0";
+		}else {
+			paymentMethod = "0";
 		}
+		
 		
 		int point = 0;
 		
@@ -100,29 +106,39 @@ public class GroupService {
 	}
 	
 //	刪除活動
-	public void deleteGroup(int eventno) {
-		groupRepository.deleteById(eventno);
+	public Group deleteGroup(int eventno) {
+		Optional<Group> groupOptonal = groupRepository.findById(eventno);
+		if(groupOptonal.isEmpty()) {
+			throw new EntityNotFoundException("Group not found with id: " + eventno);
+		}
+		Group group = groupOptonal.get();
+		
+		group.setStatus("banned");
+		
+		return groupRepository.save(group);
 	}
 	
 //	更改活動
-	public Group updateGroup(int eventno, String title, String description, Date endtime,
-			int paymentmethod, int minquantity, int minamount, String account, String address) {
+	public Group updateGroup(int eventno, String grouptitle, String groupdescription, Date endtime,
+			int paymentmethod, int mintotalquantity, int mintotalamount, String account, String address) {
 		Optional<Group> resultgroup = groupRepository.findById(eventno);
+		
 		if(resultgroup.isEmpty()) {
 			throw new EntityNotFoundException("Group not found with id: " + eventno);
 		}
 		Group group = resultgroup.get();
 		
-		group.setTitle(title);
+		group.setTitle(grouptitle);
+		group.setDescription(groupdescription);
 		group.setEndtime(endtime);
-		group.setDescription(description);
-		group.setMintotalamount(minamount);
-		group.setMintotalquantity(minquantity);
 		group.setPaymentmethod(paymentmethod);
+		group.setMintotalamount(mintotalamount);
+		group.setMintotalquantity(mintotalquantity);
 		group.setAccount(account);
 		group.setAddress(address);
 		
 		return groupRepository.save(group);
 	}
+	
 	
 }
