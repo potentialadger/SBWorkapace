@@ -18,7 +18,7 @@ import com.match.bean.GoalsBean;
 import com.match.service.IGoalsService;
 
 @Controller // 用於標記一個類別是一個控制器(Controller)組件 =>  // @RequestMapping或@GetMapping、@PostMapping等註解來映射特定的HTTP請求路徑
-public class GoalsCrudController {
+public class GoalsController {
 
 	@Autowired
 	private IGoalsService iGService; // 有寫介面一定要帶入IGoalsService
