@@ -2,7 +2,9 @@ package com.user.bean;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.stereotype.Component;
@@ -92,15 +94,16 @@ public class UserBean implements Serializable{
 	private Integer isManager; //0：普通使用者 1：管理者
 	
 	
+	
 	//多對多  // 有 join table 這邊為主要控制方，操作兩方關係盡量由這邊(User)操作
 	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name="usertags",
-	joinColumns = {@JoinColumn(name="fkuserno", referencedColumnName = "userno")},
-	inverseJoinColumns = {@JoinColumn(name="fktagno", referencedColumnName = "tagno")})
-	private Set<TagsBean> tags = new HashSet<>();  //屬性
+		joinColumns = {@JoinColumn(name="fkuserno", referencedColumnName = "userno")},
+		inverseJoinColumns = {@JoinColumn(name="fktagno", referencedColumnName = "tagno")})
+	private Set<TagsBean> tags = new HashSet<>();  //屬性 => getters and setters
 	
 	
-	
+    // getters and setters
 	public int getUserNo() {return userNo;}
 	public String getUserAccount() {return userAccount;}
 	public String getUserPassword() {return userPassword;}
@@ -158,7 +161,12 @@ public class UserBean implements Serializable{
 				+ ", isManager=" + isManager + "]";
 	}
 	
-	
-	
+    public List<Integer> getTagNos() {
+        List<Integer> tagNos = new ArrayList<>();
+        for (TagsBean tag : tags) {
+            tagNos.add(tag.getTagNo());
+        }
+        return tagNos;
+    }
 	
 }
