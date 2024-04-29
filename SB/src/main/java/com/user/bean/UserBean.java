@@ -97,7 +97,7 @@ public class UserBean implements Serializable{
 	@JoinTable(name="usertags",
 	joinColumns = {@JoinColumn(name="fkuserno", referencedColumnName = "userno")},
 	inverseJoinColumns = {@JoinColumn(name="fktagno", referencedColumnName = "tagno")})
-	private Set<TagsBean> Tags = new HashSet<>();
+	private Set<TagsBean> tags = new HashSet<>();  //屬性
 	
 	
 	
@@ -122,7 +122,7 @@ public class UserBean implements Serializable{
 	public int getVerify() {return verify;}
 	public int getIsDelete() {return isDelete;}
 	public int getIsManager() {return isManager;}
-
+	public Set<TagsBean> getTags() {return tags;}
 	
 	public void setUserNo(int userNo) {this.userNo = userNo;}
 	public void setUserAccount(String userAccount) {this.userAccount = userAccount;}
@@ -145,6 +145,7 @@ public class UserBean implements Serializable{
 	public void setVerify(int verify) {this.verify = verify;}
 	public void setIsDelete(int isDelete) {this.isDelete = isDelete;}
 	public void setIsManager(int isManager) {this.isManager = isManager;}
+	public void setTags(Set<TagsBean> tags) {this.tags = tags;}
 	
 	@Override
 	public String toString() {
