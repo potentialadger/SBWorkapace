@@ -32,13 +32,24 @@ public class TagsBean {
 	
 	//多對多
 	@ManyToMany(mappedBy = "Tags")
-	private Set<UserBean> users = new HashSet<>();
+	private Set<UserBean> users = new HashSet<>();   //getters and setters
 	
 	
 	//Constructors from superclass
 	public TagsBean() {
 	}
 	
+
+	//getters and setters
+	public Set<UserBean> getUsers() {
+		return users;
+	}
+
+
+	public void setUsers(Set<UserBean> users) {
+		this.users = users;
+	}
+
 
 	//Constructors using Fields  根據編號和名稱來初始化   => Controller
 	public TagsBean(Integer tagNo, String tagName) {
