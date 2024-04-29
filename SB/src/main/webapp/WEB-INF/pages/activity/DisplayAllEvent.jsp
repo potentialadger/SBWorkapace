@@ -130,7 +130,7 @@ h3 {
                 <td><%= event.getSignupEndTime() %></td>
                 <td><%= event.getLocation() %></td>
                 <td><%= event.getStatus() %></td>
-                <td> <img style="width : 100px" src="/localimages/<%= event.getImagePath() %>"></td>
+                <td> <img style="width : 100px " src="/localimages/<%= event.getImagePath() %>"></td>
                     <div class="button-group">
                     <td><a href="getEventDataForUpdate?eventNo=<%=event.getEventNo()%>">修改</a></td>
                     </div>
