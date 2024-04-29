@@ -68,18 +68,6 @@ public class TagsService {
         return null;
     }
 
-    // 為標籤添加關聯用戶 (?)
-    public TagsBean addUserToTag(Integer tagNo, UserBean uBean) {
-        Optional<TagsBean> optionalTag = tRepository.findById(tagNo);
-        if (optionalTag.isPresent()) {
-            TagsBean tag = optionalTag.get();
-            Set<UserBean> users = new HashSet<>(tag.getUsers()); // 創建一個新的HashSet副本  
-            users.add(uBean);
-            tag.setUsers(users);  //要在TagsBean 對users getters and setters
-            return tRepository.save(tag);
-        }
-        return null;
-    }
 
     // 從標籤移除關聯用戶 (?)
     public TagsBean removeUserFromTag(Integer tagNo, UserBean uBean) {
@@ -93,4 +81,17 @@ public class TagsService {
         }
         return null;
     }
+    
+    // 為標籤添加關聯用戶 (?)  //用戶註冊時自動分配標籤 時使用的
+//    public TagsBean addUserToTag(Integer tagNo, UserBean uBean) {
+//        Optional<TagsBean> optionalTag = tRepository.findById(tagNo);
+//        if (optionalTag.isPresent()) {
+//            TagsBean tag = optionalTag.get();
+//            Set<UserBean> users = new HashSet<>(tag.getUsers()); // 創建一個新的HashSet副本  
+//            users.add(uBean);
+//            tag.setUsers(users);  //要在TagsBean 對users getters and setters
+//            return tRepository.save(tag);
+//        }
+//        return null;
+//    }
 }
