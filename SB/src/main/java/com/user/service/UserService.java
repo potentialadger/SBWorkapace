@@ -35,7 +35,7 @@ public class UserService {
 		
 		return null;
 	}
-	
+//	我們去抽菸 
 	public List<UserBean> getAllUserData() {
 		return uReoisitory.findAll();
 	}
