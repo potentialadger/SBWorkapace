@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>活動列表</title>
+    <script>
+        window.onload = function() {
+            fetchEvents();
+        };
+
+        function fetchEvents() {
+            fetch('/AllEvents')  
+                .then(response => response.json())  // 解析 JSON 數據
+                .then(events => {
+                    const eventsList = document.getElementById('eventsList');
+                    events.forEach(event => {
+                        // 創建列表項
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `${event.title} - ${event.description}`;
+                        eventsList.appendChild(listItem);
+                    });
+                })
+                .catch(error => console.error('Error loading events:', error));
+        }
+    </script>
+</head>
+<body>
+    <h1>活動列表</h1>
+    <ul id="eventsList">
+    </ul>
+</body>
+</html>
