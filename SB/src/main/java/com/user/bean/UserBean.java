@@ -161,6 +161,8 @@ public class UserBean implements Serializable{
 				+ ", isManager=" + isManager + "]";
 	}
 	
+	
+	//UserController  =>  會遍歷 UserBean 對象中的 tags 集合,獲取每個 TagsBean 對象的 tagNo,並將其添加到一個新的 List<Integer> 中。最終,它會返回這個列表,其中包含了與該用戶關聯的所有標籤ID。
     public List<Integer> getTagNos() {
         List<Integer> tagNos = new ArrayList<>();
         for (TagsBean tag : tags) {
