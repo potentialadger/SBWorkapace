@@ -97,6 +97,7 @@ h3 {
     </style>
 </head>
 <body>
+<!-- <img src="/localimages/20240429145742_4204.jpg"> -->
     <div align="center">
         <h2>活動詳情</h2>
                <table>
@@ -110,7 +111,8 @@ h3 {
                 <th>報名結束時間 </th>
                 <th>活動地點</th>
                 <th>活動狀態</th>
-                
+                 <th>活動圖片</th>
+                 
                 <th>修改</th>
                 <th>刪除</th>
             </tr>
@@ -128,6 +130,7 @@ h3 {
                 <td><%= event.getSignupEndTime() %></td>
                 <td><%= event.getLocation() %></td>
                 <td><%= event.getStatus() %></td>
+                <td> <img style="width : 100px" src="/localimages/<%= event.getImagePath() %>"></td>
                     <div class="button-group">
                     <td><a href="getEventDataForUpdate?eventNo=<%=event.getEventNo()%>">修改</a></td>
                     </div>
