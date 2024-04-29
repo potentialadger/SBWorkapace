@@ -1,12 +1,15 @@
 package com.user.service;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.match.bean.TagsBean;
 import com.match.repository.TagsRepository;
 import com.user.bean.UserBean;
 import com.user.repository.UserRepository;
@@ -21,8 +24,8 @@ public class UserService {
 	private UserRepository uRepository;
 
 	// 多對多
-//	@Autowired
-//	private TagsRepository tRepository;
+	@Autowired
+	private TagsRepository tRepository;
 
 	public UserBean creatUser(UserBean userBean) {
 		return uRepository.save(userBean);
@@ -60,8 +63,6 @@ public class UserService {
 		return resultBean;
 	}
 
-}
-
 // ---------- 個性標籤 - 多對多 ---------------
 
 //所有的標籤用repository放到set裡面，再用set方法取出
@@ -70,14 +71,32 @@ public class UserService {
 
 
 
-// 新增 User 時，並設置其關聯的 Tag
-//public UserBean createUserWithTags(UserBean user, List<Integer> tagNos) {
-//    UserBean newUser = uRepository.save(user);
-//    Set<Tag> tags = new HashSet<>();
-//    for (Integer tagId : tagIds) {
-//        Tag tag = tagRepository.findById(tagId);
-//        		tags.add(tag);
-//    }
-//    newUser.setTags(tags);
-//    return userRepository.save(newUser);
+// 將標籤與用戶關聯
+public UserBean attachTagsToUser(UserBean user, List<Integer> tagNos) {
+    UserBean newUser = uRepository.save(user);
+    Set<TagsBean> tags = new HashSet<>();
+    for (Integer tagNo : tagNos) {
+    	Optional<TagsBean> opTag = tRepository.findById(tagNo);
+    	TagsBean tag = null;
+    	if(opTag.isPresent()) {
+    		tag = opTag.get();
+    	}
+        
+        if (tag != null) {
+            tags.add(tag);
+        } else {
+            throw new IllegalArgumentException("標籤不存在: " + tagNo);
+        }
+    }
+    newUser.setTags(tags);
+    return uRepository.save(newUser);
+}
+
+
+
+// 獲取 User 及其關聯的 Tag
+//public UserBean getUserWithTags(Integer userNo) {
+//    return uRepository.findById(userNo);
 //}
+
+}
