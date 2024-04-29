@@ -23,9 +23,10 @@ public class PostsBean {
 
 	@Column(name = "user_no")
 	private int user_no;
-
-	@Column(name = "category_no")
-	private int category_no;
+	
+	@JoinColumn(name = "category_no")
+	@ManyToOne
+	private CategoriesBean categoriesBean;
 
 	@Column(name = "title")
 	private String title;
@@ -62,12 +63,12 @@ public class PostsBean {
 		this.user_no = user_no;
 	}
 
-	public int getCategory_no() {
-		return category_no;
+	public CategoriesBean getCategoriesBean() {
+		return categoriesBean;
 	}
 
-	public void setCategory_no(int category_no) {
-		this.category_no = category_no;
+	public void setCategoriesBean(CategoriesBean categoriesBean) {
+		this.categoriesBean = categoriesBean;
 	}
 
 	public String getTitle() {
@@ -119,4 +120,4 @@ public class PostsBean {
 	}
 	
 	
-	}
+		}
