@@ -147,7 +147,8 @@ public class EventController {
     		@RequestParam("signupEndTime") LocalDateTime signupEndTime,
     		@RequestParam("location") String location,
     		@RequestParam("status") String status,	
-    		@RequestParam("imagePath") MultipartFile mf
+    		@RequestParam("imagePath") MultipartFile mf,
+    		HttpServletRequest request
     		) {
         ModelAndView mav = new ModelAndView("redirect:/AllEvents");
         try {
@@ -162,6 +163,10 @@ public class EventController {
              }
              File fileDirPath = new File(fileDir, newFileName);
              mf.transferTo(fileDirPath);
+             
+             
+             HttpSession session = request.getSession();
+             
         	event.setTitle(title);
         	event.setDescription(description);
         	event.setActivityTime(activityTime);
@@ -169,6 +174,7 @@ public class EventController {
         	event.setSignupEndTime(signupEndTime);
         	event.setLocation(location);
         	event.setStatus(status);
+        	event.setImagePath(newFileName);
         	eventService.update(event);
         } catch (Exception e) {
             e.printStackTrace();
