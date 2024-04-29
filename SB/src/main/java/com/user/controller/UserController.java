@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -200,4 +201,52 @@ public class UserController {
 		
 		return "redirect:/users";
 	}
+	
+	
+	
+// -----------Tags------------
+	
+	
+    @GetMapping("/{userNo}")
+    public ResponseEntity<UserBean> getUserWithTags(@PathVariable int userNo) {
+        UserBean userWithTags = uService.getUserWithTags(userNo);
+        return userWithTags != null ? ResponseEntity.ok(userWithTags) : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserBean>> getAllUsersWithTags() {
+        List<UserBean> usersWithTags = uService.getAllUsersWithTags();
+        return ResponseEntity.ok(usersWithTags);
+    }
+
+    @PutMapping("/{userNo}/tags")
+    public ResponseEntity<UserBean> attachTagsToUser(@PathVariable int userNo, @RequestBody List<Integer> tagNos) {
+        UserBean user = uService.getUserData(userNo);
+        if (user != null) {
+            UserBean updatedUser = uService.attachTagsToUser(user, tagNos);
+            return ResponseEntity.ok(updatedUser);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{userNo}/tags")
+    public ResponseEntity<UserBean> removeTagsFromUser(@PathVariable int userNo, @RequestBody List<Integer> tagNos) {
+        UserBean user = uService.removeTagsFromUser(userNo, tagNos);
+        return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{userNo}")
+    public ResponseEntity<UserBean> updateUserWithTags(@PathVariable int userNo, @RequestBody UserBean updatedUser) {
+        UserBean existingUser = uService.getUserData(userNo);
+        if (existingUser != null) {
+            updatedUser.setUserNo(userNo);
+            UserBean updatedUserWithTags = uService.updateUserWithTags(updatedUser, updatedUser.getTagNos());
+            return ResponseEntity.ok(updatedUserWithTags);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }	
+	
+	
 }
