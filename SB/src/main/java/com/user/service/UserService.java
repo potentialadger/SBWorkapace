@@ -64,6 +64,7 @@ public class UserService {
 		return resultBean;
 	}
 
+	
 // ---------- 個性標籤 - 多對多 ---------------
 
 //所有的標籤用repository放到set裡面，再用set方法取出
