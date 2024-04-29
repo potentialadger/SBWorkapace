@@ -2,14 +2,23 @@ package com.user.bean;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
+import com.match.bean.TagsBean;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -81,6 +90,16 @@ public class UserBean implements Serializable{
 	
 	@Column(name = "ismanager")
 	private Integer isManager; //0：普通使用者 1：管理者
+	
+	
+	//多對多  // 有 join table 這邊為主要控制方，操作兩方關係盡量由這邊(User)操作
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinTable(name="usertags",
+	joinColumns = {@JoinColumn(name="fkuserno", referencedColumnName = "userno")},
+	inverseJoinColumns = {@JoinColumn(name="fktagno", referencedColumnName = "tagno")})
+	private Set<TagsBean> Tags = new HashSet<>();
+	
+	
 	
 	public int getUserNo() {return userNo;}
 	public String getUserAccount() {return userAccount;}
