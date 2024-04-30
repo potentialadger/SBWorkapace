@@ -9,18 +9,27 @@
         };
 
         function fetchEvents() {
-            fetch('/AllEvents')  
-                .then(response => response.json())  // 解析 JSON 數據
+            fetch('/EventList')
+                .then(response => response.json())
                 .then(events => {
                     const eventsList = document.getElementById('eventsList');
                     events.forEach(event => {
-                        // 創建列表項
                         const listItem = document.createElement('li');
-                        listItem.textContent = `${event.title} - ${event.description}`;
+                        const image = document.createElement('img');
+                        image.src = event.imageUrl; 
+                        image.alt = 'Event Image';
+                        image.style.width = '100px';
+                        console.log("Loading image from URL:", event.imageUrl);
+                        const text = document.createTextNode(`${event.title} - ${event.description}`);
+                        listItem.appendChild(image);
+                        listItem.appendChild(text);
                         eventsList.appendChild(listItem);
                     });
                 })
-                .catch(error => console.error('Error loading events:', error));
+                .catch(error => {
+                    console.error('Error loading events:', error);
+                    alert('Failed to load events. Please check the console for more details.');
+                });
         }
     </script>
 </head>
@@ -30,3 +39,6 @@
     </ul>
 </body>
 </html>
+
+
+
