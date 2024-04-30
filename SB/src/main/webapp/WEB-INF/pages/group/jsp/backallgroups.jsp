@@ -33,7 +33,7 @@
                             <tbody>
                                 <% List<Group> groups = (ArrayList<Group>)
                                         request.getAttribute("groups");
-                                for (GroupBean group : groups) {
+                                for (Group group : groups) {
                                 String paymentMethodDisplay = "";
 
                                 switch (group.getPaymentmethod()) {
