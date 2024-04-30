@@ -53,10 +53,13 @@ public class PostsController {
 
 	// 新增
 	@PostMapping("/InsertPosts")
-	public String insertPosts(@RequestParam("title") String title, 
-			@RequestParam("content") String content) {
+	public String insertPosts(
+			@RequestParam("title") String title, 
+			@RequestParam("content") String content,
+			@RequestParam("user_no") String user_no,
+			@RequestParam("title") String title) {
 		PostsBean post = new PostsBean();
-		post.setUser_no(6);
+		post.setUser_no(user_no);
 		post.setCategory_no(1);
 		post.setTitle(title);
 		post.setContent(content);

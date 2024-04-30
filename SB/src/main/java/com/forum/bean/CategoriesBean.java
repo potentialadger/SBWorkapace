@@ -28,7 +28,7 @@ public class CategoriesBean {
 	@Column(name = "category_no")
 	private Integer category_no;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "CategoriesBean", cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.ALL})
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "categoriesBean", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
 	private Set<PostsBean> PostsBean =new HashSet<>();
 
 	public Integer getCategory_no() {

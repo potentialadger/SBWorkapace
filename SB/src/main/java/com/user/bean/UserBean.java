@@ -2,14 +2,21 @@ package com.user.bean;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
+import com.forum.bean.PostsBean;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -81,6 +88,10 @@ public class UserBean implements Serializable{
 	
 	@Column(name = "ismanager")
 	private Integer isManager; //0：普通使用者 1：管理者
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userBean", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+	private Set<PostsBean> PostsBean =new HashSet<>();
+	
 	
 	public int getUserNo() {return userNo;}
 	public String getUserAccount() {return userAccount;}
