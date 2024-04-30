@@ -18,6 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.activity.bean.EventBean;
+import com.activity.bean.EventRegistrationsBean;
+import com.activity.service.EventRegistrationsService;
 import com.activity.service.EventService;
 import com.user.bean.UserBean;
 
@@ -28,24 +30,18 @@ import jakarta.servlet.http.HttpSession;
 //@Controller
 public class EventRegistrationsController {
 
-	private final EventService eventService;
-	
-	 public EventRegistrationsController(EventService eventService) {
-	        this.eventService = eventService;
-	
-	 }
-//    @Autowired
-//    private EventService eventService;
+    @Autowired
+    private EventRegistrationsService eventregistrationsService;
 
     // 查询單筆事件
-    @GetMapping("/OneEvent")
-    public ModelAndView findEventByEventNo(@RequestParam("eventNo") int eventNo) {
-        ModelAndView mav = new ModelAndView("activity/DisplayAllEvent.jsp");
+    @GetMapping("/OneRegistration")
+    public ModelAndView findByRegistrationID(@RequestParam("registrationID") int registrationID) {
+        ModelAndView mav = new ModelAndView("activity/DisplayAllEvent.jsp");//尚未更改
         try {
-        	EventBean event = eventService.findEventByEventNo(eventNo);
-            List<EventBean> events = new ArrayList<>();
-            events.add(event);
-            mav.addObject("events", events);
+        	EventRegistrationsBean registration = eventregistrationsService.findByRegistration(registrationID);
+            List<EventRegistrationsBean> registrations = new ArrayList<>();
+            registrations.add(registration);
+            mav.addObject("registrations", registrations);
         } catch (Exception e) {
             e.printStackTrace();
             mav.addObject("errorMessage", "An error occurred: " + e.getMessage());
@@ -53,40 +49,14 @@ public class EventRegistrationsController {
         return mav;
     }
 
-    //活動詳情
-    @GetMapping("/EventList")
-    public ResponseEntity<?> EventList(HttpServletRequest request) {
-        try {
-            List<EventBean> events = eventService.findAllEvents();
-            List<Map<String, String>> eventsWithImages = new ArrayList<>();
-
-            for (EventBean event : events) {
-                Map<String, String> eventMap = new HashMap<>();
-                String imagePath = event.getImagePath();
-                String fullImageUrl = request.getContextPath() + "/localimages/" + imagePath;
-                eventMap.put("title", event.getTitle());
-                eventMap.put("description", event.getDescription());
-                eventMap.put("imageUrl", fullImageUrl);
-                eventsWithImages.add(eventMap);
-            }
-
-            return ResponseEntity.ok(eventsWithImages); 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
-        }
-    }
-
-
-    
     
     // 查询所有事件
-    @GetMapping("/AllEvents")
-    public ModelAndView findAllEvents() {
-        ModelAndView mav = new ModelAndView("activity/DisplayAllEvent.jsp");
+    @GetMapping("/AllRegistrations")
+    public ModelAndView findRegistrations() {
+        ModelAndView mav = new ModelAndView("activity/DisplayAllEvent.jsp");//尚未更改
         try {
-            List<EventBean> events = eventService.findAllEvents();
-            mav.addObject("events", events);
+            List<EventRegistrationsBean> registrations = eventregistrationsService.findAllRegistrations();
+            mav.addObject("registrations", registrations);
         } catch (Exception e) {
             e.printStackTrace();
             mav.addObject("errorMessage", "An error occurred: " + e.getMessage());
@@ -95,20 +65,15 @@ public class EventRegistrationsController {
     }
 
     // 新增事件
-    @PutMapping("/InsertEvent")
+    @PutMapping("/InsertRegistration")
     @ResponseBody
     public ModelAndView insertEvent(
-			@RequestParam("title") String title,
-			@RequestParam("description") String description,
-			@RequestParam("activityTime") LocalDateTime activityTime,
-			@RequestParam("signupStartTime") LocalDateTime signupStartTime,
-			@RequestParam("signupEndTime") LocalDateTime signupEndTime,
-			@RequestParam("location") String location,
-			@RequestParam("status") String status,
-			@RequestParam("imagePath") MultipartFile mf,
+			@RequestParam("participantname") String participantname,
+			@RequestParam("contactinfo") String contactinfo,
+			@RequestParam("registrationtime") String registrationtime,
 			HttpServletRequest request
     		) {
-        ModelAndView mav = new ModelAndView("redirect:AllEvents");
+        ModelAndView mav = new ModelAndView("redirect:AllEvents");//尚未修改
         try {
         	  String filename = mf.getOriginalFilename();
               String extension = filename.substring(filename.lastIndexOf('.'));
