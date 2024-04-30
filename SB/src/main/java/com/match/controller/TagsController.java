@@ -105,11 +105,4 @@ public class TagsController {
         return tagsService.getUsersForTag(tagNo);
     }
 
-    //從指定標籤中移除關聯用戶
-    @DeleteMapping("/{tagNo}/users/{userNo}")
-    public TagsBean removeUserFromTag(@PathVariable Integer tagNo, @PathVariable Integer userNo) {
-        UserBean user = new UserBean();
-        user.setUserNo(userNo);
-        return tagsService.removeUserFromTag(tagNo, user);
-    }
 }
