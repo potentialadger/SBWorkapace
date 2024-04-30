@@ -79,7 +79,7 @@ input[type="submit"] {
 <body>
  <div align="center">
   <h2>更改活動內容</h2>
-	<form method="post" action="UpdateEvent">
+	<form method="post" action="UpdateEvent"  enctype="multipart/form-data">
 	<input type="hidden" name="_method" value="put">
 		<label for="eventNo">活動編號:</label><br>
         <input type="text" id="eventNo" name="eventNo" value="${event.eventNo}" readonly ><br>
@@ -100,6 +100,8 @@ input[type="submit"] {
         <input type="text" id="location" name="location" value="${event.location}"><br>
         <label for="status">狀態:</label><br>
         <input type="text" id="status" name="status" value="${event.status}"><br>
+        <label for="imagepath">活動圖片:</label><br>
+		<input type="file" name="imagePath" id="imagepath" required><br>
         <input type="submit" value="確定">
 	</form>
 	</div>

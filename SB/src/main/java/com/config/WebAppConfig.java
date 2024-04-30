@@ -25,6 +25,7 @@ public class WebAppConfig implements WebMvcConfigurer {
 		registry.addViewController("/match.insertGoal").setViewName("match/jsp/InsertGoal.jsp");
 		registry.addViewController("/activityHomepage").setViewName("activity/HomePage.html");
 		registry.addViewController("/activityInsertpage").setViewName("activity/Insert.html");
+		registry.addViewController("/activityList").setViewName("activity/EventList.html");
 	}
 	
 
@@ -33,6 +34,7 @@ public class WebAppConfig implements WebMvcConfigurer {
 		registry.addResourceHandler("/mycss/**").addResourceLocations("/WEB-INF/resources/mycss/");
 		registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/resources/images/");
 		registry.addResourceHandler("/groupimages/**").addResourceLocations("file:/C:/temp/upload/");
+		registry.addResourceHandler("/localimages/**").addResourceLocations("file:/C:/temp/upload/");
 		registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/resources/js/");
 	}
 

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>活動列表</title>
+    <script>
+        window.onload = function() {
+            fetchEvents();
+        };
+
+        function fetchEvents() {
+            fetch('/EventList')
+                .then(response => response.json())
+                .then(events => {
+                    const eventsList = document.getElementById('eventsList');
+                    events.forEach(event => {
+                        const listItem = document.createElement('li');
+                        const image = document.createElement('img');
+                        image.src = event.imageUrl; 
+                        image.alt = 'Event Image';
+                        image.style.width = '100px';
+                        console.log("Loading image from URL:", event.imageUrl);
+                        const text = document.createTextNode(`${event.title} - ${event.description}`);
+                        listItem.appendChild(image);
+                        listItem.appendChild(text);
+                        eventsList.appendChild(listItem);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading events:', error);
+                    alert('Failed to load events. Please check the console for more details.');
+                });
+        }
+    </script>
+</head>
+<body>
+    <h1>活動列表</h1>
+    <ul id="eventsList">
+    </ul>
+</body>
+</html>
+
+
+

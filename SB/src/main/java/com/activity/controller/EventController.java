@@ -1,13 +1,21 @@
 package com.activity.controller;
 
+import java.io.File;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.activity.bean.EventBean;
 import com.activity.service.EventService;
@@ -16,11 +24,18 @@ import com.user.bean.UserBean;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
-@Controller
+@RestController
+//@Controller
 public class EventController {
 
-    @Autowired
-    private EventService eventService;
+	private final EventService eventService;
+	
+	 public EventController(EventService eventService) {
+	        this.eventService = eventService;
+	
+	 }
+//    @Autowired
+//    private EventService eventService;
 
     // 查询單筆事件
     @GetMapping("/OneEvent")
@@ -38,6 +53,33 @@ public class EventController {
         return mav;
     }
 
+    //活動詳情
+    @GetMapping("/EventList")
+    public ResponseEntity<?> EventList(HttpServletRequest request) {
+        try {
+            List<EventBean> events = eventService.findAllEvents();
+            List<Map<String, String>> eventsWithImages = new ArrayList<>();
+
+            for (EventBean event : events) {
+                Map<String, String> eventMap = new HashMap<>();
+                String imagePath = event.getImagePath();
+                String fullImageUrl = request.getContextPath() + "/localimages/" + imagePath;
+                eventMap.put("title", event.getTitle());
+                eventMap.put("description", event.getDescription());
+                eventMap.put("imageUrl", fullImageUrl);
+                eventsWithImages.add(eventMap);
+            }
+
+            return ResponseEntity.ok(eventsWithImages); 
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
+    }
+
+
+    
+    
     // 查询所有事件
     @GetMapping("/AllEvents")
     public ModelAndView findAllEvents() {
@@ -53,7 +95,7 @@ public class EventController {
     }
 
     // 新增事件
-    @PostMapping("/InsertEvent")
+    @PutMapping("/InsertEvent")
     @ResponseBody
     public ModelAndView insertEvent(
 			@RequestParam("title") String title,
@@ -63,16 +105,28 @@ public class EventController {
 			@RequestParam("signupEndTime") LocalDateTime signupEndTime,
 			@RequestParam("location") String location,
 			@RequestParam("status") String status,
+			@RequestParam("imagePath") MultipartFile mf,
 			HttpServletRequest request
     		) {
         ModelAndView mav = new ModelAndView("redirect:AllEvents");
         try {
+        	  String filename = mf.getOriginalFilename();
+              String extension = filename.substring(filename.lastIndexOf('.'));
+              String fileDir = "C:/temp/upload/";
+              String newFileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "_" + new Random().nextInt(10000) + extension;
+              File pathexist = new File(fileDir);
+              if(!pathexist.exists()) {
+                  pathexist.mkdirs();
+              }
+              File fileDirPath = new File(fileDir, newFileName);
+              mf.transferTo(fileDirPath);
+        	
         	EventBean event = new EventBean();
         	
         	HttpSession session = request.getSession();
-    		UserBean userbean = (UserBean)session.getAttribute("userData");
+//    		UserBean userbean = (UserBean)session.getAttribute("userData");
         	
-        	event.setHostUserNo(userbean.getUserNo());
+        	event.setHostUserNo(1);
         	event.setTitle(title);
         	event.setDescription(description);						
         	event.setActivityTime(activityTime);
@@ -80,7 +134,7 @@ public class EventController {
 			event.setSignupEndTime(signupEndTime);
 			event.setLocation(location);
 			event.setStatus(status);
-
+			event.setImagePath(newFileName);
 			eventService.insert(event);
         } catch (Exception e) {
             e.printStackTrace();
@@ -130,12 +184,27 @@ public class EventController {
     		@RequestParam("signupStartTime") LocalDateTime signupStartTime,
     		@RequestParam("signupEndTime") LocalDateTime signupEndTime,
     		@RequestParam("location") String location,
-    		@RequestParam("status") String status	
-    		
+    		@RequestParam("status") String status,	
+    		@RequestParam("imagePath") MultipartFile mf,
+    		HttpServletRequest request
     		) {
         ModelAndView mav = new ModelAndView("redirect:/AllEvents");
         try {
         	EventBean event = eventService.findEventByEventNo(eventNo);
+        	 String filename = mf.getOriginalFilename();
+             String extension = filename.substring(filename.lastIndexOf('.'));
+             String fileDir = "C:/temp/upload/";
+             String newFileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "_" + new Random().nextInt(10000) + extension;
+             File pathexist = new File(fileDir);
+             if (!pathexist.exists()) {
+                 pathexist.mkdirs();
+             }
+             File fileDirPath = new File(fileDir, newFileName);
+             mf.transferTo(fileDirPath);
+             
+             
+             HttpSession session = request.getSession();
+             
         	event.setTitle(title);
         	event.setDescription(description);
         	event.setActivityTime(activityTime);
@@ -143,6 +212,7 @@ public class EventController {
         	event.setSignupEndTime(signupEndTime);
         	event.setLocation(location);
         	event.setStatus(status);
+        	event.setImagePath(newFileName);
         	eventService.update(event);
         } catch (Exception e) {
             e.printStackTrace();
