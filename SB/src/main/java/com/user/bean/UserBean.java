@@ -5,11 +5,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
 import com.match.bean.TagsBean;
+import com.forum.bean.PostsBean;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -21,6 +23,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -104,6 +107,10 @@ public class UserBean implements Serializable{
 	
 	
     // getters and setters
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userBean", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+	private Set<PostsBean> PostsBean =new HashSet<>();
+	
+	
 	public int getUserNo() {return userNo;}
 	public String getUserAccount() {return userAccount;}
 	public String getUserPassword() {return userPassword;}
@@ -160,15 +167,5 @@ public class UserBean implements Serializable{
 				+ ", MBTI=" + MBTI + ", suspension=" + suspension + ", verify=" + verify + ", isDelete=" + isDelete
 				+ ", isManager=" + isManager + "]";
 	}
-	
-	
-	//UserController  =>  會遍歷 UserBean 對象中的 tags 集合,獲取每個 TagsBean 對象的 tagNo,並將其添加到一個新的 List<Integer> 中。最終,它會返回這個列表,其中包含了與該用戶關聯的所有標籤ID。
-    public List<Integer> getTagNos() {
-        List<Integer> tagNos = new ArrayList<>();
-        for (TagsBean tag : tags) {
-            tagNos.add(tag.getTagNo());
-        }
-        return tagNos;
-    }
 	
 }

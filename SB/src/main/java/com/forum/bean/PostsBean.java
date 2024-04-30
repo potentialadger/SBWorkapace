@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.user.bean.UserBean;
 
 import jakarta.persistence.*;
 
@@ -20,12 +21,14 @@ public class PostsBean {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "post_no")
 	private Integer post_no;
-
-	@Column(name = "user_no")
-	private int user_no;
-
-	@Column(name = "category_no")
-	private int category_no;
+	
+	@JoinColumn(name = "user_no")
+	@ManyToOne
+	private UserBean userBean;
+	
+	@JoinColumn(name = "category_no")
+	@ManyToOne
+	private CategoriesBean categoriesBean;
 
 	@Column(name = "title")
 	private String title;
@@ -54,20 +57,20 @@ public class PostsBean {
 		this.post_no = post_no;
 	}
 
-	public int getUser_no() {
-		return user_no;
+	public UserBean getUserBean() {
+		return userBean;
 	}
 
-	public void setUser_no(int user_no) {
-		this.user_no = user_no;
+	public void setUserBean(UserBean userBean) {
+		this.userBean = userBean;
 	}
 
-	public int getCategory_no() {
-		return category_no;
+	public CategoriesBean getCategoriesBean() {
+		return categoriesBean;
 	}
 
-	public void setCategory_no(int category_no) {
-		this.category_no = category_no;
+	public void setCategoriesBean(CategoriesBean categoriesBean) {
+		this.categoriesBean = categoriesBean;
 	}
 
 	public String getTitle() {
@@ -117,6 +120,6 @@ public class PostsBean {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
 	
-	
-	}
+		}
