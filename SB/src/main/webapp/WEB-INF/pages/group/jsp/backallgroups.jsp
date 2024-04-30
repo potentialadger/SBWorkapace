@@ -33,7 +33,35 @@
                             <tbody>
                                 <% List<Group> groups = (ArrayList<Group>)
                                         request.getAttribute("groups");
-                                        for (Group group : groups) {
+                                for (GroupBean group : groups) {
+                                String paymentMethodDisplay = "";
+
+                                switch (group.getPaymentmethod()) {
+                                	case 1 :
+                                		paymentMethodDisplay = "匯款";
+                                		break;
+                                	case 2 :
+                                		paymentMethodDisplay = "面交";
+                                		break;
+                                	case 3 :
+                                		paymentMethodDisplay = "SB點數";
+                                		break;
+                                	case 12 :
+                                		paymentMethodDisplay = "匯款,面交";
+                                		break;
+                                	case 13 :
+                                		paymentMethodDisplay = "匯款,SB點數";
+                                		break;
+                                	case 23 :
+                                		paymentMethodDisplay = "面交,SB點數";
+                                		break;
+                                	case 123 :
+                                		paymentMethodDisplay = "匯款,面交,SB點數";
+                                		break;
+                                	default :
+                                		paymentMethodDisplay = "未知支付方式";
+                                		break;
+                                }
                                         %>
                                         <tr>
                                             <th>
@@ -76,26 +104,28 @@
                     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
                     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
                     <script>
-                        $(document).ready(function () {
-                            $('#table_id').DataTable();
-                            $('.delete').on('click', function () {
-                                const eventno = $(this).data('eventno');
-                                console.log(eventno);
-                                if (confirm("確定要下架這筆活動嗎")) {
-                                    $.ajax({
-                                        url: '/group/bannedgroup/' + eventno,
-                                        type: 'post',
-                                        success: function (response) {
-                                            console.log(eventno);
-                                            location.reload();
-                                        }
-                                    })
-                                }
+    $(document).ready(function () {
+        var table = $('#table_id').DataTable();
 
-                            })
-                        });
-
-                    </script>
+        // 使用事件委託綁定事件
+        $('#table_id tbody').on('click', 'button.delete', function () {
+            const eventno = $(this).data('eventno');
+            console.log('event no: ', eventno);
+            if (confirm("確定要下架這筆活動嗎")) {
+                $.ajax({
+                    url: '/group/bannedgroup/' + eventno,
+                    type: 'post',
+                    success: function (response) {
+                        table.row($(this).parents('tr')).remove().draw();
+                    },
+                    error: function (xhr, status, error) {
+                        alert('刪除失敗: ' + error);
+                    }
+                });
+            }
+        });
+    });
+</script>
                 </body>
 
                 </html>
