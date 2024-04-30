@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.match.bean.GoalsBean;
 import com.user.bean.UserBean;
-import com.match.repository.UserRepository;
+import com.user.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
 

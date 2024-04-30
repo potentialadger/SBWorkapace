@@ -27,7 +27,7 @@ public class CategoriesController {
 		CategoriesBean Categories = categoriesService.getCategoryByNo(Integer.parseInt(categoryNo));
 	    if (Categories != null) {
 	        List<PostsBean> postsList = new ArrayList<>();
-	        postsList.add(post);
+//	        postsList.add(post);
 	        m.addAttribute("posts", postsList);
 	    } else {
 	        m.addAttribute("noData", true);

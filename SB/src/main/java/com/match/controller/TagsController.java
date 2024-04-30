@@ -34,11 +34,11 @@ public class TagsController {
             TagsBean tag = tagsService.getTagById(tagNo);
             tags = tag != null ? Collections.singletonList(tag) : Collections.emptyList();
         } else if (tagName != null && !tagName.isEmpty()) {
-            tags = tagsService.findByTagName(tagName);
+//            tags = tagsService.findByTagName(tagName);
         } else {
             tags = tagsService.findAll();
         }
-        model.addAttribute("tags", tags);
+//        model.addAttribute("tags", tags);
         return "match/jsp/TagsHP.jsp";
     }
 
