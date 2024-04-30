@@ -8,6 +8,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -91,12 +93,13 @@ public class GroupController {
 	public String findAllGroupBack(Model m) {
 		List<Group> groups = gService.findAllGroup();
 		m.addAttribute("groups", groups);
-		return "group/jsp/backallgroups";
+		return "group/jsp/backallgroups.jsp";
 	}
 	
-//	public String insertGroup(@RequestParam("gtitle") String title, @RequestParam("gdescription") String description, @RequestParam("gendtime") @DateTimeFormat(pattern = "yyyy-MM-dd") Date gEndTime, @RequestParam("payment") String[] pay, @RequestParam("MinTotalQuantity") int minQuantity,
-//			@RequestParam("MinTotalAmount") int minAmount, HttpServletRequest request) {
-		
-//	}
+	@PostMapping("/bannedgroup/{eventno}")
+	public String bannedGroupByEventNo(@PathVariable("eventno") int eventno) {
+		gService.deleteGroup(eventno);
+		return "redirect:/group/backgroups";
+	}
 	
 }

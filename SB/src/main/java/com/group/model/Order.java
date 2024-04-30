@@ -1,8 +1,11 @@
 package com.group.model;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -25,37 +28,31 @@ public class Order {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
 	@Column(name = "orderno")
-	private int orderno;
-
+	private Integer id;
+	
 	@JoinColumn(name = "eventno")
 	@ManyToOne
-	public Group group;
+	private Group group;
 	
 	@Column(name = "userno")
-	private int userno;
-	
-	@JoinColumn(name = "itemno")
-	@ManyToOne
-	public Item item;
-	
-	@Column(name = "itemquantity")
-	private int itemquantity;
-	
-	@Column(name = "totalprice")
-	private int totalprice;
+	private Integer userno;
 	
 	@Column(name = "paymentmethod")
-	private int paymentmethod;
+	private Integer paymentmethod;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
-	private List<OrderSpecification> orderspec;
+	@Column(name = "settime")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	private Date settime;
 
-	public int getOrderno() {
-		return orderno;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
+	private List<OrderDetail> orderDetails;
+	
+	public Integer getId() {
+		return id;
 	}
 
-	public void setOrderno(int orderno) {
-		this.orderno = orderno;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Group getGroup() {
@@ -66,52 +63,36 @@ public class Order {
 		this.group = group;
 	}
 
-	public int getUserno() {
+	public Integer getUserno() {
 		return userno;
 	}
 
-	public void setUserno(int userno) {
+	public void setUserno(Integer userno) {
 		this.userno = userno;
 	}
 
-	public Item getItem() {
-		return item;
-	}
-
-	public void setItem(Item item) {
-		this.item = item;
-	}
-
-	public int getItemquantity() {
-		return itemquantity;
-	}
-
-	public void setItemquantity(int itemquantity) {
-		this.itemquantity = itemquantity;
-	}
-
-	public int getTotalprice() {
-		return totalprice;
-	}
-
-	public void setTotalprice(int totalprice) {
-		this.totalprice = totalprice;
-	}
-
-	public int getPaymentmethod() {
+	public Integer getPaymentmethod() {
 		return paymentmethod;
 	}
 
-	public void setPaymentmethod(int paymentmethod) {
+	public void setPaymentmethod(Integer paymentmethod) {
 		this.paymentmethod = paymentmethod;
 	}
 
-	public List<OrderSpecification> getOrderspec() {
-		return orderspec;
+	public Date getSettime() {
+		return settime;
 	}
 
-	public void setOrderspec(List<OrderSpecification> orderspec) {
-		this.orderspec = orderspec;
+	public void setSettime(Date settime) {
+		this.settime = settime;
 	}
-	
+
+	public List<OrderDetail> getOrderDetails() {
+		return orderDetails;
+	}
+
+	public void setOrderDetails(List<OrderDetail> orderDetails) {
+		this.orderDetails = orderDetails;
+	}
+
 }

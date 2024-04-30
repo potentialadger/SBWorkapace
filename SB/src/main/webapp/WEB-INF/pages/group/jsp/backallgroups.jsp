@@ -30,45 +30,46 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            <% List<Group> groups = (ArrayList<Group>)
-                                    request.getAttribute("groups");
-                                    for (Group group : groups) {
-                                    %>
-                                    <tbody>
+                            <tbody>
+                                <% List<Group> groups = (ArrayList<Group>)
+                                        request.getAttribute("groups");
+                                        for (Group group : groups) {
+                                        %>
                                         <tr>
                                             <th>
                                                 <%=group.getEventno() %>
                                             </th>
                                             <th>
-                                            	<%=group.getTitle() %>
+                                                <%=group.getTitle() %>
                                             </th>
                                             <th>
-                                            	<%=group.getDescription() %>
+                                                <%=group.getDescription() %>
                                             </th>
                                             <th>
-                                            	<%=group.getStarttime() %>
+                                                <%=group.getStarttime() %>
                                             </th>
                                             <th>
-                                            	<%=group.getEndtime() %>
+                                                <%=group.getEndtime() %>
                                             </th>
                                             <th>
-                                            	<%=group.getMintotalamount() %>
+                                                <%=group.getMintotalamount() %>
                                             </th>
                                             <th>
-                                            	<%=group.getMintotalquantity() %>
+                                                <%=group.getMintotalquantity() %>
                                             </th>
                                             <th>
-                                            	<%=group.getPaymentmethod() %>
+                                                <%=group.getPaymentmethod() %>
                                             </th>
                                             <th>
-                                            	<button class="delete"><i class="fa-solid fa-trash"></i></button>
+                                                <button class="delete" data-eventno="<%=group.getEventno() %>"><i
+                                                        class="fa-solid fa-trash"></i></button>
                                             </th>
                                             <th>
-                                            	<button class="items"><i class="fa-solid fa-chevron-down"></i></button>
+                                                <button class="items"><i class="fa-solid fa-chevron-down"></i></button>
                                             </th>
                                         </tr>
-                                    </tbody>
-                                    <% } %>
+                                        <% } %>
+                            </tbody>
                         </table>
                     </div>
                     <script src="https://kit.fontawesome.com/f8f71426ea.js" crossorigin="anonymous"></script>
@@ -77,7 +78,23 @@
                     <script>
                         $(document).ready(function () {
                             $('#table_id').DataTable();
+                            $('.delete').on('click', function () {
+                                const eventno = $(this).data('eventno');
+                                console.log(eventno);
+                                if (confirm("確定要下架這筆活動嗎")) {
+                                    $.ajax({
+                                        url: '/group/bannedgroup/' + eventno,
+                                        type: 'post',
+                                        success: function (response) {
+                                            console.log(eventno);
+                                            location.reload();
+                                        }
+                                    })
+                                }
+
+                            })
                         });
+
                     </script>
                 </body>
 

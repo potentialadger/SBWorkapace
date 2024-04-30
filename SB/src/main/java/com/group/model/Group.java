@@ -26,10 +26,10 @@ public class Group {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
 	@Column(name = "eventno")
-	private int eventno;
+	private Integer eventno;
 	
 	@Column(name = "hostuserno")
-	private int hostuserno;
+	private Integer hostuserno;
 	
 	@Column(name = "title")
 	private String title;
@@ -46,16 +46,16 @@ public class Group {
 	private Date endtime;
 	
 	@Column(name = "mintotalamount")
-	private int mintotalamount;
+	private Integer mintotalamount;
 	
 	@Column(name = "mintotalquantity")
-	private int mintotalquantity;
+	private Integer mintotalquantity;
 	
 	@Column(name = "status")
 	private String status;
 	
 	@Column(name = "paymentmethod")
-	private int paymentmethod;
+	private Integer paymentmethod;
 	
 	@Column(name = "account")
 	private String account;
@@ -64,7 +64,7 @@ public class Group {
 	private String address;
 	
 	@Column(name = "point")
-	private int point;
+	private Integer point;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL)
 	private List<Item> items ;
@@ -72,27 +72,19 @@ public class Group {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL)
 	private List<Order> orders;
 
-	public int getPoint() {
-		return point;
-	}
-
-	public void setPoint(int point) {
-		this.point = point;
-	}
-
-	public int getEventno() {
+	public Integer getEventno() {
 		return eventno;
 	}
 
-	public void setEventno(int eventno) {
+	public void setEventno(Integer eventno) {
 		this.eventno = eventno;
 	}
 
-	public int getHostuserno() {
+	public Integer getHostuserno() {
 		return hostuserno;
 	}
 
-	public void setHostuserno(int hostuserno) {
+	public void setHostuserno(Integer hostuserno) {
 		this.hostuserno = hostuserno;
 	}
 
@@ -128,19 +120,19 @@ public class Group {
 		this.endtime = endtime;
 	}
 
-	public int getMintotalamount() {
+	public Integer getMintotalamount() {
 		return mintotalamount;
 	}
 
-	public void setMintotalamount(int mintotalamount) {
+	public void setMintotalamount(Integer mintotalamount) {
 		this.mintotalamount = mintotalamount;
 	}
 
-	public int getMintotalquantity() {
+	public Integer getMintotalquantity() {
 		return mintotalquantity;
 	}
 
-	public void setMintotalquantity(int mintotalquantity) {
+	public void setMintotalquantity(Integer mintotalquantity) {
 		this.mintotalquantity = mintotalquantity;
 	}
 
@@ -152,11 +144,11 @@ public class Group {
 		this.status = status;
 	}
 
-	public int getPaymentmethod() {
+	public Integer getPaymentmethod() {
 		return paymentmethod;
 	}
 
-	public void setPaymentmethod(int paymentmethod) {
+	public void setPaymentmethod(Integer paymentmethod) {
 		this.paymentmethod = paymentmethod;
 	}
 
@@ -176,6 +168,14 @@ public class Group {
 		this.address = address;
 	}
 
+	public Integer getPoint() {
+		return point;
+	}
+
+	public void setPoint(Integer point) {
+		this.point = point;
+	}
+
 	public List<Item> getItems() {
 		return items;
 	}
@@ -191,5 +191,5 @@ public class Group {
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
 	}
-	
+
 }

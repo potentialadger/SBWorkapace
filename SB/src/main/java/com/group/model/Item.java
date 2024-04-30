@@ -25,7 +25,7 @@ public class Item {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
 	@Column(name = "itemno")
-	private int itemno;
+	private Integer itemno;
 	
 	@JoinColumn(name = "eventno")
 	@ManyToOne
@@ -35,7 +35,7 @@ public class Item {
 	private String name;
 	
 	@Column(name = "price")
-	private int price;
+	private Integer price;
 	
 	@Column(name = "description")
 	private String description;
@@ -44,16 +44,16 @@ public class Item {
 	private String imgpath;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = CascadeType.ALL)
-	private List<Order> orders;
+	private List<ItemSpecification> itemspec;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = CascadeType.ALL)
-	private List<ItemSpecification> itemspec;
+	private List<OrderDetail> orderDetails;
 
-	public int getItemno() {
+	public Integer getItemno() {
 		return itemno;
 	}
 
-	public void setItemno(int itemno) {
+	public void setItemno(Integer itemno) {
 		this.itemno = itemno;
 	}
 
@@ -73,11 +73,11 @@ public class Item {
 		this.name = name;
 	}
 
-	public int getPrice() {
+	public Integer getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(Integer price) {
 		this.price = price;
 	}
 
@@ -97,14 +97,6 @@ public class Item {
 		this.imgpath = imgpath;
 	}
 
-	public List<Order> getOrders() {
-		return orders;
-	}
-
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
-	}
-
 	public List<ItemSpecification> getItemspec() {
 		return itemspec;
 	}
@@ -112,5 +104,14 @@ public class Item {
 	public void setItemspec(List<ItemSpecification> itemspec) {
 		this.itemspec = itemspec;
 	}
+
+	public List<OrderDetail> getOrderDetails() {
+		return orderDetails;
+	}
+
+	public void setOrderDetails(List<OrderDetail> orderDetails) {
+		this.orderDetails = orderDetails;
+	}
+
 	
 }
