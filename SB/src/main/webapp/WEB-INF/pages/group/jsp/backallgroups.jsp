@@ -19,6 +19,7 @@
                             <thead>
                                 <tr>
                                     <th>活動編號</th>
+                                    <th>開團人</th>
                                     <th>活動標題</th>
                                     <th>活動描述</th>
                                     <th>開團時間</th>
@@ -68,6 +69,9 @@
                                                 <%=group.getEventno() %>
                                             </th>
                                             <th>
+                                                <%=group.getHostuserno().getUserNo() %>
+                                            </th>
+                                            <th>
                                                 <%=group.getTitle() %>
                                             </th>
                                             <th>
@@ -86,46 +90,79 @@
                                                 <%=group.getMintotalquantity() %>
                                             </th>
                                             <th>
-                                                <%=group.getPaymentmethod() %>
+                                                <%=paymentMethodDisplay %>
                                             </th>
                                             <th>
                                                 <button class="delete" data-eventno="<%=group.getEventno() %>"><i
                                                         class="fa-solid fa-trash"></i></button>
                                             </th>
                                             <th>
-                                                <button class="items"><i class="fa-solid fa-chevron-down"></i></button>
+                                                <button class="items" data-eventno="<%=group.getEventno() %>"><i class="fa-solid fa-chevron-down"></i></button>
                                             </th>
                                         </tr>
                                         <% } %>
                             </tbody>
                         </table>
                     </div>
-                    <script src="https://kit.fontawesome.com/f8f71426ea.js" crossorigin="anonymous"></script>
                     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+                    <script src="https://kit.fontawesome.com/f8f71426ea.js" crossorigin="anonymous"></script>
                     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
                     <script>
-    $(document).ready(function () {
-        var table = $('#table_id').DataTable();
+					    $(document).ready(function () {
+					        var table = $('#table_id').DataTable();
+					
+					       
+					        $('#table_id tbody').on('click', 'button.delete', function () {
+					            const eventno = $(this).data('eventno');
+					            console.log('event no: ', eventno);
+					            if (confirm("確定要下架這筆活動嗎")) {
+					                $.ajax({
+					                    url: '/group/bannedgroup/' + eventno,
+					                    type: 'post',
+					                    success: function (response) {
+					                        table.row($(this).parents('tr')).remove().draw();
+					                        location.reload();
+					                    },
+					                    error: function (xhr, status, error) {
+					                        alert('刪除失敗: ' + error);
+					                    }
+					                });
+					            }
+					        });
+					        
+                            $('#table_id tbody').on('click', 'button.items', function () {
+                                var tr = $(this).closest('tr');
+                                var row = table.row(tr);
+                                var btn = this; // 保存 this 參考
 
-        // 使用事件委託綁定事件
-        $('#table_id tbody').on('click', 'button.delete', function () {
-            const eventno = $(this).data('eventno');
-            console.log('event no: ', eventno);
-            if (confirm("確定要下架這筆活動嗎")) {
-                $.ajax({
-                    url: '/group/bannedgroup/' + eventno,
-                    type: 'post',
-                    success: function (response) {
-                        table.row($(this).parents('tr')).remove().draw();
-                    },
-                    error: function (xhr, status, error) {
-                        alert('刪除失敗: ' + error);
-                    }
-                });
-            }
-        });
-    });
-</script>
+                                if (row.child.isShown()) {
+                                    // 如果已經展開，則收起
+                                    row.child.hide();
+                                    tr.removeClass('shown');
+                                } else {
+                                    // 展開，並從伺服器獲取數據
+                                    var eventno = $(this).data('eventno');
+                                    $.ajax({
+                                        url: '/item/groupitems/' + eventno,
+                                        type: 'get',
+                                        success: function (items) {
+                                        	var content = '<div class="child-row">';
+                                            items.forEach(item => {
+                                                content += '<div class="item">' +
+                                                           '<h4>' + item.name + '</h4>' +
+                                                           '<p>' + item.description + '</p>' +
+                                                           '<p>Price: ' + item.price + '</p>' +
+                                                           '</div>';
+                                            });
+                                            content += '</div>';
+                                            row.child(content).show();
+                                            tr.addClass('shown');
+                                        }
+                                    });
+                                }
+                            });
+					    });
+				</script>
                 </body>
 
                 </html>

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.user.bean.UserBean;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -34,8 +35,9 @@ public class Order {
 	@ManyToOne
 	private Group group;
 	
-	@Column(name = "userno")
-	private Integer userno;
+	@JoinColumn(name = "userno")
+	@ManyToOne
+	private UserBean userno;
 	
 	@Column(name = "paymentmethod")
 	private Integer paymentmethod;
@@ -63,11 +65,11 @@ public class Order {
 		this.group = group;
 	}
 
-	public Integer getUserno() {
+	public UserBean getUserno() {
 		return userno;
 	}
 
-	public void setUserno(Integer userno) {
+	public void setUserno(UserBean userno) {
 		this.userno = userno;
 	}
 

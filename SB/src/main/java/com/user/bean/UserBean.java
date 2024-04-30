@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import com.match.bean.TagsBean;
 import com.forum.bean.PostsBean;
+import com.group.model.Group;
+import com.group.model.Order;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -109,6 +111,12 @@ public class UserBean implements Serializable{
     // getters and setters
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userBean", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
 	private Set<PostsBean> PostsBean =new HashSet<>();
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "hostuserno", cascade = CascadeType.ALL)
+	private List<Group> groups;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userno", cascade = CascadeType.ALL)
+	private List<Order> orders;
 	
 	
 	public int getUserNo() {return userNo;}

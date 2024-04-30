@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.group.model.Group;
 import com.group.repository.GroupRepository;
+import com.user.bean.UserBean;
+import com.user.repository.UserRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -22,6 +24,9 @@ public class GroupService {
 
 	@Autowired
 	private GroupRepository groupRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 //	查詢活躍活動
 	public List<Group> findAllGroup(){
@@ -88,8 +93,14 @@ public class GroupService {
 		
 		int point = 0;
 		
+		Optional<UserBean> userresult = userRepository.findById(user);
+		if(userresult.isEmpty()) {
+			throw new EntityNotFoundException("user not found with id: " + user);
+		}
+		UserBean hostuser = userresult.get();
+		
 		Group group = new Group();
-		group.setHostuserno(user);
+		group.setHostuserno(hostuser);
 		group.setTitle(title);
 		group.setDescription(description);
 		group.setStarttime(startTime);

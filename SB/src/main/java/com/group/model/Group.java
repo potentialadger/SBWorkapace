@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.user.bean.UserBean;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -14,6 +16,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -28,8 +32,9 @@ public class Group {
 	@Column(name = "eventno")
 	private Integer eventno;
 	
-	@Column(name = "hostuserno")
-	private Integer hostuserno;
+	@JoinColumn(name = "hostuserno")
+	@ManyToOne
+	private UserBean hostuserno;
 	
 	@Column(name = "title")
 	private String title;
@@ -67,6 +72,7 @@ public class Group {
 	private Integer point;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List<Item> items ;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL)
@@ -80,11 +86,13 @@ public class Group {
 		this.eventno = eventno;
 	}
 
-	public Integer getHostuserno() {
+	
+
+	public UserBean getHostuserno() {
 		return hostuserno;
 	}
 
-	public void setHostuserno(Integer hostuserno) {
+	public void setHostuserno(UserBean hostuserno) {
 		this.hostuserno = hostuserno;
 	}
 
