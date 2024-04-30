@@ -24,13 +24,13 @@ public class UserServiceForMatch implements IUserService {
 
     @Override
     public UserBean getById(int userNo) {
-        // 实现从数据库中根据userNo查询UserBean的逻辑
+        // 實現從數據庫中根據userNo查詢UserBean的邏輯
         return userRepos.findById(userNo).orElse(null);
     }
 
     @Override
     public UserBean updateUser(UserBean uBean) {
-        // 实现更新UserBean的逻辑
+    	// 實現更新UserBean的邏輯
         return userRepos.save(uBean);
     }
     

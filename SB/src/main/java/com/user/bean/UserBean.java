@@ -2,14 +2,25 @@ package com.user.bean;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
+import com.match.bean.TagsBean;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -82,6 +93,17 @@ public class UserBean implements Serializable{
 	@Column(name = "ismanager")
 	private Integer isManager; //0：普通使用者 1：管理者
 	
+	
+	
+	//多對多  // 有 join table 這邊為主要控制方，操作兩方關係盡量由這邊(User)操作
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinTable(name="usertags",
+		joinColumns = {@JoinColumn(name="fkuserno", referencedColumnName = "userno")},
+		inverseJoinColumns = {@JoinColumn(name="fktagno", referencedColumnName = "tagno")})
+	private Set<TagsBean> tags = new HashSet<>();  //屬性 => getters and setters
+	
+	
+    // getters and setters
 	public int getUserNo() {return userNo;}
 	public String getUserAccount() {return userAccount;}
 	public String getUserPassword() {return userPassword;}
@@ -103,7 +125,7 @@ public class UserBean implements Serializable{
 	public int getVerify() {return verify;}
 	public int getIsDelete() {return isDelete;}
 	public int getIsManager() {return isManager;}
-
+	public Set<TagsBean> getTags() {return tags;}
 	
 	public void setUserNo(int userNo) {this.userNo = userNo;}
 	public void setUserAccount(String userAccount) {this.userAccount = userAccount;}
@@ -126,6 +148,7 @@ public class UserBean implements Serializable{
 	public void setVerify(int verify) {this.verify = verify;}
 	public void setIsDelete(int isDelete) {this.isDelete = isDelete;}
 	public void setIsManager(int isManager) {this.isManager = isManager;}
+	public void setTags(Set<TagsBean> tags) {this.tags = tags;}
 	
 	@Override
 	public String toString() {
@@ -139,6 +162,13 @@ public class UserBean implements Serializable{
 	}
 	
 	
-	
+	//UserController  =>  會遍歷 UserBean 對象中的 tags 集合,獲取每個 TagsBean 對象的 tagNo,並將其添加到一個新的 List<Integer> 中。最終,它會返回這個列表,其中包含了與該用戶關聯的所有標籤ID。
+    public List<Integer> getTagNos() {
+        List<Integer> tagNos = new ArrayList<>();
+        for (TagsBean tag : tags) {
+            tagNos.add(tag.getTagNo());
+        }
+        return tagNos;
+    }
 	
 }
