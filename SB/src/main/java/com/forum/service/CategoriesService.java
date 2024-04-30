@@ -15,9 +15,9 @@ public class CategoriesService implements CategoriesServiceInterface {
 	private CategoriesDaointerface CategoriesDaointerDao;
 
 	@Override
-	public CategoriesBean getCategoryByNo(Integer categoryNo) {
-		// Optional 中的 orElse(null) 方法 當沒有找到對應的實體時返回 null
-		return CategoriesDaointerDao.findById(categoryNo).orElse(null);
+	public List<CategoriesBean> getCategoryKeyword(String categoryKeyword) {
+		
+		return CategoriesDaointerDao.findByTitleNameContaining(categoryKeyword);
 	}
 
 	@Override

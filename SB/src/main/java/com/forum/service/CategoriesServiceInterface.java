@@ -6,7 +6,7 @@ import com.forum.bean.CategoriesBean;
 
 public interface CategoriesServiceInterface {
 	
-	CategoriesBean getCategoryByNo(Integer categoryNo);
+	List<CategoriesBean> getCategoryKeyword(String categoryKeyword);
 	
 	List<CategoriesBean> getAllCategories();
         
