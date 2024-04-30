@@ -35,9 +35,16 @@ public class SocialPhotos {
 	}
 	
 	
-	//Constructors using Fields
+	//根據所有屬性來初始化
 	public SocialPhotos(Integer photoNo, Integer userNo, String photoPath, String photoTheme) {
 		this.photoNo = photoNo;
+		this.userNo = userNo;
+		this.photoPath = photoPath;
+		this.photoTheme = photoTheme;
+	}
+	
+	//根據除了photoNo以外的屬性來初始化
+	public SocialPhotos(Integer userNo, String photoPath, String photoTheme) {
 		this.userNo = userNo;
 		this.photoPath = photoPath;
 		this.photoTheme = photoTheme;
