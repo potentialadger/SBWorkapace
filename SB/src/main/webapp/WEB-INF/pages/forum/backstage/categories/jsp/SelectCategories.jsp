@@ -8,10 +8,14 @@
 <title>分類版管理</title>
 </head>
 <body>
-	 <form style="float: left;" method="get" action="/CategoriesController/OneCategories">
-        查詢: <input type="text" name="postNo" required>
+	<form method="get" action="/CategoriesController/OneCategories">
+        查詢: <input type="text" name="categoryKeyword" required>
         <button type="submit">送出</button>
     </form>
+    
+  	<form action="/forum/backstage/ManagerHome.html">
+    	<button type="submit">新增分類</button>
+	</form>
 
     <form method="get" action="/CategoriesController/CategoriesAll">
         <button type="submit">查詢全部</button>
