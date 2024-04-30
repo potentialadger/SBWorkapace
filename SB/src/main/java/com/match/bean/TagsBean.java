@@ -31,7 +31,7 @@ public class TagsBean {
 	
 	
 	//多對多
-	@ManyToMany(mappedBy = "Tags")
+	@ManyToMany(mappedBy = "tags")
 	private Set<UserBean> users = new HashSet<>();   //getters and setters
 	
 	

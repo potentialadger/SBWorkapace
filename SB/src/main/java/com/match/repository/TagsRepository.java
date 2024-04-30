@@ -10,7 +10,7 @@ import com.match.bean.TagsBean;
 
 public interface TagsRepository extends JpaRepository<TagsBean, Integer> {
 	
-    @Query(value="from GoalsBean where goalName like %:goalName%")
-    public List<TagsBean> findByTagName(@Param("tagName") String tagName);
+//    @Query(value="from GoalsBean where goalName like %:goalName%")
+//    public List<TagsBean> findByTagName(@Param("tagName") String tagName);
 
 }

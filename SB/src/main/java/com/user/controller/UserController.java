@@ -194,7 +194,7 @@ public class UserController {
 	}
 
 	// 獲取單個使用者及其關聯的標籤
-	@GetMapping("/users/{userNo}")
+	@GetMapping("/usertags/{userNo}")
 	public String getUserWithTags(@PathVariable("userNo") int userNo, Model model) {
 		UserBean userWithTags = uService.getUserWithTags(userNo);
 		model.addAttribute("user", userWithTags);
@@ -202,7 +202,7 @@ public class UserController {
 	}
 
 	// 獲取所有使用者及其關聯的標籤
-	@GetMapping("/users")
+	@GetMapping("/userstags")
 	public String getAllUsersWithTags(Model model) {
 		List<UserBean> usersWithTags = uService.getAllUsersWithTags();
 		model.addAttribute("users", usersWithTags);

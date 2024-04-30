@@ -34,9 +34,9 @@ public class TagsService {
 	}	
     
 	//用tagName查詢
-	public List<TagsBean> findByTagName(String tagName){   //TagsRepository 新增方法
-		return tRepository.findByTagName(tagName);
-	}
+//	public List<TagsBean> findByTagName(String tagName){   //TagsRepository 新增方法
+//		return tRepository.findByTagName(tagName);
+//	}
 	
     // 查詢所有標籤
     public List<TagsBean> findAll() {
