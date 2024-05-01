@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.group.model.Group;
 import com.group.service.GroupService;
+import com.user.bean.UserBean;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -100,6 +101,24 @@ public class GroupController {
 	public String bannedGroupByEventNo(@PathVariable("eventno") int eventno) {
 		gService.deleteGroup(eventno);
 		return "redirect:/group/backgroups";
+	}
+	
+	@PostMapping("/insertgroup")
+	public String insertGroup(@RequestParam("gtitle") String title, @RequestParam("gdescription") String description, @RequestParam("gendtime") @DateTimeFormat(pattern = "yyyy-MM-dd") Date gEndTime,
+			 @RequestParam("payment") String[] pay, @RequestParam("mintotalquantity") String minquantity, @RequestParam("mintotalamount") String mintotalamount, @RequestParam("account") String account, 
+			 @RequestParam("address") String address, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		UserBean userbean = (UserBean)session.getAttribute("userData");
+		
+//		int userNo = userbean.getUserNo();
+		
+		int userNo = 1;
+		
+		Group group = gService.insertGroup(userNo, title, description, gEndTime, pay, minquantity, mintotalamount, account, address);
+		Integer eventno = group.getEventno();
+		session.setAttribute("eventno", eventno);
+		System.out.println("new eventno = " + eventno);
+		return "group/jsp/insertgroup.jsp";
 	}
 	
 }
