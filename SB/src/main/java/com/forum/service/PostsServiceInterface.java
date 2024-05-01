@@ -6,14 +6,15 @@ import com.forum.bean.PostsBean;
 
 public interface PostsServiceInterface {
 
-	PostsBean findByPostNo(Integer postNo);
+	List<PostsBean> getPostsBeanKeyword(String postsBeanKeyword);
+
+	List<PostsBean> getAllPosts();
+
+	void insertPosts(PostsBean posts);
+
+	void deletePosts(Integer postsNo);
+
+	PostsBean getPostsNo(Integer postsNo);
 	
-	List<PostsBean> findPosts();
-
-	void insertPosts(PostsBean post);
-
-	void deleteByPostNo(Integer postNo);
-
-	void update(PostsBean post);
-
+	void updatePosts(PostsBean posts);
 }

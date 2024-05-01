@@ -8,6 +8,8 @@ public interface CategoriesServiceInterface {
 	
 	List<CategoriesBean> getCategoryKeyword(String categoryKeyword);
 	
+	CategoriesBean getCategoryNo(Integer categoryNo);
+	
 	List<CategoriesBean> getAllCategories();
         
 	void insertCategory(CategoriesBean category);
