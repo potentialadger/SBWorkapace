@@ -131,8 +131,29 @@ public class GroupService {
 	
 //	更改活動
 	public Group updateGroup(int eventno, String grouptitle, String groupdescription, Date endtime,
-			int paymentmethod, int mintotalquantity, int mintotalamount, String account, String address) {
+			String[] pay, int mintotalquantity, int mintotalamount, String account, String address) {
 		Optional<Group> resultgroup = groupRepository.findById(eventno);
+		
+		  Integer paymentMethod = null;
+			if(pay != null) {
+				if(Arrays.asList(pay).containsAll(Arrays.asList("1","2","3"))) {
+					paymentMethod = 123;
+				}else if (Arrays.asList(pay).contains("1")) {
+					paymentMethod = 1;
+				}else if (Arrays.asList(pay).contains("2")) {
+					paymentMethod = 2;
+				}else if (Arrays.asList(pay).contains("3")) {
+					paymentMethod = 3;
+				}else if (Arrays.asList(pay).containsAll(Arrays.asList("1","2"))) {
+					paymentMethod = 12;
+				}else if (Arrays.asList(pay).containsAll(Arrays.asList("1","3"))) {
+					paymentMethod = 13;
+				}else if (Arrays.asList(pay).containsAll(Arrays.asList("2","3"))) {
+					paymentMethod = 23;
+				}
+			}else {
+				paymentMethod = 0;
+			}
 		
 		if(resultgroup.isEmpty()) {
 			throw new EntityNotFoundException("Group not found with id: " + eventno);
@@ -142,7 +163,7 @@ public class GroupService {
 		group.setTitle(grouptitle);
 		group.setDescription(groupdescription);
 		group.setEndtime(endtime);
-		group.setPaymentmethod(paymentmethod);
+		group.setPaymentmethod(paymentMethod);
 		group.setMintotalamount(mintotalamount);
 		group.setMintotalquantity(mintotalquantity);
 		group.setAccount(account);

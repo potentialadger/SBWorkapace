@@ -29,7 +29,7 @@ public class GroupController {
 	private GroupService gService;
 	
 //	全活躍活動
-	@GetMapping("/groups")
+	@GetMapping(value = "/groups", produces = "text/plain;charset=UTF-8")
 	public String findAllGroup(Model m) {
 		List<Group> groups = gService.findAllGroup();
 		m.addAttribute("groups", groups);
@@ -37,12 +37,12 @@ public class GroupController {
 	}
 	
 //	個人開的活動
-	@GetMapping("/mygroups")
+	@GetMapping(value = "/mygroups", produces = "text/plain;charset=UTF-8")
 	public String findGroupByUser(HttpServletRequest request, Model m) {
 		HttpSession session = request.getSession();
 //		UserBean userbean = (UserBean)session.getAttribute("userData");
 //		int userNo = userbean.getUserNo();
-		int userNo = 1;
+		Integer userNo = 1;
 		
 		List<Group> groups = gService.findGroupByUser(userNo);
 		m.addAttribute("groups",groups);
@@ -50,7 +50,7 @@ public class GroupController {
 	}
 	
 //	全活躍活動依開團時間升序
-	@GetMapping("/groupsbystimeasc")
+	@GetMapping(value = "/groupsbystimeasc", produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public List<Group> findAllGroupByStartTimeAsc() {
 		List<Group> groups = gService.findAllGroupsByStartTimeAsc();
@@ -58,7 +58,7 @@ public class GroupController {
 	}
 	
 //	全活躍活動依開團時間降序
-	@GetMapping("/groupsbystimedesc")
+	@GetMapping(value = "/groupsbystimedesc", produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public List<Group> findAllGroupByStartTimeDesc(){
 		List<Group> groups = gService.findAllGroupsByStartTimeDesc();
@@ -66,7 +66,7 @@ public class GroupController {
 	}
 	
 //	全活躍活動依結團時間升序
-	@GetMapping("/groupsbyetimeasc")
+	@GetMapping(value = "/groupsbyetimeasc", produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public List<Group> findAllGroupByEndTimeAsc(){
 		List<Group> groups = gService.findALLGroupsByEndTimeAsc();
@@ -74,7 +74,7 @@ public class GroupController {
 	}
 	
 //	全活躍活動依結團時間降序
-	@GetMapping("/groupsbyetimedesc")
+	@GetMapping(value = "/groupsbyetimedesc", produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public List<Group> findAllGroupByEndTimeDesc(){
 		List<Group> groups = gService.findALLGroupsByEndTimeDesc();
@@ -82,7 +82,7 @@ public class GroupController {
 	}
 	
 //	依搜尋找活躍活動
-	@GetMapping("/groupsbysearch")
+	@GetMapping(value = "/groupsbysearch", produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public List<Group> findGroupBySearch(@RequestParam("search") String search){
 		List<Group> groups = gService.findGroupBySearch(search);
@@ -90,35 +90,46 @@ public class GroupController {
 	}
 	
 //	後臺全活躍活動
-	@GetMapping("/backgroups")
+	@GetMapping(value = "/backgroups", produces = "text/plain;charset=UTF-8")
 	public String findAllGroupBack(Model m) {
 		List<Group> groups = gService.findAllGroup();
 		m.addAttribute("groups", groups);
 		return "group/jsp/backallgroups.jsp";
 	}
 	
-	@PostMapping("/bannedgroup/{eventno}")
-	public String bannedGroupByEventNo(@PathVariable("eventno") int eventno) {
+//	查詢被下架團購
+	@PostMapping(value = "/bannedgroup/{eventno}", produces = "text/plain;charset=UTF-8")
+	public String bannedGroupByEventNo(@PathVariable("eventno") Integer eventno) {
 		gService.deleteGroup(eventno);
 		return "redirect:/group/backgroups";
 	}
 	
-	@PostMapping("/insertgroup")
+//	新增團購
+	@PostMapping(value = "/insertgroup", produces = "text/plain;charset=UTF-8")
 	public String insertGroup(@RequestParam("gtitle") String title, @RequestParam("gdescription") String description, @RequestParam("gendtime") @DateTimeFormat(pattern = "yyyy-MM-dd") Date gEndTime,
-			 @RequestParam("payment") String[] pay, @RequestParam("mintotalquantity") String minquantity, @RequestParam("mintotalamount") String mintotalamount, @RequestParam("account") String account, 
+			 @RequestParam("payment") String[] pay, @RequestParam("mintotalquantity") String mintotalquantity, @RequestParam("mintotalamount") String mintotalamount, @RequestParam("account") String account, 
 			 @RequestParam("address") String address, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		UserBean userbean = (UserBean)session.getAttribute("userData");
 		
-//		int userNo = userbean.getUserNo();
+//		Integer userNo = userbean.getUserNo();
 		
-		int userNo = 1;
+		Integer userNo = 1;
 		
-		Group group = gService.insertGroup(userNo, title, description, gEndTime, pay, minquantity, mintotalamount, account, address);
+		Group group = gService.insertGroup(userNo, title, description, gEndTime, pay, mintotalquantity, mintotalamount, account, address);
 		Integer eventno = group.getEventno();
 		session.setAttribute("eventno", eventno);
 		System.out.println("new eventno = " + eventno);
 		return "group/jsp/insertgroup.jsp";
+	}
+	
+//	修改團購資訊
+	@PostMapping(value = "/updategroup", produces = "text/plain;charset=UTF-8")
+	public String updateGroup(@RequestParam("eventno") int eventno, @RequestParam("gtitle") String title, @RequestParam("gdescription") String description, @RequestParam("gendtime") @DateTimeFormat(pattern = "yyyy-MM-dd") Date gEndTime,
+			 @RequestParam("payment") String[] pay, @RequestParam("mintotalquantity") String mintotalquantity, @RequestParam("mintotalamount") String mintotalamount, @RequestParam("account") String account, 
+			 @RequestParam("address") String address) {
+		gService.updateGroup(eventno, title, description, gEndTime, pay, Integer.parseInt(mintotalquantity), Integer.parseInt(mintotalamount), account, address);
+		return "redirect:/mygroups";
 	}
 	
 }
