@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=BIG5"
-    pageEncoding="BIG5"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,9 +8,11 @@
 </head>
 <body>
 
-   <h1>·s¼W¦¨¥\</h1>
+   <h1>æ–°å¢žæˆåŠŸ</h1>
         
-   <a href="/forum.homepage">¦^­º­¶</a>
+   	<form method="get" action="/CategoriesController/CategoriesAll">
+    	<button type="submit">è¿”å›žåˆ†é¡žç®¡ç†</button>
+	</form>
     
 </body>
 </html>

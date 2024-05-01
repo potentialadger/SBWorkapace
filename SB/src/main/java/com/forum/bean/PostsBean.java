@@ -35,19 +35,16 @@ public class PostsBean {
 
 	@Column(name = "content")
 	private String content;
+	
+	@Column(name = "image_url")
+	private String image_url;
 
 	@JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
-	@Column(name = "creation_date")
-	private Date creation_date;
+	@Column(name = "update_date")
+	private Date update_date;
 
 	@Column(name = "view_count")
 	private int view_count;
-
-	@Column(name = "like_count")
-	private int like_count;
-
-	@Column(name = "status")
-	private String status;
 
 	public Integer getPost_no() {
 		return post_no;
@@ -89,12 +86,20 @@ public class PostsBean {
 		this.content = content;
 	}
 
-	public Date getCreation_date() {
-		return creation_date;
+	public String getImage_url() {
+		return image_url;
 	}
 
-	public void setCreation_date(Date creation_date) {
-		this.creation_date = creation_date;
+	public void setImage_url(String image_url) {
+		this.image_url = image_url;
+	}
+
+	public Date getUpdate_date() {
+		return update_date;
+	}
+
+	public void setUpdate_date(Date update_date) {
+		this.update_date = update_date;
 	}
 
 	public int getView_count() {
@@ -104,22 +109,8 @@ public class PostsBean {
 	public void setView_count(int view_count) {
 		this.view_count = view_count;
 	}
-
-	public int getLike_count() {
-		return like_count;
-	}
-
-	public void setLike_count(int like_count) {
-		this.like_count = like_count;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
+	
+	
+}
 
 	
-		}

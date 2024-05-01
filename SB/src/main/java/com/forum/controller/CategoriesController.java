@@ -25,25 +25,26 @@ public class CategoriesController {
 	@GetMapping("/OneCategories")
 	public String getCategoryKeyword(@RequestParam("categoryKeyword") String categoryKeyword, Model m) {
 		List<CategoriesBean> categoriesList = categoriesService.getCategoryKeyword(categoryKeyword);
-		if (categoriesList != null) {
+		if (categoriesList != null && !categoriesList.isEmpty()) {
 			m.addAttribute("CategoriesM", categoriesList);
 		} else {
 			m.addAttribute("noData", true);
 		}
-		return "/categories/backstage/jsp/SelectCategories.jsp";
+		return "/forum/backstage/categories/jsp/SelectCategories.jsp";
 	}
 
 	// 全部查詢
 	@GetMapping("/CategoriesAll")
-	public String findPosts(Model m) {
+	public String getAllCategories(Model m) {
 
-		List<CategoriesBean> categoriesBean = categoriesService.getAllCategories();
-
-		m.addAttribute
-
-		("CategoriesM", categoriesBean);
-
-		return "/categories/backstage/jsp/SelectCategories.jsp";
+		List<CategoriesBean> categoriesList = categoriesService.getAllCategories();
+		
+		if (categoriesList != null && !categoriesList.isEmpty()) {
+			m.addAttribute("CategoriesM", categoriesList);
+		} else {
+			m.addAttribute("noData", true);
+		}
+		return "/forum/backstage/categories/jsp/SelectCategories.jsp";
 	}
 
 	// 新增
@@ -56,7 +57,7 @@ public class CategoriesController {
 
 		categoriesService.insertCategory(categories);
 
-		return "";
+		return "/forum/backstage/categories/jsp/InsertCategories.jsp";
 	}
 
 	// 刪除
@@ -65,7 +66,7 @@ public class CategoriesController {
 
 		categoriesService.deleteCategory(Integer.parseInt(categoryNo));
 
-		return "";
+		return "redirect:/CategoriesController/CategoriesAll";
 
 	}
 
