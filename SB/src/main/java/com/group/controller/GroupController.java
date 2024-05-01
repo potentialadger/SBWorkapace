@@ -29,7 +29,7 @@ public class GroupController {
 	private GroupService gService;
 	
 //	全活躍活動
-	@GetMapping(value = "/groups", produces = "text/plain;charset=UTF-8")
+	@GetMapping(value = "/groups")
 	public String findAllGroup(Model m) {
 		List<Group> groups = gService.findAllGroup();
 		m.addAttribute("groups", groups);
@@ -37,7 +37,7 @@ public class GroupController {
 	}
 	
 //	個人開的活動
-	@GetMapping(value = "/mygroups", produces = "text/plain;charset=UTF-8")
+	@GetMapping(value = "/mygroups")
 	public String findGroupByUser(HttpServletRequest request, Model m) {
 		HttpSession session = request.getSession();
 //		UserBean userbean = (UserBean)session.getAttribute("userData");
@@ -50,7 +50,7 @@ public class GroupController {
 	}
 	
 //	全活躍活動依開團時間升序
-	@GetMapping(value = "/groupsbystimeasc", produces = "text/plain;charset=UTF-8")
+	@GetMapping(value = "/groupsbystimeasc")
 	@ResponseBody
 	public List<Group> findAllGroupByStartTimeAsc() {
 		List<Group> groups = gService.findAllGroupsByStartTimeAsc();
@@ -58,7 +58,7 @@ public class GroupController {
 	}
 	
 //	全活躍活動依開團時間降序
-	@GetMapping(value = "/groupsbystimedesc", produces = "text/plain;charset=UTF-8")
+	@GetMapping(value = "/groupsbystimedesc")
 	@ResponseBody
 	public List<Group> findAllGroupByStartTimeDesc(){
 		List<Group> groups = gService.findAllGroupsByStartTimeDesc();
@@ -66,7 +66,7 @@ public class GroupController {
 	}
 	
 //	全活躍活動依結團時間升序
-	@GetMapping(value = "/groupsbyetimeasc", produces = "text/plain;charset=UTF-8")
+	@GetMapping(value = "/groupsbyetimeasc")
 	@ResponseBody
 	public List<Group> findAllGroupByEndTimeAsc(){
 		List<Group> groups = gService.findALLGroupsByEndTimeAsc();
@@ -74,7 +74,7 @@ public class GroupController {
 	}
 	
 //	全活躍活動依結團時間降序
-	@GetMapping(value = "/groupsbyetimedesc", produces = "text/plain;charset=UTF-8")
+	@GetMapping(value = "/groupsbyetimedesc")
 	@ResponseBody
 	public List<Group> findAllGroupByEndTimeDesc(){
 		List<Group> groups = gService.findALLGroupsByEndTimeDesc();
@@ -82,7 +82,7 @@ public class GroupController {
 	}
 	
 //	依搜尋找活躍活動
-	@GetMapping(value = "/groupsbysearch", produces = "text/plain;charset=UTF-8")
+	@GetMapping(value = "/groupsbysearch")
 	@ResponseBody
 	public List<Group> findGroupBySearch(@RequestParam("search") String search){
 		List<Group> groups = gService.findGroupBySearch(search);
@@ -90,7 +90,7 @@ public class GroupController {
 	}
 	
 //	後臺全活躍活動
-	@GetMapping(value = "/backgroups", produces = "text/plain;charset=UTF-8")
+	@GetMapping(value = "/backgroups")
 	public String findAllGroupBack(Model m) {
 		List<Group> groups = gService.findAllGroup();
 		m.addAttribute("groups", groups);
@@ -98,14 +98,14 @@ public class GroupController {
 	}
 	
 //	查詢被下架團購
-	@PostMapping(value = "/bannedgroup/{eventno}", produces = "text/plain;charset=UTF-8")
+	@PostMapping(value = "/bannedgroup/{eventno}")
 	public String bannedGroupByEventNo(@PathVariable("eventno") Integer eventno) {
 		gService.deleteGroup(eventno);
 		return "redirect:/group/backgroups";
 	}
 	
 //	新增團購
-	@PostMapping(value = "/insertgroup", produces = "text/plain;charset=UTF-8")
+	@PostMapping(value = "/insertgroup")
 	public String insertGroup(@RequestParam("gtitle") String title, @RequestParam("gdescription") String description, @RequestParam("gendtime") @DateTimeFormat(pattern = "yyyy-MM-dd") Date gEndTime,
 			 @RequestParam("payment") String[] pay, @RequestParam("mintotalquantity") String mintotalquantity, @RequestParam("mintotalamount") String mintotalamount, @RequestParam("account") String account, 
 			 @RequestParam("address") String address, HttpServletRequest request, Model m) {
@@ -127,7 +127,7 @@ public class GroupController {
 	}
 	
 //	修改團購資訊
-	@PostMapping(value = "/updategroup", produces = "text/plain;charset=UTF-8")
+	@PostMapping(value = "/updategroup")
 	public String updateGroup(@RequestParam("eventno") int eventno, @RequestParam("gtitle") String title, @RequestParam("gdescription") String description, @RequestParam("gendtime") @DateTimeFormat(pattern = "yyyy-MM-dd") Date gEndTime,
 			 @RequestParam("payment") String[] pay, @RequestParam("mintotalquantity") String mintotalquantity, @RequestParam("mintotalamount") String mintotalamount, @RequestParam("account") String account, 
 			 @RequestParam("address") String address) {

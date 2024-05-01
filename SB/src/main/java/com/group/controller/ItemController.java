@@ -31,14 +31,14 @@ public class ItemController {
 	@Autowired
 	private ItemService itemService;
 	
-	@GetMapping(value = "/groupitems/{eventno}", produces = "text/plain;charset=UTF-8")
+	@GetMapping(value = "/groupitems/{eventno}")
 	@ResponseBody
 	public List<Item> findItemsByEventNo(@PathVariable("eventno") int eventno){
 		List<Item> items = itemService.findItemsByEventNo(eventno);
 		return items;
 	}
 	
-	@PostMapping(value = "/insertitem", produces = "text/plain;charset=UTF-8")
+	@PostMapping(value = "/insertitem")
 	@ResponseBody
 	public Item insertItem(@RequestParam("iname") String name, @RequestParam("iprice") Integer price, @RequestParam("idescription") String description,
 			@RequestParam("ipicture") MultipartFile mf, HttpServletRequest request) throws IllegalStateException, IOException {

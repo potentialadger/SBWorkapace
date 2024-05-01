@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -50,6 +51,7 @@ public class Item {
 	private List<ItemSpecification> itemspec;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<OrderDetail> orderDetails;
 
 	public Integer getItemno() {

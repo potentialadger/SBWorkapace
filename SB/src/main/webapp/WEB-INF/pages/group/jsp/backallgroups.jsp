@@ -13,6 +13,7 @@
                 </head>
 
                 <body>
+                
                     <div class="container">
                         <h2>團購列表</h2>
                         <table id="table_id" class="display">
@@ -69,7 +70,7 @@
                                                 <%=group.getEventno() %>
                                             </th>
                                             <th>
-                                                <%=group.getHostuserno().getUserNo() %>
+                                                <%=group.getHostuserno() %>
                                             </th>
                                             <th>
                                                 <%=group.getTitle() %>

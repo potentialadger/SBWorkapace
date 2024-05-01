@@ -93,14 +93,9 @@ public class GroupService {
 		
 		int point = 0;
 		
-		Optional<UserBean> userresult = userRepository.findById(user);
-		if(userresult.isEmpty()) {
-			throw new EntityNotFoundException("user not found with id: " + user);
-		}
-		UserBean hostuser = userresult.get();
-		
+	
 		Group group = new Group();
-		group.setHostuserno(hostuser);
+		group.setHostuserno(user);
 		group.setTitle(title);
 		group.setDescription(description);
 		group.setStarttime(startTime);

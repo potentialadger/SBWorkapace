@@ -32,9 +32,8 @@ public class Group {
 	@Column(name = "eventno")
 	private Integer eventno;
 	
-	@JoinColumn(name = "hostuserno")
-	@ManyToOne
-	private UserBean hostuserno;
+	@Column(name = "hostuserno")
+	private Integer hostuserno;
 	
 	@Column(name = "title")
 	private String title;
@@ -86,13 +85,11 @@ public class Group {
 		this.eventno = eventno;
 	}
 
-	
-
-	public UserBean getHostuserno() {
+	public Integer getHostuserno() {
 		return hostuserno;
 	}
 
-	public void setHostuserno(UserBean hostuserno) {
+	public void setHostuserno(Integer hostuserno) {
 		this.hostuserno = hostuserno;
 	}
 
