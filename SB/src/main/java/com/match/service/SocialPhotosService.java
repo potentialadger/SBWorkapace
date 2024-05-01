@@ -1,5 +1,6 @@
 package com.match.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,23 @@ public class SocialPhotosService {
 	}
 	
 	//查詢所有照片
-
+	public List<SocialPhotosBean> findAll(){
+		return spRepos.findAll();
+	}
+	
+	//新增照片
+	public SocialPhotosBean insert(SocialPhotosBean spBean) {  // 為什麼參數接收的是整個bean? 因為要用save()?
+		return spRepos.save(spBean);                           // 實際新增
+	}
+	
+	//刪除照片
+	public void deleteById(Integer photoNo) {
+		spRepos.deleteById(photoNo);
+	}
+	
+	//修改照片
+	public SocialPhotosBean update(SocialPhotosBean spBean) {
+		return spRepos.save(spBean);
+	}
 
 }
