@@ -141,6 +141,8 @@ public class UserBean implements Serializable{
 	public int getIsDelete() {return isDelete;}
 	public int getIsManager() {return isManager;}
 	public Set<TagsBean> getTags() {return tags;}
+	public List<Group> getGroups() {return groups;}
+	public List<Order> getOrders() {return orders;}
 	
 	public void setUserNo(int userNo) {this.userNo = userNo;}
 	public void setUserAccount(String userAccount) {this.userAccount = userAccount;}
@@ -164,6 +166,8 @@ public class UserBean implements Serializable{
 	public void setIsDelete(int isDelete) {this.isDelete = isDelete;}
 	public void setIsManager(int isManager) {this.isManager = isManager;}
 	public void setTags(Set<TagsBean> tags) {this.tags = tags;}
+	public void setGroups(List<Group> groups) {this.groups = groups;}
+	public void setOrders(List<Order> orders) {this.orders = orders;}
 	
 	@Override
 	public String toString() {
