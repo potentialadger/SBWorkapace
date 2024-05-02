@@ -7,38 +7,43 @@ import com.forum.bean.PostsBean;
 import com.forum.dao.PostsDaoInterface;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostsService implements PostsServiceInterface {
 
-    @Autowired
-    private PostsDaoInterface postsDao;
-    
-    @Override
-    public PostsBean findByPostNo(Integer postNo) {
-    	//Optional 中的 orElse(null) 方法 當沒有找到對應的實體時返回 null	
-    	System.out.println(postsDao.findById(postNo).orElse(null));
-    	return postsDao.findById(postNo).orElse(null);
-    }
-    
-    @Override
-    public List<PostsBean> findPosts() {
-        return postsDao.findAll();
-    }
+	@Autowired
+	private PostsDaoInterface postsDao;
 
+	@Override
+	public List<PostsBean> getPostsBeanKeyword(String postsBeanKeyword) {
 
-    @Override
-    public void insertPosts(PostsBean post) {
-        postsDao.save(post);
-    }
+		return postsDao.findByTitleContaining(postsBeanKeyword);
+	}
 
-    @Override
-    public void deleteByPostNo(Integer postNo) {
-        postsDao.deleteById(postNo);
-    }
+	@Override
+	public List<PostsBean> getAllPosts() {
+		return postsDao.findAll();
+	}
 
-    @Override
-    public void update(PostsBean post) {
-        postsDao.save(post);
-    }
+	@Override
+	public void insertPosts(PostsBean post) {
+		postsDao.save(post);
+	}
+
+	@Override
+	public void deletePosts(Integer postsNo) {
+		postsDao.deleteById(postsNo);
+	}
+
+	@Override
+	public PostsBean getPostsNo(Integer postsNo) {
+		Optional<PostsBean> postsOptional = postsDao.findById(postsNo);
+		return postsOptional.orElse(null);
+	}
+
+	@Override
+	public void updatePosts(PostsBean posts) {
+		postsDao.save(posts);
+	}
 }
