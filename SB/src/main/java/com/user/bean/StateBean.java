@@ -51,5 +51,4 @@ public class StateBean {
 	public void setStateDesc(String stateDesc) {
 		this.stateDesc = stateDesc;
 	}
-
 }

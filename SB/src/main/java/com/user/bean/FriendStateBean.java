@@ -68,7 +68,5 @@ public class FriendStateBean {
 	public void setStateBean(StateBean stateBean) {
 		this.stateBean = stateBean;
 	}
-	
-	
 
 }
