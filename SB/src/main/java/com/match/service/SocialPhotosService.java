@@ -1,14 +1,26 @@
 package com.match.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.group.model.Item;
 import com.match.bean.SocialPhotosBean;
 import com.match.repository.SocialPhotosRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -34,7 +46,7 @@ public class SocialPhotosService {
 	
 	// 查詢所有照片
 	public List<SocialPhotosBean> findAll(){
-		return spRepos.findAll();
+		return spRepos.findAll();                                        // 檢索資料庫中所有的照片記錄
 	}
 	
 	
@@ -45,22 +57,22 @@ public class SocialPhotosService {
     
     
     // 根據用戶ID和主題查詢照片
-    public SocialPhotosBean findByUserNoAndPhotoTheme(Integer userNo, String photoTheme) {
-        List<SocialPhotosBean> photos = spRepos.findByUserNoAndPhotoTheme(userNo, photoTheme);
-        return photos.isEmpty() ? null : photos.get(0);
+    public SocialPhotosBean findByUserNoAndPhotoTheme(Integer userNo, String photoTheme) {       //接收兩個參數：userNo 和 photoTheme
+        List<SocialPhotosBean> photos = spRepos.findByUserNoAndPhotoTheme(userNo, photoTheme);   //根據 userNo 和 photoTheme 查詢資料庫並返回符合條件的照片列表
+        return photos.isEmpty() ? null : photos.get(0);                                          //三元運算 : 程式碼檢查返回的照片列表是否為空。如果列表為空，表示沒有符合條件的照片，那麼方法將返回 null。否則，它將返回列表中的第一張照片。                           
     }
     
     
-    // 新增或更新照片
+    // 新增或更新照片                                                                 //檔案上傳的
     public SocialPhotosBean insertOrUpdate(Integer userNo, String photoTheme, String photoPath) {
         SocialPhotosBean existingPhoto = findByUserNoAndPhotoTheme(userNo, photoTheme);
         if (existingPhoto != null) {
             // 如果該用戶在指定主題下已有照片,則覆蓋原有照片
-            existingPhoto.setPhotoPath(photoPath);
+            existingPhoto.setPhotoPath(photoPath);   //檔案上傳的傳到這裡                                        //將新的照片路徑 photoPath 設置到現有照片對象 existingPhoto 中的 photoPath 屬性中。
             return spRepos.save(existingPhoto);
         } else {
             // 如果該用戶在指定主題下沒有照片,則插入新照片
-            SocialPhotosBean newPhoto = new SocialPhotosBean();
+            SocialPhotosBean newPhoto = new SocialPhotosBean();                                  //它將創建一個新的照片物件 newPhoto，並設置其用戶ID、照片主題和照片路徑，然後將這個新照片保存到資料庫中
             newPhoto.setUserNo(userNo);
             newPhoto.setPhotoTheme(photoTheme);
             newPhoto.setPhotoPath(photoPath);
@@ -73,6 +85,44 @@ public class SocialPhotosService {
 	public void deleteById(Integer photoNo) {
 		spRepos.deleteById(photoNo);
 	}
+	
+	
+//	@PostMapping(value = "/insertitem")
+//	@ResponseBody
+//	public Item insertItem(@RequestParam("iname") String name, @RequestParam("iprice") Integer price, @RequestParam("idescription") String description,
+//			@RequestParam("ipicture") MultipartFile mf, HttpServletRequest request) throws IllegalStateException, IOException {
+//		HttpSession session = request.getSession();
+//		Integer eventno = (Integer)session.getAttribute("eventno");
+//		
+//		String filename = mf.getOriginalFilename();
+//		String extension = "";
+//		
+//		int i = filename.lastIndexOf('.');
+//		if(i >= 0) {
+//			extension = filename.substring(i);
+//		}
+//		
+//		Random random = new Random();
+//		int raNumber = random.nextInt(10000);
+//		
+//		filename = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "_"
+//				+ raNumber + extension;
+//		
+//		String fileDir = "C:/temp/upload/";
+//		File pathexist = new File(fileDir);
+//		if(!pathexist.exists()) {
+//			pathexist.mkdirs();
+//		}
+//		
+//		File fileDirPath = new File(fileDir, filename);
+//		mf.transferTo(fileDirPath);
+//		Item item = itemService.insertItem(eventno, name, price, description, filename);
+//		
+//		Integer itemno = item.getItemno();
+//		session.setAttribute("itemno", itemno);
+//		
+//		return item;
+//	}
 	
 	
 	
