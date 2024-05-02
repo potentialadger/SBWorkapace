@@ -9,9 +9,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Component
-@Entity
-@Table(name = "EventRegistrations")
+//@Component
+//@Entity
+//@Table(name = "EventRegistrations")
 public class EventRegistrationsBean {
 	
 	@Id
