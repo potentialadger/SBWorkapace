@@ -1,6 +1,5 @@
 package com.forum.controller;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -55,6 +54,35 @@ public class PostsController {
 		}
 		return "/forum/backstage/categories/jsp/SelectCategories.jsp";
 	}
+	
+	// 新增
+		@PostMapping("/InsertPosts")
+		public String insertPosts(
+				@RequestParam("user_no") int user_no,
+				@RequestParam("category_no") int category_no,
+		        @RequestParam("title") String title, 
+		        @RequestParam("content") String content, 
+		        @RequestParam("image_url") String image_url, 
+		        @RequestParam("view_count") String view_count
+		) {
+			
+		    UserBean user = userService.getUserData(user_no);	       
+		    
+		    CategoriesBean category = categoriesService.getCategoryNo(category_no);
+
+		    PostsBean posts = new PostsBean();
+		    posts.setUserBean(user);
+		    posts.setCategoriesBean(category);
+		    posts.setTitle(title);
+		    posts.setContent(content);
+		    posts.setImage_url(image_url);
+		    posts.setView_count(Integer.parseInt(view_count));
+		    posts.setUpdate_date(new Date());
+		    
+		    postsService.insertPosts(posts);
+
+		    return "/forum/jsp/InsertPosts.jsp";
+		}
 
 	
 	// 刪除
@@ -78,5 +106,36 @@ public class PostsController {
 		return "/forum/jsp/Update.jsp";
 	
 	}
+	
+	// 更新
+		@PutMapping("/UpdatePosts")
+		public String updatePosts(
+				@RequestParam("post_no") Integer post_no,
+				@RequestParam("user_no") int user_no, 
+				@RequestParam("category_no") int category_no,
+				@RequestParam("title") String title,
+				@RequestParam("content") String content,
+				@RequestParam("image_url") String image_url,
+				@RequestParam("update_date") Date update_date,
+				@RequestParam("view_count") int view_count
+				) {
+			
+			UserBean user = userService.getUserData(user_no);
+			
+			CategoriesBean category = categoriesService.getCategoryNo(category_no);
+		   
+			PostsBean postsToUpdate = postsService.getPostsNo(post_no);				
+		    
+			postsToUpdate.setUserBean(user);
+			postsToUpdate.setCategoriesBean(category);
+			postsToUpdate.setTitle(title);
+			postsToUpdate.setContent(content);
+			postsToUpdate.setImage_url(image_url);
+			postsToUpdate.setUpdate_date(new Date());
+
+		    postsService.updatePosts(postsToUpdate);
+
+			return "redirect:/posts/PostAll";
+		}
 
 }

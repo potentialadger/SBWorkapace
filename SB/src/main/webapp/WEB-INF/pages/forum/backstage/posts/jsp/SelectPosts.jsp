@@ -5,55 +5,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>文章資料查詢</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        margin: 0;
-        padding: 0;
-    }
-
-    form {
-        margin-bottom: 20px;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    th, td {
-        border: 1px solid #ccc;
-        padding: 8px;
-        text-align: left;
-    }
-
-    th {
-        background-color: #f2f2f2;
-    }
-
-    tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
-
-    tr:hover {
-        background-color: #f2f2f2;
-    }
-</style>
+<title>文章管理</title>
 </head>
 <body>
+<h1>文章管理</h1>
     <br>
-    <form style="float: left;" method="get" action="/posts/OnePosts">
-        輸入文章編號: <input type="text" name="postNo" required>
-        <button type="submit">查詢單筆資料</button>
+    <form method="get" action="/posts/OnePosts">
+        查詢: <input type="text" name="postsBeanKeyword" required>
+       	<button type="submit">送出</button>
     </form>
 
-    <form method="get" action="/posts/PostAll">
-        <button type="submit">查詢全部資料</button>
+    <form method="get" action="/posts/AllPosts">
+        <button type="submit">查詢全部</button>
     </form>
 
-    <a href="/forum.homepage"><button>回首頁</button></a>
+    <form method="get" action="/forumManager.homepage">
+    	<button type="submit">首頁</button>
+	</form>
 
     <table>
         <thead>
