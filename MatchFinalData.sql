@@ -72,7 +72,7 @@ CREATE TABLE UserChat (
 
 CREATE TABLE SocialPhotos(
     PhotoNo     INT  identity(1,1) PRIMARY KEY,
-    FKUserNo      INT		      NOT NULL,
+    FKUserNo    INT		      NOT NULL,
     PhotoPath   NVARCHAR(200) NULL,
     PhotoTheme  NVARCHAR(30)  NOT NULL,
 	FOREIGN KEY (FKUserNo) REFERENCES Users(UserNo),
@@ -115,8 +115,8 @@ CREATE TABLE Match(
 );
 
 CREATE TABLE MatchChat (
-    UserChatNo INT identity(1,1) PRIMARY KEY,
-    UserNo    INT  NOT NULL,
+    UserChatNo  INT identity(1,1) PRIMARY KEY,
+    UserNo      INT  NOT NULL,
 	FriendNo    INT  NOT NULL,
 	ChatContent NVARCHAR(MAX) NOT NULL,
 	ContentTime datetime2 null,
@@ -279,7 +279,7 @@ CREATE TABLE EventRegistrations (
     FOREIGN KEY (UserNo) REFERENCES Users(UserNo)
 );
 
-
+ALTER DATABASE SB COLLATE Chinese_PRC_90_CI_AS
 
 Select * from Goals 
 
@@ -302,7 +302,24 @@ Select * from Users
 
 Select * from SocialPhotos
 
+
 Select * from Tags
+
+INSERT INTO Tags (TagName)  --GoalNo是自動增長的PK
+VALUES 
+('我的照片'),
+('旅行壯遊'),
+('我的寵物'),
+('偉大紀錄'),
+('展露身材'),
+('性感的我'),
+('使壞的我'),
+('玩樂的我'),
+('最愛的美食'),
+('最愛的電影'),
+('最愛的書本'),
+('最愛的遊戲');
+
 
 Select * from UserTags
 
@@ -315,6 +332,5 @@ Select * from UserTopics
 Select * from Match
 
 Select * from MatchChat
-
 
 
