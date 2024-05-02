@@ -5,29 +5,29 @@
             <%@page import="com.group.model.Item" %>
             <%@ page import="java.text.SimpleDateFormat" %>
             <%! 
-    public String formatTimeAgo(Date date) {
-        final long SECOND = 1000;
-        final long MINUTE = 60 * SECOND;
-        final long HOUR = 60 * MINUTE;
-        final long DAY = 24 * HOUR;
-        final long MONTH = 30 * DAY;
-        
-        long currentTime = System.currentTimeMillis();
-        long timeDiff = currentTime - date.getTime();
-
-        if (timeDiff < MINUTE) {
-            return (timeDiff / SECOND) + " 秒前";
-        } else if (timeDiff < HOUR) {
-            return (timeDiff / MINUTE) + " 分鐘前";
-        } else if (timeDiff < DAY) {
-            return (timeDiff / HOUR) + " 小時前";
-        } else if (timeDiff < MONTH) {
-            return (timeDiff / DAY) + " 天前";
-        } else {
-            return new SimpleDateFormat("yyyy-MM-dd").format(date);
-        }
-    }
-%>
+			    public String formatTimeAgo(Date date) {
+			        final long SECOND = 1000;
+			        final long MINUTE = 60 * SECOND;
+			        final long HOUR = 60 * MINUTE;
+			        final long DAY = 24 * HOUR;
+			        final long MONTH = 30 * DAY;
+			        
+			        long currentTime = System.currentTimeMillis();
+			        long timeDiff = currentTime - date.getTime();
+			
+			        if (timeDiff < MINUTE) {
+			            return (timeDiff / SECOND) + " 秒前開團";
+			        } else if (timeDiff < HOUR) {
+			            return (timeDiff / MINUTE) + " 分鐘前開團";
+			        } else if (timeDiff < DAY) {
+			            return (timeDiff / HOUR) + " 小時前開團";
+			        } else if (timeDiff < MONTH) {
+			            return (timeDiff / DAY) + " 天前開團";
+			        } else {
+			            return new SimpleDateFormat("yyyy-MM-dd").format(date);
+			        }
+			    }
+			%>
                 <!DOCTYPE html>
                 <html>
 
@@ -60,7 +60,7 @@
 												%>
 												
                                                 <p  class="link-wrapper" style="position: absolute; bottom: 5px; left: 10px; color: gray">
-                                                	開團時間: <%=timeAgo %> 
+                                                	<%=timeAgo %> 
                                                 </p>
                                                  <div class="link-wrapper" style="position: absolute; bottom: 10px; right: 10px;">
         											<a href="javascript:void(0)" class="text-custom">前往團購 <i class="mdi mdi-chevron-right"></i></a>
