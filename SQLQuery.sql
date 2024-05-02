@@ -1,4 +1,6 @@
-﻿--榆喬
+﻿
+
+--榆喬
 
 CREATE TABLE Goals (
     GoalNo      INT  identity(1,1) PRIMARY KEY,
@@ -28,7 +30,6 @@ CREATE TABLE Users(
 	Suspension	tinyint  DEFAULT 0		NOT NULL,
 	Verify		tinyint  DEFAULT 0		NOT NULL,
 	isDelete    tinyint  DEFAULT 0		NOT NULL,
-	isManager    tinyint  DEFAULT 0		NOT NULL,
 	point		int		 DEFAULT 0		NOT NULL,
 	FOREIGN KEY (goalNo) REFERENCES goals(goalNo) ON DELETE SET NULL
 );
@@ -72,11 +73,10 @@ CREATE TABLE UserChat (
 
 CREATE TABLE SocialPhotos(
     PhotoNo     INT  identity(1,1) PRIMARY KEY,
-    FKUserNo      INT		      NOT NULL,
+    UserNo      INT		      NOT NULL,
     PhotoPath   NVARCHAR(200) NULL,
     PhotoTheme  NVARCHAR(30)  NOT NULL,
-	FOREIGN KEY (FKUserNo) REFERENCES Users(UserNo),
-	CONSTRAINT UniqueUserPhoto UNIQUE(FKUserNo, PhotoTheme)
+	FOREIGN KEY (UserNo) REFERENCES Users(UserNo)
 );
 
 CREATE TABLE Tags(

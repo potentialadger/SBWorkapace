@@ -278,3 +278,43 @@ CREATE TABLE EventRegistrations (
     FOREIGN KEY (EventNo) REFERENCES Event(EventNo),
     FOREIGN KEY (UserNo) REFERENCES Users(UserNo)
 );
+
+
+
+Select * from Goals 
+
+INSERT INTO Goals (GoalName)  --GoalNo是自動增長的PK
+VALUES 
+('我的照片'),
+('旅行壯遊'),
+('我的寵物'),
+('偉大紀錄'),
+('展露身材'),
+('性感的我'),
+('使壞的我'),
+('玩樂的我'),
+('最愛的美食'),
+('最愛的電影'),
+('最愛的書本'),
+('最愛的遊戲');
+
+Select * from Users
+
+Select * from SocialPhotos
+
+Select * from Tags
+
+Select * from UserTags
+
+Select * from ChatTopics
+
+Select * from ChatTopics
+
+Select * from UserTopics
+
+Select * from Match
+
+Select * from MatchChat
+
+
+

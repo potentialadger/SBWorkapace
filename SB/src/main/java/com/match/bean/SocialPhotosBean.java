@@ -12,14 +12,14 @@ import jakarta.persistence.Table;
 @Entity  
 @Table(name="SocialPhotos")
 @Component
-public class SocialPhotos {
+public class SocialPhotosBean {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="photono")
 	private Integer photoNo;  //NOT NULL
 	
-	@Column(name="userNo")
+	@Column(name="fkuserno")
 	private Integer userNo;   //NOT NULL
 	
 	@Column(name="photopath")
@@ -30,14 +30,21 @@ public class SocialPhotos {
 
 	
 	//Constructors from superclass
-	public SocialPhotos() {
+	public SocialPhotosBean() {
 		
 	}
 	
 	
-	//Constructors using Fields
-	public SocialPhotos(Integer photoNo, Integer userNo, String photoPath, String photoTheme) {
+	//根據所有屬性來初始化
+	public SocialPhotosBean(Integer photoNo, Integer userNo, String photoPath, String photoTheme) {
 		this.photoNo = photoNo;
+		this.userNo = userNo;
+		this.photoPath = photoPath;
+		this.photoTheme = photoTheme;
+	}
+	
+	//根據除了photoNo以外的屬性來初始化
+	public SocialPhotosBean(Integer userNo, String photoPath, String photoTheme) {
 		this.userNo = userNo;
 		this.photoPath = photoPath;
 		this.photoTheme = photoTheme;

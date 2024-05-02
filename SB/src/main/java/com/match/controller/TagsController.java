@@ -34,11 +34,11 @@ public class TagsController {
             TagsBean tag = tagsService.getTagById(tagNo);
             tags = tag != null ? Collections.singletonList(tag) : Collections.emptyList();
         } else if (tagName != null && !tagName.isEmpty()) {
-//            tags = tagsService.findByTagName(tagName);
+            tags = tagsService.findByTagName(tagName);
         } else {
             tags = tagsService.findAll();
         }
-//        model.addAttribute("tags", tags);
+        model.addAttribute("tags", tags);
         return "match/jsp/TagsHP.jsp";
     }
 
@@ -105,11 +105,4 @@ public class TagsController {
         return tagsService.getUsersForTag(tagNo);
     }
 
-    //從指定標籤中移除關聯用戶
-    @DeleteMapping("/{tagNo}/users/{userNo}")
-    public TagsBean removeUserFromTag(@PathVariable Integer tagNo, @PathVariable Integer userNo) {
-        UserBean user = new UserBean();
-        user.setUserNo(userNo);
-        return tagsService.removeUserFromTag(tagNo, user);
-    }
 }

@@ -16,7 +16,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity                               //定義這個 Class 為一個實體(Entity)
-@Table(name="individualizedtags")
+@Table(name="tags")
 @Component                            //標註一個類為Sping容器的類
 public class TagsBean {
 

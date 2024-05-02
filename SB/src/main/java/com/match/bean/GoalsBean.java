@@ -9,7 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Entity                         //JPA實體
+
+@Entity                         //@Entity把Bean實體化  //JPA實體
 @Table(name="Goals")
 @Component                      //標記一個類別為 Spring 的組件
 public class GoalsBean{
