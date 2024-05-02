@@ -1,6 +1,7 @@
 package com.group.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.group.model.Group;
+import com.group.model.Item;
+import com.group.model.ItemSpecification;
 import com.group.service.GroupService;
+import com.group.service.ItemService;
+import com.group.service.ItemSpecService;
 import com.user.bean.UserBean;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,6 +32,12 @@ public class GroupController {
 
 	@Autowired
 	private GroupService gService;
+	
+	@Autowired
+	private ItemService iService;
+	
+	@Autowired
+	private ItemSpecService itemSpecService;
 	
 //	全活躍活動
 	@GetMapping(value = "/groups")
@@ -133,6 +144,25 @@ public class GroupController {
 			 @RequestParam("address") String address) {
 		gService.updateGroup(eventno, title, description, gEndTime, pay, Integer.parseInt(mintotalquantity), Integer.parseInt(mintotalamount), account, address);
 		return "redirect:/group/mygroups";
+	}
+	
+	@GetMapping("/eachgroup/{eventno}")
+	public String findGroupByEventNo(@PathVariable("eventno") Integer eventno, Model m) {
+		Group group = gService.findGroupByEventNo(eventno);
+		List<Item> items = iService.findItemsByEventNo(eventno);
+		HashMap<Integer, List<ItemSpecification>> specsmap = new HashMap<>();
+		
+		for (Item item : items) {
+			Integer itemno = item.getItemno();
+			List<ItemSpecification> itemspecs = itemSpecService.findItemSpecByItemNo(itemno);
+			specsmap.put(itemno, itemspecs);
+		}
+
+		m.addAttribute("group", group);
+		m.addAttribute("items", items);
+		m.addAttribute("itemspecmap", specsmap);
+		
+		return "group/jsp/eachgroup.jsp";
 	}
 	
 }

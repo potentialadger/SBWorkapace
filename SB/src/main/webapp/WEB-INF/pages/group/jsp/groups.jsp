@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <%@page import="java.util.*" %>
-    <%@page import="java.lang.*" %>
         <%@page import="com.group.model.Group" %>
             <%@page import="com.group.model.Item" %>
             <%@ page import="java.text.SimpleDateFormat" %>
@@ -63,7 +62,7 @@
                                                 	<%=timeAgo %> 
                                                 </p>
                                                  <div class="link-wrapper" style="position: absolute; bottom: 10px; right: 10px;">
-        											<a href="javascript:void(0)" class="text-custom">前往團購 <i class="mdi mdi-chevron-right"></i></a>
+        											<a href="<%= "/group/eachgroup/" + group.getEventno() %>" class="text-custom">前往團購 <i class="mdi mdi-chevron-right"></i></a>
     											</div>
                                             </div>
                                         </div>

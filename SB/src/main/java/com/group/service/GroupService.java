@@ -28,6 +28,19 @@ public class GroupService {
 	@Autowired
 	private UserRepository userRepository;
 	
+//	查詢單筆活動
+	public Group findGroupByEventNo(Integer eventno) {
+		Optional<Group> groupoptional = groupRepository.findById(eventno);
+		
+		if(groupoptional.isEmpty()) {
+			throw new EntityNotFoundException("Group not found with id: " + eventno);
+		}
+		
+		Group group = groupoptional.get();
+	
+		return group;
+	}
+	
 //	查詢活躍活動
 	public List<Group> findAllGroup(){
 		return groupRepository.finaAllGroup();
@@ -166,6 +179,5 @@ public class GroupService {
 		
 		return groupRepository.save(group);
 	}
-	
 	
 }
