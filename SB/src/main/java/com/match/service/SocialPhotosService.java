@@ -59,7 +59,11 @@ public class SocialPhotosService {
     // 根據用戶ID和主題查詢照片
     public SocialPhotosBean findByUserNoAndPhotoTheme(Integer userNo, String photoTheme) {       //接收兩個參數：userNo 和 photoTheme
         List<SocialPhotosBean> photos = spRepos.findByUserNoAndPhotoTheme(userNo, photoTheme);   //根據 userNo 和 photoTheme 查詢資料庫並返回符合條件的照片列表
-        return photos.isEmpty() ? null : photos.get(0);                                          //三元運算 : 程式碼檢查返回的照片列表是否為空。如果列表為空，表示沒有符合條件的照片，那麼方法將返回 null。否則，它將返回列表中的第一張照片。                           
+        if (photos.isEmpty()) {                                                                  //if判斷
+            return null;
+        } else {
+            return photos.get(0);
+        }
     }
     
     
