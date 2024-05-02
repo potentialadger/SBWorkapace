@@ -62,7 +62,7 @@ public class SocialPhotosService {
         if (photos.isEmpty()) {                                                                  //if判斷
             return null;
         } else {
-            return photos.get(0);
+            return photos.get(0);                                                                //返回符合條件的第一張照片
         }
     }
     
