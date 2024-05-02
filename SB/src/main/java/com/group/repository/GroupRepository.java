@@ -9,7 +9,7 @@ import com.group.model.Group;
 
 public interface GroupRepository extends JpaRepository<Group, Integer> {
 
-	@Query("SELECT g FROM Group g LEFT JOIN FETCH g.items WHERE g.status = 'active'")
+	@Query("SELECT g FROM Group g LEFT JOIN FETCH g.items WHERE g.status = 'active' AND g.endtime > CURRENT_TIMESTAMP")
 	public List<Group> finaAllGroup();
 	
 	@Query("SELECT g FROM Group g LEFT JOIN FETCH g.items WHERE g.status = 'active' ORDER BY g.starttime DESC")

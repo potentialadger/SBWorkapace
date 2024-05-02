@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,6 +32,7 @@ public class Item {
 	
 	@JoinColumn(name = "eventno")
 	@ManyToOne
+	@JsonBackReference
 	public Group group;
 	
 	@Column(name = "name")
@@ -47,6 +51,7 @@ public class Item {
 	private List<ItemSpecification> itemspec;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<OrderDetail> orderDetails;
 
 	public Integer getItemno() {

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import com.match.bean.TagsBean;
 import com.forum.bean.PostsBean;
+import com.group.model.Group;
+import com.group.model.Order;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -94,7 +96,7 @@ public class UserBean implements Serializable{
 	private Integer isDelete; //0：未刪除 1：已刪除 Not Null
 	
 	@Column(name = "ismanager")
-	private Integer isManager; //0：普通使用者 1：管理者
+	private Integer isManager;
 	
 	
 	
@@ -110,7 +112,10 @@ public class UserBean implements Serializable{
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userBean", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
 	private Set<PostsBean> PostsBean =new HashSet<>();
 	
+
 	
+	
+
 	public int getUserNo() {return userNo;}
 	public String getUserAccount() {return userAccount;}
 	public String getUserPassword() {return userPassword;}
@@ -131,8 +136,9 @@ public class UserBean implements Serializable{
 	public int getSuspension() {return suspension;}
 	public int getVerify() {return verify;}
 	public int getIsDelete() {return isDelete;}
-	public int getIsManager() {return isManager;}
+	public Integer getIsManager() {return isManager;}
 	public Set<TagsBean> getTags() {return tags;}
+
 	
 	public void setUserNo(int userNo) {this.userNo = userNo;}
 	public void setUserAccount(String userAccount) {this.userAccount = userAccount;}
@@ -154,8 +160,9 @@ public class UserBean implements Serializable{
 	public void setSuspension(int suspension) {this.suspension = suspension;}
 	public void setVerify(int verify) {this.verify = verify;}
 	public void setIsDelete(int isDelete) {this.isDelete = isDelete;}
-	public void setIsManager(int isManager) {this.isManager = isManager;}
+	public void setIsManager(Integer isManager) {this.isManager = isManager;}
 	public void setTags(Set<TagsBean> tags) {this.tags = tags;}
+	
 	
 	@Override
 	public String toString() {
@@ -165,7 +172,9 @@ public class UserBean implements Serializable{
 				+ ", userAddress=" + userAddress + ", creationDatetime=" + creationDatetime + ", lastLoginDatetime="
 				+ lastLoginDatetime + ", gender=" + gender + ", goalNo=" + goalNo + ", bloodType=" + bloodType
 				+ ", MBTI=" + MBTI + ", suspension=" + suspension + ", verify=" + verify + ", isDelete=" + isDelete
-				+ ", isManager=" + isManager + "]";
+				+ "]";
 	}
+	
+	
 	
 }
