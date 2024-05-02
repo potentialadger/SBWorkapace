@@ -33,7 +33,7 @@ public class GroupController {
 	public String findAllGroup(Model m) {
 		List<Group> groups = gService.findAllGroup();
 		m.addAttribute("groups", groups);
-		return "group/jsp/groups";
+		return "group/jsp/groups.jsp";
 	}
 	
 //	個人開的活動
