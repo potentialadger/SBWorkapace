@@ -26,6 +26,38 @@ public class SocialPhotosController {
 	private SocialPhotosService socialPhotosService;
 	
 	
+    // 查詢單張照片
+//    @GetMapping("/photos/{photoNo}")
+//    public ResponseEntity<SocialPhotosBean> getPhotoById(@PathVariable Integer photoNo) {
+//        SocialPhotosBean photo = socialPhotosService.getById(photoNo);
+//        if (photo == null) {
+//            return ResponseEntity.notFound().build();
+//        }
+//        return ResponseEntity.ok(photo);
+//    }
+	
+    // 查詢所有照片
+//    @GetMapping("/photos")
+//    public ResponseEntity<List<SocialPhotosBean>> getAllPhotos() {
+//        List<SocialPhotosBean> photos = socialPhotosService.findAll();
+//        return ResponseEntity.ok(photos);
+//    }
+
+    // 根據主題查詢照片
+//    @GetMapping("/photos/theme/{photoTheme}")
+//    public ResponseEntity<List<SocialPhotosBean>> getPhotosByTheme(@PathVariable String photoTheme) {
+//        List<SocialPhotosBean> photos = socialPhotosService.findByPhotoTheme(photoTheme);
+//        return ResponseEntity.ok(photos);
+//    }
+
+    // 删除照片
+//    @DeleteMapping("/photos/{photoNo}")
+//    public ResponseEntity<Void> deletePhoto(@PathVariable Integer photoNo) {
+//        socialPhotosService.deleteById(photoNo);
+//        return ResponseEntity.noContent().build();
+//    }
+	
+	
 	//上傳圖片 - 新增
 	@PostMapping(value = "/insertsphoto")
 	@ResponseBody
@@ -62,7 +94,7 @@ public class SocialPhotosController {
 	}
 	
 	
-	
+	//上傳圖片 - 修改
 	@PostMapping(value = "/updatesphoto", produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public SocialPhotosBean updateSPhoto(@RequestParam("userNo") Integer userNo,
