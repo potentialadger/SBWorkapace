@@ -1,26 +1,11 @@
 package com.match.service;
 
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.group.model.Item;
 import com.match.bean.SocialPhotosBean;
 import com.match.repository.SocialPhotosRepository;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -90,43 +75,6 @@ public class SocialPhotosService {
 		spRepos.deleteById(photoNo);
 	}
 	
-	
-//	@PostMapping(value = "/insertitem")
-//	@ResponseBody
-//	public Item insertItem(@RequestParam("iname") String name, @RequestParam("iprice") Integer price, @RequestParam("idescription") String description,
-//			@RequestParam("ipicture") MultipartFile mf, HttpServletRequest request) throws IllegalStateException, IOException {
-//		HttpSession session = request.getSession();
-//		Integer eventno = (Integer)session.getAttribute("eventno");
-//		
-//		String filename = mf.getOriginalFilename();
-//		String extension = "";
-//		
-//		int i = filename.lastIndexOf('.');
-//		if(i >= 0) {
-//			extension = filename.substring(i);
-//		}
-//		
-//		Random random = new Random();
-//		int raNumber = random.nextInt(10000);
-//		
-//		filename = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "_"
-//				+ raNumber + extension;
-//		
-//		String fileDir = "C:/temp/upload/";
-//		File pathexist = new File(fileDir);
-//		if(!pathexist.exists()) {
-//			pathexist.mkdirs();
-//		}
-//		
-//		File fileDirPath = new File(fileDir, filename);
-//		mf.transferTo(fileDirPath);
-//		Item item = itemService.insertItem(eventno, name, price, description, filename);
-//		
-//		Integer itemno = item.getItemno();
-//		session.setAttribute("itemno", itemno);
-//		
-//		return item;
-//	}
 	
 	
 	
