@@ -98,8 +98,13 @@ public class UserBean implements Serializable{
 	@Column(name = "ismanager")
 	private Integer isManager;
 	
+	@Column(name = "point")
+	private Integer point;
 	
 	
+	public UserBean() {
+	}
+
 	//多對多  // 有 join table 這邊為主要控制方，操作兩方關係盡量由這邊(User)操作
 	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name="usertags",
