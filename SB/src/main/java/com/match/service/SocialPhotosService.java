@@ -42,24 +42,54 @@ public class SocialPhotosService {
     public List<SocialPhotosBean> findByPhotoTheme(String photoTheme) {
         return spRepos.findByPhotoTheme(photoTheme);
     }
-	
-	
-	
-	//新增照片
-	public SocialPhotosBean insert(SocialPhotosBean spBean) {  // 為什麼參數接收的是整個bean? 因為要用save()?
-		return spRepos.save(spBean);                           // 實際新增
-	}
-	
-	
+    
+    
+    // 根據用戶ID和主題查詢照片
+    public SocialPhotosBean findByUserNoAndPhotoTheme(Integer userNo, String photoTheme) {
+        List<SocialPhotosBean> photos = spRepos.findByUserNoAndPhotoTheme(userNo, photoTheme);
+        return photos.isEmpty() ? null : photos.get(0);
+    }
+    
+    
+    // 新增或更新照片
+    public SocialPhotosBean insertOrUpdate(Integer userNo, String photoTheme, String photoPath) {
+        SocialPhotosBean existingPhoto = findByUserNoAndPhotoTheme(userNo, photoTheme);
+        if (existingPhoto != null) {
+            // 如果該用戶在指定主題下已有照片,則覆蓋原有照片
+            existingPhoto.setPhotoPath(photoPath);
+            return spRepos.save(existingPhoto);
+        } else {
+            // 如果該用戶在指定主題下沒有照片,則插入新照片
+            SocialPhotosBean newPhoto = new SocialPhotosBean();
+            newPhoto.setUserNo(userNo);
+            newPhoto.setPhotoTheme(photoTheme);
+            newPhoto.setPhotoPath(photoPath);
+            return spRepos.save(newPhoto);
+        }
+    }
+    
+    
 	//刪除照片
 	public void deleteById(Integer photoNo) {
 		spRepos.deleteById(photoNo);
 	}
 	
 	
-	//修改照片
-	public SocialPhotosBean update(SocialPhotosBean spBean) {
-		return spRepos.save(spBean);
-	}
+	
+	
+//	//新增照片
+//	public SocialPhotosBean insert(SocialPhotosBean spBean) {  // 為什麼參數接收的是整個bean? 因為要用save()?
+//		return spRepos.save(spBean);                           // 實際新增
+//	}
+//	
+//	//修改照片
+//	public SocialPhotosBean update(SocialPhotosBean spBean) {
+//		return spRepos.save(spBean);
+//	}
+
+	
+	
+
+	
 
 }
