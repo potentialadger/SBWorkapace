@@ -27,52 +27,52 @@
         <thead>
             <tr>
                 <th>文章編號</th>
-                <th>會員</th>
+                <th>會員名稱</th>
+                <th>會員信箱</th>
                 <th>分類</th>
                 <th>文章標題</th>
                 <th>文章內容</th>
-                <th>創建日期</th>
+                <th>日期</th>
+                <th>圖片</th>
                 <th>瀏覽次數</th>
-                <th>喜歡次數</th>
-                <th>文章狀態</th>
                 <th>刪除</th>
                 <th>修改</th>
             </tr>
         </thead>
 
         <tbody>
-            <c:if test="${not empty posts}">
-                <c:forEach var="post" items="${posts}">
+            <c:if test="${not empty postsM}">
+                <c:forEach var="posts" items="${postsM}">
                     <tr>
-                        <td><c:out value="${post.post_no}" /></td>
-                        <td><c:out value="${post.user_no}" /></td>
-                        <td><c:out value="${post.category_no}" /></td>
-                        <td><c:out value="${post.title}" /></td>
-                        <td><c:out value="${post.content}" /></td>
-                        <td><c:out value="${post.creation_date}" /></td>
-                        <td><c:out value="${post.view_count}" /></td>
-                        <td><c:out value="${post.like_count}" /></td>
-                        <td><c:out value="${post.status}" /></td>
+                        <td><c:out value="${posts.post_no}" /></td>
+                        <td><c:out value="${posts.userBean.userChineseName}" /></td>
+                        <td><c:out value="${posts.userBean.email}" /></td>
+                        <td><c:out value="${posts.categoriesBean.title_name}" /></td>
+                        <td><c:out value="${posts.title}" /></td>
+                        <td><c:out value="${posts.content}" /></td>
+                        <td><c:out value="${posts.update_date}" /></td>
+                        <td><c:out value="${posts.image_url}" /></td>
+                        <td><c:out value="${posts.view_count}" /></td>
 
                         <td>
                             <form method="post" action="/posts/DeletePosts">
-                                <input type="hidden" name="postno" value="${post.post_no}">
+                                <input type="hidden" name="postsNo" value="${posts.post_no}">
                                 <input type="hidden" name="_method" value="delete">
                                 <button type="submit">刪除</button>
                             </form>
                         </td>
                         <td>
-                            <form method="get" action="/posts/SelectUpdatePosts">
-                                <input type="hidden" name="postNo" value="${post.post_no}">
+                            <form method="get" action="/posts/UpdateSelectPosts">
+                                <input type="hidden" name="postsNo" value="${posts.post_no}">
                                 <button type="submit">修改</button>
                             </form>
                         </td>
                     </tr>
                 </c:forEach>
             </c:if>
-            <c:if test="${empty posts}">
+            <c:if test="${empty postsM}">
                 <tr>
-                    <td colspan="11">尚無資料</td>
+                    <td colspan="13">尚無資料</td>
                 </tr>
             </c:if>
         </tbody>

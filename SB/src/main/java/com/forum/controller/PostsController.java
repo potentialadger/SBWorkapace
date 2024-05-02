@@ -1,5 +1,7 @@
 package com.forum.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +28,11 @@ public class PostsController {
 
 	@Autowired
 	private PostsServiceInterface postsService;
+	
+	@Autowired
 	private CategoriesService categoriesService;
+	
+	@Autowired
 	private UserService userService;
 
 	// 單筆查詢
@@ -38,7 +44,7 @@ public class PostsController {
 		} else {
 			m.addAttribute("noData", true);
 		}
-		return "/forum/backstage/categories/jsp/SelectCategories.jsp";
+		return "/forum/backstage/posts/jsp/SelectPosts.jsp";
 	}
 
 	// 全部查詢
@@ -46,96 +52,95 @@ public class PostsController {
 	public String getAllPosts(Model m) {
 
 		List<PostsBean> postsList = postsService.getAllPosts();
-		
-		if (postsList != null && !postsList.isEmpty()) {
-			m.addAttribute("postsM", postsList);
-		} else {
-			m.addAttribute("noData", true);
-		}
-		return "/forum/backstage/categories/jsp/SelectCategories.jsp";
+
+		m.addAttribute("postsM", postsList);
+
+		return "/forum/backstage/posts/jsp/SelectPosts.jsp";
 	}
-	
+
 	// 新增
-		@PostMapping("/InsertPosts")
-		public String insertPosts(
-				@RequestParam("user_no") int user_no,
-				@RequestParam("category_no") int category_no,
-		        @RequestParam("title") String title, 
-		        @RequestParam("content") String content, 
-		        @RequestParam("image_url") String image_url, 
-		        @RequestParam("view_count") String view_count
-		) {
-			
-		    UserBean user = userService.getUserData(user_no);	       
-		    
-		    CategoriesBean category = categoriesService.getCategoryNo(category_no);
+	@PostMapping("/InsertPosts")
+	public String insertPosts(@RequestParam("user_no") int user_no, 
+			@RequestParam("category_no") int category_no,
+			@RequestParam("title") String title, 
+			@RequestParam("content") String content,
+			@RequestParam("image_url") String image_url, 
+			@RequestParam("update_date") String update_date, 
+			@RequestParam("view_count") String view_count) {
 
-		    PostsBean posts = new PostsBean();
-		    posts.setUserBean(user);
-		    posts.setCategoriesBean(category);
-		    posts.setTitle(title);
-		    posts.setContent(content);
-		    posts.setImage_url(image_url);
-		    posts.setView_count(Integer.parseInt(view_count));
-		    posts.setUpdate_date(new Date());
-		    
-		    postsService.insertPosts(posts);
+		UserBean user = userService.getUserData(user_no);
 
-		    return "/forum/jsp/InsertPosts.jsp";
-		}
+		CategoriesBean category = categoriesService.getCategoryNo(category_no);
 
-	
+		PostsBean posts = new PostsBean();
+		posts.setUserBean(user);
+		posts.setCategoriesBean(category);
+		posts.setTitle(title);
+		posts.setContent(content);
+		posts.setImage_url(image_url);
+		posts.setView_count(Integer.parseInt(view_count));
+		posts.setUpdate_date(new Date());
+
+		postsService.insertPosts(posts);
+
+		return "/forum/jsp/InsertPosts.jsp";
+	}
+
 	// 刪除
 	@DeleteMapping("/DeletePosts")
 	public String deletePosts(@RequestParam("postsNo") String postsNo) {
 
 		postsService.deletePosts(Integer.parseInt(postsNo));
 
-		return "redirect:/posts/PostAll";
+		return "redirect:/posts/AllPosts";
 
 	}
 
-	// 更新用查詢
+	// 更新用查詢和分類
 	@GetMapping("/UpdateSelectPosts")
 	public String getPostsNo(@RequestParam("postsNo") String postsNo, Model m) {
 
 		PostsBean posts = postsService.getPostsNo(Integer.parseInt(postsNo));
 
 		m.addAttribute("updateSelect", posts);
+		
+		List<CategoriesBean> categoriesList = categoriesService.getAllCategories();
+		
+		m.addAttribute("categoriesList", categoriesList);
+		
 
-		return "/forum/jsp/Update.jsp";
-	
+		return "/forum/backstage/posts/jsp/Update.jsp";
+
 	}
-	
+
 	// 更新
-		@PutMapping("/UpdatePosts")
-		public String updatePosts(
-				@RequestParam("post_no") Integer post_no,
-				@RequestParam("user_no") int user_no, 
-				@RequestParam("category_no") int category_no,
-				@RequestParam("title") String title,
-				@RequestParam("content") String content,
-				@RequestParam("image_url") String image_url,
-				@RequestParam("update_date") Date update_date,
-				@RequestParam("view_count") int view_count
-				) {
-			
-			UserBean user = userService.getUserData(user_no);
-			
-			CategoriesBean category = categoriesService.getCategoryNo(category_no);
-		   
-			PostsBean postsToUpdate = postsService.getPostsNo(post_no);				
-		    
-			postsToUpdate.setUserBean(user);
-			postsToUpdate.setCategoriesBean(category);
-			postsToUpdate.setTitle(title);
-			postsToUpdate.setContent(content);
-			postsToUpdate.setImage_url(image_url);
-			postsToUpdate.setUpdate_date(new Date());
+	@PutMapping("/UpdatePosts")
+	public String updatePosts(
+			@RequestParam("post_no") Integer post_no, 
+			@RequestParam("user_no") int user_no,
+			@RequestParam("category_no") int category_no, 
+			@RequestParam("title") String title,
+			@RequestParam("content") String content, 
+			@RequestParam("image_url") String image_url,
+			@RequestParam("update_date") String update_date)
+			{
 
-		    postsService.updatePosts(postsToUpdate);
+		UserBean user = userService.getUserData(user_no);
 
-			return "redirect:/posts/PostAll";
-		}
+		CategoriesBean category = categoriesService.getCategoryNo(category_no);
+
+		PostsBean postsToUpdate = postsService.getPostsNo(post_no);
+
+		postsToUpdate.setUserBean(user);
+		postsToUpdate.setCategoriesBean(category);
+		postsToUpdate.setTitle(title);
+		postsToUpdate.setContent(content);
+		postsToUpdate.setImage_url(image_url);
+		postsToUpdate.setUpdate_date(new Date());
+
+		postsService.updatePosts(postsToUpdate);
+
+		return "redirect:/posts/AllPosts";
+	}
 
 }

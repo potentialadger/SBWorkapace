@@ -4,7 +4,6 @@ import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.user.bean.UserBean;
 
 import jakarta.persistence.*;
@@ -39,7 +38,6 @@ public class PostsBean {
 	@Column(name = "image_url")
 	private String image_url;
 
-	@JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
 	@Column(name = "update_date")
 	private Date update_date;
 
