@@ -31,20 +31,31 @@ public class SocialPhotosService {
 		return null;
 	}
 	
-	//查詢所有照片
+	
+	// 查詢所有照片
 	public List<SocialPhotosBean> findAll(){
 		return spRepos.findAll();
 	}
+	
+	
+	// 根據主題查詢照片
+    public List<SocialPhotosBean> findByPhotoTheme(String photoTheme) {
+        return spRepos.findByPhotoTheme(photoTheme);
+    }
+	
+	
 	
 	//新增照片
 	public SocialPhotosBean insert(SocialPhotosBean spBean) {  // 為什麼參數接收的是整個bean? 因為要用save()?
 		return spRepos.save(spBean);                           // 實際新增
 	}
 	
+	
 	//刪除照片
 	public void deleteById(Integer photoNo) {
 		spRepos.deleteById(photoNo);
 	}
+	
 	
 	//修改照片
 	public SocialPhotosBean update(SocialPhotosBean spBean) {
