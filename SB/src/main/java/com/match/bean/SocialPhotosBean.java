@@ -19,7 +19,7 @@ public class SocialPhotosBean {
 	@Column(name="photono")
 	private Integer photoNo;  //NOT NULL
 	
-	@Column(name="userno")
+	@Column(name="fkuserno")
 	private Integer userNo;   //NOT NULL
 	
 	@Column(name="photopath")
