@@ -54,7 +54,7 @@
                                                     <%=group.getDescription() %>
                                                 </p>
                                                 <%
-												    Date startDate = group.getStarttime();
+												    Date startDate = group.getStartTime();
 												    String timeAgo = formatTimeAgo(startDate);
 												%>
 												
@@ -62,7 +62,7 @@
                                                 	<%=timeAgo %> 
                                                 </p>
                                                  <div class="link-wrapper" style="position: absolute; bottom: 10px; right: 10px;">
-        											<a href="<%= "/group/eachgroup/" + group.getEventno() %>" class="text-custom">前往團購 <i class="mdi mdi-chevron-right"></i></a>
+        											<a href="<%= "/group/eachgroup/" + group.getEventNo() %>" class="text-custom">前往團購 <i class="mdi mdi-chevron-right"></i></a>
     											</div>
                                             </div>
                                         </div>

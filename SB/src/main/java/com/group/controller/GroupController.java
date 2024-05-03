@@ -22,6 +22,7 @@ import com.group.service.GroupService;
 import com.group.service.ItemService;
 import com.group.service.ItemSpecService;
 import com.user.bean.UserBean;
+import com.user.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -38,6 +39,9 @@ public class GroupController {
 	
 	@Autowired
 	private ItemSpecService itemSpecService;
+	
+	@Autowired
+	private UserService userService;
 	
 //	全活躍活動
 	@GetMapping(value = "/groups")
@@ -57,7 +61,7 @@ public class GroupController {
 		
 		List<Group> groups = gService.findGroupByUser(userNo);
 		m.addAttribute("groups",groups);
-		return "group/jsp/mygroups";
+		return "group/jsp/mygroup.jsp";
 	}
 	
 //	全活躍活動依開團時間升序
@@ -128,7 +132,7 @@ public class GroupController {
 		Integer userNo = 1;
 		
 		Group group = gService.insertGroup(userNo, title, description, gEndTime, pay, mintotalquantity, mintotalamount, account, address);
-		Integer eventno = group.getEventno();
+		Integer eventno = group.getEventNo();
 		session.setAttribute("eventno", eventno);
 		m.addAttribute("group",group);
 		
@@ -145,19 +149,21 @@ public class GroupController {
 		gService.updateGroup(eventno, title, description, gEndTime, pay, Integer.parseInt(mintotalquantity), Integer.parseInt(mintotalamount), account, address);
 		return "redirect:/group/mygroups";
 	}
-	
+//	查詢單筆團購
 	@GetMapping("/eachgroup/{eventno}")
-	public String findGroupByEventNo(@PathVariable("eventno") Integer eventno, Model m) {
+	public String findGroupByEventNo(@PathVariable("eventno") Integer eventno, Model m, HttpServletRequest request) {
 		Group group = gService.findGroupByEventNo(eventno);
 		List<Item> items = iService.findItemsByEventNo(eventno);
 		HashMap<Integer, List<ItemSpecification>> specsmap = new HashMap<>();
+		HttpSession session = request.getSession();
 		
 		for (Item item : items) {
-			Integer itemno = item.getItemno();
+			Integer itemno = item.getItemNo();
 			List<ItemSpecification> itemspecs = itemSpecService.findItemSpecByItemNo(itemno);
 			specsmap.put(itemno, itemspecs);
 		}
 
+		session.setAttribute("group", group);
 		m.addAttribute("group", group);
 		m.addAttribute("items", items);
 		m.addAttribute("itemspecmap", specsmap);

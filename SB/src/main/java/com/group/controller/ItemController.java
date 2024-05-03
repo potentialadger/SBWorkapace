@@ -69,7 +69,7 @@ public class ItemController {
 		mf.transferTo(fileDirPath);
 		Item item = itemService.insertItem(eventno, name, price, description, filename);
 		
-		Integer itemno = item.getItemno();
+		Integer itemno = item.getItemNo();
 		session.setAttribute("itemno", itemno);
 		
 		return item;

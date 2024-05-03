@@ -9,25 +9,25 @@ import com.group.model.Group;
 
 public interface GroupRepository extends JpaRepository<Group, Integer> {
 
-	@Query("SELECT g FROM Group g LEFT JOIN FETCH g.items WHERE g.status = 'active' AND g.endtime > CURRENT_TIMESTAMP")
+	@Query("SELECT g FROM Group g LEFT JOIN FETCH g.items WHERE g.status = 'active' AND g.endTime > CURRENT_TIMESTAMP")
 	public List<Group> finaAllGroup();
 	
-	@Query("SELECT g FROM Group g LEFT JOIN FETCH g.items WHERE g.status = 'active' ORDER BY g.starttime DESC")
+	@Query("SELECT g FROM Group g LEFT JOIN FETCH g.items WHERE g.status = 'active' ORDER BY g.startTime DESC")
 	public List<Group> findAllGroupsByStartTimeDesc();
 	
-	@Query("SELECT g FROM Group g LEFT JOIN FETCH g.items WHERE g.status = 'active' ORDER BY g.starttime ASC")
+	@Query("SELECT g FROM Group g LEFT JOIN FETCH g.items WHERE g.status = 'active' ORDER BY g.startTime ASC")
 	public List<Group> findAllGroupsByStartTimeAsc();
 
 	@Query("SELECT g FROM Group g where g.title like concat('%',?1,'%')")
 	public List<Group> findGroupBySearch(String title);
 	
-	@Query("SELECT g FROM Group g WHERE g.hostuserno = :user")
+	@Query("SELECT g FROM Group g WHERE g.user.userNo = :user")
 	public List<Group> findGroupByUser(int user) ;
 	
-	@Query("SELECT g FROM Group g LEFT JOIN FETCH g.items WHERE g.status = 'active' ORDER BY g.endtime DESC")
+	@Query("SELECT g FROM Group g LEFT JOIN FETCH g.items WHERE g.status = 'active' ORDER BY g.endTime DESC")
 	public List<Group> findAllGroupByEndTimeDesc();
 	
-	@Query("SELECT g FROM Group g LEFT JOIN FETCH g.items WHERE g.status = 'active' ORDER BY g.endtime ASC")
+	@Query("SELECT g FROM Group g LEFT JOIN FETCH g.items WHERE g.status = 'active' ORDER BY g.endTime ASC")
 	public List<Group> findAllGroupByEndTimeAsc();
 	
 }

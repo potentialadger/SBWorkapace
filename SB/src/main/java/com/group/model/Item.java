@@ -28,7 +28,7 @@ public class Item {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
 	@Column(name = "itemno")
-	private Integer itemno;
+	private Integer itemNo;
 	
 	@JoinColumn(name = "eventno")
 	@ManyToOne
@@ -45,7 +45,7 @@ public class Item {
 	private String description;
 	
 	@Column(name = "imgpath")
-	private String imgpath;
+	private String imgPath;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = CascadeType.ALL)
 	private List<ItemSpecification> itemspec;
@@ -54,13 +54,7 @@ public class Item {
 	@JsonIgnore
 	private List<OrderDetail> orderDetails;
 
-	public Integer getItemno() {
-		return itemno;
-	}
 
-	public void setItemno(Integer itemno) {
-		this.itemno = itemno;
-	}
 
 	public Group getGroup() {
 		return group;
@@ -94,12 +88,22 @@ public class Item {
 		this.description = description;
 	}
 
-	public String getImgpath() {
-		return imgpath;
+	
+
+	public Integer getItemNo() {
+		return itemNo;
 	}
 
-	public void setImgpath(String imgpath) {
-		this.imgpath = imgpath;
+	public void setItemNo(Integer itemNo) {
+		this.itemNo = itemNo;
+	}
+
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
 	}
 
 	public List<ItemSpecification> getItemspec() {
