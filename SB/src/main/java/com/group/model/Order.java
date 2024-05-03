@@ -37,14 +37,14 @@ public class Order {
 	
 	@JoinColumn(name = "userno")
 	@ManyToOne
-	private UserBean userno;
+	private UserBean userNo;
 	
 	@Column(name = "paymentmethod")
-	private Integer paymentmethod;
+	private Integer paymentMethod;
 	
 	@Column(name = "settime")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	private Date settime;
+	private Date setTime;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
 	private List<OrderDetail> orderDetails;
@@ -65,28 +65,30 @@ public class Order {
 		this.group = group;
 	}
 
-	public UserBean getUserno() {
-		return userno;
+	
+
+	public UserBean getUserNo() {
+		return userNo;
 	}
 
-	public void setUserno(UserBean userno) {
-		this.userno = userno;
+	public void setUserNo(UserBean userNo) {
+		this.userNo = userNo;
 	}
 
-	public Integer getPaymentmethod() {
-		return paymentmethod;
+	public Integer getPaymentMethod() {
+		return paymentMethod;
 	}
 
-	public void setPaymentmethod(Integer paymentmethod) {
-		this.paymentmethod = paymentmethod;
+	public void setPaymentMethod(Integer paymentMethod) {
+		this.paymentMethod = paymentMethod;
 	}
 
-	public Date getSettime() {
-		return settime;
+	public Date getSetTime() {
+		return setTime;
 	}
 
-	public void setSettime(Date settime) {
-		this.settime = settime;
+	public void setSetTime(Date setTime) {
+		this.setTime = setTime;
 	}
 
 	public List<OrderDetail> getOrderDetails() {
@@ -96,5 +98,7 @@ public class Order {
 	public void setOrderDetails(List<OrderDetail> orderDetails) {
 		this.orderDetails = orderDetails;
 	}
+
+
 
 }

@@ -53,7 +53,7 @@ public class ItemService {
 		item.setName(name);
 		item.setPrice(price);
 		item.setDescription(description);
-		item.setImgpath(filename);
+		item.setImgPath(filename);
 		
 		return iRepository.save(item);
 	}
@@ -64,7 +64,7 @@ public class ItemService {
 		item.setName(name);
 		item.setPrice(price);
 		item.setDescription(description);
-		item.setImgpath(filename);
+		item.setImgPath(filename);
 		
 		return iRepository.save(item);
 	}

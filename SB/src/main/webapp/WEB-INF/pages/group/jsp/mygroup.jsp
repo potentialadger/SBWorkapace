@@ -40,33 +40,33 @@
 											%>
 							<tr>
 								<td>
-									<%=group.getEventno()%>
+									<%=group.getEventNo()%>
 								<td>
 									<%=group.getTitle()%>
 								<td>
 									<%=group.getDescription()%>
-										<% Date endTime=group.getEndtime(); SimpleDateFormat sdf=new
+										<% Date endTime=group.getEndTime(); SimpleDateFormat sdf=new
 											SimpleDateFormat("yyyy-MM-dd"); String formattedEndTime=sdf.format(endTime);
 											%>
 								<td>
 									<%=formattedEndTime%>
 								<td>
-									<%=group.getMintotalamount()%>
+									<%=group.getMinTotalAmount()%>
 								<td>
-									<%=group.getMintotalquantity()%>
-										<% String paymentMethodDisplay="" ; switch (group.getPaymentmethod()) { case 1 :
+									<%=group.getMinTotalQuantity()%>
+										<% String paymentMethodDisplay="" ; switch (group.getPaymentMethod()) { case 1 :
 											paymentMethodDisplay="LinePay" ; break; case 2 : paymentMethodDisplay="匯款" ;
 											break; case 12 : paymentMethodDisplay="LinePay, 匯款" ; break; default :
 											paymentMethodDisplay="未知支付方式" ; break; } %>
 								<td>
 									<%=paymentMethodDisplay%>
 								<td><button class="update btn btn-primary btn-lg"
-										data-groupeventno="<%=group.getEventno()%>"
+										data-groupeventno="<%=group.getEventNo()%>"
 										data-grouptitle="<%=group.getTitle()%>"
 										data-groupdescription="<%=group.getDescription()%>"
 										data-groupendtime="<%=formattedEndTime%>"
-										data-groupmintotalamount="<%=group.getMintotalamount()%>"
-										data-groupmintotalquantity="<%=group.getMintotalquantity()%>"
+										data-groupmintotalamount="<%=group.getMinTotalAmount()%>"
+										data-groupmintotalquantity="<%=group.getMinTotalQuantity()%>"
 										data-grouppaymentmethod="<%=paymentMethodDisplay%>" data-bs-toggle="modal"
 										data-bs-target="#exampleModal">
 										<i class="fa-solid fa-pen-to-square"></i>
@@ -115,13 +115,13 @@
 												style="display: flex; align-items: center; margin-bottom: 10px">
 												<div style="width: 150px">成團金額:</div>
 												<input type="number" name="MinTotalAmount"
-													class="swal2-input" value="<%=group.getMintotalamount()%>" />
+													class="swal2-input" value="<%=group.getMinTotalAmount()%>" />
 											</div>
 											<div
 												style="display: flex; align-items: center; margin-bottom: 10px">
 												<div style="width: 150px">成團數量:</div>
 												<input name="MinTotalQuantity" class="swal2-input"
-													value="<%=group.getMintotalquantity()%>" />
+													value="<%=group.getMinTotalQuantity()%>" />
 											</div>
 										</div>
 								<div class="modal-footer">
@@ -134,7 +134,7 @@
 							</div>
 						</div>
 								<td><button class="delete btn btn-primary btn-lg"
-										data-groupeventno="<%=group.getEventno()%>">
+										data-groupeventno="<%=group.getEventNo()%>">
 										<i class="fa-solid fa-xmark"></i>
 									</button>
 									<% } %>

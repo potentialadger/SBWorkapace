@@ -117,12 +117,12 @@ public class GroupService {
 		group.setUser(userBean);
 		group.setTitle(title);
 		group.setDescription(description);
-		group.setStarttime(startTime);
-		group.setEndtime(endtime);
-		group.setMintotalamount(Integer.parseInt(minamount));
-		group.setMintotalquantity(Integer.parseInt(minquantity));
+		group.setStartTime(startTime);
+		group.setEndTime(endtime);
+		group.setMinTotalAmount(Integer.parseInt(minamount));
+		group.setMinTotalQuantity(Integer.parseInt(minquantity));
 		group.setStatus("active");
-		group.setPaymentmethod(Integer.parseInt(paymentMethod));
+		group.setPaymentMethod(Integer.parseInt(paymentMethod));
 		group.setAccount(account);
 		group.setAddress(address);
 		group.setPoint(point);
@@ -176,10 +176,10 @@ public class GroupService {
 		
 		group.setTitle(grouptitle);
 		group.setDescription(groupdescription);
-		group.setEndtime(endtime);
-		group.setPaymentmethod(paymentMethod);
-		group.setMintotalamount(mintotalamount);
-		group.setMintotalquantity(mintotalquantity);
+		group.setEndTime(endtime);
+		group.setPaymentMethod(paymentMethod);
+		group.setMinTotalAmount(mintotalamount);
+		group.setMinTotalQuantity(mintotalquantity);
 		group.setAccount(account);
 		group.setAddress(address);
 		

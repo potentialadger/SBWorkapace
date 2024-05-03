@@ -30,7 +30,7 @@ public class Group {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
 	@Column(name = "eventno")
-	private Integer eventno;
+	private Integer eventNo;
 	
 	@JoinColumn(name = "hostuserno")
 	@ManyToOne
@@ -44,23 +44,23 @@ public class Group {
 	
 	@Column(name = "starttime")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	private Date starttime;
+	private Date startTime;
 	
 	@Column(name = "endtime")
 	@JsonFormat(pattern="yyyy-MM-dd", timezone = "GMT+8")
-	private Date endtime;
+	private Date endTime;
 	
 	@Column(name = "mintotalamount")
-	private Integer mintotalamount;
+	private Integer minTotalAmount;
 	
 	@Column(name = "mintotalquantity")
-	private Integer mintotalquantity;
+	private Integer minTotalQuantity;
 	
 	@Column(name = "status")
 	private String status;
 	
 	@Column(name = "paymentmethod")
-	private Integer paymentmethod;
+	private Integer paymentMethod;
 	
 	@Column(name = "account")
 	private String account;
@@ -78,15 +78,54 @@ public class Group {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL)
 	private List<Order> orders;
 
-	public Integer getEventno() {
-		return eventno;
-	}
-
-	public void setEventno(Integer eventno) {
-		this.eventno = eventno;
-	}
-
 	
+	public Integer getEventNo() {
+		return eventNo;
+	}
+
+	public void setEventNo(Integer eventNo) {
+		this.eventNo = eventNo;
+	}
+
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+
+	public Integer getMinTotalAmount() {
+		return minTotalAmount;
+	}
+
+	public void setMinTotalAmount(Integer minTotalAmount) {
+		this.minTotalAmount = minTotalAmount;
+	}
+
+	public Integer getMinTotalQuantity() {
+		return minTotalQuantity;
+	}
+
+	public void setMinTotalQuantity(Integer minTotalQuantity) {
+		this.minTotalQuantity = minTotalQuantity;
+	}
+
+	public Integer getPaymentMethod() {
+		return paymentMethod;
+	}
+
+	public void setPaymentMethod(Integer paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
 
 	public UserBean getUser() {
 		return user;
@@ -112,37 +151,7 @@ public class Group {
 		this.description = description;
 	}
 
-	public Date getStarttime() {
-		return starttime;
-	}
-
-	public void setStarttime(Date starttime) {
-		this.starttime = starttime;
-	}
-
-	public Date getEndtime() {
-		return endtime;
-	}
-
-	public void setEndtime(Date endtime) {
-		this.endtime = endtime;
-	}
-
-	public Integer getMintotalamount() {
-		return mintotalamount;
-	}
-
-	public void setMintotalamount(Integer mintotalamount) {
-		this.mintotalamount = mintotalamount;
-	}
-
-	public Integer getMintotalquantity() {
-		return mintotalquantity;
-	}
-
-	public void setMintotalquantity(Integer mintotalquantity) {
-		this.mintotalquantity = mintotalquantity;
-	}
+	
 
 	public String getStatus() {
 		return status;
@@ -152,13 +161,7 @@ public class Group {
 		this.status = status;
 	}
 
-	public Integer getPaymentmethod() {
-		return paymentmethod;
-	}
-
-	public void setPaymentmethod(Integer paymentmethod) {
-		this.paymentmethod = paymentmethod;
-	}
+	
 
 	public String getAccount() {
 		return account;
