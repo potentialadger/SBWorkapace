@@ -103,12 +103,18 @@ public class GroupService {
 			paymentMethod = "0";
 		}
 		
+		Optional<UserBean> useroptional = userRepository.findById(user);
+		if(useroptional.isEmpty()) {
+			throw new EntityNotFoundException("Group not found with id: " + user);
+		}
+		
+		UserBean userBean = useroptional.get();
 		
 		int point = 0;
 		
 	
 		Group group = new Group();
-		group.setHostuserno(user);
+		group.setUser(userBean);
 		group.setTitle(title);
 		group.setDescription(description);
 		group.setStarttime(startTime);

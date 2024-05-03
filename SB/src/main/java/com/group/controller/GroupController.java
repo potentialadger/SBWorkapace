@@ -22,6 +22,7 @@ import com.group.service.GroupService;
 import com.group.service.ItemService;
 import com.group.service.ItemSpecService;
 import com.user.bean.UserBean;
+import com.user.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -38,6 +39,9 @@ public class GroupController {
 	
 	@Autowired
 	private ItemSpecService itemSpecService;
+	
+	@Autowired
+	private UserService userService;
 	
 //	全活躍活動
 	@GetMapping(value = "/groups")
