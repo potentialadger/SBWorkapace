@@ -65,6 +65,8 @@ public class UserController {
 		} else {
 			insertBean.setIsManager(0);
 		}
+		
+		insertBean.setPoint(0);
 
 		uService.creatUser(insertBean);
 
