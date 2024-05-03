@@ -56,7 +56,7 @@
                                                             <p>規格: </p>
                                                             <select>
                                                                 <% for(int i=0; i < specifications.size(); i++){  %>
-                                                                	<option value = "<%=specifications.get(i).getSpecvalue() %>"><%=specifications.get(i).getSpecvalue() %></option>
+                                                                	<option value = "<%=specifications.get(i).getSpecno() %>"><%=specifications.get(i).getSpecvalue() %></option>
                                                                 <% } %>
                                                             </select>
                                                         </td>
