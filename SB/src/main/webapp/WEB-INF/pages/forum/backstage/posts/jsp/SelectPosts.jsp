@@ -13,7 +13,7 @@
     <form method="get" action="/posts/OnePosts">
         查詢: <input type="text" name="postsBeanKeyword" required>
        	<button type="submit">送出</button>
-    </form>
+    </form>   
 
     <form method="get" action="/posts/AllPosts">
         <button type="submit">查詢全部</button>
@@ -36,7 +36,6 @@
                 <th>圖片</th>
                 <th>瀏覽次數</th>
                 <th>刪除</th>
-                <th>修改</th>
             </tr>
         </thead>
 
@@ -51,7 +50,7 @@
                         <td><c:out value="${posts.title}" /></td>
                         <td><c:out value="${posts.content}" /></td>
                         <td><c:out value="${posts.update_date}" /></td>
-                        <td><c:out value="${posts.image_url}" /></td>
+                        <td><img src="http://localhost:8080/localimages/${posts.image_url}"  style="max-width: 200px; max-height: 200px;"></td>
                         <td><c:out value="${posts.view_count}" /></td>
 
                         <td>
@@ -61,18 +60,12 @@
                                 <button type="submit">刪除</button>
                             </form>
                         </td>
-                        <td>
-                            <form method="get" action="/posts/UpdateSelectPosts">
-                                <input type="hidden" name="postsNo" value="${posts.post_no}">
-                                <button type="submit">修改</button>
-                            </form>
-                        </td>
                     </tr>
                 </c:forEach>
             </c:if>
             <c:if test="${empty postsM}">
                 <tr>
-                    <td colspan="13">尚無資料</td>
+                    <td colspan="10">尚無資料</td>
                 </tr>
             </c:if>
         </tbody>

@@ -1,9 +1,11 @@
 package com.forum.controller;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.forum.bean.CategoriesBean;
 import com.forum.bean.PostsBean;
@@ -28,10 +31,10 @@ public class PostsController {
 
 	@Autowired
 	private PostsServiceInterface postsService;
-	
+
 	@Autowired
 	private CategoriesService categoriesService;
-	
+
 	@Autowired
 	private UserService userService;
 
@@ -60,30 +63,84 @@ public class PostsController {
 
 	// 新增
 	@PostMapping("/InsertPosts")
-	public String insertPosts(@RequestParam("user_no") int user_no, 
+	public String insertPosts(
 			@RequestParam("category_no") int category_no,
 			@RequestParam("title") String title, 
 			@RequestParam("content") String content,
-			@RequestParam("image_url") String image_url, 
-			@RequestParam("update_date") String update_date, 
-			@RequestParam("view_count") String view_count) {
-
-		UserBean user = userService.getUserData(user_no);
+			@RequestParam("image_url") MultipartFile image_url,
+			Model m
+			) {
 
 		CategoriesBean category = categoriesService.getCategoryNo(category_no);
 
 		PostsBean posts = new PostsBean();
-		posts.setUserBean(user);
 		posts.setCategoriesBean(category);
 		posts.setTitle(title);
 		posts.setContent(content);
-		posts.setImage_url(image_url);
-		posts.setView_count(Integer.parseInt(view_count));
 		posts.setUpdate_date(new Date());
+		
+		List<CategoriesBean> categoriesList = categoriesService.getAllCategories();
+		
+		m.addAttribute("categoriesList", categoriesList);
 
+		try {
+			
+		// 從上傳的文件 image_url 中獲取原始文件名。
+		String fileName = image_url.getOriginalFilename();
+		// 以下判斷是為了過濾掉非圖檔的 檔案 只要.jpg, .png, .pdf 等
+		// 創建一個空字符串來保存文件的擴展名 例如 .jpg, .png, .pdf 等 用於識別文件的類型。
+		String SaveFileType = "";
+		// 找到最後一個點的索引位置 例:example.txt =從e開始0123456(7)為點的位置
+		int i = fileName.lastIndexOf('.');
+		// 如果找到了擴展名，則從文件名中截取擴展名部分 從索引位置點開始取 = .txt
+		if (i >= 0) {
+			SaveFileType = fileName.substring(i);
+		}
+		// 生成一個隨機數，作為文件名的一部分，以避免文件名衝突 增加一個辨別條件(怕兩個人上傳同樣名稱之類的檔案的情況)
+		Random random = new Random();
+		int raNumber = random.nextInt(10000);
+
+		// 獲取當前日期和時間
+		Date currentDate = new Date();
+		// 定義日期格式
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+		// 將日期格式化為字符串
+		String formattedDate = formatter.format(currentDate);
+		// 構建新的文件名，將格式化後的日期、隨機數和擴展名組合在一起 成為此檔案新的辨別的方式
+		fileName = formattedDate + "_" + raNumber + SaveFileType;
+		// 指定文件上傳的目錄路徑
+		String fileDir = "C:/temp/upload/";
+		// 創建一個文件，把路徑跟新的檔案辨別名稱加上去。
+		File fileDirPath = new File(fileDir, fileName);
+
+		image_url.transferTo(fileDirPath);
+
+		posts.setImage_url(fileName);
+
+		
 		postsService.insertPosts(posts);
 
-		return "/forum/jsp/InsertPosts.jsp";
+		return"";
+
+	}catch(
+
+	IOException e)
+	{
+		e.printStackTrace();
+		// 如果發生 IO 錯誤，提示用戶文件上傳失敗 前台還要再做一個頁面
+		return "redirect:/posts/error?message=文件上傳失敗";
+	}
+}
+	
+	//新增用的取得分類版
+	@GetMapping("/forum.InsertPosts")
+	public String getAllCategoriesToJsp(Model m) {
+		
+		List<CategoriesBean> categoriesBeans = categoriesService.getAllCategories();
+		
+		m.addAttribute("categoriesList", categoriesBeans);
+		
+		return "/forum/backstage/posts/jsp/InsertPosts.jsp";
 	}
 
 	// 刪除
@@ -121,10 +178,13 @@ public class PostsController {
 			@RequestParam("category_no") int category_no, 
 			@RequestParam("title") String title,
 			@RequestParam("content") String content, 
-			@RequestParam("image_url") String image_url,
-			@RequestParam("update_date") String update_date)
+			@RequestParam("image_url") MultipartFile image_url,
+			@RequestParam("update_date") String update_date
+		    )
 			{
-
+		
+		try {
+			
 		UserBean user = userService.getUserData(user_no);
 
 		CategoriesBean category = categoriesService.getCategoryNo(category_no);
@@ -135,12 +195,48 @@ public class PostsController {
 		postsToUpdate.setCategoriesBean(category);
 		postsToUpdate.setTitle(title);
 		postsToUpdate.setContent(content);
-		postsToUpdate.setImage_url(image_url);
 		postsToUpdate.setUpdate_date(new Date());
-
+		
+		//從上傳的文件 image_url 中獲取原始文件名。
+		String fileName = image_url.getOriginalFilename();
+		//以下判斷是為了過濾掉非圖檔的 檔案 只要.jpg, .png, .pdf 等
+		//創建一個空字符串來保存文件的擴展名 例如 .jpg, .png, .pdf 等 用於識別文件的類型。
+		String SaveFileType = "";		
+		// 找到最後一個點的索引位置 例:example.txt =從e開始0123456(7)為點的位置
+		int i = fileName.lastIndexOf('.');
+		//如果找到了擴展名，則從文件名中截取擴展名部分 從索引位置點開始取 = .txt
+		if(i >= 0) {
+			SaveFileType = fileName.substring(i);
+		}
+		//生成一個隨機數，作為文件名的一部分，以避免文件名衝突 增加一個辨別條件(怕兩個人上傳同樣名稱之類的檔案的情況)
+		Random random = new Random();
+		int raNumber = random.nextInt(10000);
+		
+		// 獲取當前日期和時間
+		Date currentDate = new Date();
+        // 定義日期格式
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        // 將日期格式化為字符串
+        String formattedDate = formatter.format(currentDate);
+		//構建新的文件名，將格式化後的日期、隨機數和擴展名組合在一起 成為此檔案新的辨別的方式
+        fileName = formattedDate + "_" + raNumber + SaveFileType;
+        //指定文件上傳的目錄路徑
+		String fileDir = "C:/temp/upload/";
+		//創建一個文件，把路徑跟新的檔案辨別名稱加上去。		
+		File fileDirPath = new File(fileDir, fileName);
+		
+		image_url.transferTo(fileDirPath);
+		
+		postsToUpdate.setImage_url(fileName);
+		
 		postsService.updatePosts(postsToUpdate);
 
 		return "redirect:/posts/AllPosts";
-	}
-
+		
+		} catch (IOException e) {
+	        e.printStackTrace();
+	        // 如果發生 IO 錯誤，提示用戶文件上傳失敗 前台還要再做一個頁面
+	        return "redirect:/posts/error?message=文件上傳失敗";
+	    }
+	}		
 }

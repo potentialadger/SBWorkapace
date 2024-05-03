@@ -1,6 +1,8 @@
 package com.forum.bean;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
@@ -43,6 +45,9 @@ public class PostsBean {
 
 	@Column(name = "view_count")
 	private int view_count;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "postsBean", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+	private Set<RepliesBean> repliesBean =new HashSet<>();
 
 	public Integer getPost_no() {
 		return post_no;
@@ -107,7 +112,14 @@ public class PostsBean {
 	public void setView_count(int view_count) {
 		this.view_count = view_count;
 	}
-	
+
+	public Set<RepliesBean> getRepliesBean() {
+		return repliesBean;
+	}
+
+	public void setRepliesBean(Set<RepliesBean> repliesBean) {
+		this.repliesBean = repliesBean;
+	}
 	
 }
 
