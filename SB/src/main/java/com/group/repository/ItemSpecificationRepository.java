@@ -9,7 +9,7 @@ import com.group.model.ItemSpecification;
 
 public interface ItemSpecificationRepository extends JpaRepository<ItemSpecification, Integer> {
 	
-	@Query("SELECT i from ItemSpecification i where i.item.itemno = :itemno")
+	@Query("SELECT i from ItemSpecification i where i.item.itemNo = :itemno")
 	public List<ItemSpecification> findItemSpecByItemNo(Integer itemno);
 	
 }
