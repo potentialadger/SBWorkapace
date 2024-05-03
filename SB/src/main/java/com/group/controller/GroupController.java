@@ -59,6 +59,7 @@ public class GroupController {
 //		int userNo = userbean.getUserNo();
 		Integer userNo = 1;
 		
+		System.out.println("aaa");
 		List<Group> groups = gService.findGroupByUser(userNo);
 		m.addAttribute("groups",groups);
 		return "group/jsp/mygroup.jsp";
