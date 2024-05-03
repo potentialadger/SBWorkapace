@@ -4,10 +4,15 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,7 +28,44 @@ import jakarta.servlet.http.HttpSession;
 public class SocialPhotosController {
 	
 	@Autowired
-	private SocialPhotosService socialPhotosService;
+	private SocialPhotosService spService;
+	
+	
+	// 查詢單張照片
+	@GetMapping("/photos/{photoNo}")
+	public String getPhotoById(@PathVariable Integer photoNo, Model model) {
+	    SocialPhotosBean photo = spService.getById(photoNo);
+	    if (photo == null) {
+	        // 處理找不到照片的情況,例如返回錯誤頁面或其他操作
+	        return "error"; // 這裡替換為實際的錯誤頁面路徑
+	    }
+	    model.addAttribute("photo", photo);
+	    return "photoDetails"; // 這裡替換為顯示單張照片詳情的JSP文件路徑
+	}
+
+	// 查詢所有照片
+	@GetMapping("/photos")
+	public String getAllPhotos(Model model) {
+	    List<SocialPhotosBean> photos = spService.findAll();
+	    model.addAttribute("photos", photos);
+	    return "photoList"; // 這裡替換為列出所有照片的JSP文件路徑
+	}
+
+	// 根據主題查詢照片
+	@GetMapping("/photos/theme/{photoTheme}")
+	public String getPhotosByTheme(@PathVariable String photoTheme, Model model) {
+	    List<SocialPhotosBean> photos = spService.findByPhotoTheme(photoTheme);
+	    model.addAttribute("photos", photos);
+	    return "photoList"; // 這裡替換為列出按主題過濾的照片的JSP文件路徑
+	}
+
+	// 删除照片
+	@DeleteMapping("/photos/{photoNo}")
+	public String deletePhoto(@PathVariable Integer photoNo) {
+		spService.deleteById(photoNo);
+	    // 可以在這裡添加刪除成功後的操作,例如重定向到列表頁面
+	    return "redirect:/photos"; // 這裡替換為重定向到照片列表頁面的路徑
+	}
 	
 	
     // 查詢單張照片
@@ -87,7 +129,7 @@ public class SocialPhotosController {
 	    File fileDirPath = new File(fileDir, filename);
 	    mf.transferTo(fileDirPath);
 
-	    SocialPhotosBean sPhoto = socialPhotosService.insertOrUpdate(userNo, photoTheme, filename);
+	    SocialPhotosBean sPhoto = spService.insertOrUpdate(userNo, photoTheme, filename);
 	    session.setAttribute("photono", sPhoto.getPhotoNo());
 
 	    return sPhoto;
@@ -126,7 +168,7 @@ public class SocialPhotosController {
 		File fileDirPath = new File(fileDir, filename);
 		mf.transferTo(fileDirPath);
 		
-		SocialPhotosBean sPhoto = socialPhotosService.insertOrUpdate(userNo, photoTheme, filename);
+		SocialPhotosBean sPhoto = spService.insertOrUpdate(userNo, photoTheme, filename);
 		
 		return sPhoto;
 	}
