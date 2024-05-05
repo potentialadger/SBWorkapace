@@ -48,6 +48,9 @@ public class PostsBean {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "postsBean", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
 	private Set<RepliesBean> repliesBean =new HashSet<>();
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "postsBean", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+	private Set<ReportsBean> reportsBean =new HashSet<>();
 
 	public Integer getPost_no() {
 		return post_no;
@@ -120,6 +123,16 @@ public class PostsBean {
 	public void setRepliesBean(Set<RepliesBean> repliesBean) {
 		this.repliesBean = repliesBean;
 	}
+
+	public Set<ReportsBean> getReportsBean() {
+		return reportsBean;
+	}
+
+	public void setReportsBean(Set<ReportsBean> reportsBean) {
+		this.reportsBean = reportsBean;
+	}
+	
+	
 	
 }
 

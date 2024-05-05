@@ -1,14 +1,14 @@
-<%@ page import="com.forum.bean.PostsBean" %>
+<%@ page import="com.forum.bean.RepliesBean" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>文章管理</title>
+<title>回覆管理</title>
 </head>
 <body>
-<h1>文章管理</h1>
+<h1>回覆管理</h1>
     <br>
     <form method="get" action="/replies/OneReplies">
         查詢: <input type="text" name="repliesBeanKeyword" required>
@@ -30,7 +30,7 @@
                 <th>會員名稱</th>
                 <th>會員信箱</th>
                 <th>文章標題</th>
-                <th>內容</th>
+                <th>回覆內容</th>
                 <th>日期</th>
                 <th>刪除</th>
             </tr>
@@ -57,7 +57,7 @@
                     </tr>
                 </c:forEach>
             </c:if>
-            <c:if test="${empty postsM}">
+            <c:if test="${empty repliesM}">
                 <tr>
                     <td colspan="7">尚無資料</td>
                 </tr>

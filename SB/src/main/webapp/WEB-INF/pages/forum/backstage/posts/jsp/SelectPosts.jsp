@@ -60,6 +60,13 @@
                                 <button type="submit">刪除</button>
                             </form>
                         </td>
+                        
+                        <td>
+							<form method="get" action="/reports/SelectReportsPosts">
+							 <input type="hidden" name="postsNo" value="${posts.post_no}">
+    						<button type="submit">檢舉</button>
+							</form>
+						</td>
                     </tr>
                 </c:forEach>
             </c:if>
