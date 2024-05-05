@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profile Edit</title>
+    <title>Blog</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
         integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
     <link rel="stylesheet" href="./scss/custom.css" />
@@ -197,6 +197,7 @@
             /* 調整高度 */
             display: inline-block;
             /* 或者 float:left; */
+            overflow: hidden; /* 裁切超出框架的部分 */
         }
 
         /*主題照片框線樣式*/
@@ -534,8 +535,7 @@
 
                                                     <!--顯示用戶的頭像或者預設的用戶圖示 - Font Awesome圖標-->
                                                     <div class="square position-relative display-2 mb-3">
-                                                        <i
-                                                            class="fas fa-fw fa-user position-absolute top-50 start-50 translate-middle text-secondary"></i>
+                                                        <img src="https://p1-tt.byteimg.com/origin/tos-cn-i-qvj2lq49k0/a2752baadcc147cb80408dc7179fe65b.jpg" alt="User Avatar" class="position-absolute top-50 start-50 translate-middle img-fluid">
                                                     </div>
 
                                                     <input type="file" id="customFile" name="file" hidden>
@@ -658,16 +658,16 @@
                         <div class="owl-carousel owl-theme">
 
                             <!--第一個主題-->
-                            <div class="item">
-                                <div class="photo-container position-relative">
-                                    <div class="image-frame"></div>
+                            <div class="item" >
+                                <div class="photo-container position-relative" >
+                                    <div class="image-frame" ></div>
                                     <!--刪除按鈕-->
                                     <button type="button"
                                         class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
                                     <label for="customFile1"
-                                        class="square position-absolute top-50 start-50 translate-middle display-2">
+                                        class="square position-absolute top-50 start-50 translate-middle display-2 ">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
                                     <input type="file" id="customFile1" name="file" hidden>
@@ -747,11 +747,11 @@
                                         class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile3"
+                                    <label for="customFile5"
                                         class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
-                                    <input type="file" id="customFile3" name="file" hidden>
+                                    <input type="file" id="customFile5" name="file" hidden>
                                     <!-- 新增的空白區塊用來放置主題文字 -->
                                     <div class="theme-name text-center p-2">
                                         展露身材
@@ -767,11 +767,11 @@
                                         class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile3"
+                                    <label for="customFile6"
                                         class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
-                                    <input type="file" id="customFile3" name="file" hidden>
+                                    <input type="file" id="customFile6" name="file" hidden>
                                     <!-- 新增的空白區塊用來放置主題文字 -->
                                     <div class="theme-name text-center p-2">
                                         性感的我
@@ -787,11 +787,11 @@
                                         class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile3"
+                                    <label for="customFile7"
                                         class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
-                                    <input type="file" id="customFile3" name="file" hidden>
+                                    <input type="file" id="customFile7" name="file" hidden>
                                     <!-- 新增的空白區塊用來放置主題文字 -->
                                     <div class="theme-name text-center p-2">
                                         玩樂的我
@@ -807,11 +807,11 @@
                                         class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile3"
+                                    <label for="customFile8"
                                         class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
-                                    <input type="file" id="customFile3" name="file" hidden>
+                                    <input type="file" id="customFile8" name="file" hidden>
                                     <!-- 新增的空白區塊用來放置主題文字 -->
                                     <div class="theme-name text-center p-2">
                                         時尚的我
@@ -827,11 +827,11 @@
                                         class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile3"
+                                    <label for="customFile9"
                                         class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
-                                    <input type="file" id="customFile3" name="file" hidden>
+                                    <input type="file" id="customFile9" name="file" hidden>
                                     <!-- 新增的空白區塊用來放置主題文字 -->
                                     <div class="theme-name text-center p-2">
                                         我的作品
@@ -847,11 +847,11 @@
                                         class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile3"
+                                    <label for="customFile10"
                                         class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
-                                    <input type="file" id="customFile3" name="file" hidden>
+                                    <input type="file" id="customFile10" name="file" hidden>
                                     <!-- 新增的空白區塊用來放置主題文字 -->
                                     <div class="theme-name text-center p-2">
                                         我的收藏
@@ -867,11 +867,11 @@
                                         class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile3"
+                                    <label for="customFile11"
                                         class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
-                                    <input type="file" id="customFile3" name="file" hidden>
+                                    <input type="file" id="customFile11" name="file" hidden>
                                     <!-- 新增的空白區塊用來放置主題文字 -->
                                     <div class="theme-name text-center p-2">
                                         最愛的美食
@@ -887,11 +887,11 @@
                                         class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile3"
+                                    <label for="customFile12"
                                         class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
-                                    <input type="file" id="customFile3" name="file" hidden>
+                                    <input type="file" id="customFile12" name="file" hidden>
                                     <!-- 新增的空白區塊用來放置主題文字 -->
                                     <div class="theme-name text-center p-2">
                                         最愛的電影
@@ -907,11 +907,11 @@
                                         class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile3"
+                                    <label for="customFile13"
                                         class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
-                                    <input type="file" id="customFile3" name="file" hidden>
+                                    <input type="file" id="customFile13" name="file" hidden>
                                     <!-- 新增的空白區塊用來放置主題文字 -->
                                     <div class="theme-name text-center p-2">
                                         最愛的書本
@@ -927,11 +927,11 @@
                                         class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile3"
+                                    <label for="customFile14"
                                         class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
-                                    <input type="file" id="customFile3" name="file" hidden>
+                                    <input type="file" id="customFile14" name="file" hidden>
                                     <!-- 新增的空白區塊用來放置主題文字 -->
                                     <div class="theme-name text-center p-2">
                                         最愛的遊戲
@@ -1175,7 +1175,7 @@
             //可選標籤 : 框裡選擇再在外面顯示標籤
             var input = document.querySelector('input[name=tags-outside]')
             var tagify = new Tagify(input, {
-                whitelist: ['感情心事', '唱歌', '電玩', '美食', '購物', '運動', '動漫', '音樂', '人生夢想', '旅行壯遊', '寵物', '文青對話', '語言交換', '影視討論', '工作', '隨便', '深夜話題'],
+                whitelist: ['感情心事', '唱歌', '電玩', '美食', '購物', '運動', '動漫', '音樂', '寵物', '人生夢想', '旅行壯遊', '文青對話', '語言交換','打工旅遊', '影視討論', '工作', '隨便', '深夜話題'],
                 focusable: false,
                 dropdown: {
                     position: 'input',
