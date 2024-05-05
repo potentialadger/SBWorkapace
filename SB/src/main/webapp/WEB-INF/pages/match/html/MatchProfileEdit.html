@@ -197,7 +197,8 @@
             /* 調整高度 */
             display: inline-block;
             /* 或者 float:left; */
-            overflow: hidden; /* 裁切超出框架的部分 */
+            overflow: hidden;
+            /* 裁切超出框架的部分 */
         }
 
         /*主題照片框線樣式*/
@@ -535,7 +536,9 @@
 
                                                     <!--顯示用戶的頭像或者預設的用戶圖示 - Font Awesome圖標-->
                                                     <div class="square position-relative display-2 mb-3">
-                                                        <img src="https://p1-tt.byteimg.com/origin/tos-cn-i-qvj2lq49k0/a2752baadcc147cb80408dc7179fe65b.jpg" alt="User Avatar" class="position-absolute top-50 start-50 translate-middle img-fluid">
+                                                        <img src="https://p1-tt.byteimg.com/origin/tos-cn-i-qvj2lq49k0/a2752baadcc147cb80408dc7179fe65b.jpg"
+                                                            alt="User Avatar"
+                                                            class="position-absolute top-50 start-50 translate-middle img-fluid">
                                                     </div>
 
                                                     <input type="file" id="customFile" name="file" hidden>
@@ -658,9 +661,9 @@
                         <div class="owl-carousel owl-theme">
 
                             <!--第一個主題-->
-                            <div class="item" >
-                                <div class="photo-container position-relative" >
-                                    <div class="image-frame" ></div>
+                            <div class="item">
+                                <div class="photo-container position-relative">
+                                    <div class="image-frame"></div>
                                     <!--刪除按鈕-->
                                     <button type="button"
                                         class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
@@ -1109,12 +1112,35 @@
             });
         </script>
 
+
+        <script>
+            //按下"x"刪除圖片
+
+            // 獲取所有的刪除按鈕
+            const deleteButtons = document.querySelectorAll('.delete-photo');
+
+            // 遍歷每個刪除按鈕,並綁定事件監聽器
+            deleteButtons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    // 獲取對應的圖片框
+                    const imageFrame = button.parentNode.querySelector('.image-frame');
+
+                    // 清空圖片框
+                    imageFrame.innerHTML = '';
+
+                    // 還原默認的加號圖標
+                    const addPhotoIcon = button.parentNode.querySelector('.add-photo');
+                    addPhotoIcon.style.display = 'block';
+                });
+            });
+        </script>
+
         <script>
             //可選標籤 : 下拉式選單
             var input = document.querySelector('input[name=tags-manual-suggestions]'),
                 // init Tagify script on the above inputs
                 tagify = new Tagify(input, {
-                    whitelist: ["A# .NET", "A# (Axiom)", "A-0 System", "A+", "A++", "ABAP", "ABC", "ABC ALGOL", "ABSET", "ABSYS", "ACC", "Accent", "Ace DASL", "ACL2", "Avicsoft", "ACT-III", "Action!", "ActionScript", "Ada", "Adenine", "Agda", "Agilent VEE", "Agora", "AIMMS", "Alef", "ALF", "ALGOL 58", "ALGOL 60", "ALGOL 68", "ALGOL W", "Alice", "Alma-0", "AmbientTalk", "Amiga E", "AMOS", "AMPL", "Apex (Salesforce.com)", "APL", "AppleScript", "Arc", "ARexx", "Argus", "AspectJ", "Assembly language", "ATS", "Ateji PX", "AutoHotkey", "Autocoder", "AutoIt", "AutoLISP / Visual LISP", "Averest", "AWK", "Axum", "Active Server Pages", "ASP.NET", "B", "Babbage", "Bash", "BASIC", "bc", "BCPL", "BeanShell", "Batch (Windows/Dos)", "Bertrand", "BETA", "Bigwig", "Bistro", "BitC", "BLISS", "Blockly", "BlooP", "Blue", "Boo", "Boomerang", "Bourne shell (including bash and ksh)", "BREW", "BPEL", "B", "C--", "C++ – ISO/IEC 14882", "C# – ISO/IEC 23270", "C/AL", "Caché ObjectScript", "C Shell", "Caml", "Cayenne", "CDuce", "Cecil", "Cesil", "Céu", "Ceylon", "CFEngine", "CFML", "Cg", "Ch", "Chapel", "Charity", "Charm", "Chef", "CHILL", "CHIP-8", "chomski", "ChucK", "CICS", "Cilk", "Citrine (programming language)", "CL (IBM)", "Claire", "Clarion", "Clean", "Clipper", "CLIPS", "CLIST", "Clojure", "CLU", "CMS-2", "COBOL – ISO/IEC 1989", "CobolScript – COBOL Scripting language", "Cobra", "CODE", "CoffeeScript", "ColdFusion", "COMAL", "Combined Programming Language (CPL)", "COMIT", "Common Intermediate Language (CIL)", "Common Lisp (also known as CL)", "COMPASS", "Component Pascal", "Constraint Handling Rules (CHR)", "COMTRAN", "Converge", "Cool", "Coq", "Coral 66", "Corn", "CorVision", "COWSEL", "CPL", "CPL", "Cryptol", "csh", "Csound", "CSP", "CUDA", "Curl", "Curry", "Cybil", "Cyclone", "Cython", "Java", "Javascript", "M2001", "M4", "M#", "Machine code", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"],
+                    whitelist: ["JAVA","懶癌末期", "無話不談", "美劇", "健身", "韓劇", "NBA", "咖啡成癮", "爬山", "游泳", "馬拉松", "ABC", "今天吃什麼", "健行", "打工度假", "留學生活", "Youtube", "新移民", "唱歌", "打工", "貓", "狗", "奶茶控", "夜貓子", "手控", "音控", "顏控", "喜歡年上", "喜歡年下", "穩聊", "古風", "文青", "愛動物", "鬼片", "泰拳", "重訓", "衝浪", "不抽菸", "不喝酒", "作息規律", "素食主義者", "大叔", "不會說謊", "好相處", "美食甜點", "運動", "不菸不酒", "下廚小能手", "真心", "手遊", "閱讀", "正能量", "脾氣好", "陽光男孩", "愛睡覺", "背包客", "野外活動", "心理學", "數學", "股票", "攝影", "自煮", "外食", "影集", "陸劇", "找個聊得來的人", "滑雪", "熱愛生活", "情感豐富", "單身", "刺青", "擋車", "傳說對決", "園藝", "下棋", "棒球", "來個說走就走的旅行", "成人話題", "不排除聊色", "LOL", "KTV", "演戲", "打code", "工程師", "樂觀", "金融投資", "愛音樂", "ROCK!", "看展", "研究歷史", "獨立樂團", "韓團", "追星", "Y2K", "時尚", "reddit", "友善食光", "i珍食", "小資族", "英文", "日文", "生活要自己學會快樂", "想找個互相陪伴的人", "無釐頭", "愛笑", "熟了就很瘋", "學生", "上班族", "創業", "原神", "鋼琴", "武術", "科技產品", "幽默風趣", "熱愛生活", "瘋瘋癲癲", "藝術家", "可愛", "帥氣", "率性", "走在夢想的路上", "溫柔體貼", "專一", "老實人", "轉職", "設計", "抖S", "抖M", "黑客", "愛冒險", "我都可以聊喔", "手工藝", "高蛋白飲食", "佛系交友", "討厭人多的地方", "插畫家", "愛發呆", "塔羅", "算命", "夾娃娃", "智性戀", "音樂創作", "鬼才", "搞怪", "跳tone", "理性", "感性", "逛街", "小酌", "喜歡交朋友", "害羞", "慢熟", "可靠", "講幹話", "穿搭", "電視劇", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"],
                     dropdown: {
                         position: "manual",
                         maxItems: Infinity,
@@ -1175,7 +1201,7 @@
             //可選標籤 : 框裡選擇再在外面顯示標籤
             var input = document.querySelector('input[name=tags-outside]')
             var tagify = new Tagify(input, {
-                whitelist: ['感情心事', '唱歌', '電玩', '美食', '購物', '運動', '動漫', '音樂', '寵物', '人生夢想', '旅行壯遊', '文青對話', '語言交換','打工旅遊', '影視討論', '工作', '隨便', '深夜話題'],
+                whitelist: ['感情心事', '唱歌', '電玩', '美食', '購物', '運動', '動漫', '音樂', '寵物', '人生夢想', '旅行壯遊', '文青對話', '語言交換', '打工旅遊', '影視討論', '工作', '隨便', '深夜話題'],
                 focusable: false,
                 dropdown: {
                     position: 'input',
