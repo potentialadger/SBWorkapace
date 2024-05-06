@@ -146,7 +146,9 @@ public class UserBean implements Serializable{
 	public int getIsDelete() {return isDelete;}
 	public Integer getIsManager() {return isManager;}
 	public Set<TagsBean> getTags() {return tags;}
-
+	public Integer getPoint() {return point;}
+	
+	
 	
 	public void setUserNo(int userNo) {this.userNo = userNo;}
 	public void setUserAccount(String userAccount) {this.userAccount = userAccount;}
@@ -170,6 +172,7 @@ public class UserBean implements Serializable{
 	public void setIsDelete(int isDelete) {this.isDelete = isDelete;}
 	public void setIsManager(Integer isManager) {this.isManager = isManager;}
 	public void setTags(Set<TagsBean> tags) {this.tags = tags;}
+	public void setPoint(Integer point) {this.point = point;}
 	
 	
 	@Override

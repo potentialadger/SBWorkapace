@@ -17,8 +17,9 @@ public class WebAppConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/user.login").setViewName("user/html/LogIn.html");
-		registry.addViewController("/user.signup").setViewName("user/html/SignUp.html");
+		registry.addViewController("/user.login").setViewName("user/html/NewLogin.html");
+		registry.addViewController("/user.signup").setViewName("user/html/register.html");
+		registry.addViewController("/user.oldSignup").setViewName("user/html/SignUp.html");
 		registry.addViewController("/ManagerIndex").setViewName("ManagerIndex.jsp");
 		registry.addViewController("/forum.homepage").setViewName("/forum/html/Home.html");
 		registry.addViewController("/forum.InsertPosts").setViewName("/forum/html/InsertPosts.html");
@@ -35,6 +36,8 @@ public class WebAppConfig implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/mycss/**").addResourceLocations("/WEB-INF/resources/mycss/");
+		registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/resources/mycss/");
+		registry.addResourceHandler("/vendor/**").addResourceLocations("/WEB-INF/resources/vendor/");
 		registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/resources/images/");
 		registry.addResourceHandler("/groupimages/**").addResourceLocations("file:/C:/temp/upload/");
 		registry.addResourceHandler("/localimages/**").addResourceLocations("file:/C:/temp/upload/");
