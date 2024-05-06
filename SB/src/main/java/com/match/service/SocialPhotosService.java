@@ -2,13 +2,10 @@ package com.match.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.match.bean.SocialPhotosBean;
 import com.match.repository.SocialPhotosRepository;
-
 import jakarta.transaction.Transactional;
 
 @Service
@@ -34,7 +31,7 @@ public class SocialPhotosService {
 	
 	// 查詢所有照片
 	public List<SocialPhotosBean> findAll(){
-		return spRepos.findAll();
+		return spRepos.findAll();                                        // 檢索資料庫中所有的照片記錄
 	}
 	
 	
@@ -45,22 +42,26 @@ public class SocialPhotosService {
     
     
     // 根據用戶ID和主題查詢照片
-    public SocialPhotosBean findByUserNoAndPhotoTheme(Integer userNo, String photoTheme) {
-        List<SocialPhotosBean> photos = spRepos.findByUserNoAndPhotoTheme(userNo, photoTheme);
-        return photos.isEmpty() ? null : photos.get(0);
+    public SocialPhotosBean findByUserNoAndPhotoTheme(Integer userNo, String photoTheme) {       //接收兩個參數：userNo 和 photoTheme
+        List<SocialPhotosBean> photos = spRepos.findByUserNoAndPhotoTheme(userNo, photoTheme);   //根據 userNo 和 photoTheme 查詢資料庫並返回符合條件的照片列表
+        if (photos.isEmpty()) {                                                                  //if判斷
+            return null;
+        } else {
+            return photos.get(0);                                                                //返回符合條件的第一張照片
+        }
     }
     
     
-    // 新增或更新照片
+    // 新增或更新照片                                                                 //檔案上傳的
     public SocialPhotosBean insertOrUpdate(Integer userNo, String photoTheme, String photoPath) {
         SocialPhotosBean existingPhoto = findByUserNoAndPhotoTheme(userNo, photoTheme);
         if (existingPhoto != null) {
             // 如果該用戶在指定主題下已有照片,則覆蓋原有照片
-            existingPhoto.setPhotoPath(photoPath);
+            existingPhoto.setPhotoPath(photoPath);   //檔案上傳的傳到這裡                                        //將新的照片路徑 photoPath 設置到現有照片對象 existingPhoto 中的 photoPath 屬性中。
             return spRepos.save(existingPhoto);
         } else {
             // 如果該用戶在指定主題下沒有照片,則插入新照片
-            SocialPhotosBean newPhoto = new SocialPhotosBean();
+            SocialPhotosBean newPhoto = new SocialPhotosBean();                                  //它將創建一個新的照片物件 newPhoto，並設置其用戶ID、照片主題和照片路徑，然後將這個新照片保存到資料庫中
             newPhoto.setUserNo(userNo);
             newPhoto.setPhotoTheme(photoTheme);
             newPhoto.setPhotoPath(photoPath);
@@ -73,6 +74,7 @@ public class SocialPhotosService {
 	public void deleteById(Integer photoNo) {
 		spRepos.deleteById(photoNo);
 	}
+	
 	
 	
 	

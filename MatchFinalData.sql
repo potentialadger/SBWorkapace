@@ -66,13 +66,21 @@ CREATE TABLE UserChat (
 	FOREIGN KEY (FriendNo) REFERENCES Users(UserNo)
 );
 
+Select * from users
+Select * from Tags
+Select * from UserTags
+
+INSERT INTO Users(Account, UserPassword, UCName, UEName, NickName, Avatar, Email, Birthday, Phone, UserAddress, CreationDatetime, LastLoginDatetime, Gender, GoalNo, BloodType, MBTI, Suspension, Verify, isDelete, isManager, point)
+VALUES ('account','password','小明', 'moon', '床前明月光', 'avatar','xxx@gmail.com' ,'2000/01/01', '0986777777' ,'天堂' ,'2024/02/28' ,'2024/03/05', 0 ,1,'AB','INFJ',0,0,0,0,0);
+
+
 
 
 --榆喬
 
 CREATE TABLE SocialPhotos(
     PhotoNo     INT  identity(1,1) PRIMARY KEY,
-    FKUserNo      INT		      NOT NULL,
+    FKUserNo    INT		      NOT NULL,
     PhotoPath   NVARCHAR(200) NULL,
     PhotoTheme  NVARCHAR(30)  NOT NULL,
 	FOREIGN KEY (FKUserNo) REFERENCES Users(UserNo),
@@ -83,6 +91,8 @@ CREATE TABLE Tags(
     TagNo	    INT	 identity(1,1)	PRIMARY KEY,
     TagName		NVARCHAR(30)  NOT NULL,
 );
+
+Select * from Tags
 
 
 CREATE TABLE UserTags(
@@ -115,14 +125,16 @@ CREATE TABLE Match(
 );
 
 CREATE TABLE MatchChat (
-    UserChatNo INT identity(1,1) PRIMARY KEY,
-    UserNo    INT  NOT NULL,
+    UserChatNo  INT identity(1,1) PRIMARY KEY,
+    UserNo      INT  NOT NULL,
 	FriendNo    INT  NOT NULL,
 	ChatContent NVARCHAR(MAX) NOT NULL,
 	ContentTime datetime2 null,
 	FOREIGN KEY (UserNo) REFERENCES Users(UserNo),
 	FOREIGN KEY (FriendNo) REFERENCES Users(UserNo)
 );
+
+Select * from UserTags
 
 
 --官正
@@ -279,7 +291,7 @@ CREATE TABLE EventRegistrations (
     FOREIGN KEY (UserNo) REFERENCES Users(UserNo)
 );
 
-
+ALTER DATABASE SB COLLATE Chinese_PRC_90_CI_AS
 
 Select * from Goals 
 
@@ -302,7 +314,24 @@ Select * from Users
 
 Select * from SocialPhotos
 
+
 Select * from Tags
+
+INSERT INTO Tags (TagName)  --GoalNo是自動增長的PK
+VALUES 
+('我的照片'),
+('旅行壯遊'),
+('我的寵物'),
+('偉大紀錄'),
+('展露身材'),
+('性感的我'),
+('使壞的我'),
+('玩樂的我'),
+('最愛的美食'),
+('最愛的電影'),
+('最愛的書本'),
+('最愛的遊戲');
+
 
 Select * from UserTags
 
@@ -315,6 +344,5 @@ Select * from UserTopics
 Select * from Match
 
 Select * from MatchChat
-
 
 
