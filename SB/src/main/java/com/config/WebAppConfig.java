@@ -18,7 +18,8 @@ public class WebAppConfig implements WebMvcConfigurer {
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/user.login").setViewName("user/html/NewLogin.html");
-		registry.addViewController("/user.signup").setViewName("user/html/SignUp.html");
+		registry.addViewController("/user.signup").setViewName("user/html/register.html");
+		registry.addViewController("/user.oldSignup").setViewName("user/html/SignUp.html");
 		registry.addViewController("/ManagerIndex").setViewName("ManagerIndex.jsp");
 		registry.addViewController("/forum.homepage").setViewName("/forum/html/Home.html");
 		registry.addViewController("/forum.InsertPosts").setViewName("/forum/html/InsertPosts.html");
