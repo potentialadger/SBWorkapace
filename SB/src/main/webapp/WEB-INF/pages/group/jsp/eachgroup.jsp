@@ -133,7 +133,7 @@
                             </table>
                             <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal"
                                 type="submit" id="submitorder" data-eventno="<%=group.getEventNo() %>"
-                                style="width: 100%;">送出</button>
+                                style="width: 100%;">購物車</button>
                         </div>
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -177,8 +177,8 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary cartsubmit" 
-                                         data-eventno="<%=group.getEventNo() %>">確認送出</button>
+                                        <button type="button" class="btn btn-primary cartsubmit"
+                                            data-eventno="<%=group.getEventNo() %>">確認送出</button>
                                     </div>
                                 </div>
                             </div>

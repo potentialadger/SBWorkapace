@@ -3,6 +3,7 @@ package com.group.service;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,5 +32,17 @@ public class OrderService {
 		order.setSetTime(setTime);
 		
 		return orderRepository.save(order);
+	}
+	
+//	查詢訂單依活動
+	public List<Order> findOrdersByEventNo(Integer eventNo) {
+		List<Order> Orders = orderRepository.findOrdersByEventNo(eventNo);
+		return Orders;
+	}
+	
+//	查詢訂單依訂購人
+	public List<Order> findOrdersByUserNo(Integer userNo){
+		List<Order> orders = orderRepository.findOrdersByUserNo(userNo);
+		return orders;
 	}
 }

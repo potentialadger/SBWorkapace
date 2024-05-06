@@ -1,5 +1,7 @@
 package com.group.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,5 +27,11 @@ public class OrderDetailService {
 		orderDetail.setItemSpec(itemSpec);
 		
 		return orderDetailReopsitory.save(orderDetail);
+	}
+	
+//	查詢訂單細節依訂單編號
+	public List<OrderDetail> findOrderDetailsByOrderNo(Integer orderNo){
+		List<OrderDetail> orderDetails = orderDetailReopsitory.findOrderDetailByOrderNo(orderNo);
+		return orderDetails;
 	}
 }
