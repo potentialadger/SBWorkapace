@@ -33,7 +33,6 @@
     <label for="image_url">圖片 :</label><br>
     <input type="file" name="image_url"/>
     <img src="${updateSelect.image_url}"><br>
-    <button type="submit">上傳圖片</button>
 	</div>
   
     <label for="update_date">日期 :</label><br>
@@ -41,7 +40,7 @@
     
     <label for="view_count">瀏覽次數 :</label><br>
     <input type="text" name="view_count" value="${updateSelect.view_count}" readonly/><br>
-      
+    
     <input type="submit" value="修改" />
 </form>
 </body>

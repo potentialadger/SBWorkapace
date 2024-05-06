@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import com.forum.bean.PostsBean;
 import com.forum.bean.ReportsBean;
 import com.forum.service.PostsServiceInterface;
 import com.forum.service.ReportsService;
 import com.user.bean.UserBean;
-import com.user.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/reports")
@@ -28,9 +28,6 @@ public class ReportsController {
 
 	@Autowired
 	private PostsServiceInterface postsService;
-
-	@Autowired
-	private UserService userService;
 
 	// 全部查詢
 	@GetMapping("/AllReports")
@@ -58,15 +55,16 @@ public class ReportsController {
 	@PostMapping("/InsertReports")
 	public String insertReports(@RequestParam("post_no") Integer post_no, 
 			@RequestParam("user_no") Integer user_no,
-			@RequestParam("reason") String reason
+			@RequestParam("reason") String reason,
+			HttpSession session
 			) {
 
 		PostsBean posts = postsService.getPostsNo(post_no);
-		UserBean user = userService.getUserData(user_no);
+		UserBean userData = (UserBean) session.getAttribute("userData");
 
 		ReportsBean reports = new ReportsBean();
 		reports.setPostsBean(posts);
-		reports.setUserBean(user);
+		reports.setUserBean(userData);
 		reports.setReason(reason);
 		reports.setReport_date(new Date());
 
@@ -75,17 +73,19 @@ public class ReportsController {
 		return "redirect:/reports/AllReports";
 	}
 
-	// 刪除
-	@DeleteMapping("/DeleteReports")
-	public String deleteReports(
-			@RequestParam("reportNo") String reportNo, 
-			@RequestParam("postNo") String postNo) {
-
-		reportsService.deleteReports(Integer.parseInt(reportNo));
-		
-		postsService.deletePosts(Integer.parseInt(postNo));
-		
-		return "redirect:/reports/AllReports";
-
-	}
+//	// 刪除
+//	@DeleteMapping("/DeleteReports")
+//	public String deleteReports(
+//			@RequestParam("reportNo") String reportNo, 
+//			@RequestParam("postNo") String postNo) {
+//
+//		reportsService.deleteReports(Integer.parseInt(reportNo));
+//		
+//		postsService.deletePosts(Integer.parseInt(postNo));
+//		
+//		return "redirect:/reports/AllReports";
+//
+//	}
+	
+	
 }

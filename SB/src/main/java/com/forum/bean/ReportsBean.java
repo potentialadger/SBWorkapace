@@ -81,7 +81,6 @@ public class ReportsBean {
 
 	public void setReport_date(Date report_date) {
 		this.report_date = report_date;
-	}
-	
+	}	
 	
 }

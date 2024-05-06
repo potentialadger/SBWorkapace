@@ -18,7 +18,8 @@ import com.forum.bean.RepliesBean;
 import com.forum.service.PostsServiceInterface;
 import com.forum.service.RepliesService;
 import com.user.bean.UserBean;
-import com.user.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/replies")
@@ -30,8 +31,6 @@ public class RepliesController {
 	@Autowired
 	private PostsServiceInterface postsService;
 
-	@Autowired
-	private UserService userService;
 
 	// 單筆查詢
 	@GetMapping("/OneReplies")
@@ -61,15 +60,16 @@ public class RepliesController {
 	public String insertReplies(
 			@RequestParam("post_no") int post_no, 
 			@RequestParam("user_no") int user_no,
-			@RequestParam("content") String content
+			@RequestParam("content") String content,
+			HttpSession session
 			) {
 		
 		PostsBean posts = postsService.getPostsNo(post_no);
-		UserBean user = userService.getUserData(user_no);
+		UserBean userData = (UserBean) session.getAttribute("userData");
 		
 		RepliesBean replies = new RepliesBean();
 		replies.setPostsBean(posts);
-		replies.setUserBean(user);
+		replies.setUserBean(userData);
 		replies.setContent(content);
 		replies.setUpdate_date(new Date());
 		
@@ -107,16 +107,17 @@ public class RepliesController {
 			@RequestParam("post_no") int post_no, 
 			@RequestParam("user_no") int user_no,
 			@RequestParam("content") String content,
-			@RequestParam("update_date") String update_date
+			@RequestParam("update_date") String update_date,
+			HttpSession session
 			) {
 		
-		UserBean user = userService.getUserData(user_no);
+		UserBean userData = (UserBean) session.getAttribute("userData");
 		
 		PostsBean posts = postsService.getPostsNo(post_no);				
 		
 		RepliesBean repliesToUpdate = repliesService.getRepliesNo(reply_no);
 		
-		repliesToUpdate.setUserBean(user);
+		repliesToUpdate.setUserBean(userData);
 		repliesToUpdate.setPostsBean(posts);
 		repliesToUpdate.setContent(content);
 		repliesToUpdate.setUpdate_date(new Date());

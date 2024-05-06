@@ -54,6 +54,12 @@
                                 <button type="submit">刪除</button>
                             </form>
                         </td>
+                        <td>
+							<form method="get" action="/replies/UpdateSelectReplies">
+							<input type="hidden" name="repliesNo" value="${replies.reply_no}">
+							<button type="submit">編輯</button>
+							</form>
+						</td>
                     </tr>
                 </c:forEach>
             </c:if>

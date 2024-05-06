@@ -23,7 +23,8 @@ import com.forum.bean.PostsBean;
 import com.forum.service.CategoriesService;
 import com.forum.service.PostsServiceInterface;
 import com.user.bean.UserBean;
-import com.user.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/posts")
@@ -35,8 +36,6 @@ public class PostsController {
 	@Autowired
 	private CategoriesService categoriesService;
 
-	@Autowired
-	private UserService userService;
 
 	// 單筆查詢
 	@GetMapping("/OnePosts")
@@ -60,6 +59,17 @@ public class PostsController {
 
 		return "/forum/backstage/posts/jsp/SelectPosts.jsp";
 	}
+	
+	//新增用的取得分類版
+	@GetMapping("/InsertPostsCategories")
+	public String getAllCategoriesToJsp(Model m) {
+		
+		List<CategoriesBean> categoriesBeans = categoriesService.getAllCategories();
+		
+		m.addAttribute("categoriesList", categoriesBeans);
+		
+		return "/forum/backstage/posts/jsp/InsertPosts.jsp";
+	}
 
 	// 新增
 	@PostMapping("/InsertPosts")
@@ -68,21 +78,20 @@ public class PostsController {
 			@RequestParam("title") String title, 
 			@RequestParam("content") String content,
 			@RequestParam("image_url") MultipartFile image_url,
-			Model m
+			HttpSession session
 			) {
+		
+		UserBean userData = (UserBean) session.getAttribute("userData");
 
 		CategoriesBean category = categoriesService.getCategoryNo(category_no);
 
 		PostsBean posts = new PostsBean();
+		posts.setUserBean(userData);
 		posts.setCategoriesBean(category);
 		posts.setTitle(title);
 		posts.setContent(content);
 		posts.setUpdate_date(new Date());
 		
-		List<CategoriesBean> categoriesList = categoriesService.getAllCategories();
-		
-		m.addAttribute("categoriesList", categoriesList);
-
 		try {
 			
 		// 從上傳的文件 image_url 中獲取原始文件名。
@@ -120,7 +129,7 @@ public class PostsController {
 		
 		postsService.insertPosts(posts);
 
-		return"";
+		return"redirect:/posts/AllPosts";
 
 	}catch(
 
@@ -132,16 +141,6 @@ public class PostsController {
 	}
 }
 	
-	//新增用的取得分類版
-	@GetMapping("/forum.InsertPosts")
-	public String getAllCategoriesToJsp(Model m) {
-		
-		List<CategoriesBean> categoriesBeans = categoriesService.getAllCategories();
-		
-		m.addAttribute("categoriesList", categoriesBeans);
-		
-		return "/forum/backstage/posts/jsp/InsertPosts.jsp";
-	}
 
 	// 刪除
 	@DeleteMapping("/DeletePosts")
@@ -166,7 +165,7 @@ public class PostsController {
 		m.addAttribute("categoriesList", categoriesList);
 		
 
-		return "/forum/backstage/posts/jsp/Update.jsp";
+		return "/forum/backstage/posts/jsp/UpdatePosts.jsp";
 
 	}
 
@@ -179,19 +178,20 @@ public class PostsController {
 			@RequestParam("title") String title,
 			@RequestParam("content") String content, 
 			@RequestParam("image_url") MultipartFile image_url,
-			@RequestParam("update_date") String update_date
+			@RequestParam("update_date") String update_date,
+			HttpSession session
 		    )
 			{
 		
 		try {
-			
-		UserBean user = userService.getUserData(user_no);
-
+		
+		UserBean userData = (UserBean) session.getAttribute("userData");
+		
 		CategoriesBean category = categoriesService.getCategoryNo(category_no);
 
 		PostsBean postsToUpdate = postsService.getPostsNo(post_no);
-
-		postsToUpdate.setUserBean(user);
+		
+		postsToUpdate.setUserBean(userData);
 		postsToUpdate.setCategoriesBean(category);
 		postsToUpdate.setTitle(title);
 		postsToUpdate.setContent(content);
@@ -238,5 +238,6 @@ public class PostsController {
 	        // 如果發生 IO 錯誤，提示用戶文件上傳失敗 前台還要再做一個頁面
 	        return "redirect:/posts/error?message=文件上傳失敗";
 	    }
-	}		
+	}
+	
 }

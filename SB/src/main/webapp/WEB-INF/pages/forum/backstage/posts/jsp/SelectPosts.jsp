@@ -22,6 +22,10 @@
     <form method="get" action="/forumManager.homepage">
     	<button type="submit">首頁</button>
 	</form>
+	
+	<form method="get" action="/posts/InsertPostsCategories">
+    	<button type="submit">新增</button>
+	</form>
 
     <table>
         <thead>
@@ -52,7 +56,7 @@
                         <td><c:out value="${posts.update_date}" /></td>
                         <td><img src="http://localhost:8080/localimages/${posts.image_url}"  style="max-width: 200px; max-height: 200px;"></td>
                         <td><c:out value="${posts.view_count}" /></td>
-
+                        
                         <td>
                             <form method="post" action="/posts/DeletePosts">
                                 <input type="hidden" name="postsNo" value="${posts.post_no}">
@@ -67,7 +71,22 @@
     						<button type="submit">檢舉</button>
 							</form>
 						</td>
-                    </tr>
+                    	<td>
+							<form action="/replies/InsertReplies" method="post">
+							<input type="hidden" name="user_no" value="${posts.userBean.userNo}">
+							<input type="hidden" name="post_no" value="${posts.post_no}"> 
+							<h2>回覆表單：</h2>
+							<textarea name="content" rows="4" cols="50" required></textarea><br>
+							<input type="submit" value="提交回覆">
+							</form>
+						</td>
+						<td>
+						<form method="get" action="/posts/UpdateSelectPosts">
+         				<input type="hidden" name="postsNo" value="${posts.post_no}">
+         				<button type="submit">修改</button>
+ 						</form>
+ 						</td>
+					</tr>
                 </c:forEach>
             </c:if>
             <c:if test="${empty postsM}">

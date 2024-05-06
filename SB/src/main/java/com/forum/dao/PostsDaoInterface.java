@@ -12,4 +12,6 @@ public interface PostsDaoInterface extends JpaRepository<PostsBean, Integer>{
 
 	 @Query("SELECT p FROM PostsBean p WHERE LOWER(p.title) LIKE LOWER(CONCAT('%', :keyword, '%'))")
 	    List<PostsBean> findByTitleContaining(@Param("keyword") String keyword);
+	
 }
+

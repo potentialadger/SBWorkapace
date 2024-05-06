@@ -10,7 +10,7 @@
 <body>
    <form method="post" action="/reports/InsertReports">
 	<input type="hidden" name="post_no" value="${reportsPosts.post_no}"> 
-    <input type="hidden" name="user_no" value="${reports.userBean.userNo}">
+    <input type="hidden" name="user_no" value="${userData.userNo}">
     <label for="reason">檢舉原因 :</label><br>
     <textarea id="reason" name="reason" rows="5" cols="50" required></textarea><br>
     
