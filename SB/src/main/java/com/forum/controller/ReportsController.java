@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.forum.bean.PostsBean;
 import com.forum.bean.ReportsBean;
-import com.forum.service.PostsServiceInterface;
+import com.forum.service.PostsService;
 import com.forum.service.ReportsService;
 import com.user.bean.UserBean;
 
@@ -27,7 +27,7 @@ public class ReportsController {
 	private ReportsService reportsService;
 
 	@Autowired
-	private PostsServiceInterface postsService;
+	private PostsService postsService;
 
 	// 全部查詢
 	@GetMapping("/AllReports")
@@ -73,19 +73,19 @@ public class ReportsController {
 		return "redirect:/reports/AllReports";
 	}
 
-//	// 刪除
-//	@DeleteMapping("/DeleteReports")
-//	public String deleteReports(
-//			@RequestParam("reportNo") String reportNo, 
-//			@RequestParam("postNo") String postNo) {
-//
-//		reportsService.deleteReports(Integer.parseInt(reportNo));
-//		
-//		postsService.deletePosts(Integer.parseInt(postNo));
-//		
-//		return "redirect:/reports/AllReports";
-//
-//	}
+	// 刪除
+	@DeleteMapping("/DeleteReports")
+	public String deleteReports(
+			@RequestParam("reportNo") String reportNo, 
+			@RequestParam("postNo") String postNo) {
+
+		reportsService.deleteReports(Integer.parseInt(reportNo));
+		
+		postsService.deletePostAndReplies(Integer.parseInt(postNo));
+		
+		return "redirect:/reports/AllReports";
+
+	}
 	
 	
 }

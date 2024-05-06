@@ -46,7 +46,7 @@ public class PostsBean {
 	@Column(name = "view_count")
 	private int view_count;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "postsBean", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "postsBean", cascade = {CascadeType.PERSIST,CascadeType.ALL})
 	private Set<RepliesBean> repliesBean =new HashSet<>();
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "postsBean", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
