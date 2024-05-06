@@ -28,6 +28,19 @@ public class GroupService {
 	@Autowired
 	private UserRepository userRepository;
 	
+//	查詢單筆活動
+	public Group findGroupByEventNo(Integer eventno) {
+		Optional<Group> groupoptional = groupRepository.findById(eventno);
+		
+		if(groupoptional.isEmpty()) {
+			throw new EntityNotFoundException("Group not found with id: " + eventno);
+		}
+		
+		Group group = groupoptional.get();
+	
+		return group;
+	}
+	
 //	查詢活躍活動
 	public List<Group> findAllGroup(){
 		return groupRepository.finaAllGroup();
@@ -90,20 +103,26 @@ public class GroupService {
 			paymentMethod = "0";
 		}
 		
+		Optional<UserBean> useroptional = userRepository.findById(user);
+		if(useroptional.isEmpty()) {
+			throw new EntityNotFoundException("Group not found with id: " + user);
+		}
+		
+		UserBean userBean = useroptional.get();
 		
 		int point = 0;
 		
 	
 		Group group = new Group();
-		group.setHostuserno(user);
+		group.setUser(userBean);
 		group.setTitle(title);
 		group.setDescription(description);
-		group.setStarttime(startTime);
-		group.setEndtime(endtime);
-		group.setMintotalamount(Integer.parseInt(minamount));
-		group.setMintotalquantity(Integer.parseInt(minquantity));
+		group.setStartTime(startTime);
+		group.setEndTime(endtime);
+		group.setMinTotalAmount(Integer.parseInt(minamount));
+		group.setMinTotalQuantity(Integer.parseInt(minquantity));
 		group.setStatus("active");
-		group.setPaymentmethod(Integer.parseInt(paymentMethod));
+		group.setPaymentMethod(Integer.parseInt(paymentMethod));
 		group.setAccount(account);
 		group.setAddress(address);
 		group.setPoint(point);
@@ -157,15 +176,14 @@ public class GroupService {
 		
 		group.setTitle(grouptitle);
 		group.setDescription(groupdescription);
-		group.setEndtime(endtime);
-		group.setPaymentmethod(paymentMethod);
-		group.setMintotalamount(mintotalamount);
-		group.setMintotalquantity(mintotalquantity);
+		group.setEndTime(endtime);
+		group.setPaymentMethod(paymentMethod);
+		group.setMinTotalAmount(mintotalamount);
+		group.setMinTotalQuantity(mintotalquantity);
 		group.setAccount(account);
 		group.setAddress(address);
 		
 		return groupRepository.save(group);
 	}
-	
 	
 }

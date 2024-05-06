@@ -34,11 +34,11 @@ public class OrderDetail {
 	private Item item;
 	
 	@Column(name = "itemquantity")
-	private Integer itemquantity;
+	private Integer itemQuantity;
 	
 	@JoinColumn(name = "itemspec")
 	@OneToOne
-	private ItemSpecification itemspec;
+	private ItemSpecification itemSpec;
 
 	public Integer getId() {
 		return id;
@@ -64,20 +64,22 @@ public class OrderDetail {
 		this.item = item;
 	}
 
-	public Integer getItemquantity() {
-		return itemquantity;
+	public Integer getItemQuantity() {
+		return itemQuantity;
 	}
 
-	public void setItemquantity(Integer itemquantity) {
-		this.itemquantity = itemquantity;
+	public void setItemQuantity(Integer itemQuantity) {
+		this.itemQuantity = itemQuantity;
 	}
 
-	public ItemSpecification getItemspec() {
-		return itemspec;
+	public ItemSpecification getItemSpec() {
+		return itemSpec;
 	}
 
-	public void setItemspec(ItemSpecification itemspec) {
-		this.itemspec = itemspec;
+	public void setItemSpec(ItemSpecification itemSpec) {
+		this.itemSpec = itemSpec;
 	}
+
+	
 
 }

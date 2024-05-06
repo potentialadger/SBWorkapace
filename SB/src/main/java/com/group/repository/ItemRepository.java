@@ -9,7 +9,7 @@ import com.group.model.Item;
 
 public interface ItemRepository extends JpaRepository<Item, Integer> {
 
-	@Query("SELECT i FROM Item i WHERE i.group.eventno = :eventno")
+	@Query("SELECT i FROM Item i WHERE i.group.eventNo = :eventno")
 	public List<Item> findItemByEventNo(int eventno);
 	
 }

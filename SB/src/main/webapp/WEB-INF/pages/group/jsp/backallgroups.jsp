@@ -38,7 +38,7 @@
                                         for (Group group : groups) {
                                         String paymentMethodDisplay = "";
 
-                                        switch (group.getPaymentmethod()) {
+                                        switch (group.getPaymentMethod()) {
                                         case 1 :
                                         paymentMethodDisplay = "匯款";
                                         break;
@@ -67,10 +67,10 @@
                                         %>
                                         <tr>
                                             <th>
-                                                <%=group.getEventno() %>
+                                                <%=group.getEventNo() %>
                                             </th>
                                             <th>
-                                                <%=group.getHostuserno() %>
+                                                <%=group.getUser().getUserNo() %>
                                             </th>
                                             <th>
                                                 <%=group.getTitle() %>
@@ -79,26 +79,26 @@
                                                 <%=group.getDescription() %>
                                             </th>
                                             <th>
-                                                <%=group.getStarttime() %>
+                                                <%=group.getStartTime() %>
                                             </th>
                                             <th>
-                                                <%=group.getEndtime() %>
+                                                <%=group.getEndTime() %>
                                             </th>
                                             <th>
-                                                <%=group.getMintotalamount() %>
+                                                <%=group.getMinTotalAmount() %>
                                             </th>
                                             <th>
-                                                <%=group.getMintotalquantity() %>
+                                                <%=group.getMinTotalQuantity() %>
                                             </th>
                                             <th>
                                                 <%=paymentMethodDisplay %>
                                             </th>
                                             <th>
-                                                <button class="delete" data-eventno="<%=group.getEventno() %>"><i
+                                                <button class="delete" data-eventno="<%=group.getEventNo() %>"><i
                                                         class="fa-solid fa-trash"></i></button>
                                             </th>
                                             <th>
-                                                <button class="items" data-eventno="<%=group.getEventno() %>"><i
+                                                <button class="items" data-eventno="<%=group.getEventNo() %>"><i
                                                         class="fa-solid fa-chevron-down"></i></button>
                                             </th>
                                         </tr>

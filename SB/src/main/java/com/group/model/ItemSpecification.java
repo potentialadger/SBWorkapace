@@ -22,22 +22,14 @@ public class ItemSpecification {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
 	@Column(name = "specno")
-	private int specno;
+	private int specNo;
 
 	@JoinColumn(name = "itemno")
 	@ManyToOne
 	public Item item;
 	
 	@Column(name = "specvalue")
-	private String specvalue;
-
-	public int getSpecno() {
-		return specno;
-	}
-
-	public void setSpecno(int specno) {
-		this.specno = specno;
-	}
+	private String specValue;
 
 	public Item getItem() {
 		return item;
@@ -47,13 +39,23 @@ public class ItemSpecification {
 		this.item = item;
 	}
 
-	public String getSpecvalue() {
-		return specvalue;
+	public int getSpecNo() {
+		return specNo;
 	}
 
-	public void setSpecvalue(String specvalue) {
-		this.specvalue = specvalue;
+	public void setSpecNo(int specNo) {
+		this.specNo = specNo;
 	}
+
+	public String getSpecValue() {
+		return specValue;
+	}
+
+	public void setSpecValue(String specValue) {
+		this.specValue = specValue;
+	}
+
+	
 
 	
 }
