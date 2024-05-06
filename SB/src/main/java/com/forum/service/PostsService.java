@@ -17,7 +17,6 @@ public class PostsService implements PostsServiceInterface {
 
 	@Override
 	public List<PostsBean> getPostsBeanKeyword(String postsBeanKeyword) {
-
 		return postsDao.findByTitleContaining(postsBeanKeyword);
 	}
 

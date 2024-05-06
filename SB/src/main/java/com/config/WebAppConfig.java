@@ -21,13 +21,13 @@ public class WebAppConfig implements WebMvcConfigurer {
 		registry.addViewController("/user.signup").setViewName("user/html/register.html");
 		registry.addViewController("/user.oldSignup").setViewName("user/html/SignUp.html");
 		registry.addViewController("/ManagerIndex").setViewName("ManagerIndex.jsp");
-		registry.addViewController("/forum.homepage").setViewName("/forum/html/Home.html");
-		registry.addViewController("/forum.InsertPosts").setViewName("/forum/html/InsertPosts.html");
 		registry.addViewController("/match.insertGoal").setViewName("match/jsp/InsertGoal.jsp");
 		registry.addViewController("/activityHomepage").setViewName("activity/HomePage.html");
 		registry.addViewController("/activityInsertpage").setViewName("activity/Insert.html");
 		registry.addViewController("/activityInsertRegistrations").setViewName("activity/InsertRegistrations.html");
 		registry.addViewController("/activityList").setViewName("activity/EventList.html");
+//		registry.addViewController("/forum.homepage").setViewName("/forum/html/Home.html");
+		registry.addViewController("/forum.InsertPosts").setViewName("/forum/backstage/posts/jsp/InsertPosts.jsp");
 		registry.addViewController("/forum.InsertCategories").setViewName("forum/backstage/categories/html/InsertCategories.html");
 		registry.addViewController("/forumManager.homepage").setViewName("forum/backstage/ManagerHome.html");
 	}
@@ -41,6 +41,7 @@ public class WebAppConfig implements WebMvcConfigurer {
 		registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/resources/images/");
 		registry.addResourceHandler("/groupimages/**").addResourceLocations("file:/C:/temp/upload/");
 		registry.addResourceHandler("/localimages/**").addResourceLocations("file:/C:/temp/upload/");
+		registry.addResourceHandler("/forumimages/**").addResourceLocations("file:/C:/temp/upload/");
 		registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/resources/js/");
 		registry.addResourceHandler("/json/**").addResourceLocations("/WEB-INF/resources/json/");
 	}

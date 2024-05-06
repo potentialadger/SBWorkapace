@@ -9,6 +9,7 @@
 </head>
 <body>
 <h1>分類版管理</h1>
+
 	<br>
 	<form method="get" action="/CategoriesController/OneCategories">
         查詢: <input type="text" name="categoryKeyword" required>

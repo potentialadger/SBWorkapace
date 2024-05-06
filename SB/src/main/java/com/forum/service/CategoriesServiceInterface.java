@@ -15,5 +15,6 @@ public interface CategoriesServiceInterface {
 	void insertCategory(CategoriesBean category);
 	
 	void deleteCategory(Integer categoryNo);
+	
     
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import com.forum.bean.PostsBean;
 
 public interface PostsServiceInterface {
-
+	
 	List<PostsBean> getPostsBeanKeyword(String postsBeanKeyword);
 
 	List<PostsBean> getAllPosts();
