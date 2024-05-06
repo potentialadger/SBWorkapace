@@ -9,15 +9,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-//@Component
-//@Entity
-//@Table(name = "EventRegistrations")
+@Component
+@Entity
+@Table(name = "EventRegistrations")
 public class EventRegistrationsBean {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "registrationID")
-	private int RegistrationID;
+	private int registrationID;
 	
 	@Column(name = "eventno")
 	private int eventNo;
@@ -46,7 +46,7 @@ public class EventRegistrationsBean {
 
 	public EventRegistrationsBean(int registrationID, int eventNo, Integer hostUserNo, String participantName,
 			String contactInfo, String registrationTime) {
-		RegistrationID = registrationID;
+		this.registrationID = registrationID;
 		this.eventNo = eventNo;
 		this.hostUserNo = hostUserNo;
 		ParticipantName = participantName;
@@ -54,12 +54,15 @@ public class EventRegistrationsBean {
 		RegistrationTime = registrationTime;
 	}
 
+	public EventRegistrationsBean() {
+	}
+
 	public int getRegistrationID() {
-		return RegistrationID;
+		return registrationID;
 	}
 
 	public void setRegistrationID(int registrationID) {
-		RegistrationID = registrationID;
+		this.registrationID = registrationID;
 	}
 
 	public int getEventNo() {
