@@ -66,6 +66,14 @@ CREATE TABLE UserChat (
 	FOREIGN KEY (FriendNo) REFERENCES Users(UserNo)
 );
 
+Select * from users
+Select * from Tags
+Select * from UserTags
+
+INSERT INTO Users(Account, UserPassword, UCName, UEName, NickName, Avatar, Email, Birthday, Phone, UserAddress, CreationDatetime, LastLoginDatetime, Gender, GoalNo, BloodType, MBTI, Suspension, Verify, isDelete, isManager, point)
+VALUES ('account','password','小明', 'moon', '床前明月光', 'avatar','xxx@gmail.com' ,'2000/01/01', '0986777777' ,'天堂' ,'2024/02/28' ,'2024/03/05', 0 ,1,'AB','INFJ',0,0,0,0,0);
+
+
 
 
 --榆喬
@@ -83,6 +91,8 @@ CREATE TABLE Tags(
     TagNo	    INT	 identity(1,1)	PRIMARY KEY,
     TagName		NVARCHAR(30)  NOT NULL,
 );
+
+Select * from Tags
 
 
 CREATE TABLE UserTags(
@@ -123,6 +133,8 @@ CREATE TABLE MatchChat (
 	FOREIGN KEY (UserNo) REFERENCES Users(UserNo),
 	FOREIGN KEY (FriendNo) REFERENCES Users(UserNo)
 );
+
+Select * from UserTags
 
 
 --官正

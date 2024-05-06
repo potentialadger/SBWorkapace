@@ -58,8 +58,8 @@ public class TagsController {
 
     // 新增標籤
     @PostMapping("/tags")
-    public String createTag(@RequestParam("tagName") String tagName) {
-        TagsBean newTag = new TagsBean(tagName);
+    public String createTag(@RequestParam("tagNameParam") String tagNameParam) {
+        TagsBean newTag = new TagsBean(tagNameParam);
         tagsService.insert(newTag);
         return "redirect:tagsHP";
     }
