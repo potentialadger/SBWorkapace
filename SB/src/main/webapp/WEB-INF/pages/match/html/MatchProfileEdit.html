@@ -4,9 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blog</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
-        integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+    <title>MatchProfileEdit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
     <link rel="stylesheet" href="./scss/custom.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css">
@@ -132,6 +131,18 @@
             transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
             transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
         }
+
+        /* 頭像樣式 */
+        .avatar {
+            width: 100%;
+            /* 設置頭像的寬度 */
+            height: 100%;
+            /* 設置頭像的高度 */
+            object-fit: cover;
+            /* 確保圖像完全填充頭像框 */
+            border-radius: 5px;
+        }
+
 
         /*輪播*/
         .owl-carousel .item {
@@ -259,7 +270,7 @@
 
         .delete-photo i {
             color: #111111;
-            /* "x" 圖標颜色 */
+            /* "x" 圖標顏色 */
         }
 
         .delete-photo:hover i {
@@ -302,7 +313,7 @@
         }
 
 
-        /* 在外部的 tagify 输入框樣式 */
+        /* 在外部的 tagify 輸入框樣式 */
         .tagify--outside .tagify__input {
             order: -1;
             flex: 100%;
@@ -329,7 +340,7 @@
             color: #ffffff;
             /* 更改文本顏色 */
             font-size: 12px;
-            /* 调整按钮文字大小 */
+            /* 調整按鈕文字大小 */
             border: 1px solid #80ade8;
             /* 更改邊框顏色 */
             padding: 3px 15px;
@@ -340,9 +351,9 @@
             /* 調整上方 margin */
             margin-bottom: 0;
             width: auto;
-            /* 自动调整宽度 */
+            /* 自動調整寬度 */
             height: 25px;
-            /* 自动调整高度 */
+            /* 自動調整高度 */
         }
 
         .tags--removeAllBtn:hover {
@@ -362,11 +373,6 @@
             /* 調整上方 margin */
         }
     </style>
-
-
-
-
-
 
 </head>
 
@@ -537,8 +543,8 @@
                                                     <!--顯示用戶的頭像或者預設的用戶圖示 - Font Awesome圖標-->
                                                     <div class="square position-relative display-2 mb-3">
                                                         <img src="https://p1-tt.byteimg.com/origin/tos-cn-i-qvj2lq49k0/a2752baadcc147cb80408dc7179fe65b.jpg"
-                                                            alt="User Avatar"
-                                                            class="position-absolute top-50 start-50 translate-middle img-fluid">
+                                                            alt="Avatar"
+                                                            class="position-absolute avatar top-50 start-50 translate-middle img-fluid">
                                                     </div>
 
                                                     <input type="file" id="customFile" name="file" hidden>
@@ -655,8 +661,7 @@
                 </div>
 
                 <!--主題照片- 輪播-->
-                <div class="tab-pane fade my-5" id="photosTabPane" role="tabpanel" aria-labelledby="photosTab"
-                    tabindex="0">
+                <div class="tab-pane fade my-5" id="photosTabPane" role="tabpanel" aria-labelledby="photosTab" tabindex="0">
                     <div class="mb-3">
                         <div class="owl-carousel owl-theme">
 
@@ -665,12 +670,10 @@
                                 <div class="photo-container position-relative">
                                     <div class="image-frame"></div>
                                     <!--刪除按鈕-->
-                                    <button type="button"
-                                        class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
+                                    <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile1"
-                                        class="square position-absolute top-50 start-50 translate-middle display-2 ">
+                                    <label for="customFile1" class="square position-absolute top-50 start-50 translate-middle display-2 ">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
                                     <input type="file" id="customFile1" name="file" hidden>
@@ -685,12 +688,10 @@
                                 <div class="photo-container position-relative">
                                     <div class="image-frame"></div>
                                     <!--刪除按鈕-->
-                                    <button type="button"
-                                        class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
+                                    <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile2"
-                                        class="square position-absolute top-50 start-50 translate-middle display-2">
+                                    <label for="customFile2" class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
                                     <input type="file" id="customFile2" name="file" hidden>
@@ -705,12 +706,10 @@
                                 <div class="photo-container position-relative">
                                     <div class="image-frame"></div>
                                     <!--刪除按鈕-->
-                                    <button type="button"
-                                        class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
+                                    <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile3"
-                                        class="square position-absolute top-50 start-50 translate-middle display-2">
+                                    <label for="customFile3" class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
                                     <input type="file" id="customFile3" name="file" hidden>
@@ -726,12 +725,10 @@
                                 <div class="photo-container position-relative">
                                     <div class="image-frame"></div>
                                     <!--刪除按鈕-->
-                                    <button type="button"
-                                        class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
+                                    <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile4"
-                                        class="square position-absolute top-50 start-50 translate-middle display-2">
+                                    <label for="customFile4" class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
                                     <input type="file" id="customFile4" name="file" hidden>
@@ -750,8 +747,7 @@
                                         class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile5"
-                                        class="square position-absolute top-50 start-50 translate-middle display-2">
+                                    <label for="customFile5" class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
                                     <input type="file" id="customFile5" name="file" hidden>
@@ -766,12 +762,10 @@
                                 <div class="photo-container position-relative">
                                     <div class="image-frame"></div>
                                     <!--刪除按鈕-->
-                                    <button type="button"
-                                        class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
+                                    <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile6"
-                                        class="square position-absolute top-50 start-50 translate-middle display-2">
+                                    <label for="customFile6" class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
                                     <input type="file" id="customFile6" name="file" hidden>
@@ -786,12 +780,10 @@
                                 <div class="photo-container position-relative">
                                     <div class="image-frame"></div>
                                     <!--刪除按鈕-->
-                                    <button type="button"
-                                        class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
+                                    <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile7"
-                                        class="square position-absolute top-50 start-50 translate-middle display-2">
+                                    <label for="customFile7" class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
                                     <input type="file" id="customFile7" name="file" hidden>
@@ -806,12 +798,10 @@
                                 <div class="photo-container position-relative">
                                     <div class="image-frame"></div>
                                     <!--刪除按鈕-->
-                                    <button type="button"
-                                        class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
+                                    <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile8"
-                                        class="square position-absolute top-50 start-50 translate-middle display-2">
+                                    <label for="customFile8" class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
                                     <input type="file" id="customFile8" name="file" hidden>
@@ -846,12 +836,10 @@
                                 <div class="photo-container position-relative">
                                     <div class="image-frame"></div>
                                     <!--刪除按鈕-->
-                                    <button type="button"
-                                        class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
+                                    <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile10"
-                                        class="square position-absolute top-50 start-50 translate-middle display-2">
+                                    <label for="customFile10" class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
                                     <input type="file" id="customFile10" name="file" hidden>
@@ -866,12 +854,10 @@
                                 <div class="photo-container position-relative">
                                     <div class="image-frame"></div>
                                     <!--刪除按鈕-->
-                                    <button type="button"
-                                        class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
+                                    <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile11"
-                                        class="square position-absolute top-50 start-50 translate-middle display-2">
+                                    <label for="customFile11" class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
                                     <input type="file" id="customFile11" name="file" hidden>
@@ -886,12 +872,10 @@
                                 <div class="photo-container position-relative">
                                     <div class="image-frame"></div>
                                     <!--刪除按鈕-->
-                                    <button type="button"
-                                        class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
+                                    <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile12"
-                                        class="square position-absolute top-50 start-50 translate-middle display-2">
+                                    <label for="customFile12" class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
                                     <input type="file" id="customFile12" name="file" hidden>
@@ -906,12 +890,10 @@
                                 <div class="photo-container position-relative">
                                     <div class="image-frame"></div>
                                     <!--刪除按鈕-->
-                                    <button type="button"
-                                        class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
+                                    <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile13"
-                                        class="square position-absolute top-50 start-50 translate-middle display-2">
+                                    <label for="customFile13" class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
                                     <input type="file" id="customFile13" name="file" hidden>
@@ -926,12 +908,10 @@
                                 <div class="photo-container position-relative">
                                     <div class="image-frame"></div>
                                     <!--刪除按鈕-->
-                                    <button type="button"
-                                        class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
+                                    <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile14"
-                                        class="square position-absolute top-50 start-50 translate-middle display-2">
+                                    <label for="customFile14" class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
                                     <input type="file" id="customFile14" name="file" hidden>
@@ -963,8 +943,7 @@
                                     <h4 class="mb-4 mt-0">個性標籤</h4>
 
                                     <!--Tagify標籤輸入外掛-->
-                                    <input name='tags-manual-suggestions' placeholder='輸入文字查詢標籤 / 限制只能選15個'
-                                        style="margin-bottom: 10px;"> <!-- 調整下方 margin -->
+                                    <input name='tags-manual-suggestions' placeholder='輸入文字查詢標籤 / 限制只能選15個' style="margin-bottom: 10px;"> <!-- 調整下方 margin -->
                                     <div class="d-flex justify-content-between align-items-center mt-4">
                                         <h3 class="mb-0 tag-label">☝ 從以下清單中新增標籤:</h3>
                                         <button class='tags--removeAllBtn'>清除全部</button> <!-- 調整上方 margin -->
@@ -978,8 +957,7 @@
                             <div class="bg-secondary-soft px-4 py-5 rounded">
                                 <div class="row g-3">
                                     <h4 class="my-4 mt-0">聊天話題</h4>
-                                    <input name='tags-outside' class='tagify--outside' type="text"
-                                        placeholder='選擇聊天話題 / 限制只能選3個'>
+                                    <input name='tags-outside' class='tagify--outside' type="text" placeholder='選擇聊天話題 / 限制只能選3個'>
                                 </div>
                             </div>
                         </div>
@@ -996,9 +974,7 @@
 
 
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-            </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/owl.carousel.min.js"></script>
@@ -1140,7 +1116,7 @@
             var input = document.querySelector('input[name=tags-manual-suggestions]'),
                 // init Tagify script on the above inputs
                 tagify = new Tagify(input, {
-                    whitelist: ["JAVA","懶癌末期", "無話不談", "美劇", "健身", "韓劇", "NBA", "咖啡成癮", "爬山", "游泳", "馬拉松", "ABC", "今天吃什麼", "健行", "打工度假", "留學生活", "Youtube", "新移民", "唱歌", "打工", "貓", "狗", "奶茶控", "夜貓子", "手控", "音控", "顏控", "喜歡年上", "喜歡年下", "穩聊", "古風", "文青", "愛動物", "鬼片", "泰拳", "重訓", "衝浪", "不抽菸", "不喝酒", "作息規律", "素食主義者", "大叔", "不會說謊", "好相處", "美食甜點", "運動", "不菸不酒", "下廚小能手", "真心", "手遊", "閱讀", "正能量", "脾氣好", "陽光男孩", "愛睡覺", "背包客", "野外活動", "心理學", "數學", "股票", "攝影", "自煮", "外食", "影集", "陸劇", "找個聊得來的人", "滑雪", "熱愛生活", "情感豐富", "單身", "刺青", "擋車", "傳說對決", "園藝", "下棋", "棒球", "來個說走就走的旅行", "成人話題", "不排除聊色", "LOL", "KTV", "演戲", "打code", "工程師", "樂觀", "金融投資", "愛音樂", "ROCK!", "看展", "研究歷史", "獨立樂團", "韓團", "追星", "Y2K", "時尚", "reddit", "友善食光", "i珍食", "小資族", "英文", "日文", "生活要自己學會快樂", "想找個互相陪伴的人", "無釐頭", "愛笑", "熟了就很瘋", "學生", "上班族", "創業", "原神", "鋼琴", "武術", "科技產品", "幽默風趣", "熱愛生活", "瘋瘋癲癲", "藝術家", "可愛", "帥氣", "率性", "走在夢想的路上", "溫柔體貼", "專一", "老實人", "轉職", "設計", "抖S", "抖M", "黑客", "愛冒險", "我都可以聊喔", "手工藝", "高蛋白飲食", "佛系交友", "討厭人多的地方", "插畫家", "愛發呆", "塔羅", "算命", "夾娃娃", "智性戀", "音樂創作", "鬼才", "搞怪", "跳tone", "理性", "感性", "逛街", "小酌", "喜歡交朋友", "害羞", "慢熟", "可靠", "講幹話", "穿搭", "電視劇", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"],
+                    whitelist: ["JAVA", "懶癌末期", "無話不談", "美劇", "健身", "韓劇", "NBA", "咖啡成癮", "爬山", "游泳", "馬拉松", "ABC", "今天吃什麼", "健行", "打工度假", "留學生活", "Youtube", "新移民", "唱歌", "打工", "貓", "狗", "奶茶控", "夜貓子", "手控", "音控", "顏控", "喜歡年上", "喜歡年下", "穩聊", "古風", "文青", "愛動物", "鬼片", "泰拳", "重訓", "衝浪", "不抽菸", "不喝酒", "作息規律", "素食主義者", "大叔", "不會說謊", "好相處", "美食甜點", "運動", "不菸不酒", "下廚小能手", "真心", "手遊", "閱讀", "正能量", "脾氣好", "陽光男孩", "愛睡覺", "背包客", "野外活動", "心理學", "數學", "股票", "攝影", "自煮", "外食", "影集", "陸劇", "找個聊得來的人", "滑雪", "熱愛生活", "情感豐富", "單身", "刺青", "擋車", "傳說對決", "園藝", "下棋", "棒球", "來個說走就走的旅行", "成人話題", "不排除聊色", "LOL", "KTV", "演戲", "打code", "工程師", "樂觀", "金融投資", "愛音樂", "ROCK!", "看展", "研究歷史", "獨立樂團", "韓團", "追星", "Y2K", "時尚", "reddit", "友善食光", "i珍食", "小資族", "英文", "日文", "生活要自己學會快樂", "想找個互相陪伴的人", "無釐頭", "愛笑", "熟了就很瘋", "學生", "上班族", "創業", "原神", "鋼琴", "武術", "科技產品", "幽默風趣", "熱愛生活", "瘋瘋癲癲", "藝術家", "可愛", "帥氣", "率性", "走在夢想的路上", "溫柔體貼", "專一", "老實人", "轉職", "設計", "抖S", "抖M", "黑客", "愛冒險", "我都可以聊喔", "手工藝", "高蛋白飲食", "佛系交友", "討厭人多的地方", "插畫家", "愛發呆", "塔羅", "算命", "夾娃娃", "智性戀", "音樂創作", "鬼才", "搞怪", "跳tone", "理性", "感性", "逛街", "小酌", "喜歡交朋友", "害羞", "慢熟", "可靠", "講幹話", "穿搭", "電視劇", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"],
                     dropdown: {
                         position: "manual",
                         maxItems: Infinity,
