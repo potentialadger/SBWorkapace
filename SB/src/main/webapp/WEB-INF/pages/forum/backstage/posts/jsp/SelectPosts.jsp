@@ -87,11 +87,12 @@
  						</form>
  						</td>
  						<td>
-                           <form method="post" action="/likes/InsertlikesPosts">
-                               <input type="hidden" name="postsNo" value="${posts.post_no}">
-                               <button type="submit">喜歡</button>
-                           </form>
-                       </td>
+   						<form method="post" action="/likes/likeOrUnlike">
+        				<input type="hidden" name="userNo" value="${user.user_no}">
+        				<input type="hidden" name="postsNo" value="${posts.post_no}">
+        				<button type="submit">喜歡</button>
+    					</form>
+						</td>
 					</tr>
                 </c:forEach>
             </c:if>
