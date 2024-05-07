@@ -52,7 +52,6 @@ public class PostsService implements PostsServiceInterface {
     // 刪除文章的相關回覆
     @Override
     public void deletePostAndReplies(int postNo) {
-    	System.out.println("132");
         // 先刪除文章的相關回覆
     	repliesService.deleteReplies(postNo);
         // 然后刪除文章

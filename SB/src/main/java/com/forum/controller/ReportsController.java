@@ -70,7 +70,7 @@ public class ReportsController {
 
 		reportsService.insertReports(reports);
 
-		return "redirect:/reports/AllReports";
+		return "前台應該跳轉回那筆文章的頁面";
 	}
 
 	// 刪除

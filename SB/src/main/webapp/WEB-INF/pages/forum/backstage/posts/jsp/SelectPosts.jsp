@@ -86,6 +86,12 @@
          				<button type="submit">修改</button>
  						</form>
  						</td>
+ 						<td>
+                           <form method="post" action="/likes/InsertlikesPosts">
+                               <input type="hidden" name="postsNo" value="${posts.post_no}">
+                               <button type="submit">喜歡</button>
+                           </form>
+                       </td>
 					</tr>
                 </c:forEach>
             </c:if>
