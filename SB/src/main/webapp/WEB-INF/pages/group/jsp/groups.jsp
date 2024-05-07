@@ -21,15 +21,19 @@
 								integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0"
 								crossorigin="anonymous">
 							<link rel="stylesheet" href="/mycss/groups.css">
-							<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+							<link rel="stylesheet"
+								href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 						</head>
 
 						<body>
-							<div class="container" style="width: 68%">
+							<div class="container" style="width: 68%;position: relative;">
 								<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-									data-bs-target="#newgroup">
-									開團囉
+									data-bs-target="#newgroup" style="height: 40px;">
+									我要開團
 								</button>
+								<button style="border: none;background: none;padding: 0;"><img
+										src="/images/pigbigbro.jpg"
+										style="border-radius: 50%;object-fit: cover;width: 70px;height: 70px;margin-left: 1100px;"></button>
 								<div class="row">
 									<% List<Group> groups = (ArrayList<Group>)
 											request.getAttribute("groups");
@@ -67,21 +71,18 @@
 							<div class="modal fade" id="newgroup" tabindex="-1" aria-labelledby="exampleModalLabel"
 								aria-hidden="true">
 								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-											<button type="button" class="btn-close" data-bs-dismiss="modal"
-												aria-label="Close"></button>
-										</div>
+									<div class="modal-content" style="border-radius: 20px;">
 										<div class="modal-body">
 											<form id="newgroupform" , method="post" , action="/group/insertgroup">
 												<fieldset>
 													<legend>團購</legend>
-													<ol>
+													<ol style="list-style-type: none;">
 														<li>
 															<label for="gTitle" style="display: flex;">團購標題:</label>
 															<input type="text" name="gTitle" id="gTitle"
 																placeholder="團購標題" style="width: 411px;">
+															<span class="error-message"
+																style="display: none; color: red;"></span>
 														</li>
 														<li>
 															<label for="gDescription"
@@ -89,11 +90,15 @@
 															<textarea name="gDescription" id="gDescription"
 																placeholder="團購描述"
 																style="display: flex;justify-content: flex-end;width: 411px;"></textarea>
+															<span class="error-message"
+																style="display: none; color: red;"></span>
 														</li>
 														<li>
 															<label for:"gEndTime" style="display: flex;">團購截止時間:</label>
 															<input type="date" id="gEndTime" name="gEndTime"
 																style="width: 411px;">
+															<span class="error-message"
+																style="display: none; color: red;"></span>
 														</li>
 														<li>
 															<label for="gMinTotalAmount"
@@ -113,7 +118,7 @@
 												</fieldset>
 												<fieldset>
 													<legend>付款細項</legend>
-													<ol>
+													<ol style="list-style-type: none;">
 														<li>
 															<label style="display: flex;">
 																付款方式:
@@ -151,11 +156,13 @@
 														</li>
 													</ol>
 												</fieldset>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary"
-												data-bs-dismiss="modal">Close</button>
-											<button type="submit" class="btn btn-primary">Save changes</button>
+												<fieldset>
+													<div
+														style="display: flex;align-items: center;justify-content: center;">
+														<button type="submit" class="btn btn-primary"
+															id="submitgroup">開團囉</button>
+													</div>
+												</fieldset>
 										</div>
 										</form>
 									</div>
@@ -165,6 +172,7 @@
 							<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 							<script
 								src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+							<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 							<script>
 								$(document).ready(function () {
 									const url = '/json/taiwancity.json'
@@ -251,7 +259,7 @@
 									function updateAccountInput(data) {
 										const bankvalue = $('#bank').val();
 										if (data[bankvalue]) {
-											const bankcode = data[bankvalue].code + "-";
+											const bankcode = data[bankvalue].code + data[bankvalue].a;
 											$('input[name="account"]').val(bankcode);
 										}
 									}
@@ -273,6 +281,36 @@
 										}
 									})
 								})
+							</script>
+							<script>
+								$(document).ready(function () {
+									$('#newgroupform').submit(function (e) {
+										var gTitle = $('#gTitle').val().trim();
+										var gDescription = $('#gDescription').val().trim();
+										var gEndTime = $('#gEndTime').val().trim();
+										var errorMessages = [];
+
+										if (gTitle === '') {
+											errorMessages.push('團購標題');
+										}
+										if (gDescription === '') {
+											errorMessages.push('團購簡述');
+										}
+										if (gEndTime === '') {
+											errorMessages.push('團購截止時間');
+										}
+
+										if (errorMessages.length > 0) {
+											e.preventDefault();
+											Swal.fire({
+												title: '錯誤!',
+												html: '請填寫所有必填欄位：<br>' + errorMessages.join('、'),
+												icon: 'error',
+												confirmButtonText: '確定'
+											});
+										}
+									});
+								});
 							</script>
 						</body>
 

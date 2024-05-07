@@ -2,14 +2,17 @@ package com.group.dto;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class GroupDto {
 
 	private String gTitle;
 	private String gDescription;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date gEndTime;
 	private String[] payment;
-	private Integer gMinTotalAmount;
-	private Integer gMinTotalQuantity;
+	private String gMinTotalAmount;
+	private String gMinTotalQuantity;
 	private String address;
 	private String account;
 	public String getgTitle() {
@@ -36,16 +39,17 @@ public class GroupDto {
 	public void setPayment(String[] payment) {
 		this.payment = payment;
 	}
-	public Integer getgMinTotalAmount() {
+	
+	public String getgMinTotalAmount() {
 		return gMinTotalAmount;
 	}
-	public void setgMinTotalAmount(Integer gMinTotalAmount) {
+	public void setgMinTotalAmount(String gMinTotalAmount) {
 		this.gMinTotalAmount = gMinTotalAmount;
 	}
-	public Integer getgMinTotalQuantity() {
+	public String getgMinTotalQuantity() {
 		return gMinTotalQuantity;
 	}
-	public void setgMinTotalQuantity(Integer gMinTotalQuantity) {
+	public void setgMinTotalQuantity(String gMinTotalQuantity) {
 		this.gMinTotalQuantity = gMinTotalQuantity;
 	}
 	public String getAddress() {

@@ -1,5 +1,6 @@
 package com.group.controller;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -128,14 +129,38 @@ public class GroupController {
 	public String insertGroup(@ModelAttribute GroupDto newGroup, HttpServletRequest request, Model m) {
 		HttpSession session = request.getSession();
 		UserBean userbean = (UserBean)session.getAttribute("userData");
-		
 //		Integer userNo = userbean.getUserNo();
-		
 		Integer userNo = 1;
 		
+		String address = null;
+		String account = null;
+		String minTotalAmount = null;
+		String minTotalQuantity = null;
+		
+		String title = newGroup.getgTitle();
+		String description = newGroup.getgDescription();
+		Date endTime = newGroup.getgEndTime();
+		if(!newGroup.getgMinTotalAmount().isEmpty()) {
+			minTotalAmount = newGroup.getgMinTotalAmount();
+		} else {
+			minTotalAmount = "0";
+		}
+		if(!newGroup.getgMinTotalQuantity().isEmpty()) {
+			minTotalQuantity = newGroup.getgMinTotalQuantity();
+		} else {
+			minTotalQuantity = "0";
+		}
+		String[] payments = newGroup.getPayment();
+		if(Arrays.asList(payments).contains("1")) {
+			account = newGroup.getAccount();
+		}else if (Arrays.asList(payments).contains("2")) {
+			address = newGroup.getAddress();
+		}
+		Group group = gService.insertGroup(userNo, title, description, endTime, payments, minTotalQuantity, minTotalAmount, account, address);
+		Integer eventNo = group.getEventNo();
 		
 		
-		return "group/jsp/insertgroup.jsp";
+		return "redirect:/group/eachgroup/" + eventNo;
 	}
 	
 //	修改團購資訊
