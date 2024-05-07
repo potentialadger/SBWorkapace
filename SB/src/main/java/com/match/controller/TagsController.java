@@ -2,9 +2,11 @@ package com.match.controller;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -99,10 +101,39 @@ public class TagsController {
         return "redirect:/tagsHP";
     }
     
-    //獲取與指定標籤關聯的所有用戶
-    @GetMapping("/{tagNo}/users")
-    public Set<UserBean> getUsersForTag(@PathVariable Integer tagNo) {
-        return tagsService.getUsersForTag(tagNo);
+    
+    
+    
+    //---ManyToMany
+    
+    @GetMapping(path = "/findTag/{tagNo}.json", produces = "application/json;charset=UTF-8")
+    ResponseEntity<TagsBean> TagsBean(@PathVariable("tagNo") Integer tagNo) {
+    Optional<TagsBean> opTag = tagsService.getOneById(tagNo);
+    if (opTag.isPresent()) {
+    return ResponseEntity.ok(opTag.get());
     }
+    return ResponseEntity.notFound().build(); 
+    }
+    
+	
+
+    
+	
+	//-------Test-----------
+	
+    
+//    @GetMapping("/{tagNo}/users")
+//    public String getUsersForTag(@PathVariable Integer tagNo, Model model) {
+//        Set<UserBean> users = tagsService.getUsersForTag(tagNo);
+//        model.addAttribute("tagNo", tagNo);
+//        model.addAttribute("users", users);
+//        return "users";
+//    }
+//    
+//    @GetMapping("/findByTagNo")
+//    public String showFindByTagNoPage(Model model) {
+//        // 如果需要在页面上显示初始数据,可以在这里准备数据并添加到 Model 中
+//        return "match/jsp/FindByTagNo.jsp";
+//    }
 
 }

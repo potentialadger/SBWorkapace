@@ -107,12 +107,16 @@ public class UserBean implements Serializable{
 	public UserBean() {
 	}
 
+	
+
 	//多對多  // 有 join table 這邊為主要控制方，操作兩方關係盡量由這邊(User)操作
 	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name="usertags",
 		joinColumns = {@JoinColumn(name="fkuserno", referencedColumnName = "userno")},
 		inverseJoinColumns = {@JoinColumn(name="fktagno", referencedColumnName = "tagno")})
-	private Set<TagsBean> tags = new HashSet<>();  //屬性 => getters and setters
+	private Set<TagsBean> tagsBeans = new HashSet<>();  //屬性 => getters and setters
+	
+	
 	
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
@@ -150,7 +154,7 @@ public class UserBean implements Serializable{
 	public int getVerify() {return verify;}
 	public int getIsDelete() {return isDelete;}
 	public Integer getIsManager() {return isManager;}
-	public Set<TagsBean> getTags() {return tags;}
+	public Set<TagsBean> getTagsBeans() {return tagsBeans;}   //ManyToMany
 	public Integer getPoint() {return point;}
 	
 	public Set<PostsBean> getPostsBean() {return PostsBean;}
@@ -179,7 +183,7 @@ public class UserBean implements Serializable{
 	public void setVerify(int verify) {this.verify = verify;}
 	public void setIsDelete(int isDelete) {this.isDelete = isDelete;}
 	public void setIsManager(Integer isManager) {this.isManager = isManager;}
-	public void setTags(Set<TagsBean> tags) {this.tags = tags;}
+	public void setTagsBeans(Set<TagsBean> TagsBeans) {this.tagsBeans = tagsBeans;}   //ManyToMany
 	public void setPoint(Integer point) {this.point = point;}
 	
 	
@@ -194,9 +198,31 @@ public class UserBean implements Serializable{
 				+ ", userAddress=" + userAddress + ", creationDatetime=" + creationDatetime + ", lastLoginDatetime="
 				+ lastLoginDatetime + ", gender=" + gender + ", goalNo=" + goalNo + ", bloodType=" + bloodType
 				+ ", MBTI=" + MBTI + ", suspension=" + suspension + ", verify=" + verify + ", isDelete=" + isDelete
-				+ "]";
+				+ "com.example.manytomany.entity.UserBean[ userNo=" + userNo + " ]]";   //ManyToMany
 	}
 	
 	
 	
+	
+	// ---ManyToMany : 除雙主鍵以外還有其他欄位才要加，要另外寫Bean
+	// ---UserTagsBean : https://docs.jboss.org/hibernate/orm/6.4/userguide/html_single/Hibernate_User_Guide.html#identifiers-composite
+	// ---UserTagsBeanKey :
+	
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (userNo != null ? userNo.hashCode() : 0);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (!(object instanceof UserBean)) {
+			return false;
+		}
+		UserBean other = (UserBean) object;
+		return !((this.userNo == null && other.userNo != null) || (this.userNo != null && !this.userNo.equals(other.userNo)));
+	}
+
 }
+

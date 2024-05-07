@@ -51,7 +51,7 @@
 					<th scope="col"><input type="checkbox" id="selectAll">全選</th>
 					<th scope="col">個性標籤編號</th>
 					<th scope="col">個性標籤名稱</th>
-					<th scope="col">操作</th>
+					<th scope="col">操作</th>					
 				</tr>
 			</thead>
 			
@@ -79,16 +79,16 @@
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title" id="updateModalLabel">修改交友目標</h5>
+								<h5 class="modal-title" id="updateModalLabel">修改個性標籤</h5>
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
 							<form action="updateTag/<%=tag.getTagNo()%>" method="post">
 								<input type="hidden" name="_method" value="put">
 								<div class="modal-body">
 									<div class="mb-3">
-											<label for="updateTagNo" class="form-label">交友目標編號</label> 
+											<label for="updateTagNo" class="form-label">個性標籤編號</label> 
 											<input type="text" class="form-control" id="updateTagNo" name="tagNo" value="<%=tag.getTagNo()%>" readonly>
-											<label for="updateTagName" class="form-label">新的交友目標</label> 
+											<label for="updateTagName" class="form-label">新的個性標籤</label> 
 											<input type="text" class="form-control" id="updateTagName" name="tagName" value="<%=tag.getTagName()%>" required>
 									</div>
 								</div>
