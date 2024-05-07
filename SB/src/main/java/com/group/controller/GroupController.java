@@ -9,12 +9,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.group.dto.GroupDto;
 import com.group.model.Group;
 import com.group.model.Item;
 import com.group.model.ItemSpecification;
@@ -122,9 +125,7 @@ public class GroupController {
 	
 //	新增團購
 	@PostMapping(value = "/insertgroup")
-	public String insertGroup(@RequestParam("gtitle") String title, @RequestParam("gdescription") String description, @RequestParam("gendtime") @DateTimeFormat(pattern = "yyyy-MM-dd") Date gEndTime,
-			 @RequestParam("payment") String[] pay, @RequestParam("mintotalquantity") String mintotalquantity, @RequestParam("mintotalamount") String mintotalamount, @RequestParam("account") String account, 
-			 @RequestParam("address") String address, HttpServletRequest request, Model m) {
+	public String insertGroup(@ModelAttribute GroupDto newGroup, HttpServletRequest request, Model m) {
 		HttpSession session = request.getSession();
 		UserBean userbean = (UserBean)session.getAttribute("userData");
 		
@@ -132,12 +133,7 @@ public class GroupController {
 		
 		Integer userNo = 1;
 		
-		Group group = gService.insertGroup(userNo, title, description, gEndTime, pay, mintotalquantity, mintotalamount, account, address);
-		Integer eventno = group.getEventNo();
-		session.setAttribute("eventno", eventno);
-		m.addAttribute("group",group);
 		
-		System.out.println("new eventno = " + eventno);
 		
 		return "group/jsp/insertgroup.jsp";
 	}

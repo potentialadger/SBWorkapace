@@ -74,56 +74,90 @@
 												aria-label="Close"></button>
 										</div>
 										<div class="modal-body">
-											<form id="newgroupform" , method="put" , action="/insertgroup">
-												<div>
-													團購標題:
-													<input type="text" name="gtitle" placeholder="團購標題">
-												</div>
-												<div>
-													團購描述:
-													<input type="text" name="gdescription" placeholder="團購描述">
-												</div>
-												<div>
-													團購截止時間:
-													<input type="date" name="gendtime">
-												</div>
-												<div>
-													付款方式:
-													<label><input type="checkbox" name="payment" value="1">匯款</label>
-													<label><input type="checkbox" name="payment" value="2">面交</label>
-													<label><input type="checkbox" name="payment" value="3">SB點數</label>
-												</div>
-												<div>
-													成團金額:
-													<input type="number" name="gmintotalamount" placeholder="成團最小金額">
-												</div>
-												<div>
-													成團數量:
-													<input type="number" name="gmintotalquantity" placeholder="成團最小數量">
-												</div>
-												<div class="meetup-address" style="display:none;">
-													面交地址:
-													<select id="city" name="city">
-														<option value="">選縣市</option>
-													</select>
-													<select id="area" name="area" style="display:none;">
-														<option value="">請選擇</option>
-													</select>
-												</div>
-												<div class="bank-account" style="display:none;">
-													匯款帳戶:
-													<select id="bank" name="bank">
-														<option>銀行</option>
-													</select>
-													<input type="input" placeholder="帳戶">
-												</div>
-											</form>
+											<form id="newgroupform" , method="post" , action="/group/insertgroup">
+												<fieldset>
+													<legend>團購</legend>
+													<ol>
+														<li>
+															<label for="gTitle" style="display: flex;">團購標題:</label>
+															<input type="text" name="gTitle" id="gTitle"
+																placeholder="團購標題" style="width: 411px;">
+														</li>
+														<li>
+															<label for="gDescription"
+																style="display: flex;">團購簡述:</label>
+															<textarea name="gDescription" id="gDescription"
+																placeholder="團購描述"
+																style="display: flex;justify-content: flex-end;width: 411px;"></textarea>
+														</li>
+														<li>
+															<label for:"gEndTime" style="display: flex;">團購截止時間:</label>
+															<input type="date" id="gEndTime" name="gEndTime"
+																style="width: 411px;">
+														</li>
+														<li>
+															<label for="gMinTotalAmount"
+																style="display: flex;">成團金額:</label>
+															<input type="number" name="gMinTotalAmount"
+																id="gMinTotalAmount" placeholder="成團最小金額"
+																style="width: 411px;">
+														</li>
+														<li>
+															<label for="gMinTotalQuantity"
+																style="display: flex;">成團數量:</label>
+															<input type="number" name="gMinTotalQuantity"
+																id="gMinTotalQuantity" placeholder="成團最小數量"
+																style="width: 411px;">
+														</li>
+													</ol>
+												</fieldset>
+												<fieldset>
+													<legend>付款細項</legend>
+													<ol>
+														<li>
+															<label style="display: flex;">
+																付款方式:
+															</label>
+															<label><input type="checkbox" name="payment"
+																	value="1">匯款</label>
+															<label><input type="checkbox" name="payment"
+																	value="2">面交</label>
+															<label><input type="checkbox" name="payment"
+																	value="3">SB點數</label>
+														</li>
+														<li class="meetup-address" style="display:none;">
+															<label style="display: flex;">
+																面交地址:
+															</label>
+															<select id="city" name="city">
+																<option value="">選縣市</option>
+															</select>
+															<select id="area" name="area" style="display:none;">
+																<option value="">請選擇</option>
+															</select>
+															<br>
+															<input type="text" name="address"
+																style="display:none; width: 411px;">
+														</li>
+														<li class="bank-account" style="display:none;">
+															<label style="display: flex;">
+																匯款帳戶:
+															</label>
+															<select id="bank" name="bank">
+																<option>銀行</option>
+															</select>
+															<input type="input" name="account" placeholder="帳戶"
+																style="width: 411px;">
+														</li>
+													</ol>
+												</fieldset>
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-secondary"
 												data-bs-dismiss="modal">Close</button>
-											<button type="button" class="btn btn-primary">Save changes</button>
+											<button type="submit" class="btn btn-primary">Save changes</button>
 										</div>
+										</form>
 									</div>
 								</div>
 							</div>
@@ -148,15 +182,15 @@
 										}
 									});
 									$("#city").change(function () {
-										cityvalue = $("#city").val();  // 取得使用者選擇的縣市
-										$("#area").empty(); // 清空上次的值
-										$("#area").css("display", "inline"); // 顯示第二層選單
+										cityvalue = $("#city").val();
+										$("#area").empty();
+										$("#area").css("display", "inline");
 										$.ajax({
 											url: url,
 											type: "get",
 											dataType: "json",
 											success: function (data) {
-												eachval = data[cityvalue].AreaList; // 取得所選縣市的鄉鎮資料
+												eachval = data[cityvalue].AreaList;
 												$.each(eachval, function (key, value) {
 													$('#area').append('<option value="' + key + '">' + eachval[key].AreaName + '</option>')
 												});
@@ -167,8 +201,9 @@
 										});
 									});
 									$("#area").change(function () {
-										cityvalue = $("#city").val();  // 縣市
-										areavalue = $("#area").val();  // 鄉鎮
+										cityvalue = $("#city").val();
+										areavalue = $("#area").val();
+										if (!areavalue) return;
 										$.ajax({
 											url: url,
 											type: "get",
@@ -176,7 +211,8 @@
 											success: function (data) {
 												const cityname = data[cityvalue].CityName; // 取得所選縣市名稱
 												const areaname = data[cityvalue].AreaList[areavalue].AreaName; // 取得所選鄉鎮名稱
-												const selected = cityname + "-" + areaname; // 組合縣市與鄉鎮名稱
+												const selected = cityname + areaname; // 組合縣市與鄉鎮名稱
+												$('input[name="address"]').val(selected).show();
 											},
 											error: function () {
 												alert("讀取資料失敗");
@@ -196,8 +232,29 @@
 											$.each(data, function (key, value) {
 												$('#bank').append('<option value="' + key + '">' + data[key].code + '-' + data[key].name + '</option>')
 											})
+											updateAccountInput(data);
 										}
 									})
+
+									$('#bank').change(function () {
+										const url = '/json/taiwanbank.json';
+										$.ajax({
+											url: url,
+											type: "get",
+											dataType: "json",
+											success: function (data) {
+												updateAccountInput(data);
+											}
+										});
+									});
+
+									function updateAccountInput(data) {
+										const bankvalue = $('#bank').val();
+										if (data[bankvalue]) {
+											const bankcode = data[bankvalue].code + "-";
+											$('input[name="account"]').val(bankcode);
+										}
+									}
 								})
 							</script>
 							<script>
