@@ -157,7 +157,6 @@ public class PostsController {
 	public String getPostsNo(@RequestParam("postsNo") String postsNo, Model m) {
 
 		PostsBean posts = postsService.getPostsNo(Integer.parseInt(postsNo));
-
 		m.addAttribute("updateSelect", posts);
 		
 		List<CategoriesBean> categoriesList = categoriesService.getAllCategories();
@@ -238,6 +237,21 @@ public class PostsController {
 	        // 如果發生 IO 錯誤，提示用戶文件上傳失敗 前台還要再做一個頁面
 	        return "redirect:/posts/error?message=文件上傳失敗";
 	    }
+	}
+	
+	//單筆文章
+	@GetMapping("/SelectPosts")
+	public String getPosts(@RequestParam("postsNo") String postsNo, Model m) {
+
+		PostsBean posts = postsService.getPostsNo(Integer.parseInt(postsNo));
+		
+		//用來印出總喜歡數 總回覆數同上
+		posts.getLikesBean().size();
+		
+		m.addAttribute("updateSelect", posts);
+		
+		return "前台用單筆查詢";
+
 	}
 	
 }

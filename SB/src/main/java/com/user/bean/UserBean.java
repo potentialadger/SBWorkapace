@@ -9,6 +9,7 @@ import java.util.Set;
 import org.springframework.stereotype.Component;
 
 import com.match.bean.TagsBean;
+import com.forum.bean.LikesBean;
 import com.forum.bean.PostsBean;
 import com.forum.bean.RepliesBean;
 import com.forum.bean.ReportsBean;
@@ -126,6 +127,8 @@ public class UserBean implements Serializable{
 	private Set<RepliesBean> repliesBean =new HashSet<>();
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userBean", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
 	private Set<ReportsBean> reportsBean =new HashSet<>();
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userBean", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+	private Set<LikesBean> likesBean =new HashSet<>();
 
 	
 	
@@ -157,6 +160,7 @@ public class UserBean implements Serializable{
 	public Set<PostsBean> getPostsBean() {return PostsBean;}
 	public Set<RepliesBean> getRepliesBean() {return repliesBean;}
 	public Set<ReportsBean> getReportsBean() {return reportsBean;}
+	public Set<LikesBean> getLikesBean() {return likesBean;}
 	
 	
 	public void setUserNo(int userNo) {this.userNo = userNo;}
@@ -183,10 +187,10 @@ public class UserBean implements Serializable{
 	public void setTagsBeans(Set<TagsBean> TagsBeans) {this.tagsBeans = tagsBeans;}   //ManyToMany
 	public void setPoint(Integer point) {this.point = point;}
 	
-	
 	public void setPostsBean(Set<PostsBean> postsBean) {PostsBean = postsBean;}
 	public void setRepliesBean(Set<RepliesBean> repliesBean) {this.repliesBean = repliesBean;}
 	public void setReportsBean(Set<ReportsBean> reportsBean) {this.reportsBean = reportsBean;}
+	public void setLikesBean(Set<LikesBean> likesBean) {this.likesBean = likesBean;}
 	@Override
 	public String toString() {
 		return "UserBean [userNo=" + userNo + ", userAccount=" + userAccount + ", userPassword=" + userPassword

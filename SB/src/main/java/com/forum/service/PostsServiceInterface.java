@@ -17,4 +17,7 @@ public interface PostsServiceInterface {
 	PostsBean getPostsNo(Integer postsNo);
 	
 	void updatePosts(PostsBean posts);
+	
+	 // 刪除文章的相關回覆
+    void deletePostAndReplies(int postNo);
 }

@@ -31,7 +31,7 @@
 	<table>
         <thead>
             <tr>
-                <th>分類編號</th>
+                <!--<th>分類編號</th>-->
                 <th>分類</th>
              	<th>刪除</th>
             </tr>
@@ -41,7 +41,7 @@
         <c:if test="${not empty CategoriesM}">
             <c:forEach  var="category" items="${CategoriesM}">
             <tr>
-                <td><c:out value="${category.category_no}"/></td>
+                <!--<td><c:out value="${category.category_no}"/></td>-->
                 <td><c:out value="${category.title_name}"/></td>
                 
                 <td>

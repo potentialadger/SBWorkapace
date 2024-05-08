@@ -26,6 +26,7 @@
     <input type="file" id="image_url" name="image_url" /><br>
     
     <input type="submit" value="發佈" />
+    <input type="submit" value="返回" /><!--前台返回首頁 還沒做-->
 </form>
 </body>
 </html>

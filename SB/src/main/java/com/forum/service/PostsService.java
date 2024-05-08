@@ -14,6 +14,9 @@ public class PostsService implements PostsServiceInterface {
 
 	@Autowired
 	private PostsDaoInterface postsDao;
+	
+	@Autowired
+    private RepliesService repliesService;
 
 	@Override
 	public List<PostsBean> getPostsBeanKeyword(String postsBeanKeyword) {
@@ -45,4 +48,13 @@ public class PostsService implements PostsServiceInterface {
 	public void updatePosts(PostsBean posts) {
 		postsDao.save(posts);
 	}
+
+    // 刪除文章的相關回覆
+    @Override
+    public void deletePostAndReplies(int postNo) {
+        // 先刪除文章的相關回覆
+    	repliesService.deleteReplies(postNo);
+        // 然后刪除文章
+    	postsDao.deleteById(postNo);
+    }
 }
