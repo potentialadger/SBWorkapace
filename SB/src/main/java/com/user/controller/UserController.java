@@ -248,12 +248,12 @@ public class UserController {
 	
 
 	// 更新與現有使用者關聯的標籤
-	@PutMapping("/users/{userNo}/updateTags")
-	public String updateUserWithTags(@PathVariable("userNo") int userNo, @RequestParam("tagNos") List<Integer> tagNos) {
-		UserBean user = uService.getUserData(userNo);
-		uService.updateUserWithTags(user, tagNos);
-		return "redirect:/users/" + userNo;
-	}
+//	@PutMapping("/users/{userNo}/updateTags")
+//	public String updateUserWithTags(@PathVariable("userNo") int userNo, @RequestParam("tagNos") List<Integer> tagNos) {
+//		UserBean user = uService.getUserData(userNo);
+//		uService.updateUserWithTags(user, tagNos);
+//		return "redirect:/users/" + userNo;
+//	}
 	
 //	-----------LinePay------------
 //	public String geLinePay(@RequestBody LinePayDto linePayOrder) {
