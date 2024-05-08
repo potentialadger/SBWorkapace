@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.forum.bean.LikesBean;
 import com.forum.bean.PostsBean;
@@ -40,10 +40,14 @@ public class LikesController {
 		return "/forum/backstage/likes/jsp/SelectLikes.jsp";
 	}
 	
+	//喜歡 及 收回
 	@PostMapping("/likeOrUnlike")
-	public String  likeOrUnlike(@ModelAttribute LikeRequest request, HttpSession session) {
+	public String  likeOrUnlike(
+			 @RequestParam("user_no") Integer user_no,
+		     @RequestParam("post_no") Integer post_no, 			
+			HttpSession session) {
 	    UserBean userData = (UserBean) session.getAttribute("userData");
-	    PostsBean posts = postsService.getPostsNo(request.getPostsNo());
+	    PostsBean posts = postsService.getPostsNo(post_no);
 
 	    // 檢查使用者對該文章的按讚狀態
 	    LikesBean existingLike = likesService.findByUserAndPost(userData, posts);

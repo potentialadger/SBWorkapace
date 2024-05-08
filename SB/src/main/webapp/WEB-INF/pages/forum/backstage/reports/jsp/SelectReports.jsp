@@ -22,7 +22,7 @@
     <table>
         <thead>
             <tr>
-                <th>檢舉編號</th>
+                <!--<th>檢舉編號</th>-->
                 <th>文章標題</th>
                 <th>文章內容</th>
                 <th>檢舉人</th>
@@ -37,7 +37,7 @@
             <c:if test="${not empty reportsM}">
                 <c:forEach var="reports" items="${reportsM}">
                     <tr>
-                        <td><c:out value="${reports.report_no}" /></td>
+                        <!--<td><c:out value="${reports.report_no}" /></td>-->
                         <td><c:out value="${reports.postsBean.title}" /></td>
                         <td><c:out value="${reports.postsBean.content}" /></td>
                         <td><c:out value="${reports.userBean.userChineseName}" /></td>

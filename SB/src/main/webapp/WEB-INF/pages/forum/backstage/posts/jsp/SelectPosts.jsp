@@ -30,7 +30,7 @@
     <table>
         <thead>
             <tr>
-                <th>文章編號</th>
+                <!--<th>文章編號</th>-->
                 <th>會員名稱</th>
                 <th>會員信箱</th>
                 <th>分類</th>
@@ -47,7 +47,7 @@
             <c:if test="${not empty postsM}">
                 <c:forEach var="posts" items="${postsM}">
                     <tr>
-                        <td><c:out value="${posts.post_no}" /></td>
+                        <!--<td><c:out value="${posts.post_no}" /></td>-->
                         <td><c:out value="${posts.userBean.userChineseName}" /></td>
                         <td><c:out value="${posts.userBean.email}" /></td>
                         <td><c:out value="${posts.categoriesBean.title_name}" /></td>
@@ -72,7 +72,7 @@
 							</form>
 						</td>
                     	<td>
-							<form action="/replies/InsertReplies" method="post">
+							<form method="post" action="/replies/InsertReplies">
 							<input type="hidden" name="user_no" value="${posts.userBean.userNo}">
 							<input type="hidden" name="post_no" value="${posts.post_no}"> 
 							<h2>回覆表單：</h2>
@@ -88,8 +88,8 @@
  						</td>
  						<td>
    						<form method="post" action="/likes/likeOrUnlike">
-        				<input type="hidden" name="userNo" value="${user.user_no}">
-        				<input type="hidden" name="postsNo" value="${posts.post_no}">
+        				<input type="hidden" name="user_no" value="${posts.userBean.userNo}">
+        				<input type="hidden" name="post_no" value="${posts.post_no}">
         				<button type="submit">喜歡</button>
     					</form>
 						</td>

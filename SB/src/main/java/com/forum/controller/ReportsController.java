@@ -1,6 +1,5 @@
 package com.forum.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.forum.bean.PostsBean;
 import com.forum.bean.ReportsBean;
 import com.forum.service.PostsService;
@@ -39,40 +39,41 @@ public class ReportsController {
 
 		return "/forum/backstage/reports/jsp/SelectReports.jsp";
 	}
-
-	// 檢舉用查詢文章
+	
 	@GetMapping("/SelectReportsPosts")
-	public String getPostsNo(@RequestParam("postsNo") String postsNo, Model m) {
-
-		PostsBean posts = postsService.getPostsNo(Integer.parseInt(postsNo));
-
-		m.addAttribute("reportsPosts", posts);
-
-		return "/forum/backstage/reports/jsp/InsertReports.jsp";
+	public String getPostsNo(@RequestParam("postsNo") String postsNo, HttpSession session, Model model) {
+	    PostsBean posts = postsService.getPostsNo(Integer.parseInt(postsNo));
+	    UserBean userData = (UserBean) session.getAttribute("userData");
+	    model.addAttribute("reportsPosts", posts);
+	    model.addAttribute("userData", userData); // 将用户信息添加到模型中
+	    return "/forum/backstage/reports/jsp/InsertReports.jsp";
 	}
-
-	// 新增
+	
 	@PostMapping("/InsertReports")
 	public String insertReports(@RequestParam("post_no") Integer post_no, 
-			@RequestParam("user_no") Integer user_no,
-			@RequestParam("reason") String reason,
-			HttpSession session
-			) {
+	                            @RequestParam("reason") String reason,
+	                            HttpSession session,
+	                            Model m) {
 
-		PostsBean posts = postsService.getPostsNo(post_no);
-		UserBean userData = (UserBean) session.getAttribute("userData");
+	    // 從 session 中獲取當前用訊息
+	    UserBean userData = (UserBean) session.getAttribute("userData");
 
-		ReportsBean reports = new ReportsBean();
-		reports.setPostsBean(posts);
-		reports.setUserBean(userData);
-		reports.setReason(reason);
-		reports.setReport_date(new Date());
+	    // 獲取文章信息
+	    PostsBean posts = postsService.getPostsNo(post_no);
 
-		reportsService.insertReports(reports);
+	    // 检查是否以檢舉過
+	    ReportsBean existingReports = reportsService.findByUserAndPost(userData, posts);
 
-		return "前台應該跳轉回那筆文章的頁面";
+	    if (existingReports != null) {
+	        return "/forum/backstage/reports/jsp/Repeatedreports.jsp"; 
+	    } else {
+	        // 未檢舉過 執行檢舉
+	        reportsService.checkAndInsertReports(userData, posts ,reason);
+	        return "redirect:/posts/detail?post_no=" + post_no;
+	    }
 	}
-
+	
+	
 	// 刪除
 	@DeleteMapping("/DeleteReports")
 	public String deleteReports(
@@ -86,6 +87,5 @@ public class ReportsController {
 		return "redirect:/reports/AllReports";
 
 	}
-	
-	
+	 
 }

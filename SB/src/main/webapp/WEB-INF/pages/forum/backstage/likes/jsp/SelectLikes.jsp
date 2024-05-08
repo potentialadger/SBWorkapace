@@ -18,7 +18,7 @@
     <table>
         <thead>
             <tr>
-                <th>紀錄編號</th>
+                <!--<th>紀錄編號</th>-->
                 <th>文章標題</th>
                 <th>文章內容</th>
                 <th>案讚會員</th>
@@ -30,7 +30,7 @@
             <c:if test="${not empty PostsLikesListM}">
                 <c:forEach var="postsLikes" items="${PostsLikesListM}">
                     <tr>
-                        <td><c:out value="${postsLikes.like_no}" /></td>
+                        <!--<td><c:out value="${postsLikes.like_no}" /></td>-->
                         <td><c:out value="${postsLikes.postsBean.title}" /></td>
                         <td><c:out value="${postsLikes.postsBean.content}" /></td>
                         <td><c:out value="${postsLikes.userBean.userChineseName}" /></td>
