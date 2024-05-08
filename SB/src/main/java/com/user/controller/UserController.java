@@ -204,12 +204,19 @@ public class UserController {
 	}
 	
     // 指定返回 JSON 格式的資料，以及資料的編碼格式為 UTF-8
-    // @GetMapping(path = "/getUserTags/{userNo}", produces = "application/json;charset=UTF-8")
-
+    // @GetMapping(path = "/getUserTags/{userNo}", produces = "application/json;charset=UTF-8"
+	
+	
+	// 獲取所有使用者及其關聯的標籤
+//	@GetMapping(path = "/getAllUsersWithTags")
+//	public ResponseEntity<List<Set<TagsBean>>> getAllUsersWithTags() {
+//	    List<Set<TagsBean>> userTags = uService.getAllUsersWithTags();
+//	    return ResponseEntity.ok(userTags);
+//	}
 	
 	
 	
-	// 獲取所有使用者及其關聯的標籤   ..? 不是返回所有資料是只有標籤的資料
+	// 獲取所有使用者及所有資料
 	@GetMapping(path = "/getAllUsersWithTags")
 	public ResponseEntity<List<UserBean>> getAllUsersWithTags() {
 	    List<UserBean> users = uService.getAllUsersWithTags();
@@ -218,7 +225,7 @@ public class UserController {
 	
 	
 	
-	// 使用者添加一個或多個標籤       ..? 不是返回所有資料是只有標籤的資料
+	// 使用者添加一個或多個標籤 (返回該所有用戶資料)
 	@PostMapping(path = "/addUserTags/{userNo}/tags")
 	public ResponseEntity<UserBean> addTagsToUser(@PathVariable Integer userNo, @RequestBody List<Integer> tagNos) {
 	    try {
@@ -231,7 +238,20 @@ public class UserController {
 	
 	
 	
-	// 使用者移除一個或多個標籤
+	// 使用者添加一個或多個標籤 (只返回關聯的標籤資料)
+//	@PostMapping("/addUserTags/{userNo}/tags")
+//	public ResponseEntity<Set<TagsBean>> addTagsToUser(@PathVariable Integer userNo, @RequestBody List<Integer> tagNos) {
+//	    try {
+//	        UserBean updatedUser = uService.addTagsToUser(userNo, tagNos);
+//	        return ResponseEntity.ok(updatedUser.getTagsBeans());
+//	    } catch (IllegalArgumentException ex) {
+//	        return ResponseEntity.notFound().build();
+//	    }
+//	}
+	
+	
+
+	// 使用者移除一個或多個標籤 (返回標籤資料)
 	@DeleteMapping(path = "/deleteUserTags/{userNo}/tags")
 	public ResponseEntity<UserBean> removeTagsFromUser(@PathVariable Integer userNo, @RequestBody List<Integer> tagNos) {
 	    try {

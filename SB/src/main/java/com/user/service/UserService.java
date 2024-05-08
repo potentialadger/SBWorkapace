@@ -1,6 +1,7 @@
 package com.user.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -72,14 +73,27 @@ public class UserService {
         return uRepository.findById(userNo);
     }
     
-    // 獲取所有使用者及其關聯的標籤  // ..? 不是所有資料是只有標籤的資料
-    public List<UserBean> getAllUsersWithTags() {
-        List<UserBean> users = uRepository.findAll();
-        for (UserBean user : users) {
-            Hibernate.initialize(user.getTagsBeans());                       // Hibernate.initialize(user.getTagsBeans());：使用 Hibernate 的 initialize 方法來強制初始化每個使用者對象中的標籤集合。這樣做是為了在返回結果時確保標籤集合已經加載，避免了懶加載引起的應用程式錯誤。
-        }
-        return users;
-    }
+    
+    // 獲取所有使用者及其關聯的標籤                                           //創建了一個 List<Set<TagsBean>> 對象 userTags。然後,我們遍歷所有 UserBean 實例,初始化每個實例中的 tagsBeans 集合,並將其添加到 userTags 列表中。最終,我們返回這個列表,它包含了所有使用者關聯的標籤集合。
+//    public List<Set<TagsBean>> getAllUsersWithTags() {
+//        List<UserBean> users = uRepository.findAll();
+//        List<Set<TagsBean>> userTags = new ArrayList<>();
+//        for (UserBean user : users) {
+//            Hibernate.initialize(user.getTagsBeans());                      // Hibernate.initialize(user.getTagsBeans());：使用 Hibernate 的 initialize 方法來強制初始化每個使用者對象中的標籤集合。這樣做是為了在返回結果時確保標籤集合已經加載，避免了懶加載引起的應用程式錯誤。
+//            userTags.add(user.getTagsBeans());
+//        }
+//        return userTags;
+//    }
+    
+    
+	// 獲取所有使用者及所有資料
+  public List<UserBean> getAllUsersWithTags() {
+      List<UserBean> users = uRepository.findAll();
+      for (UserBean user : users) {
+          Hibernate.initialize(user.getTagsBeans());                       
+      }
+      return users;
+  }
     
     
     // 使用者添加一個或多個標籤
