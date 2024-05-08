@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.match.bean.TagsBean;
 import com.user.bean.UserBean;
 import com.user.service.UserService;
 
@@ -183,100 +186,71 @@ public class UserController {
 	
 	
 	
-//---ManyToMany
+    //---Tags : ManyToMany
 	
 	
-	@GetMapping(path = "/findUser/{userNo}.json", produces = "application/json;charset=UTF-8")
-	ResponseEntity<UserBean> userBean(@PathVariable("userNo") Integer userNo) {
-	Optional<UserBean> optional = uService.getOneById(userNo);
-	if (optional.isPresent()) {
-	return ResponseEntity.ok(optional.get());
+	// 獲取單個使用者及其關聯的標籤
+	@GetMapping(path = "/getUserTags/{userNo}")
+	public ResponseEntity<Set<TagsBean>> getUserTags(@PathVariable("userNo") Integer userNo) {
+	    Optional<UserBean> opUser = uService.getDataById(userNo);
+	    if (opUser.isPresent()) {
+	        UserBean user = opUser.get();
+	        Set<TagsBean> tags = user.getTagsBeans();
+	        return ResponseEntity.ok(tags);
+	    } else {
+	        return ResponseEntity.notFound().build();
+	    }
 	}
-	return ResponseEntity.notFound().build();
+	
+    // 指定返回 JSON 格式的資料，以及資料的編碼格式為 UTF-8
+    // @GetMapping(path = "/getUserTags/{userNo}", produces = "application/json;charset=UTF-8")
+
+	
+	
+	
+	// 獲取所有使用者及其關聯的標籤   ..? 不是返回所有資料是只有標籤的資料
+	@GetMapping(path = "/getAllUsersWithTags")
+	public ResponseEntity<List<UserBean>> getAllUsersWithTags() {
+	    List<UserBean> users = uService.getAllUsersWithTags();
+	    return ResponseEntity.ok(users);
 	}
 	
 	
 	
+	// 使用者添加一個或多個標籤       ..? 不是返回所有資料是只有標籤的資料
+	@PostMapping(path = "/addUserTags/{userNo}/tags")
+	public ResponseEntity<UserBean> addTagsToUser(@PathVariable Integer userNo, @RequestBody List<Integer> tagNos) {
+	    try {
+	        UserBean updatedUser = uService.addTagsToUser(userNo, tagNos);
+	        return ResponseEntity.ok(updatedUser);
+	    } catch (IllegalArgumentException ex) {
+	        return ResponseEntity.notFound().build();
+	    }
+	}
+	
+	
+	
+	// 使用者移除一個或多個標籤
+	@DeleteMapping(path = "/deleteUserTags/{userNo}/tags")
+	public ResponseEntity<UserBean> removeTagsFromUser(@PathVariable Integer userNo, @RequestBody List<Integer> tagNos) {
+	    try {
+	        UserBean updatedUser = uService.removeTagsFromUser(userNo, tagNos);
+	        return ResponseEntity.ok(updatedUser);
+	    } catch (IllegalArgumentException ex) {
+	        return ResponseEntity.notFound().build();
+	    }
+	}
 	
 
 	
 	
-// -----------Tags------------
-	
-	
-//	  // 查詢所有用戶（UserBean），並返回它們的清單
-//	  @GetMapping("/allUsersProfile")
-//	  public ResponseEntity<List<UserBean>> getAllUserBeans(@RequestParam(required = false) String userChineseName) {
-//	    List<UserBean> userBeans = new ArrayList<UserBean>();                         //創建一個空的 userBeans 清單，用於存儲從服務（uService）中搜尋到的用戶。
-//
-//	    if (userChineseName == null)
-//	    	uService.findAll().forEach(userBeans::add);                               //使用條件判斷式檢查傳入的參數 userChineseName 是否為空。如果為空，則調用 uService.findAll() 方法檢索所有的用戶，並將它們添加到 userBeans 清單中
-//	    else
-//	    	uService.findByUserChineseName(userChineseName).forEach(userBeans::add);  //否則，調用 uService.findByUserChineseName(userChineseName) 方法檢索標題中包含指定文字的用戶，並將它們添加到 userBeans 清單中
-//
-//	    if (userBeans.isEmpty()) {                                                    //檢查 userBeans 清單是否為空。如果是空的，則返回一個 HTTP 狀態碼為 NO_CONTENT 的回應實體，這表示沒有可返回的資源。   
-//	      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//	    }
-//
-//	    return new ResponseEntity<>(userBeans, HttpStatus.OK);                        //如果 userBeans 清單不為空，則返回一個 HTTP 狀態碼為 OK 的回應實體，並將 userBeans 清單作為回應主體返回給客戶端
-//	  }	
-//	  
-//	  
-//	  //根據提供的使用者 ID 查詢資料庫中的使用者
-//	  @GetMapping("/allUsersProfile/{userNo}")
-//	  public ResponseEntity<UserBean> getById(@PathVariable("userNo") Integer userNo) {
-//		  UserBean resultBean = uService.findById(userNo);
-//
-//	    return new ResponseEntity<>(resultBean, HttpStatus.OK);
-//	  }
-	
-	
-	
-//-------------	  
-	
-	
 	
 
-	// 為使用者附加標籤(更新)
-//	@PostMapping("/users/{userNo}/addTags")
-//	public String attachTagsToUser(@PathVariable("userNo") int userNo, @RequestParam("tagNos") List<Integer> tagNos) {
-//	    UserBean user = uService.getUserData(userNo);
-//	    uService.attachTagsToUser(user, tagNos);
-//	    return "redirect:/users/" + userNo;
-//	}
+	
+	
+    // -----------Test------------
+	
 
-//	// 獲取單個使用者及其關聯的標籤
-//	@GetMapping("/usertags/{userNo}")
-//	public String getUserWithTags(@PathVariable("userNo") Integer userNo, Model model) {
-//		UserBean userWithTags = uService.getUserWithTags(userNo);
-//		model.addAttribute("user", userWithTags);
-//		return "redirect:usertagsHP";
-//	}
-//
-//	// 獲取所有使用者及其關聯的標籤
-//	@GetMapping("/userstags")
-//	public String getAllUsersWithTags(Model model) {
-//		List<UserBean> usersWithTags = uService.getAllUsersWithTags();
-//		model.addAttribute("users", usersWithTags);
-//		return "redirect:usertagsHP";
-//	}
-//
-//	// 從使用者移除標籤
-//	@DeleteMapping("/users/{userNo}/tags")
-//	public String removeTagsFromUser(@PathVariable("userNo") int userNo, @RequestParam("tagNos") List<Integer> tagNos) {
-//		uService.removeTagsFromUser(userNo, tagNos);
-//		return "redirect:/users/" + userNo;
-//	}
-//
-//	// 更新與現有使用者關聯的標籤
-//	@PutMapping("/users/{userNo}/updateTags")
-//	public String updateUserWithTags(@PathVariable("userNo") int userNo, @RequestParam("tagNos") List<Integer> tagNos) {
-//		UserBean user = uService.getUserData(userNo);
-//		uService.updateUserWithTags(user, tagNos);
-//		return "redirect:/users/" + userNo;
-//	}
-//	
-//	
 //	// 關聯 UserBean 與 TagsBean
 //	@PostMapping("/users/{userNo}/tags")
 //	public String associateUserWithTags(@PathVariable Integer userNo, @RequestParam("tagNos") List<Integer> tagNos) {

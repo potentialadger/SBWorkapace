@@ -111,7 +111,9 @@ public class TagsBean {
 	}
 	
 	
-	// ---ManyToMany : 除雙主鍵以外還有其他欄位才要加，要另外寫Bean
+	
+	
+	// ---下面的代碼除了雙主鍵以外還有其他欄位才要加，要另外寫Bean
 	// ---UserTagsBean : https://docs.jboss.org/hibernate/orm/6.4/userguide/html_single/Hibernate_User_Guide.html#identifiers-composite
 	// ---UserTagsBeanKey :
 
