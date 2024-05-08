@@ -70,7 +70,7 @@ public class UserController {
 
 		uService.creatUser(insertBean);
 
-		return "user/html/LogIn.html";
+		return "user/html/NewLogin.html";
 	}
 	@PostMapping("/userLogin")
 	public String processLoginAction(@RequestParam("account") String account, @RequestParam("password") String password,
