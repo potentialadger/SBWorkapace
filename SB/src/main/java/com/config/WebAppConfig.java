@@ -22,6 +22,9 @@ public class WebAppConfig implements WebMvcConfigurer {
 		registry.addViewController("/user.oldSignup").setViewName("user/html/SignUp.html");
 		registry.addViewController("/ManagerIndex").setViewName("ManagerIndex.jsp");
 		registry.addViewController("/match.insertGoal").setViewName("match/jsp/InsertGoal.jsp");
+		registry.addViewController("/match.MatchProfileEdit").setViewName("match/html/MatchProfileEdit.html");
+		registry.addViewController("/match.MatchProfileCreate").setViewName("match/html/MatchProfileCreate.html");
+		registry.addViewController("/match.HeartLoading").setViewName("match/html/HeartLoading.html");
 		registry.addViewController("/activityHomepage").setViewName("activity/HomePage.html");
 		registry.addViewController("/activityInsertpage").setViewName("activity/Insert.html");
 		registry.addViewController("/activityInsertRegistrations").setViewName("activity/InsertRegistrations.html");
@@ -30,6 +33,7 @@ public class WebAppConfig implements WebMvcConfigurer {
 		registry.addViewController("/forum.InsertPosts").setViewName("/forum/backstage/posts/jsp/InsertPosts.jsp");
 		registry.addViewController("/forum.InsertCategories").setViewName("forum/backstage/categories/html/InsertCategories.html");
 		registry.addViewController("/forumManager.homepage").setViewName("forum/backstage/ManagerHome.html");
+		
 	}
 	
 
