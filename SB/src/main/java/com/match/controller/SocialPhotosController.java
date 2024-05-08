@@ -70,8 +70,9 @@ public class SocialPhotosController {
 	@PostMapping(value = "/insertSPhoto")
 	@ResponseBody
 	public SocialPhotosBean insertSPhoto(@RequestParam("userNo") Integer userNo,
-			@RequestParam("photoTheme") String photoTheme, @RequestParam("sPhoto") MultipartFile mf,
-			HttpServletRequest request) throws IllegalStateException, IOException {
+										 @RequestParam("photoTheme") String photoTheme, 
+										 @RequestParam("sPhoto") MultipartFile mf,
+										 HttpServletRequest request) throws IllegalStateException, IOException {
 		HttpSession session = request.getSession();
 
 		String filename = mf.getOriginalFilename();
@@ -108,8 +109,9 @@ public class SocialPhotosController {
 	@PostMapping(value = "/updateSPhoto", produces = "application/json;charset=UTF-8")   //注意要加 .json", produces = "application/json;charset=UTF-8"
 	@ResponseBody
 	public SocialPhotosBean updateSPhoto(@RequestParam("userNo") Integer userNo,
-			@RequestParam("photoTheme") String photoTheme, @RequestParam("sPhoto") MultipartFile mf,
-			HttpServletRequest request) throws IllegalStateException, IOException {
+										 @RequestParam("photoTheme") String photoTheme, 
+										 @RequestParam("sPhoto") MultipartFile mf,
+										 HttpServletRequest request) throws IllegalStateException, IOException {
 		HttpSession session = request.getSession();
 		Integer photoNo = (Integer) session.getAttribute("photoNo"); // ..?
 
