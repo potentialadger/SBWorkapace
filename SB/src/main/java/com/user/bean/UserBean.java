@@ -2,10 +2,8 @@ package com.user.bean;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.stereotype.Component;
@@ -15,7 +13,6 @@ import com.forum.bean.PostsBean;
 import com.forum.bean.RepliesBean;
 import com.forum.bean.ReportsBean;
 import com.group.model.Group;
-import com.group.model.Order;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
