@@ -33,7 +33,7 @@ public class TagsBean {
 	private Integer tagNo;
 	
 	@Column(name="tagname")
-	private String tagName;
+	private String tagName;  //.
 	
 	@Transient
 	private Integer userNo;
