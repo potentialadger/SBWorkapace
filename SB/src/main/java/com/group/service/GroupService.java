@@ -77,7 +77,7 @@ public class GroupService {
 	}
 	
 //	新增活動
-	public Group insertGroup(int user, String title, String description, Date endtime,
+	public Group insertGroup(Integer user, String title, String description, Date endtime,
 							String[] pay, String minquantity, String minamount, String account, String address) {
 		LocalDateTime startDateTime = LocalDateTime.now();
 		Date startTime = Date.from(startDateTime.atZone(ZoneId.systemDefault()).toInstant());

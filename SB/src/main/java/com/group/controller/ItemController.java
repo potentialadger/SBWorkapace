@@ -56,7 +56,7 @@ public class ItemController {
 		Random random = new Random();
 		int raNumber = random.nextInt(10000);
 		
-		filename = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "_"
+		filename = "item" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "_"
 				+ raNumber + extension;
 		
 		String fileDir = "C:/temp/upload/";
