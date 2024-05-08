@@ -53,7 +53,7 @@ public class TagsBean {
 	//---如果要互相可以找，兩邊都要用@JoinTable，並把mappedBy註解，因為不能只有一方是主控方
 	
 	@JsonIgnore                                //要加這個不然會跑很多資料
-//	@ManyToMany(mappedBy = "tagsBeans")
+//	@ManyToMany(mappedBy = "tagsBeans")                                                      //雙邊找要註解
 	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name="usertags",                                                              //雙邊找，單邊找再換回來
 	joinColumns = {@JoinColumn(name="fktagno", referencedColumnName = "tagno")},             //fkuserno -> fktagno   userno -> tagno 
@@ -112,7 +112,7 @@ public class TagsBean {
 	
 	
 	
-	
+	// ---ManyToMany
 	// ---下面的代碼除了雙主鍵以外還有其他欄位才要加，要另外寫Bean
 	// ---UserTagsBean : https://docs.jboss.org/hibernate/orm/6.4/userguide/html_single/Hibernate_User_Guide.html#identifiers-composite
 	// ---UserTagsBeanKey :
