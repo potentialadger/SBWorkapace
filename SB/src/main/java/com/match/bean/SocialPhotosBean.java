@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity  
-@Table(name="SocialPhotos")
+@Table(name="socialphotos")
 @Component
 public class SocialPhotosBean {
 	

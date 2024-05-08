@@ -36,9 +36,9 @@ public class SocialPhotosService {
 	
 	
 	// 根據主題查詢照片
-    public List<SocialPhotosBean> findByPhotoTheme(String photoTheme) {
-        return spRepos.findByPhotoTheme(photoTheme);
-    }
+//    public List<SocialPhotosBean> findByPhotoTheme(String photoTheme) {
+//        return spRepos.findByPhotoTheme(photoTheme);
+//    }
     
     
     // 根據用戶ID和主題查詢照片
