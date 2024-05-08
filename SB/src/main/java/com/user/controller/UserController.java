@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.user.bean.UserBean;
+import com.user.dto.LinePayDto;
 import com.user.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -225,4 +226,14 @@ public class UserController {
 		uService.updateUserWithTags(user, tagNos);
 		return "redirect:/users/" + userNo;
 	}
+	
+//	-----------LinePay------------
+//	public String geLinePay(@RequestBody LinePayDto linePayOrder) {
+//		String orderId = linePayOrder.getOrderId();
+//		Integer amount = linePayOrder.getAmount();
+//		String confirmUrl = linePayOrder.getConfirmUrl();
+//		String currency = linePayOrder.getCurrency();
+//		String productName = linePayOrder.getProductName();
+//	}
+	
 }
