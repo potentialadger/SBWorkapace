@@ -1,13 +1,26 @@
 package com.user.service;
 
+import java.io.IOException;
+import java.net.http.HttpClient;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 
+import org.apache.http.ParseException;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.match.bean.TagsBean;
@@ -27,6 +40,8 @@ public class UserService {
 	// 個性標籤 - 多對多
 	@Autowired
 	private TagsRepository tRepository;
+	
+	
 
 	public UserBean creatUser(UserBean userBean) {
 		return uRepository.save(userBean);
@@ -174,7 +189,42 @@ public class UserService {
 	}
 	
 	// ---------- LINEPAY金流 ---------------
-	
+	private static final String LinePayUrl = "https://api-pay.line.me/v2/payments/request";
+	private static final String ChannelSecret = "4a91e36157b573b652b027d2b69935cb";
+    private static final String ChannelId = "2003913073";
+
+    public UserBean getRequestLinePay(UserBean user, Integer amount, String currency, String productName, String confirmUrl) throws ParseException, IOException, JSONException {
+		CloseableHttpClient client = HttpClients.createDefault();
+		HttpPost post = new HttpPost(LinePayUrl);
+		post.setHeader("Content-Type", "application/json");
+		post.setHeader("X-LINE-ChannelId", ChannelId);
+		post.setHeader("X-LINE-ChannelSecret", ChannelSecret);
+		
+		Random random = new Random();
+		int raNum = random.nextInt(10000);
+		
+		String orderId = "Point" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + raNum;
+		
+		String json = String.format("{\"amount\": %d, \"productName\": \"%s\", \"currency\": \"%s\", \"confirmUrl\": \"%s\", \"orderId\": \"%s\"}",
+				amount, productName, currency, confirmUrl, orderId);
+
+        StringEntity entity = new StringEntity(json);
+        post.setEntity(entity);
+        
+        CloseableHttpResponse response = client.execute(post);
+        int statusCode = response.getStatusLine().getStatusCode();
+        String responseBody = EntityUtils.toString(response.getEntity());
+        
+        if(statusCode == 200) {
+        	JSONObject jsonObject = new JSONObject(responseBody);
+        	if(jsonObject.optJSONObject("return").optString("returnCode").equals("0000")) {
+        		user.setPoint(user.getPoint() + Integer.parseInt(productName));
+        		return uRepository.save(user);
+        	}
+        }
+        
+        return null;
+	}
 	
 
 }

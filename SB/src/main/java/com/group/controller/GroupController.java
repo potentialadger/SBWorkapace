@@ -49,9 +49,15 @@ public class GroupController {
 	
 //	全活躍活動
 	@GetMapping(value = "/groups")
-	public String findAllGroup(Model m) {
+	public String findAllGroup(Model m, HttpServletRequest request) {
 		List<Group> groups = gService.findAllGroup();
+		
+		HttpSession session = request.getSession();
+		UserBean user = (UserBean)session.getAttribute("userData");
+
 		m.addAttribute("groups", groups);
+		m.addAttribute("userData", user);
+		
 		return "group/jsp/groups.jsp";
 	}
 	

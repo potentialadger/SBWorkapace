@@ -1,10 +1,13 @@
 package com.user.controller;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import org.apache.http.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +26,7 @@ import com.user.dto.LinePayDto;
 import com.user.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @SessionAttributes(names = { "userData" })
@@ -228,12 +232,19 @@ public class UserController {
 	}
 	
 //	-----------LinePay------------
-//	public String geLinePay(@RequestBody LinePayDto linePayOrder) {
-//		String orderId = linePayOrder.getOrderId();
-//		Integer amount = linePayOrder.getAmount();
-//		String confirmUrl = linePayOrder.getConfirmUrl();
-//		String currency = linePayOrder.getCurrency();
-//		String productName = linePayOrder.getProductName();
-//	}
+	public String getLinePay(@RequestBody LinePayDto linePayOrder, HttpServletRequest request, Model m) throws ParseException, IOException, JSONException {
+		Integer amount = linePayOrder.getAmount();
+		String confirmUrl = linePayOrder.getConfirmUrl();
+		String currency = linePayOrder.getCurrency();
+		String productName = linePayOrder.getProductName();
+		
+		HttpSession session = request.getSession();
+		UserBean userBean = (UserBean)session.getAttribute("userData");
+		
+//		confirmUrl = "https://"
+		UserBean user = uService.getRequestLinePay(userBean, amount, currency, productName, confirmUrl);
+		m.addAttribute("pointUser", user);
+		return "redirect:/group/groups";
+	}
 	
 }

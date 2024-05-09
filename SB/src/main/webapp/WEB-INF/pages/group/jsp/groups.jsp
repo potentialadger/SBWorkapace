@@ -31,9 +31,9 @@
 									data-bs-target="#newgroup" style="height: 40px;">
 									我要開團
 								</button>
-								<button style="border: none;background: none;padding: 0;"><img
+								<button style="border: none;background: none;padding: 0;width:70px"><img
 										src="/images/pigbigbro.jpg"
-										style="border-radius: 50%;object-fit: cover;width: 70px;height: 70px;margin-left: 1100px;"></button>
+										style="border-radius: 50%;object-fit: cover;width: 70px;height: 70px;margin-left: 1130px;"></button>
 								<div class="row">
 									<% List<Group> groups = (ArrayList<Group>)
 											request.getAttribute("groups");
