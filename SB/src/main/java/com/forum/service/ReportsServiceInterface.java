@@ -7,6 +7,9 @@ import com.forum.bean.ReportsBean;
 import com.user.bean.UserBean;
 
 public interface ReportsServiceInterface {
+	
+	// 用文章去找檢舉
+	List<ReportsBean> findByPostNo(int postNo);
 
 	List<ReportsBean> getAllReports();
 

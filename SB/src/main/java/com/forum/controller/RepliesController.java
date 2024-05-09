@@ -43,6 +43,21 @@ public class RepliesController {
 		}
 		return "/forum/backstage/replies/jsp/SelectReplies.jsp";
 	}
+	
+	// 單筆查詢 查詢該篇文章的回覆用
+	@GetMapping("/PostsReplies")
+	public String getPostsReplies(@RequestParam("postsNo") int postsNo, Model m) {
+	   
+		PostsBean post = postsService.getPostsNo(postsNo);
+	    
+	    List<RepliesBean> replies = repliesService.findByPostNo(postsNo);
+	    
+	    m.addAttribute("post", post);
+	    
+	    m.addAttribute("repliesM", replies);
+	    
+	    return "/forum/backstage/replies/jsp/SelectReplies.jsp";
+	}
 
 	// 全部查詢
 	@GetMapping("/AllReplies")
@@ -75,7 +90,7 @@ public class RepliesController {
 		
 		repliesService.insertReplies(replies);
 		
-		return "redirect:/posts/AllPosts";
+		return "redirect:/posts/AllPosts(要跳轉回該篇文章)";
 	}
 
 	// 刪除
@@ -84,7 +99,7 @@ public class RepliesController {
 
 		repliesService.deleteReplies(Integer.parseInt(repliesNo));
 
-		return "redirect:/replies/AllReplies";
+		return "redirect:/replies/AllReplies(要跳轉回該篇文章)";
 
 	}
 	
@@ -124,6 +139,6 @@ public class RepliesController {
 		
 		repliesService.updateReplies(repliesToUpdate);
 		
-		return "redirect:/replies/AllReplies";
+		return "redirect:/replies/AllReplies(要跳轉回該篇文章)";
 	}
 }

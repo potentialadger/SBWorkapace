@@ -40,6 +40,21 @@ public class LikesController {
 		return "/forum/backstage/likes/jsp/SelectLikes.jsp";
 	}
 	
+	// 單筆查詢 查詢該篇文章的喜歡紀錄用
+	@GetMapping("/PostsLikes")
+	public String getPostsLikes(@RequestParam("postsNo") int postsNo, Model m) {
+
+		PostsBean post = postsService.getPostsNo(postsNo);
+
+		List<LikesBean> Likes = likesService.findByPostNo(postsNo);
+
+		m.addAttribute("post", post);
+
+		m.addAttribute("PostsLikesListM", Likes);
+
+		return "/forum/backstage/likes/jsp/SelectLikes.jsp";
+	}
+	
 	//喜歡 及 收回
 	@PostMapping("/likeOrUnlike")
 	public String  likeOrUnlike(
@@ -59,6 +74,6 @@ public class LikesController {
 	        // 如果未按讚，則執行按讚
 	        likesService.checkAndInsertLike(userData, posts); 
 	    }
-	    return"redirect:/posts/AllPosts";
+	    return"redirect:/posts/AllPosts(要跳回該篇文章)";
 	}
 }

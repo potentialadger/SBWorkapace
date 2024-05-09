@@ -6,23 +6,41 @@
 <head>
 <meta charset="UTF-8">
 <title>檢舉管理</title>
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+
+<!-- 引入 jQuery -->
+<script type="text/javascript" charset="utf8"
+    src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<!-- 引入 DataTables JS -->
+<script type="text/javascript" charset="utf8"
+    src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+
+<!-- DataTables initialization -->
+<script>
+    $(document).ready(function() {
+        $('#reportsTable').DataTable(); // 初始化 DataTables
+    });
+</script>
 </head>
 <body>
 <h1>檢舉管理</h1>
     <br>
-    
+<!--  
     <form method="get" action="/reports/AllReports">
         <button type="submit">檢舉紀錄</button>
     </form>
+-->
+    <form method="get" action="/posts/AllPosts">
+        <button type="submit">返回</button>
+    </form>
 
-    <form method="get" action="/forumManager.homepage">
-    	<button type="submit">首頁</button>
-	</form>
-
-    <table>
+    <table id="reportsTable">
         <thead>
             <tr>
-                <!--<th>檢舉編號</th>-->
                 <th>文章標題</th>
                 <th>文章內容</th>
                 <th>檢舉人</th>
@@ -37,9 +55,8 @@
             <c:if test="${not empty reportsM}">
                 <c:forEach var="reports" items="${reportsM}">
                     <tr>
-                        <!--<td><c:out value="${reports.report_no}" /></td>-->
-                        <td><c:out value="${reports.postsBean.title}" /></td>
-                        <td><c:out value="${reports.postsBean.content}" /></td>
+                        <td><c:out value="${post.title}" /></td>
+                        <td><c:out value="${post.content}" /></td>
                         <td><c:out value="${reports.userBean.userChineseName}" /></td>
                         <td><c:out value="${reports.userBean.email}" /></td>
                         <td><c:out value="${reports.reason}" /></td>
@@ -58,7 +75,7 @@
             </c:if>
             <c:if test="${empty reportsM}">
                 <tr>
-                    <td colspan="8">尚無資料</td>
+                    <td colspan="7">尚無資料</td>
                 </tr>
             </c:if>
         </tbody>

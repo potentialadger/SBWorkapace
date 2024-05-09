@@ -47,5 +47,11 @@ public class RepliesService implements RepliesServiceInterface{
 	public void updateReplies(RepliesBean replies) {
 		repliesDao.save(replies);
 	}
+	
+	//查詢文章底下的回覆
+	@Override
+	public List<RepliesBean> findByPostNo(int postNo) {
+		return repliesDao.findByPostNo(postNo);
+	}
 
 }

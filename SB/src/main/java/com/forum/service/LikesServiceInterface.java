@@ -8,6 +8,8 @@ import com.user.bean.UserBean;
 
 public interface LikesServiceInterface {
 	
+	// 用文章去找喜歡紀錄
+	List<LikesBean> findByPostNo(int postNo);
     
     List<LikesBean> getAllPostsLikes();
     

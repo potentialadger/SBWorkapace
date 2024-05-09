@@ -12,4 +12,8 @@ public interface RepliesDaoInterface extends JpaRepository<RepliesBean, Integer>
 
 	 @Query( "SELECT r FROM RepliesBean r WHERE LOWER(r.content) LIKE LOWER(CONCAT('%', :keyword, '%'))")
 	    List<RepliesBean> findByContentContaining(@Param("keyword") String keyword);
+	 
+	 // 用文章去找底下回覆
+	 @Query("SELECT r FROM RepliesBean r WHERE r.postsBean.post_no = :postNo")
+	   	List<RepliesBean> findByPostNo(@Param("postNo") int postNo);
 }

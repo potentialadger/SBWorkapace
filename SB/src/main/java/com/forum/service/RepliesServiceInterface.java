@@ -18,4 +18,7 @@ public interface RepliesServiceInterface {
 	RepliesBean getRepliesNo(Integer repliesNo);
 	
 	void updateReplies(RepliesBean replies);
+	
+	//找文章底下的回覆
+	List<RepliesBean> findByPostNo(int postNo);
 }

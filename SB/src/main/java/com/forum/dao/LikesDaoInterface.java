@@ -2,6 +2,8 @@ package com.forum.dao;
 
 
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,6 +13,10 @@ import com.forum.bean.PostsBean;
 import com.user.bean.UserBean;
 
 public interface LikesDaoInterface extends JpaRepository<LikesBean, Integer> {
+	
+	// 用文章去找喜歡紀錄
+	@Query("SELECT l FROM LikesBean l WHERE l.postsBean.post_no = :postNo")
+	List<LikesBean> findByPostNo(@Param("postNo") int postNo);
 	
 	//檢查特定使用者是否已對特定文章按讚
     @Query("SELECT l FROM LikesBean l WHERE l.userBean = :user AND l.postsBean = :post")

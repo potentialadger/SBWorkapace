@@ -6,6 +6,9 @@ import com.forum.bean.PostsBean;
 
 public interface PostsServiceInterface {
 	
+	// 用分類去找文章
+	List<PostsBean> findBycategoryNo(int categoryNo);
+	
 	List<PostsBean> getPostsBeanKeyword(String postsBeanKeyword);
 
 	List<PostsBean> getAllPosts();

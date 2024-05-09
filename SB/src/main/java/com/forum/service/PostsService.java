@@ -17,6 +17,12 @@ public class PostsService implements PostsServiceInterface {
 	
 	@Autowired
     private RepliesService repliesService;
+	
+	//查詢文章底下的檢舉
+  	@Override
+  	public List<PostsBean> findBycategoryNo(int categoryNo) {
+  		return postsDao.findBycategoryNo(categoryNo);
+  	}
 
 	@Override
 	public List<PostsBean> getPostsBeanKeyword(String postsBeanKeyword) {

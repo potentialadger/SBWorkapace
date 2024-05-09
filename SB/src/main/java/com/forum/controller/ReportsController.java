@@ -40,12 +40,27 @@ public class ReportsController {
 		return "/forum/backstage/reports/jsp/SelectReports.jsp";
 	}
 	
+	// 單筆查詢 查詢該篇文章的檢舉用
+		@GetMapping("/PostsReports")
+		public String getPostsReports(@RequestParam("postsNo") int postsNo, Model m) {
+		   
+			PostsBean post = postsService.getPostsNo(postsNo);
+		    
+		    List<ReportsBean> reports = reportsService.findByPostNo(postsNo);
+		    
+		    m.addAttribute("post", post);
+		    
+		    m.addAttribute("reportsM", reports);
+		    
+		    return "/forum/backstage/reports/jsp/SelectReports.jsp";
+		}
+	
 	@GetMapping("/SelectReportsPosts")
 	public String getPostsNo(@RequestParam("postsNo") String postsNo, HttpSession session, Model model) {
 	    PostsBean posts = postsService.getPostsNo(Integer.parseInt(postsNo));
 	    UserBean userData = (UserBean) session.getAttribute("userData");
 	    model.addAttribute("reportsPosts", posts);
-	    model.addAttribute("userData", userData); // 将用户信息添加到模型中
+	    model.addAttribute("userData", userData);
 	    return "/forum/backstage/reports/jsp/InsertReports.jsp";
 	}
 	
@@ -61,15 +76,15 @@ public class ReportsController {
 	    // 獲取文章信息
 	    PostsBean posts = postsService.getPostsNo(post_no);
 
-	    // 检查是否以檢舉過
+	    // 檢查是否以檢舉過
 	    ReportsBean existingReports = reportsService.findByUserAndPost(userData, posts);
 
 	    if (existingReports != null) {
-	        return "/forum/backstage/reports/jsp/Repeatedreports.jsp"; 
+	        return "/forum/backstage/reports/jsp/RepeatedReports.jsp"; 
 	    } else {
 	        // 未檢舉過 執行檢舉
 	        reportsService.checkAndInsertReports(userData, posts ,reason);
-	        return "redirect:/posts/detail?post_no=" + post_no;
+	        return "redirect:/posts/detail?post_no=(要跳回該篇文章)" + post_no;
 	    }
 	}
 	
@@ -84,7 +99,7 @@ public class ReportsController {
 		
 		postsService.deletePostAndReplies(Integer.parseInt(postNo));
 		
-		return "redirect:/reports/AllReports";
+		return "redirect:/posts/AllPosts";
 
 	}
 	 

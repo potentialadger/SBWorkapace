@@ -17,7 +17,13 @@ import com.user.bean.UserBean;
 public class ReportsService implements ReportsServiceInterface {
 
     @Autowired
-    private ReportsDaoInterface reportsDaoInterface; 	
+    private ReportsDaoInterface reportsDaoInterface; 
+    
+  //查詢文章底下的檢舉
+  	@Override
+  	public List<ReportsBean> findByPostNo(int postNo) {
+  		return reportsDaoInterface.findByPostNo(postNo);
+  	}
 
 	@Override
 	public List<ReportsBean> getAllReports() {

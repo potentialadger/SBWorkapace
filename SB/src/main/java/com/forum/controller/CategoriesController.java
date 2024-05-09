@@ -20,7 +20,7 @@ public class CategoriesController {
 
 	@Autowired
 	private CategoriesServiceInterface categoriesService;
-
+	
 	// 單筆查詢
 	@GetMapping("/OneCategories")
 	public String getCategoryKeyword(@RequestParam("categoryKeyword") String categoryKeyword, Model m) {
@@ -69,5 +69,5 @@ public class CategoriesController {
 		return "redirect:/CategoriesController/CategoriesAll";
 
 	}
-
+	
 }

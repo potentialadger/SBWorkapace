@@ -37,7 +37,7 @@ public class PostsController {
 	private CategoriesService categoriesService;
 
 
-	// 單筆查詢
+	// 單筆關鍵字模糊查詢
 	@GetMapping("/OnePosts")
 	public String getPostsBeanKeyword(@RequestParam("postsBeanKeyword") String postsBeanKeyword, Model m) {
 		List<PostsBean> postsList = postsService.getPostsBeanKeyword(postsBeanKeyword);
@@ -46,6 +46,21 @@ public class PostsController {
 		} else {
 			m.addAttribute("noData", true);
 		}
+		return "/forum/backstage/posts/jsp/SelectPosts.jsp";
+	}
+	
+	// 單筆查詢 查詢該分類的文章用
+	@GetMapping("/CategoriesPosts")
+	public String getCategoriesPosts(@RequestParam("categoryNo") int categoryNo, Model m) {
+
+		CategoriesBean categories = categoriesService.getCategoryNo(categoryNo);
+
+		List<PostsBean> posts = postsService.findBycategoryNo(categoryNo);
+
+		m.addAttribute("categories", categories);
+
+		m.addAttribute("postsM", posts);
+
 		return "/forum/backstage/posts/jsp/SelectPosts.jsp";
 	}
 
@@ -60,7 +75,7 @@ public class PostsController {
 		return "/forum/backstage/posts/jsp/SelectPosts.jsp";
 	}
 	
-	//新增用的取得分類版
+	// 新增用的取得分類版
 	@GetMapping("/InsertPostsCategories")
 	public String getAllCategoriesToJsp(Model m) {
 		
@@ -68,7 +83,7 @@ public class PostsController {
 		
 		m.addAttribute("categoriesList", categoriesBeans);
 		
-		return "/forum/backstage/posts/jsp/InsertPosts.jsp";
+		return "/forum/backstage/posts/jsp/InsertPosts.jsp(要改成前台)";
 	}
 
 	// 新增
@@ -129,7 +144,7 @@ public class PostsController {
 		
 		postsService.insertPosts(posts);
 
-		return"redirect:/posts/AllPosts";
+		return"redirect:/posts/AllPosts(跳回所有文章或剛發的該筆文章)";
 
 	}catch(
 
@@ -148,7 +163,7 @@ public class PostsController {
 
 		postsService.deletePosts(Integer.parseInt(postsNo));
 
-		return "redirect:/posts/AllPosts";
+		return "redirect:/posts/AllPosts(要跳回所有文章)";
 
 	}
 
@@ -230,28 +245,28 @@ public class PostsController {
 		
 		postsService.updatePosts(postsToUpdate);
 
-		return "redirect:/posts/AllPosts";
+		return "redirect:/posts/AllPosts(要跳出更新成功)";
 		
 		} catch (IOException e) {
 	        e.printStackTrace();
-	        // 如果發生 IO 錯誤，提示用戶文件上傳失敗 前台還要再做一個頁面
+	        // 如果發生 IO 錯誤，提示用戶文件上傳失敗 這個再看可不可以刪除
 	        return "redirect:/posts/error?message=文件上傳失敗";
 	    }
 	}
 	
-	//單筆文章
-	@GetMapping("/SelectPosts")
-	public String getPosts(@RequestParam("postsNo") String postsNo, Model m) {
-
-		PostsBean posts = postsService.getPostsNo(Integer.parseInt(postsNo));
-		
-		//用來印出總喜歡數 總回覆數同上
-		posts.getLikesBean().size();
-		
-		m.addAttribute("updateSelect", posts);
-		
-		return "前台用單筆查詢";
-
-	}
+//	//單筆文章顯示總喜歡與總回覆用
+//	@GetMapping("/SelectPosts")
+//	public String getPosts(@RequestParam("postsNo") String postsNo, Model m) {
+//
+//		PostsBean posts = postsService.getPostsNo(Integer.parseInt(postsNo));
+//		
+//		//用來印出總喜歡數 總回覆數同上
+//		posts.getLikesBean().size();
+//		
+//		m.addAttribute("updateSelect", posts);
+//		
+//		return "前台用單筆查詢";
+//
+//	}
 	
 }

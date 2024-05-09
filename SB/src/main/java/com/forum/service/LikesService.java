@@ -16,7 +16,12 @@ public class LikesService implements LikesServiceInterface {
 	@Autowired
 	private LikesDaoInterface likesDao;
 	
-
+	// 查詢文章底下的檢舉
+	@Override
+	public List<LikesBean> findByPostNo(int postNo) {
+		return likesDao.findByPostNo(postNo);
+	}
+  	
 	    @Override
 		public List<LikesBean> getAllPostsLikes() {
 			return likesDao.findAll();
