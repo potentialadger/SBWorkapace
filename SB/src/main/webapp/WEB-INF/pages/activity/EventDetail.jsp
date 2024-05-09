@@ -4,128 +4,204 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); %>
+<% DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); %>
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <title>活動詳情</title>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <style>
-       body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-            color: #333; 
-        }
-
-        h2 {
-            color: #222;
-            font-size: 2.5rem;
-            text-align: center;
+        body {
+            background-color: #f4f7f6;
             margin-top: 20px;
+            font-family: Arial, sans-serif;
+            color: #333;
+            display: flex;
+            justify-content: center;
         }
-
-        table {
-            width: 95%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        .file_manager .file a:hover .hover,
+        .file_manager .file .file-name small {
+            display: block;
         }
-
-        th, td {
-            padding: 8px;
-            border: 1px solid #ddd;
-            text-align: left;
-            background-color: #ffffff; 
+        .file_manager .file {
+            padding: 0 !important;
+            position: relative;
+            border-radius: .55rem;
+            overflow: hidden;
+            background-size: cover;
+            background-position: top;
         }
-
-        th {
-            background-color: #333;
-            color: #fff; 
-            font-weight: bold;
+        .file_manager .file .image,
+        .file_manager .file .icon {
+            max-height: 180px;
+            overflow: hidden;
+            background-size: cover;
+            background-position: top;
         }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
+        .file_manager .file .hover {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            display: none;
+            transition: all 0.2s ease-in-out;
         }
-
-        tr:hover {
-            background-color: #ddd; 
+        .file_manager .file a:hover .hover {
+            transition: all 0.2s ease-in-out;
         }
-
-        .button-group a {
-            padding: 5px 15px;
-            margin: 5px;
-            border-radius: 3px; 
+        .file_manager .file .icon {
+            padding: 15px 10px;
+            display: table;
+            width: 100%;
+        }
+        .file_manager .file .icon i {
+            display: table-cell;
+            font-size: 30px;
+            vertical-align: middle;
+            color: #777;
+            line-height: 100px;
+        }
+        .file_manager .file .file-name {
+            padding: 10px;
+            border-top: 1px solid #f7f7f7;
+        }
+        .file_manager .file .file-name small .date {
+            float: right;
+        }
+        .folder {
+            padding: 20px;
+            display: block;
+            color: #777;
+        }
+        @media only screen and (max-width: 992px) {
+            .file_manager .nav-tabs {
+                padding-left: 0;
+                padding-right: 0;
+            }
+            .file_manager .nav-tabs .nav-item {
+                display: inline-block;
+            }
+        }
+        .card {
+            background: #fff;
+            transition: .5s;
+            border: 0;
+            margin-bottom: 30px;
+            border-radius: .55rem;
+            position: relative;
+            width: 100%;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+        }
+        a:hover {
             text-decoration: none;
-            color: #fff; 
-            background-color: #222; 
-            display: inline-block; 
-            text-align: center;
         }
-
-        .button-group a:hover {
+        ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        li {
+            margin: 10px;
+            padding: 0;
+            width: calc(25% - 20px);
+            background-color: #fff;
+            border-radius: .55rem;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+        }
+        img {
+            display: block;
+            width: 100%;
+            border-bottom: 1px solid #f7f7f7;
+        }
+        .file-name {
+            padding: 10px;
+        }
+        .details-button {
+            display: block;
+            padding: 10px;
+            margin: 10px auto;
+            border: none;
+            border-radius: 3px;
+            background-color: #3b76e1;
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            width: 80%;
+        }
+        .details-button:hover {
             background-color: #555;
+        }
+        .media-body {
+            word-wrap: break-word;
+            overflow: hidden;
+        }
+        .card-body {
+            overflow: hidden;
+            padding: 20px;
+        }
+        .card-body h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        .card-body p {
+            margin: 5px 0;
+        }
+        .container {
+            max-width: 1000px; /* 調整這裡的寬度 */
+            padding: 20px;
+        }
+        .signup-button {
+            display: inline-block;
+            padding: 5px 10px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 3px;
+            background-color: #28a745;
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
             cursor: pointer;
         }
-
-        h3 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        @media (max-width: 768px) {
-            h2 {
-                font-size: 2rem;
-            }
-
-            .button-group a {
-                padding: 5px 10px; 
-            }
-
-            table {
-                width: 100%; 
-            }
+        .signup-button:hover {
+            background-color: #218838;
         }
     </style>
 </head>
 <body>
-    <div align="center">
-        <h2>活動詳情</h2>
-        <table>
-            <tr>
-                <th>活動編號</th>
-                <th>發起人</th>
-                <th>標題</th>
-                <th>描述</th>
-                <th>活動時間</th>
-                <th>報名開始時間</th>
-                <th>報名結束時間</th>
-                <th>活動地點</th>
-                <th>活動狀態</th>
-                <th>活動圖片</th>
-            </tr>
-            <%
-                EventBean event = (EventBean) request.getAttribute("event");
-            %>
-            <tr>
-                <td><%= event.getEventNo() %></td>
-                <td><%= event.getHostUserNo() %></td>
-                <td><%= event.getTitle() %></td>
-                <td><%= event.getDescription() %></td>
-                <td><%= event.getActivityTime().format(dtf) %></td>
-                <td><%= event.getSignupStartTime().format(dtf) %></td>
-                <td><%= event.getSignupEndTime().format(dtf) %></td>
-                <td><%= event.getLocation() %></td>
-                <td><%= event.getStatus() %></td>
-                <td><img style="width: 100px;" src="/localimages/<%= event.getImagePath() %>" alt="活動圖片"></td>
-            </tr>
-        </table>
-    </div>
-    <div class="button-group">
-        <a href="activityList" class="button">返回活動列表</a>
+    <div class="container">
+        <h1>活動詳情</h1>
+        <div class="card card-lg">
+            <div class="card-body">
+                <div class="user-activity">
+                    <div class="media">
+                        <div class="media-img-wrap">
+                            <div class="avatar avatar-lg">
+                                <img src="/localimages/<%= ((EventBean) request.getAttribute("event")).getImagePath() %>" alt="活動圖片" class="avatar-img rounded-circle">
+                            </div>
+                        </div>
+                        <div class="media-body">
+                            <h2 class="mt-0"><%= ((EventBean) request.getAttribute("event")).getTitle() %></h2>
+                            <p><strong>描述:</strong> <%= ((EventBean) request.getAttribute("event")).getDescription() %></p>
+                            <p><strong>活動時間:</strong> <%= ((EventBean) request.getAttribute("event")).getActivityTime().format(dtf) %></p>
+                            <p><strong>報名開始時間:</strong> <%= ((EventBean) request.getAttribute("event")).getSignupStartTime().format(dtf) %></p>
+                            <p><strong>報名結束時間:</strong> <%= ((EventBean) request.getAttribute("event")).getSignupEndTime().format(dtf) %></p>
+                            <p><strong>活動地點:</strong> <%= ((EventBean) request.getAttribute("event")).getLocation() %></p>
+                            <p>
+                                <strong>活動狀態:</strong> <%= ((EventBean) request.getAttribute("event")).getStatus() %>
+                                <% if ("開放報名".equals(((EventBean) request.getAttribute("event")).getStatus())) { %>
+                                    <a href="/activityInsertRegistrations?eventno=<%= ((EventBean) request.getAttribute("event")).getEventNo() %>" class="signup-button">我要報名</a>
+                                <% } %>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="activityList" class="details-button">返回活動列表</a>
     </div>
 </body>
 </html>

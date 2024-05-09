@@ -11,12 +11,12 @@ import jakarta.persistence.Table;
 
 @Component
 @Entity
-@Table(name = "EventRegistrations")
+@Table(name = "eventregistrations")
 public class EventRegistrationsBean {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "registrationID")
+	@Column(name = "registrationid")
 	private int registrationID;
 	
 	@Column(name = "eventno")
