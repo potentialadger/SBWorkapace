@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import org.apache.http.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +19,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.match.bean.TagsBean;
 import com.user.bean.UserBean;
 import com.user.dto.LinePayDto;
 import com.user.service.UserService;
@@ -75,7 +77,7 @@ public class UserController {
 
 		uService.creatUser(insertBean);
 
-		return "user/html/LogIn.html";
+		return "user/html/NewLogin.html";
 	}
 	@PostMapping("/userLogin")
 	public String processLoginAction(@RequestParam("account") String account, @RequestParam("password") String password,
@@ -186,52 +188,79 @@ public class UserController {
 
 		return "redirect:/users";
 	}
-
 	
 	
-// -----------Tags------------
 	
-
-	// 為使用者附加標籤(更新)
-	@PostMapping("/users/{userNo}/tags")
-	public String attachTagsToUser(@PathVariable("userNo") int userNo, @RequestParam("tagNos") List<Integer> tagNos) {
-		UserBean user = uService.getUserData(userNo);
-		uService.attachTagsToUser(user, tagNos);
-		return "redirect:/users/" + userNo;
-	}
-
+    //---Tags : ManyToMany
+	
+	
 	// 獲取單個使用者及其關聯的標籤
-	@GetMapping("/usertags/{userNo}")
-	public String getUserWithTags(@PathVariable("userNo") int userNo, Model model) {
-		UserBean userWithTags = uService.getUserWithTags(userNo);
-		model.addAttribute("user", userWithTags);
-		return "user/userDetail";
+	@GetMapping(path = "/getUserTags/{userNo}")
+	public ResponseEntity<Set<TagsBean>> getUserTags(@PathVariable("userNo") Integer userNo) {
+	    Optional<UserBean> opUser = uService.getDataById(userNo);
+	    if (opUser.isPresent()) {
+	        UserBean user = opUser.get();
+	        Set<TagsBean> tags = user.getTagsBeans();
+	        return ResponseEntity.ok(tags);
+	    } else {
+	        return ResponseEntity.notFound().build();
+	    }
 	}
+	
+    // 指定返回 JSON 格式的資料，以及資料的編碼格式為 UTF-8
+    // @GetMapping(path = "/getUserTags/{userNo}", produces = "application/json;charset=UTF-8")
 
-	// 獲取所有使用者及其關聯的標籤
-	@GetMapping("/userstags")
-	public String getAllUsersWithTags(Model model) {
-		List<UserBean> usersWithTags = uService.getAllUsersWithTags();
-		model.addAttribute("users", usersWithTags);
-		return "user/userList";
+	
+	
+	
+	// 獲取所有使用者及其關聯的標籤   ..? 不是返回所有資料是只有標籤的資料
+	@GetMapping(path = "/getAllUsersWithTags")
+	public ResponseEntity<List<UserBean>> getAllUsersWithTags() {
+	    List<UserBean> users = uService.getAllUsersWithTags();
+	    return ResponseEntity.ok(users);
 	}
+	
+	
+	
+	// 使用者添加一個或多個標籤       ..? 不是返回所有資料是只有標籤的資料
+	@PostMapping(path = "/addUserTags/{userNo}/tags")
+	public ResponseEntity<UserBean> addTagsToUser(@PathVariable Integer userNo, @RequestBody List<Integer> tagNos) {
+	    try {
+	        UserBean updatedUser = uService.addTagsToUser(userNo, tagNos);
+	        return ResponseEntity.ok(updatedUser);
+	    } catch (IllegalArgumentException ex) {
+	        return ResponseEntity.notFound().build();
+	    }
+	}
+	
+	
+	
+	// 使用者移除一個或多個標籤
+	@DeleteMapping(path = "/deleteUserTags/{userNo}/tags")
+	public ResponseEntity<UserBean> removeTagsFromUser(@PathVariable Integer userNo, @RequestBody List<Integer> tagNos) {
+	    try {
+	        UserBean updatedUser = uService.removeTagsFromUser(userNo, tagNos);
+	        return ResponseEntity.ok(updatedUser);
+	    } catch (IllegalArgumentException ex) {
+	        return ResponseEntity.notFound().build();
+	    }
+	}
+	
 
-	// 從使用者移除標籤
-	@DeleteMapping("/users/{userNo}/tags")
-	public String removeTagsFromUser(@PathVariable("userNo") int userNo, @RequestParam("tagNos") List<Integer> tagNos) {
-		uService.removeTagsFromUser(userNo, tagNos);
-		return "redirect:/users/" + userNo;
-	}
+	
+	
+	
 
 	// 更新與現有使用者關聯的標籤
-	@PutMapping("/users/{userNo}/updateTags")
-	public String updateUserWithTags(@PathVariable("userNo") int userNo, @RequestParam("tagNos") List<Integer> tagNos) {
-		UserBean user = uService.getUserData(userNo);
-		uService.updateUserWithTags(user, tagNos);
-		return "redirect:/users/" + userNo;
-	}
+//	@PutMapping("/users/{userNo}/updateTags")
+//	public String updateUserWithTags(@PathVariable("userNo") int userNo, @RequestParam("tagNos") List<Integer> tagNos) {
+//		UserBean user = uService.getUserData(userNo);
+//		uService.updateUserWithTags(user, tagNos);
+//		return "redirect:/users/" + userNo;
+//	}
 	
 //	-----------LinePay------------
+<<<<<<< HEAD
 	public String getLinePay(@RequestBody LinePayDto linePayOrder, HttpServletRequest request, Model m) throws ParseException, IOException, JSONException {
 		Integer amount = linePayOrder.getAmount();
 		String confirmUrl = linePayOrder.getConfirmUrl();
@@ -246,5 +275,24 @@ public class UserController {
 		m.addAttribute("pointUser", user);
 		return "redirect:/group/groups";
 	}
+=======
+//	public String geLinePay(@RequestBody LinePayDto linePayOrder) {
+//		String orderId = linePayOrder.getOrderId();
+//		Integer amount = linePayOrder.getAmount();
+//		String confirmUrl = linePayOrder.getConfirmUrl();
+//		String currency = linePayOrder.getCurrency();
+//		String productName = linePayOrder.getProductName();
+	
+	
+    // -----------Test------------
+	
+
+//	// 關聯 UserBean 與 TagsBean
+//	@PostMapping("/users/{userNo}/tags")
+//	public String associateUserWithTags(@PathVariable Integer userNo, @RequestParam("tagNos") List<Integer> tagNos) {
+//	    uService.associateUserWithTags(userNo, tagNos);
+//	    return "redirect:/usertagsHP";
+//	}
+>>>>>>> d29350f0b9d7264f22898d1d85a6ad2f4893d7b8
 	
 }

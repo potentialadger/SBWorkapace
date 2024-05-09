@@ -10,6 +10,6 @@ import com.forum.bean.RepliesBean;
 
 public interface RepliesDaoInterface extends JpaRepository<RepliesBean, Integer>{
 
-	 @Query("SELECT r FROM RepliesBean r WHERE LOWER(r.content) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+	 @Query( "SELECT r FROM RepliesBean r WHERE LOWER(r.content) LIKE LOWER(CONCAT('%', :keyword, '%'))")
 	    List<RepliesBean> findByContentContaining(@Param("keyword") String keyword);
 }

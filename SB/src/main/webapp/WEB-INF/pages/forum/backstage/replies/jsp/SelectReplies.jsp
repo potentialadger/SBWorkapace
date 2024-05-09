@@ -26,7 +26,7 @@
     <table>
         <thead>
             <tr>
-                <th>回覆編號</th>
+                <!--<th>回覆編號</th>-->
                 <th>會員名稱</th>
                 <th>會員信箱</th>
                 <th>文章標題</th>
@@ -40,7 +40,7 @@
             <c:if test="${not empty repliesM}">
                 <c:forEach var="replies" items="${repliesM}">
                     <tr>
-                        <td><c:out value="${replies.reply_no}" /></td>
+                        <!--<td><c:out value="${replies.reply_no}" /></td>-->
                         <td><c:out value="${replies.userBean.userChineseName}" /></td>
                         <td><c:out value="${replies.userBean.email}" /></td>
                         <td><c:out value="${replies.postsBean.title}" /></td>

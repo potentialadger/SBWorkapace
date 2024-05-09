@@ -3,14 +3,18 @@ package com.user.service;
 import java.io.IOException;
 import java.net.http.HttpClient;
 import java.time.LocalDateTime;
+<<<<<<< HEAD
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
+=======
+>>>>>>> d29350f0b9d7264f22898d1d85a6ad2f4893d7b8
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 
+<<<<<<< HEAD
 import org.apache.http.ParseException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -18,6 +22,9 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+=======
+import org.hibernate.Hibernate;
+>>>>>>> d29350f0b9d7264f22898d1d85a6ad2f4893d7b8
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
@@ -37,7 +44,6 @@ public class UserService {
 	@Autowired
 	private UserRepository uRepository;
 
-	// 個性標籤 - 多對多
 	@Autowired
 	private TagsRepository tRepository;
 	
@@ -79,7 +85,74 @@ public class UserService {
 	}
 
 	
-// ---------- 個性標籤 - 多對多 ---------------
+
+	
+//---Tags : ManyToMany
+	
+	
+	// 取得使用者資料
+    public Optional<UserBean> getDataById(Integer userNo) {
+        return uRepository.findById(userNo);
+    }
+    
+    // 獲取所有使用者及其關聯的標籤  // ..? 不是所有資料是只有標籤的資料
+    public List<UserBean> getAllUsersWithTags() {
+        List<UserBean> users = uRepository.findAll();
+        for (UserBean user : users) {
+            Hibernate.initialize(user.getTagsBeans());                       // Hibernate.initialize(user.getTagsBeans());：使用 Hibernate 的 initialize 方法來強制初始化每個使用者對象中的標籤集合。這樣做是為了在返回結果時確保標籤集合已經加載，避免了懶加載引起的應用程式錯誤。
+        }
+        return users;
+    }
+    
+    
+    // 使用者添加一個或多個標籤
+    public UserBean addTagsToUser(Integer userNo, List<Integer> tagNos) {
+        Optional<UserBean> optionalUser = uRepository.findById(userNo);
+        if (optionalUser.isPresent()) {
+            UserBean user = optionalUser.get();
+            Set<TagsBean> tags = user.getTagsBeans();
+            for (Integer tagNo : tagNos) {
+                Optional<TagsBean> optionalTag = tRepository.findById(tagNo);
+                if (optionalTag.isPresent()) {
+                    tags.add(optionalTag.get());
+                }
+            }
+            user.setTagsBeans(tags);
+            return uRepository.save(user);
+        } else {
+            throw new IllegalArgumentException("User not found with id: " + userNo);
+        }
+    }
+    
+    
+    
+    
+	// 使用者移除一個或多個標籤
+    public UserBean removeTagsFromUser(Integer userNo, List<Integer> tagNos) {
+        Optional<UserBean> optionalUser = uRepository.findById(userNo);
+        if (optionalUser.isPresent()) {
+            UserBean user = optionalUser.get();
+            Set<TagsBean> tags = user.getTagsBeans();
+            for (Integer tagNo : tagNos) {
+                Optional<TagsBean> optionalTag = tRepository.findById(tagNo);
+                if (optionalTag.isPresent()) {
+                    tags.remove(optionalTag.get());
+                }
+            }
+            user.setTagsBeans(tags);
+            return uRepository.save(user);
+        } else {
+            throw new IllegalArgumentException("User not found with id: " + userNo);
+        }
+    }
+   
+	
+    
+    
+	
+    //----Test----	
+	
+	
 
 //所有的標籤用repository放到set裡面，再用set方法取出
 //先做新增
@@ -87,6 +160,7 @@ public class UserService {
 
 	
 	
+<<<<<<< HEAD
 // 操作這個UserBean的方法都是針對使用者的操作，例如將標籤附加到使用者、從使用者中移除標籤、更新使用者的標籤關聯等。
 	
 	
@@ -225,6 +299,64 @@ public class UserService {
         
         return null;
 	}
+=======
+//// 更新與現有使用者關聯的標籤。
+//	public UserBean updateUserWithTags(UserBean updatedUser, List<Integer> tagNos) {
+//		Optional<UserBean> optionalUser = uRepository.findById(updatedUser.getUserNo());
+//		if (optionalUser.isPresent()) {
+//			UserBean user = optionalUser.get();
+//
+//			// 清空原有的標籤關聯
+//			user.getTags().clear();
+//
+//			// 添加新的標籤關聯
+//			Set<TagsBean> tags = new HashSet<>();
+//			for (Integer tagNo : tagNos) {
+//				Optional<TagsBean> optionalTag = tRepository.findById(tagNo);
+//				if (optionalTag.isPresent()) {
+//					tags.add(optionalTag.get());
+//				} else {
+//					throw new IllegalArgumentException("標籤不存在: " + tagNo);
+//				}
+//			}
+//			user.setTags(tags);
+//
+//			return uRepository.save(user);
+//		}
+//		return null;
+//	}
+//	
+//
+//	
+//	
+//	//關聯 UserBean 與 TagsBean
+//	public UserBean associateUserWithTags(Integer userNo, List<Integer> tagNos) {
+//	    // 獲取 UserBean
+//	    Optional<UserBean> optionalUser = uRepository.findById(userNo);
+//	    if (optionalUser.isPresent()) {
+//	        UserBean user = optionalUser.get();
+//	        Set<TagsBean> tags = new HashSet<>();
+//
+//	        // 獲取 TagsBean 列表
+//	        for (Integer tagNo : tagNos) {
+//	            Optional<TagsBean> optionalTag = tRepository.findById(tagNo);
+//	            if (optionalTag.isPresent()) {
+//	                TagsBean tag = optionalTag.get();
+//	                tags.add(tag);
+//	                tag.getUsers().add(user); // 將 UserBean 添加到 TagsBean 的 users 集合中
+//	                tRepository.save(tag); // 保存 TagsBean
+//	            }
+//	        }
+//
+//	        // 關聯 UserBean 與 TagsBean
+//	        user.setTags(tags);
+//
+//	        // 保存 UserBean
+//	        return uRepository.save(user);
+//	    }
+//	    return null;
+//	}
+>>>>>>> d29350f0b9d7264f22898d1d85a6ad2f4893d7b8
 	
 
 }

@@ -10,7 +10,25 @@ import com.match.bean.TagsBean;
 
 public interface TagsRepository extends JpaRepository<TagsBean, Integer> {
 	
+	
+	// 模糊查詢tagName
     @Query(value="from TagsBean where tagName like %:tagName%")
     public List<TagsBean> findByTagName(@Param("tagName") String tagName);
+    
+    
+    // 根據用戶編號（userNo）查找相關的標籤
+    @Query(value="SELECT t FROM TagsBean t JOIN t.userBeans u WHERE u.userNo = :userNo")
+    List<TagsBean> findTagsByUserNo(@Param("userNo") Integer userNo);
+    
+    
+    
+    
+    
+    
+    
+    /*定義了自定義查找方法：
 
+    findUserBeansByTagNo()：返回與輸入 tagNo 相關的所有 userBeans。
+    findTagsByUserNo()：返回與輸入 userId 相關的所有 Tags。
+    Spring Data JPA 自動插入了實現。*/
 }

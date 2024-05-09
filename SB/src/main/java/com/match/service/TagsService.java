@@ -1,17 +1,11 @@
 package com.match.service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.match.bean.TagsBean;
 import com.match.repository.TagsRepository;
-import com.user.bean.UserBean;
-
 import jakarta.transaction.Transactional;
 
 @Service
@@ -58,15 +52,15 @@ public class TagsService {
         return tRepository.save(tBean);
     }
 
-    // 獲取與標籤關聯的所有用戶
-    public Set<UserBean> getUsersForTag(Integer tagNo) {
-        Optional<TagsBean> optionalTag = tRepository.findById(tagNo);
-        if (optionalTag.isPresent()) {
-            TagsBean tag = optionalTag.get();
-            return new HashSet<>(tag.getUsers()); // 返回一個新的HashSet副本,避免直接暴露實體的集合引用
-        }
-        return null;
-    }
 
+    
+    
+    //---ManyToMany
+    
+    
+    public Optional<TagsBean> getOneById(Integer tagNo) {
+        return tRepository.findById(tagNo);
+    }
+    
 
 }
