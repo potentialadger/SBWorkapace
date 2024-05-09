@@ -46,21 +46,21 @@
 								<div class="form-group row">
 									<div class="col-sm-6 mb-3 mb-sm-0">
 										<input type="text" class="form-control form-control-user" id="UCName"
-											placeholder="中文姓名" name="UCName">
+											placeholder="中文姓名" name="UCName" autocomplete="off">
 									</div>
 									<div class="col-sm-6">
 										<input type="text" class="form-control form-control-user" id="UEName"
-											placeholder="英文姓名" name="UEName">
+											placeholder="英文姓名" name="UEName" autocomplete="off">
 									</div>
 								</div>
 								<div class="form-group row">
 									<div class="col-sm-6 mb-3 mb-sm-0">
 										<input type="text" class="form-control form-control-user" id="account"
-											placeholder="帳號" name="account">
+											placeholder="帳號" name="account" autocomplete="off">
 									</div>
 									<div class="col-sm-6">
 										<input type="email" class="form-control form-control-user" id="Email"
-											placeholder="電子郵件" name="Email">
+											placeholder="電子郵件" name="Email" autocomplete="off">
 									</div>
 
 								</div>
@@ -90,21 +90,21 @@
 								</div>
 								<div class="form-group">
 									<input type="text" class="form-control form-control-user" id="Phone"
-										placeholder="電話" name="Phone">
+										placeholder="電話" name="Phone" autocomplete="off">
 								</div>
 								<div class="form-group">
 									<input type="text" class="form-control form-control-user" id="UserAddress"
-										placeholder="地址" name="UserAddress">
+										placeholder="地址" name="UserAddress" autocomplete="off">
 								</div>
 
 								<!-- 是否為管理員 -->
 								<div class="form-group row">
-									<div class="col-sm-6 mb-3 mb-sm-0">
-										<input type="checkbox" class="custom-control-input" id="">
+									<div class="col-sm-3 mb-3 mb-sm-0">
+										<button class="btn btn-info btn-user btn-block" id="isManager">我是管理員</button>
 									</div>
-									<div class=" col-sm-6 mb-3 mb-sm-0">
+									<div class=" col-sm-9 mb-3 mb-sm-0">
 										<input class="form-control form-control-user" type="text" name="key" id="key"
-											placeholder="管理者金鑰">
+											placeholder="管理者金鑰" hidden autocomplete="off">
 									</div>
 								</div>
 								<div class="row">
@@ -170,6 +170,11 @@
 			$("#Birthday").val("2000-10-15");
 			$("#Phone").val("0972874898");
 			$("#UserAddress").val("台南市關廟區東勢里和平路22巷9弄5號");
+		});
+
+		document.querySelector("#isManager").addEventListener("click", function (e) {
+			e.preventDefault();
+			document.querySelector("#key").hidden = false;
 		});
 	</script>
 
