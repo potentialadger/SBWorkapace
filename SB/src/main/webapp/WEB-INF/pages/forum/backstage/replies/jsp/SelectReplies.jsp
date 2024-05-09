@@ -45,7 +45,7 @@
 
     
     <form method="get" action="/posts/AllPosts">
-        <button type="submit">返回</button>
+        <button type="submit">所有文章</button>
     </form>
 
 

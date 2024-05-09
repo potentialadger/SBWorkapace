@@ -31,7 +31,7 @@ public class CategoriesBean {
 	@Column(name = "title_name")
 	private String title_name;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "categoriesBean", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "categoriesBean", cascade = {CascadeType.PERSIST,CascadeType.ALL})
 	private Set<PostsBean> PostsBean =new HashSet<>();
 
 	public Integer getCategory_no() {
