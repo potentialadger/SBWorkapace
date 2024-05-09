@@ -64,6 +64,7 @@ public class EventController {
                 Map<String, String> eventMap = new HashMap<>();
                 String imagePath = event.getImagePath();
                 String fullImageUrl = request.getContextPath() + "/localimages/" + imagePath;
+                eventMap.put("eventNo", event.getEventNo().toString());
                 eventMap.put("title", event.getTitle());
                 eventMap.put("description", event.getDescription());
                 eventMap.put("imageUrl", fullImageUrl);
@@ -77,6 +78,21 @@ public class EventController {
         }
     }
 
+
+  //單筆查詢活動詳情
+    @GetMapping("/getEventDetail")
+    public ModelAndView getEventDetail(@RequestParam("eventNo") int eventNo) {
+        ModelAndView mav = new ModelAndView("activity/EventDetail.jsp");
+        try {
+        	EventBean event = eventService.findEventByEventNo(eventNo);
+
+            mav.addObject("event", event);
+        } catch (Exception e) {
+            e.printStackTrace();
+            mav.addObject("errorMessage", "An error occurred: " + e.getMessage());
+        }
+        return mav;
+    }
 
     
     
@@ -126,7 +142,7 @@ public class EventController {
         	HttpSession session = request.getSession();
 //    		UserBean userbean = (UserBean)session.getAttribute("userData");
         	
-        	event.setHostUserNo(1);
+        	event.setHostUserNo(2);
         	event.setTitle(title);
         	event.setDescription(description);						
         	event.setActivityTime(activityTime);
