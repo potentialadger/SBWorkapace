@@ -64,6 +64,7 @@ public class EventController {
                 Map<String, String> eventMap = new HashMap<>();
                 String imagePath = event.getImagePath();
                 String fullImageUrl = request.getContextPath() + "/localimages/" + imagePath;
+                eventMap.put("eventNo", event.getEventNo().toString());
                 eventMap.put("title", event.getTitle());
                 eventMap.put("description", event.getDescription());
                 eventMap.put("imageUrl", fullImageUrl);
@@ -77,6 +78,21 @@ public class EventController {
         }
     }
 
+
+  //單筆查詢活動詳情
+    @GetMapping("/getEventDetail")
+    public ModelAndView getEventDetail(@RequestParam("eventNo") int eventNo) {
+        ModelAndView mav = new ModelAndView("activity/EventDetail.jsp");
+        try {
+        	EventBean event = eventService.findEventByEventNo(eventNo);
+
+            mav.addObject("event", event);
+        } catch (Exception e) {
+            e.printStackTrace();
+            mav.addObject("errorMessage", "An error occurred: " + e.getMessage());
+        }
+        return mav;
+    }
 
     
     
@@ -158,7 +174,7 @@ public class EventController {
     
     // 查询欲更新得資料
     @GetMapping("/getEventDataForUpdate")
-    public ModelAndView getEventDataForUpdate(@RequestParam("eventNo") int eventNo) {
+    public ModelAndView getEventDataForUpdate(@RequestParam("eventNo") Integer eventNo) {
         ModelAndView mav = new ModelAndView("activity/UpdateEvent.jsp");
         try {
         	EventBean event = eventService.findEventByEventNo(eventNo);
@@ -176,7 +192,7 @@ public class EventController {
     @PutMapping("/UpdateEvent")
     public ModelAndView updateEvent(
 
-    		@RequestParam("eventNo") int eventNo,
+    		@RequestParam("eventNo") Integer eventNo,
     		@RequestParam("hostUserNo") Integer hostUserNo, 
     		@RequestParam("title") String title,
     		@RequestParam("description") String description,
@@ -189,21 +205,29 @@ public class EventController {
     		HttpServletRequest request
     		) {
         ModelAndView mav = new ModelAndView("redirect:/AllEvents");
+       
         try {
         	EventBean event = eventService.findEventByEventNo(eventNo);
-        	 String filename = mf.getOriginalFilename();
-             String extension = filename.substring(filename.lastIndexOf('.'));
-             String fileDir = "C:/temp/upload/";
-             String newFileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "_" + new Random().nextInt(10000) + extension;
-             File pathexist = new File(fileDir);
-             if (!pathexist.exists()) {
-                 pathexist.mkdirs();
-             }
-             File fileDirPath = new File(fileDir, newFileName);
-             mf.transferTo(fileDirPath);
+        	if(!mf.isEmpty())
+        	{
+        		
+        		String filename = mf.getOriginalFilename();
+        		String extension = filename.substring(filename.lastIndexOf('.'));
+        		String fileDir = "C:/temp/upload/";
+        		String newFileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "_" + new Random().nextInt(10000) + extension;
+        		File pathexist = new File(fileDir);
+        		if (!pathexist.exists()) {
+        			pathexist.mkdirs();
+        		}
+        		File fileDirPath = new File(fileDir, newFileName);
+        		mf.transferTo(fileDirPath);
+        		
+        		
+        		event.setImagePath(newFileName);
+        	}
              
              
-             HttpSession session = request.getSession();
+            HttpSession session = request.getSession();
              
         	event.setTitle(title);
         	event.setDescription(description);
@@ -212,7 +236,6 @@ public class EventController {
         	event.setSignupEndTime(signupEndTime);
         	event.setLocation(location);
         	event.setStatus(status);
-        	event.setImagePath(newFileName);
         	eventService.update(event);
         } catch (Exception e) {
             e.printStackTrace();

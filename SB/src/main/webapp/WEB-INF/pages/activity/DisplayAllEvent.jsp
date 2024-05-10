@@ -5,7 +5,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isErrorPage="true"%>
-<%DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm"); %>
+<%DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,146 +13,143 @@
     <title>活動詳情</title>
     <style>
        body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0;
-    color: #333; 
-}
+           font-family: Arial, sans-serif;
+           margin: 0;
+           padding: 0;
+           background-color: #f0f0f0;
+           color: #333; 
+       }
 
-h2 {
-    color: #222;
-    font-size: 2.5rem;
-    text-align: center;
-    margin-top: 20px;
-}
+       h2 {
+           color: #222;
+           font-size: 2.5rem;
+           text-align: center;
+           margin-top: 20px;
+       }
 
-table {
-    width: 95%;
-    margin: 20px auto;
-    border-collapse: collapse;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-}
+       table {
+           width: 95%;
+           margin: 20px auto;
+           border-collapse: collapse;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+       }
 
-th, td {
-    padding: 8px;
-    border: 1px solid #ddd;
-    text-align: left;
-    background-color: #ffffff; 
-}
+       th, td {
+           padding: 8px;
+           border: 1px solid #ddd;
+           text-align: left;
+           background-color: #ffffff; 
+       }
 
-th {
-    background-color: #333;
-    color: #fff; 
-    font-weight: bold;
-}
+       th {
+           background-color: #333;
+           color: #fff; 
+           font-weight: bold;
+       }
 
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
+       tr:nth-child(even) {
+           background-color: #f2f2f2;
+       }
 
-tr:hover {
-    background-color: #ddd; 
-}
+       tr:hover {
+           background-color: #ddd; 
+       }
 
-.button-group a, .button-group button {
-    padding: 5px 15px;
-    margin: 5px;
-    border-radius: 3px; 
-    text-decoration: none;
-    color: #fff; 
-    background-color: #222; 
-    border: none;
-    display: inline-block; 
-    text-align: center;
-}
+       .button-group a, .button-group button {
+           padding: 5px 15px;
+           margin: 5px;
+           border-radius: 3px; 
+           text-decoration: none;
+           color: #fff; 
+           background-color: #222; 
+           border: none;
+           display: inline-block; 
+           text-align: center;
+       }
 
+       .button-group a:hover, .button-group button:hover {
+           background-color: #555;
+           cursor: pointer;
+       }
 
-.button-group a:hover, .button-group button:hover {
-    background-color: #555;
-    cursor: pointer;
-}
+       h3 {
+           color: #333;
+           text-align: center;
+           margin-bottom: 20px;
+       }
 
-h3 {
-    color: #333;
-    text-align: center;
-    margin-bottom: 20px;
-}
+       @media (max-width: 768px) {
+           h2 {
+               font-size: 2rem;
+           }
 
+           .button-group a, .button-group button {
+               padding: 5px 10px; 
+           }
 
-@media (max-width: 768px) {
-    h2 {
-        font-size: 2rem;
-    }
-
-    .button-group a, .button-group button {
-        padding: 5px 10px; 
-    }
-
-    table {
-        width: 100%; 
-    }
-}
-
+           table {
+               width: 100%; 
+           }
+       }
     </style>
 </head>
 <body>
-<!-- <img src="/localimages/20240429145742_4204.jpg"> -->
     <div align="center">
         <h2>活動詳情</h2>
-               <table>
-            <tr>
-                <th>活動<br>編號</th>
-                <th>發起人</th>
-                <th>標題</th>
-                <th>描述</th>
-                <th>活動時間</th>
-                <th>報名開始時間</th>
-                <th>報名結束時間 </th>
-                <th>活動地點</th>
-                <th>活動狀態</th>
-                 <th>活動圖片</th>
-                 
-                <th>修改</th>
-                <th>刪除</th>
-            </tr>
-            <%
-            List<EventBean> events = (ArrayList<EventBean>)request.getAttribute("events");
-                            for(EventBean event : events){
-            %>
+        <% 
+            List<EventBean> events = (List<EventBean>) request.getAttribute("events");
+            if (events != null && !events.isEmpty()) {
+        %>
+            <table>
                 <tr>
-                <td><%= event.getEventNo() %></td>
-                <td><%= event.getHostUserNo() %></td>
-                <td><%= event.getTitle() %></td>
-                <td><%= event.getDescription() %></td>
-                <td><%= event.getActivityTime()  %></td>
-                <td><%= event.getSignupStartTime() %></td>
-                <td><%= event.getSignupEndTime() %></td>
-                <td><%= event.getLocation() %></td>
-                <td><%= event.getStatus() %></td>
-                <td> <img style="width : 100px " src="/localimages/<%= event.getImagePath()%>"></td>
-                    <div class="button-group">
-                    <td><a href="getEventDataForUpdate?eventNo=<%=event.getEventNo()%>">修改</a></td>
-                    </div>
-                    <div class="button-group">
-                    <td>
-                     <form method="post" action="/DeleteEvent">
-        					<input type="hidden" name="_method" value="delete">
-        					<input type="hidden" name="eventNo" value="<%=event.getEventNo()%>">
-        					<input type="submit" value="刪除">
-<%--                         	<a href="DeleteEvent?eventNo=<%=event.getEventNo()%>">刪除</a> --%>
-                      </form>
-                    </td>
-                    </div>
+                    <th>活動<br>編號</th>
+                    <th>發起人</th>
+                    <th>標題</th>
+                    <th>描述</th>
+                    <th>活動時間</th>
+                    <th>報名開始時間</th>
+                    <th>報名結束時間</th>
+                    <th>活動地點</th>
+                    <th>活動狀態</th>
+                    <th>活動圖片</th>
+                    <th>修改</th>
+                    <th>刪除</th>
                 </tr>
-            <% } %>
-        </table>
-        
+                <% for (EventBean event : events) { %>
+                    <tr>
+                        <td><%= event.getEventNo() %></td>
+                        <td><%= event.getHostUserNo() %></td>
+                        <td><%= event.getTitle() %></td>
+                        <td><%= event.getDescription() %></td>
+                        <td><%= event.getActivityTime().format(dtf) %></td>
+                        <td><%= event.getSignupStartTime().format(dtf) %></td>
+                        <td><%= event.getSignupEndTime().format(dtf) %></td>
+                        <td><%= event.getLocation() %></td>
+                        <td><%= event.getStatus() %></td>
+                        <td><img style="width: 100px;" src="/localimages/<%= event.getImagePath() %>" alt="活動圖片"></td>
+                        <td>
+                            <div class="button-group">
+                                <a href="getEventDataForUpdate?eventNo=<%= event.getEventNo() %>">修改</a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="button-group">
+                                <form method="post" action="/DeleteEvent">
+                                    <input type="hidden" name="_method" value="delete">
+                                    <input type="hidden" name="eventNo" value="<%= event.getEventNo() %>">
+                                    <input type="submit" value="刪除">
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                <% } %>
+            </table>
+        <% } else { %>
+            <h3>目前沒有可顯示的活動。</h3>
+        <% } %>
     </div>
-  <div class="button-group">
-    <a href="activityHomepage" class="button">返回活動首頁</a>
-</div>
-
-
+    <div class="button-group" align="center">
+        <a href="activityHomepage" class="button">返回活動首頁</a>
+    </div>
 </body>
 </html>

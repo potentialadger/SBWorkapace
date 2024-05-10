@@ -3,6 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <title>活動列表</title>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #f4f7f6;
+            margin-top: 20px;
+            font-family: Arial, sans-serif;
+            color: #333;
+            display: flex;
+            justify-content: center;
+        }
+        .file_manager .file a:hover .hover,
+        .file_manager .file .file-name small {
+            display: block;
+        }
+        .file_manager .file {
+            padding: 0 !important;
+            position: relative;
+            border-radius: .55rem;
+            overflow: hidden;
+            background-size: cover;
+            background-position: top;
+        }
+        .file_manager .file .image,
+        .file_manager .file .icon {
+            max-height: 180px;
+            overflow: hidden;
+            background-size: cover;
+            background-position: top;
+        }
+        .file_manager .file .hover {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            display: none;
+            transition: all 0.2s ease-in-out;
+        }
+        .file_manager .file a:hover .hover {
+            transition: all 0.2s ease-in-out;
+        }
+        .file_manager .file .icon {
+            padding: 15px 10px;
+            display: table;
+            width: 100%;
+        }
+        .file_manager .file .icon i {
+            display: table-cell;
+            font-size: 30px;
+            vertical-align: middle;
+            color: #777;
+            line-height: 100px;
+        }
+        .file_manager .file .file-name {
+            padding: 10px;
+            border-top: 1px solid #f7f7f7;
+        }
+        .file_manager .file .file-name small .date {
+            float: right;
+        }
+        .folder {
+            padding: 20px;
+            display: block;
+            color: #777;
+        }
+        @media only screen and (max-width: 992px) {
+            .file_manager .nav-tabs {
+                padding-left: 0;
+                padding-right: 0;
+            }
+            .file_manager .nav-tabs .nav-item {
+                display: inline-block;
+            }
+        }
+        .card {
+            background: #fff;
+            transition: .5s;
+            border: 0;
+            margin-bottom: 30px;
+            border-radius: .55rem;
+            position: relative;
+            width: 100%;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+        }
+        a:hover {
+            text-decoration: none;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        li {
+            margin: 10px;
+            padding: 0;
+            width: calc(25% - 20px);
+            background-color: #fff;
+            border-radius: .55rem;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+        }
+        img {
+            display: block;
+            width: 100%;
+            border-bottom: 1px solid #f7f7f7;
+        }
+        .file-name {
+            padding: 10px;
+        }
+        .details-button {
+            display: block;
+            padding: 10px;
+            margin: 10px auto;
+            border: none;
+            border-radius: 3px;
+            background-color: #3b76e1;
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            width: 80%;
+        }
+        .details-button:hover {
+            background-color: #555;
+        }
+    </style>
     <script>
         window.onload = function() {
             fetchEvents();
@@ -15,14 +141,39 @@
                     const eventsList = document.getElementById('eventsList');
                     events.forEach(event => {
                         const listItem = document.createElement('li');
+                        listItem.className = "col-lg-3 col-md-4 col-sm-12";
+
+                        const card = document.createElement('div');
+                        card.className = 'card';
+
+                        const file = document.createElement('div');
+                        file.className = 'file';
+
                         const image = document.createElement('img');
-                        image.src = event.imageUrl; 
+                        image.src = event.imageUrl ? event.imageUrl : 'https://via.placeholder.com/280x280?text=No+Image';
                         image.alt = 'Event Image';
-                        image.style.width = '100px';
-                        console.log("Loading image from URL:", event.imageUrl);
-                        const text = document.createTextNode(`${event.title} - ${event.description}`);
-                        listItem.appendChild(image);
-                        listItem.appendChild(text);
+                        image.className = 'img-fluid';
+
+                        const fileName = document.createElement('div');
+                        fileName.className = 'file-name';
+
+                        const title = document.createElement('p');
+                        title.className = 'm-b-5 text-muted';
+                        title.textContent = event.title;
+						
+						console.log(event);
+						console.log("eventno: " + event.eventNo);
+                        const detailsButton = document.createElement('a');
+                        detailsButton.textContent = '活動詳情';
+						detailsButton.href = "/getEventDetail?eventNo=" + event.eventNo;
+                        detailsButton.className = 'details-button';
+
+                        fileName.appendChild(title);
+                        file.appendChild(image);
+                        file.appendChild(fileName);
+                        file.appendChild(detailsButton);
+                        card.appendChild(file);
+                        listItem.appendChild(card);
                         eventsList.appendChild(listItem);
                     });
                 })
@@ -35,10 +186,10 @@
 </head>
 <body>
     <h1>活動列表</h1>
-    <ul id="eventsList">
-    </ul>
+    <div id="main-content" class="file_manager">
+        <div class="container">
+            <ul id="eventsList" class="row clearfix"></ul>
+        </div>
+    </div>
 </body>
 </html>
-
-
-

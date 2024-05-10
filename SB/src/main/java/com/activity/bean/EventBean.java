@@ -3,7 +3,6 @@ package com.activity.bean;
 import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,7 +20,7 @@ public class EventBean {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "eventno")
-	private int eventNo;
+	private Integer eventNo;
 	
 	@Column(name = "hostuserno")
 	private Integer hostUserNo;
@@ -55,7 +54,7 @@ public class EventBean {
 	
 	
 
-	public EventBean(int eventNo, Integer hostUserNo, String title, String description,
+	public EventBean(Integer eventNo, Integer hostUserNo, String title, String description,
 			LocalDateTime activityTime, LocalDateTime signupStartTime, LocalDateTime signupEndTime, String location,
 			String status, String imagePath) {
 		this.eventNo = eventNo;
@@ -87,13 +86,13 @@ public class EventBean {
 
 
 
-	public int getEventNo() {
+	public Integer getEventNo() {
 		return eventNo;
 	}
 
 
 
-	public void setEventNo(int eventNo) {
+	public void setEventNo(Integer eventNo) {
 		this.eventNo = eventNo;
 	}
 

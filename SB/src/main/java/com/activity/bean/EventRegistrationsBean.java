@@ -1,57 +1,65 @@
 package com.activity.bean;
 
+import java.time.LocalDateTime;
+
 import org.springframework.stereotype.Component;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Component
 @Entity
-@Table(name = "EventRegistrations")
+@Table(name = "eventregistrations")
 public class EventRegistrationsBean {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "registrationID")
+	@Column(name = "registrationid")
 	private int registrationID;
 	
-	@Column(name = "eventno")
+	@Column(name = "eventno", nullable = false)
 	private int eventNo;
 	
-	@Column(name = "hostuserno")
+	@Column(name = "userno", nullable = false)
 	private Integer hostUserNo;
 	
-	@Column(name = "participantname")
-	private String ParticipantName;
+	@Column(name = "participantname", nullable = false, length = 255)
+	private String participantName;
 	
-
-	@Column(name = "contactinfo")
-	private String ContactInfo;
+	@Column(name = "contactinfo", nullable = false, length = 255)
+	private String contactInfo;
 	
-	@Column(name = "registrationtime")
-	private String RegistrationTime;
+	@Column(name = "registrationtime", nullable = false)
+	private LocalDateTime registrationTime;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "eventno", insertable = false, updatable = false)
+	private EventBean event;
 
 	public EventRegistrationsBean(int eventNo, Integer hostUserNo, String participantName, String contactInfo,
-			String registrationTime) {
+			LocalDateTime registrationTime) {
 		this.eventNo = eventNo;
 		this.hostUserNo = hostUserNo;
-		ParticipantName = participantName;
-		ContactInfo = contactInfo;
-		RegistrationTime = registrationTime;
+		this.participantName = participantName;
+		this.contactInfo = contactInfo;
+		this.registrationTime = registrationTime;
 	}
 
 	public EventRegistrationsBean(int registrationID, int eventNo, Integer hostUserNo, String participantName,
-			String contactInfo, String registrationTime) {
+			String contactInfo, LocalDateTime registrationTime) {
 		this.registrationID = registrationID;
 		this.eventNo = eventNo;
 		this.hostUserNo = hostUserNo;
-		ParticipantName = participantName;
-		ContactInfo = contactInfo;
-		RegistrationTime = registrationTime;
+		this.participantName = participantName;
+		this.contactInfo = contactInfo;
+		this.registrationTime = registrationTime;
 	}
 
 	public EventRegistrationsBean() {
@@ -82,29 +90,34 @@ public class EventRegistrationsBean {
 	}
 
 	public String getParticipantName() {
-		return ParticipantName;
+		return participantName;
 	}
 
 	public void setParticipantName(String participantName) {
-		ParticipantName = participantName;
+		this.participantName = participantName;
 	}
 
 	public String getContactInfo() {
-		return ContactInfo;
+		return contactInfo;
 	}
 
 	public void setContactInfo(String contactInfo) {
-		ContactInfo = contactInfo;
+		this.contactInfo = contactInfo;
 	}
 
-	public String getRegistrationTime() {
-		return RegistrationTime;
+	public LocalDateTime getRegistrationTime() {
+		return registrationTime;
 	}
 
-	public void setRegistrationTime(String registrationTime) {
-		RegistrationTime = registrationTime;
+	public void setRegistrationTime(LocalDateTime registrationTime) {
+		this.registrationTime = registrationTime;
 	}
-	
-	
-	
+
+	public EventBean getEvent() {
+		return event;
+	}
+
+	public void setEvent(EventBean event) {
+		this.event = event;
+	}
 }
