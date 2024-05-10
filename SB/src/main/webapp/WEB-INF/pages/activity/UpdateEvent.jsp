@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isErrorPage="true"%>
     
-    <%DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm"); %>
+    <%DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); %>
     <jsp:useBean id="event" scope="request" class="com.activity.bean.EventBean"/>
 <!DOCTYPE html>
 <html>
@@ -65,16 +65,12 @@ input[type="submit"] {
  
 }
 
-
 @media (max-width: 600px) {
     form {
         width: 90%;
     }
 }
-
-
-
-    </style>
+</style>
 </head>
 <body>
  <div align="center">
@@ -100,8 +96,18 @@ input[type="submit"] {
         <input type="text" id="location" name="location" value="${event.location}"><br>
         <label for="status">狀態:</label><br>
         <input type="text" id="status" name="status" value="${event.status}"><br>
-        <label for="imagepath">活動圖片:</label><br>
-		<input type="file" name="imagePath" id="imagepath" required><br>
+        
+        <!-- 顯示當前圖片 -->
+        <% if (event.getImagePath() != null) { %>
+            <label for="currentImage">目前圖片:</label><br>
+            <img src="/localimages/<%= event.getImagePath() %>" alt="活動圖片" style="max-width: 100%;"><br>
+            <input type="hidden" name="currentImagePath" value="<%= event.getImagePath() %>"><br>
+        <% } %>
+
+        <!-- 選擇重新上傳圖片 -->
+        <label for="imagepath">更換圖片:</label><br>
+        <input type="file" name="imagePath" id="imagepath"><br>
+        
         <input type="submit" value="確定">
 	</form>
 	</div>

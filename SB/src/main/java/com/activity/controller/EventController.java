@@ -142,7 +142,7 @@ public class EventController {
         	HttpSession session = request.getSession();
 //    		UserBean userbean = (UserBean)session.getAttribute("userData");
         	
-        	event.setHostUserNo(2);
+        	event.setHostUserNo(1);
         	event.setTitle(title);
         	event.setDescription(description);						
         	event.setActivityTime(activityTime);
@@ -174,7 +174,7 @@ public class EventController {
     
     // 查询欲更新得資料
     @GetMapping("/getEventDataForUpdate")
-    public ModelAndView getEventDataForUpdate(@RequestParam("eventNo") int eventNo) {
+    public ModelAndView getEventDataForUpdate(@RequestParam("eventNo") Integer eventNo) {
         ModelAndView mav = new ModelAndView("activity/UpdateEvent.jsp");
         try {
         	EventBean event = eventService.findEventByEventNo(eventNo);
@@ -192,7 +192,7 @@ public class EventController {
     @PutMapping("/UpdateEvent")
     public ModelAndView updateEvent(
 
-    		@RequestParam("eventNo") int eventNo,
+    		@RequestParam("eventNo") Integer eventNo,
     		@RequestParam("hostUserNo") Integer hostUserNo, 
     		@RequestParam("title") String title,
     		@RequestParam("description") String description,
@@ -205,21 +205,29 @@ public class EventController {
     		HttpServletRequest request
     		) {
         ModelAndView mav = new ModelAndView("redirect:/AllEvents");
+       
         try {
         	EventBean event = eventService.findEventByEventNo(eventNo);
-        	 String filename = mf.getOriginalFilename();
-             String extension = filename.substring(filename.lastIndexOf('.'));
-             String fileDir = "C:/temp/upload/";
-             String newFileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "_" + new Random().nextInt(10000) + extension;
-             File pathexist = new File(fileDir);
-             if (!pathexist.exists()) {
-                 pathexist.mkdirs();
-             }
-             File fileDirPath = new File(fileDir, newFileName);
-             mf.transferTo(fileDirPath);
+        	if(!mf.isEmpty())
+        	{
+        		
+        		String filename = mf.getOriginalFilename();
+        		String extension = filename.substring(filename.lastIndexOf('.'));
+        		String fileDir = "C:/temp/upload/";
+        		String newFileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "_" + new Random().nextInt(10000) + extension;
+        		File pathexist = new File(fileDir);
+        		if (!pathexist.exists()) {
+        			pathexist.mkdirs();
+        		}
+        		File fileDirPath = new File(fileDir, newFileName);
+        		mf.transferTo(fileDirPath);
+        		
+        		
+        		event.setImagePath(newFileName);
+        	}
              
              
-             HttpSession session = request.getSession();
+            HttpSession session = request.getSession();
              
         	event.setTitle(title);
         	event.setDescription(description);
@@ -228,7 +236,6 @@ public class EventController {
         	event.setSignupEndTime(signupEndTime);
         	event.setLocation(location);
         	event.setStatus(status);
-        	event.setImagePath(newFileName);
         	eventService.update(event);
         } catch (Exception e) {
             e.printStackTrace();
