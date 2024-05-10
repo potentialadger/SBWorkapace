@@ -101,7 +101,6 @@ public class UserController {
 			// 更新最後登入時間
 			resultBean = uService.updateUserLastLoginTime(resultBean);
 
-			System.out.println(resultBean.getLastLoginDatetime());
 			m.addAttribute("userData", resultBean);
 //			request.getSession().setAttribute("userData", resultBean);
 
