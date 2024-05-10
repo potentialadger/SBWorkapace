@@ -81,6 +81,22 @@ public class ReportsBean {
 
 	public void setReport_date(Date report_date) {
 		this.report_date = report_date;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ReportsBean [report_no=");
+		builder.append(report_no);
+		builder.append(", userBean=");
+		builder.append(userBean);
+		builder.append(", postsBean=");
+		builder.append(postsBean);
+		builder.append(", reason=");
+		builder.append(reason);
+		builder.append(", report_date=");
+		builder.append(report_date);
+		builder.append("]");
+		return builder.toString();
 	}	
-	
 }

@@ -29,7 +29,7 @@ public class ReportsController {
 	@Autowired
 	private PostsService postsService;
 
-	// 全部查詢
+	//後台 全部查詢
 	@GetMapping("/AllReports")
 	public String getAllReports(Model m) {
 
@@ -39,68 +39,70 @@ public class ReportsController {
 
 		return "/forum/backstage/reports/jsp/SelectReports.jsp";
 	}
-	
-	// 單筆查詢 查詢該篇文章的檢舉用
-		@GetMapping("/PostsReports")
-		public String getPostsReports(@RequestParam("postsNo") int postsNo, Model m) {
-		   
-			PostsBean post = postsService.getPostsNo(postsNo);
-		    
-		    List<ReportsBean> reports = reportsService.findByPostNo(postsNo);
-		    
-		    m.addAttribute("post", post);
-		    
-		    m.addAttribute("reportsM", reports);
-		    
-		    return "/forum/backstage/reports/jsp/SelectReports.jsp";
-		}
-	
-	@GetMapping("/SelectReportsPosts")
-	public String getPostsNo(@RequestParam("postsNo") String postsNo, HttpSession session, Model model) {
-	    PostsBean posts = postsService.getPostsNo(Integer.parseInt(postsNo));
-	    UserBean userData = (UserBean) session.getAttribute("userData");
-	    model.addAttribute("reportsPosts", posts);
-	    model.addAttribute("userData", userData);
-	    return "/forum/backstage/reports/jsp/InsertReports.jsp";
+
+	//後台 單筆查詢 查詢該篇文章的檢舉用
+	@GetMapping("/PostsReports")
+	public String getPostsReports(@RequestParam("postsNo") int postsNo, Model m) {
+
+		PostsBean post = postsService.getPostsNo(postsNo);
+
+		List<ReportsBean> reports = reportsService.findByPostNo(postsNo);
+
+		m.addAttribute("post", post);
+
+		m.addAttribute("reportsM", reports);
+
+		return "/forum/backstage/reports/jsp/SelectReports.jsp";
 	}
-	
-	@PostMapping("/InsertReports")
-	public String insertReports(@RequestParam("post_no") Integer post_no, 
-	                            @RequestParam("reason") String reason,
-	                            HttpSession session,
-	                            Model m) {
 
-	    // 從 session 中獲取當前用訊息
-	    UserBean userData = (UserBean) session.getAttribute("userData");
-
-	    // 獲取文章信息
-	    PostsBean posts = postsService.getPostsNo(post_no);
-
-	    // 檢查是否以檢舉過
-	    ReportsBean existingReports = reportsService.findByUserAndPost(userData, posts);
-
-	    if (existingReports != null) {
-	        return "/forum/backstage/reports/jsp/RepeatedReports.jsp"; 
-	    } else {
-	        // 未檢舉過 執行檢舉
-	        reportsService.checkAndInsertReports(userData, posts ,reason);
-	        return "redirect:/posts/detail?post_no=(要跳回該篇文章)" + post_no;
-	    }
-	}
-	
-	
-	// 刪除
+	//後台 刪除
 	@DeleteMapping("/DeleteReports")
 	public String deleteReports(
 			@RequestParam("reportNo") String reportNo, 
-			@RequestParam("postNo") String postNo) {
+			@RequestParam("postNo") String postNo,
+			@RequestParam("categoryNo") String categoryNo
+			) {
 
 		reportsService.deleteReports(Integer.parseInt(reportNo));
-		
+
 		postsService.deletePostAndReplies(Integer.parseInt(postNo));
 		
-		return "redirect:/posts/AllPosts";
+		System.out.println(categoryNo);
+
+		return "redirect:/posts/CategoriesPosts?categoryNo="+categoryNo;
 
 	}
-	 
+	
+	//前台 新增查詢
+	@GetMapping("/SelectReportsPosts")
+	public String getPostsNo(@RequestParam("postsNo") String postsNo, HttpSession session, Model model) {
+		PostsBean posts = postsService.getPostsNo(Integer.parseInt(postsNo));
+		UserBean userData = (UserBean) session.getAttribute("userData");
+		model.addAttribute("reportsPosts", posts);
+		model.addAttribute("userData", userData);
+		return "/forum/backstage/reports/jsp/InsertReports.jsp";
+	}
+	
+	//前台 新增檢舉
+	@PostMapping("/InsertReports")
+	public String insertReports(@RequestParam("post_no") Integer post_no, @RequestParam("reason") String reason,
+			HttpSession session, Model m) {
+
+		// 從 session 中獲取當前用訊息
+		UserBean userData = (UserBean) session.getAttribute("userData");
+
+		// 獲取文章信息
+		PostsBean posts = postsService.getPostsNo(post_no);
+
+		// 檢查是否以檢舉過
+		ReportsBean existingReports = reportsService.findByUserAndPost(userData, posts);
+
+		if (existingReports != null) {
+			return "/forum/backstage/reports/jsp/RepeatedReports.jsp";
+		} else {
+			// 未檢舉過 執行檢舉
+			reportsService.checkAndInsertReports(userData, posts, reason);
+			return "redirect:/posts/detail?post_no=(要跳回該篇文章)" + post_no;
+		}
+	}
 }

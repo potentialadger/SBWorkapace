@@ -9,7 +9,8 @@ import org.springframework.data.repository.query.Param;
 import com.forum.bean.RepliesBean;
 
 public interface RepliesDaoInterface extends JpaRepository<RepliesBean, Integer>{
-
+	
+	// 模糊查詢回覆內容關鍵字
 	 @Query( "SELECT r FROM RepliesBean r WHERE LOWER(r.content) LIKE LOWER(CONCAT('%', :keyword, '%'))")
 	    List<RepliesBean> findByContentContaining(@Param("keyword") String keyword);
 	 

@@ -28,13 +28,14 @@
 </head>
 <body>
 <h1>喜歡紀錄</h1>
-    <br>
 
-     <form method="get" action="/posts/AllPosts">
-        <button type="submit">所有文章</button>
-    </form>
+	<form method="get" action="/posts/CategoriesPosts">
+		<input type="hidden" name="categoryNo"
+			value="${post.categoriesBean.category_no}">
+		<button type="submit">返回</button>
+	</form>
 
-    <table id="likesTable">
+	<table id="likesTable">
         <thead>
             <tr>
                 <th>文章標題</th>

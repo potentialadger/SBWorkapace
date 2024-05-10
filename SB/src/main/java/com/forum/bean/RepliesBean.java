@@ -98,7 +98,5 @@ public class RepliesBean {
 		builder.append("]");
 		return builder.toString();
 	}
-
-	
 }
 

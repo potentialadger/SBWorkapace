@@ -9,18 +9,24 @@ public interface PostsServiceInterface {
 	// 用分類去找文章
 	List<PostsBean> findBycategoryNo(int categoryNo);
 	
+	// 關鍵字模糊查詢標題
 	List<PostsBean> getPostsBeanKeyword(String postsBeanKeyword);
-
+	
+	// 查詢全部
 	List<PostsBean> getAllPosts();
-
+	
+	// 新增
 	void insertPosts(PostsBean posts);
-
+	
+	// 依照編號刪除
 	void deletePosts(Integer postsNo);
-
+	
+	// 編號查詢單筆
 	PostsBean getPostsNo(Integer postsNo);
 	
+	// 更新
 	void updatePosts(PostsBean posts);
 	
-	 // 刪除文章的相關回覆
+	// 刪除文章的相關回覆
     void deletePostAndReplies(int postNo);
 }

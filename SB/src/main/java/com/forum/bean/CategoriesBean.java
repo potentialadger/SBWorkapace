@@ -57,5 +57,17 @@ public class CategoriesBean {
 	public void setPostsBean(Set<PostsBean> postsBean) {
 		PostsBean = postsBean;
 	}
-			
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("CategoriesBean [category_no=");
+		builder.append(category_no);
+		builder.append(", title_name=");
+		builder.append(title_name);
+		builder.append(", PostsBean=");
+		builder.append(PostsBean);
+		builder.append("]");
+		return builder.toString();
+	}		
 }

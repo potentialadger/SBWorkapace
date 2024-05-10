@@ -32,7 +32,7 @@ public class RepliesController {
 	private PostsServiceInterface postsService;
 
 
-	// 單筆查詢
+	//後台 單筆查詢
 	@GetMapping("/OneReplies")
 	public String getRepliesBeanKeyword(@RequestParam("repliesBeanKeyword") String repliesBeanKeyword, Model m) {
 		List<RepliesBean> repliesList = repliesService.getRepliesBeanKeyword(repliesBeanKeyword);
@@ -44,7 +44,7 @@ public class RepliesController {
 		return "/forum/backstage/replies/jsp/SelectReplies.jsp";
 	}
 	
-	// 單筆查詢 查詢該篇文章的回覆用
+	//後台 單筆查詢 查詢該篇文章的回覆用
 	@GetMapping("/PostsReplies")
 	public String getPostsReplies(@RequestParam("postsNo") int postsNo, Model m) {
 	   
@@ -59,7 +59,7 @@ public class RepliesController {
 	    return "/forum/backstage/replies/jsp/SelectReplies.jsp";
 	}
 
-	// 全部查詢
+	//後台 全部查詢
 	@GetMapping("/AllReplies")
 	public String getAllReplies(Model m) {
 
@@ -70,7 +70,7 @@ public class RepliesController {
 		return "/forum/backstage/replies/jsp/SelectReplies.jsp";
 	}
 
-	// 新增
+	//前台 新增
 	@PostMapping("/InsertReplies")
 	public String insertReplies(
 			@RequestParam("post_no") int post_no, 
@@ -93,7 +93,7 @@ public class RepliesController {
 		return "redirect:/posts/AllPosts(要跳轉回該篇文章)";
 	}
 
-	// 刪除
+	//前台 刪除
 	@DeleteMapping("/DeleteReplies")
 	public String deleteReplies(@RequestParam("repliesNo") String repliesNo) {
 
@@ -103,7 +103,7 @@ public class RepliesController {
 
 	}
 	
-	//更新用查詢
+	//前台 更新用查詢
 	@GetMapping("/UpdateSelectReplies")
 	public String getRepliesNo(@RequestParam("repliesNo") String repliesNo, Model m) {
 
@@ -115,7 +115,7 @@ public class RepliesController {
 
 	}
 	
-	//更新
+	//前台 更新
 	@PutMapping("/UpdateReplies")
 	public String updateReplies(
 			@RequestParam("reply_no") int reply_no, 

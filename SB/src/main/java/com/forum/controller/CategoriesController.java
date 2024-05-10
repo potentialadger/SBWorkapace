@@ -21,7 +21,7 @@ public class CategoriesController {
 	@Autowired
 	private CategoriesServiceInterface categoriesService;
 	
-	// 單筆查詢
+	//後台 單筆查詢
 	@GetMapping("/OneCategories")
 	public String getCategoryKeyword(@RequestParam("categoryKeyword") String categoryKeyword, Model m) {
 		List<CategoriesBean> categoriesList = categoriesService.getCategoryKeyword(categoryKeyword);
@@ -33,7 +33,7 @@ public class CategoriesController {
 		return "/forum/backstage/categories/jsp/SelectCategories.jsp";
 	}
 
-	// 全部查詢
+	//後台 全部查詢
 	@GetMapping("/CategoriesAll")
 	public String getAllCategories(Model m) {
 
@@ -47,7 +47,7 @@ public class CategoriesController {
 		return "/forum/backstage/categories/jsp/SelectCategories.jsp";
 	}
 
-	// 新增
+	//後台 新增
 	@PostMapping("/InsertCategories")
 	public String insertCategory(@RequestParam("title_name") String title_name) {
 
@@ -60,7 +60,7 @@ public class CategoriesController {
 		return "/forum/backstage/categories/jsp/InsertCategories.jsp";
 	}
 
-	// 刪除
+	//後台 刪除
 	@DeleteMapping("/DeleteCategories")
 	public String deleteCategory(@RequestParam("categoryNo") String categoryNo) {
 

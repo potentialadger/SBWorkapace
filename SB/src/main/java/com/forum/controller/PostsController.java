@@ -37,7 +37,7 @@ public class PostsController {
 	private CategoriesService categoriesService;
 
 
-	// 單筆關鍵字模糊查詢
+	//後台 單筆關鍵字模糊查詢
 	@GetMapping("/OnePosts")
 	public String getPostsBeanKeyword(@RequestParam("postsBeanKeyword") String postsBeanKeyword, Model m) {
 		List<PostsBean> postsList = postsService.getPostsBeanKeyword(postsBeanKeyword);
@@ -49,7 +49,7 @@ public class PostsController {
 		return "/forum/backstage/posts/jsp/SelectPosts.jsp";
 	}
 	
-	// 單筆查詢 查詢該分類的文章用
+	//後台 單筆查詢 查詢該分類的文章用
 	@GetMapping("/CategoriesPosts")
 	public String getCategoriesPosts(@RequestParam("categoryNo") int categoryNo, Model m) {
 
@@ -64,7 +64,7 @@ public class PostsController {
 		return "/forum/backstage/posts/jsp/SelectPosts.jsp";
 	}
 
-	// 全部查詢
+	//後台 全部查詢
 	@GetMapping("/AllPosts")
 	public String getAllPosts(Model m) {
 
@@ -75,7 +75,7 @@ public class PostsController {
 		return "/forum/backstage/posts/jsp/SelectPosts.jsp";
 	}
 	
-	// 新增用的取得分類版
+	//前台 新增用的取得分類版
 	@GetMapping("/InsertPostsCategories")
 	public String getAllCategoriesToJsp(Model m) {
 		
@@ -86,7 +86,7 @@ public class PostsController {
 		return "/forum/backstage/posts/jsp/InsertPosts.jsp(要改成前台)";
 	}
 
-	// 新增
+	//前台 新增
 	@PostMapping("/InsertPosts")
 	public String insertPosts(
 			@RequestParam("category_no") int category_no,
@@ -157,7 +157,7 @@ public class PostsController {
 }
 	
 
-	// 刪除
+	//前台 刪除
 	@DeleteMapping("/DeletePosts")
 	public String deletePosts(@RequestParam("postsNo") String postsNo) {
 
@@ -167,7 +167,7 @@ public class PostsController {
 
 	}
 
-	// 更新用查詢和分類
+	//前台 更新用查詢和分類
 	@GetMapping("/UpdateSelectPosts")
 	public String getPostsNo(@RequestParam("postsNo") String postsNo, Model m) {
 
@@ -183,7 +183,7 @@ public class PostsController {
 
 	}
 
-	// 更新
+	//前台 更新
 	@PutMapping("/UpdatePosts")
 	public String updatePosts(
 			@RequestParam("post_no") Integer post_no, 
@@ -253,20 +253,4 @@ public class PostsController {
 	        return "redirect:/posts/error?message=文件上傳失敗";
 	    }
 	}
-	
-//	//單筆文章顯示總喜歡與總回覆用
-//	@GetMapping("/SelectPosts")
-//	public String getPosts(@RequestParam("postsNo") String postsNo, Model m) {
-//
-//		PostsBean posts = postsService.getPostsNo(Integer.parseInt(postsNo));
-//		
-//		//用來印出總喜歡數 總回覆數同上
-//		posts.getLikesBean().size();
-//		
-//		m.addAttribute("updateSelect", posts);
-//		
-//		return "前台用單筆查詢";
-//
-//	}
-	
 }

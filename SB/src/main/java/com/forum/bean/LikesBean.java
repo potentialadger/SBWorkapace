@@ -59,8 +59,14 @@ public class LikesBean {
 
 	@Override
 	public String toString() {
-		return "LikesBean [like_no=" + like_no + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("LikesBean [like_no=");
+		builder.append(like_no);
+		builder.append(", userBean=");
+		builder.append(userBean);
+		builder.append(", postsBean=");
+		builder.append(postsBean);
+		builder.append("]");
+		return builder.toString();
 	}
-	
-	
 }
