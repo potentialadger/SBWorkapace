@@ -7,43 +7,93 @@
 <head>
 <meta charset="UTF-8">
 <title>首頁</title>
+<style>
+.forum-container {
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 20px;
+}
+
+.search-form {
+	margin-bottom: 20px;
+}
+
+.forum-posts {
+	display: flex;
+	flex-direction: column;
+}
+
+.post {
+	border: 1px solid #ccc;
+	margin-bottom: 20px;
+	padding: 10px;
+}
+
+.post-date {
+	font-size: 14px;
+	color: #888;
+}
+
+.post-title {
+	font-size: 18px;
+	font-weight: bold;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.post-content {
+	font-size: 16px;
+	margin-bottom: 10px;
+}
+
+.post-image img {
+	max-width: 100%;
+	height: auto;
+	float: right;
+	margin-left: 10px;
+}
+
+.post-footer {
+	font-size: 14px;
+	color: #888;
+	margin-top: 10px;
+}
+
+.post-footer div {
+	display: inline-block;
+	margin-right: 10px;
+}
+</style>
 </head>
 <body>
-	<div>
-		<form method="get" action="/OnePosts/postsFrontDesk">
+
+	<div class="forum-container">
+		<form class="search-form" method="get" action="/postsFrontDesk/OnePosts">
 			查詢: <input type="text" name="postsBeanKeyword" required>
 			<button type="submit">送出</button>
 		</form>
+		
+		<form method="get" action="/postsFrontDesk/AllPosts">
+			<button type="submit">全部文章</button>
+		</form>
 
-		<table>
-
-			<thead>
-				<tr>
-					<th>分類</th>
-					<th>文章標題</th>
-					<th>文章內容</th>
-					<th>日期</th>
-					<th>會員名稱</th>
-					<th>瀏覽次數</th>
-					<th>喜歡次數</th>
-				</tr>
-			</thead>
-
-			<tbody>
-				<c:if test="${not empty postsM}">
-					<c:forEach var="posts" items="${postsM}">
-						<tr>
-							<td><c:out value="${categories.title_name}" /></td>
-							<td><c:out value="${posts.title}" /></td>
-							<td><c:out value="${posts.content}" /></td>
-							<td><c:out value="${posts.update_date}" /></td>
-							<td><c:out value="${posts.userBean.userChineseName}" /></td>
-							<td><c:out value="${posts.view_count}" /></td>
-						</tr>
-					</c:forEach>
-				</c:if>
-			</tbody>
-		</table>
+		<div class="forum-posts">
+			<c:forEach var="post" items="${postsM}">
+				<div class="post">
+					<div class="post-date">${post.update_date}</div>
+					<div class="post-title">${post.title}</div>
+					<div class="post-content">${post.content}</div>
+					<div class="post-image">
+						<img src="${post.image_url}" alt="Post Image">
+					</div>
+					<div class="post-footer">
+						<div class="post-likes">${post.likesBean.size()}likes</div>
+						<div class="post-views">${post.view_count}views</div>
+					</div>
+				</div>
+			</c:forEach>
+		</div>
 	</div>
+
 </body>
 </html>

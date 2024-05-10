@@ -25,6 +25,7 @@
         $('#reportsTable').DataTable(); // 初始化 DataTables
     });
 </script>
+  
 </head>
 <body>
 <h1>檢舉管理</h1>
@@ -65,15 +66,15 @@
                         <td><c:out value="${reports.reason}" /></td>
                         <td><c:out value="${reports.report_date}" /></td>
 
-                        <td>
-                            <form method="post" action="/reports/DeleteReports">
-                                <input type="hidden" name="postNo" value="${reports.postsBean.post_no}">
-                                <input type="hidden" name="reportNo" value="${reports.report_no}">
-                                <input type="hidden" name="categoryNo" value="${post.categoriesBean.category_no}">
-                                <input type="hidden" name="_method" value="delete">
-                                <button type="submit">刪除</button>
-                            </form>
-                        </td>
+          <td>
+    		<form method="post" action="/reports/DeleteReports" onsubmit="return confirm('確定要刪除嗎？');">
+       			 <input type="hidden" name="postNo" value="${reports.postsBean.post_no}">
+        		 <input type="hidden" name="reportNo" value="${reports.report_no}">
+        		 <input type="hidden" name="categoryNo" value="${post.categoriesBean.category_no}">
+        		 <input type="hidden" name="_method" value="delete">
+        			<button type="submit">刪除</button>
+    		</form>
+		</td>
                     </tr>
                 </c:forEach>
             </c:if>
@@ -83,7 +84,6 @@
                 </tr>
             </c:if>
         </tbody>
-    </table>
-    
+    </table>  
 </body>
 </html>

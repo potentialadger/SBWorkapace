@@ -45,7 +45,7 @@ public class FrontDeskPostsController {
 		} else {
 			m.addAttribute("noData", true);
 		}
-		return "/forum/frontdesk/Home.jsp";
+		return "/forum/frontdesk/posts/jsp/UserHome.jsp";
 	}
 
 	// 前台 全部查詢
@@ -222,20 +222,23 @@ public class FrontDeskPostsController {
 			return "redirect:/posts/error?message=文件上傳失敗";
 		}
 	}
+	
+	// 瀏覽次數
+	@GetMapping("/SelectPosts")
+	public String getPosts(@RequestParam("postsNo") String postsNo, Model m) {
+	    
+		PostsBean posts = postsService.getPostsNo(Integer.parseInt(postsNo));
+	    
+	    // 更新瀏覽次數
+	    int newViewCount = posts.getView_count() + 1;
+	    
+	    posts.setView_count(newViewCount);
+	    // 把更新的文章插入資料庫
+	    postsService.updatePosts(posts);
 
-//		//前台 單筆文章顯示總喜歡與總回覆用
-//		@GetMapping("/SelectPosts")
-//		public String getPosts(@RequestParam("postsNo") String postsNo, Model m) {
-	//
-//			PostsBean posts = postsService.getPostsNo(Integer.parseInt(postsNo));
-//			
-//			//用來印出總喜歡數 總回覆數同上
-//			posts.getLikesBean().size();
-//			
-//			m.addAttribute("updateSelect", posts);
-//			
-//			return "前台用單筆查詢";
-	//
-//		}
+	    m.addAttribute("updateSelect", posts);
+
+	    return "前台用單筆查詢";
+	}
 
 }

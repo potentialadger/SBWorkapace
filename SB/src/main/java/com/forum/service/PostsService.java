@@ -69,4 +69,7 @@ public class PostsService implements PostsServiceInterface {
 		// 然后刪除文章
 		postsDao.deleteById(postNo);
 	}
+	
+	// 更新瀏覽次數
+	
 }

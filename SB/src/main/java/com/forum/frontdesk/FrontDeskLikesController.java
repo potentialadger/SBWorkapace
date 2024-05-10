@@ -45,6 +45,6 @@ public class FrontDeskLikesController {
 		        // 如果未按讚，則執行按讚
 		        likesService.checkAndInsertLike(userData, posts); 
 		    }
-		    return"redirect:/posts/AllPosts(要跳回該篇文章)";
+		    return"redirect:/posts/AllPosts";
 		}
 	}
