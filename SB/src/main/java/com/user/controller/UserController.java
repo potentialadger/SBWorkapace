@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.user.bean.UserBean;
@@ -257,20 +258,30 @@ public class UserController {
 	
 //	-----------LinePay------------
 
-	public String getLinePay(@RequestBody LinePayDto linePayOrder, HttpServletRequest request, Model m) throws ParseException, IOException, JSONException {
+	@PostMapping("/getLinePay")
+	@ResponseBody
+	public String getRequestLinePay(@RequestBody LinePayDto linePayOrder, HttpServletRequest request, Model m) throws ParseException, IOException, JSONException {
 		Integer amount = linePayOrder.getAmount();
 		String confirmUrl = linePayOrder.getConfirmUrl();
 		String currency = linePayOrder.getCurrency();
 		String productName = linePayOrder.getProductName();
 		
-		HttpSession session = request.getSession();
-		UserBean userBean = (UserBean)session.getAttribute("userData");
+		System.out.println("amount = " + amount);
+		System.out.println("url = " + confirmUrl);
+		System.out.println("currency = " + currency);
+		System.out.println("product = " + productName);
 		
-//		confirmUrl = "https://"
-		UserBean user = uService.getRequestLinePay(userBean, amount, currency, productName, confirmUrl);
-		m.addAttribute("pointUser", user);
-		return "redirect:/group/groups";
+		HttpSession session = request.getSession();
+//		UserBean userBean = (UserBean)session.getAttribute("userData");
+		UserBean userBean = uService.getUserData(1);
+		
+		String confirmWeb = uService.getRequestLinePay(userBean, amount, currency, productName, confirmUrl);
+		System.out.println("回傳網址:--------------------" + confirmWeb);
+		
+		return confirmWeb;
 	}
+	
+
 
 
 	

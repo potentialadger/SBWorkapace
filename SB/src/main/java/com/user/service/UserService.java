@@ -263,11 +263,11 @@ public class UserService {
 //	}
 	
 	// ---------- LINEPAY金流 ---------------
-	private static final String LinePayUrl = "https://api-pay.line.me/v2/payments/request";
-	private static final String ChannelSecret = "4a91e36157b573b652b027d2b69935cb";
-    private static final String ChannelId = "2003913073";
+	private static final String LinePayUrl = "https://sandbox-api-pay.line.me/v2/payments/request";
+	private static final String ChannelSecret = "64e9607268ad77d84190c95c76a58054";
+    private static final String ChannelId = "2004736885";
 
-    public UserBean getRequestLinePay(UserBean user, Integer amount, String currency, String productName, String confirmUrl) throws ParseException, IOException, JSONException {
+    public String getRequestLinePay(UserBean user, Integer amount, String currency, String productName, String confirmUrl) throws ParseException, IOException, JSONException {
 		CloseableHttpClient client = HttpClients.createDefault();
 		HttpPost post = new HttpPost(LinePayUrl);
 		post.setHeader("Content-Type", "application/json");
@@ -291,14 +291,46 @@ public class UserService {
         
         if(statusCode == 200) {
         	JSONObject jsonObject = new JSONObject(responseBody);
-        	if(jsonObject.optJSONObject("return").optString("returnCode").equals("0000")) {
-        		user.setPoint(user.getPoint() + Integer.parseInt(productName));
-        		return uRepository.save(user);
+        	System.out.println("回傳: " + jsonObject.optString("returnCode"));
+        	if(jsonObject.optString("returnCode").equals("0000")) {
+        		String confirmWeb = jsonObject.getJSONObject("info").getJSONObject("paymentUrl").getString("web");
+        		return confirmWeb;
         	}
         }
         
         return null;
 	}
+    
+    public UserBean insertPoint100(UserBean user) {
+    	user.setPoint(user.getPoint() + 100);
+    	return uRepository.save(user);
+    }
+    
+    public UserBean insertPoint300(UserBean user) {
+    	user.setPoint(user.getPoint() + 310);
+    	return uRepository.save(user);
+    }
+    
+    public UserBean insertPoint500(UserBean user) {
+    	user.setPoint(user.getPoint() + 520);
+    	return uRepository.save(user);
+    }
+    
+    public UserBean insertPoint1000(UserBean user) {
+    	user.setPoint(user.getPoint() + 1050);
+    	return uRepository.save(user);
+    }
+    
+    public UserBean insertPoint2000(UserBean user) {
+    	user.setPoint(user.getPoint() + 2150);
+    	return uRepository.save(user);
+    }
+    
+    public UserBean insertPoint3000(UserBean user) {
+    	user.setPoint(user.getPoint() + 3250);
+    	return uRepository.save(user);
+    }
+    
 
 //// 更新與現有使用者關聯的標籤。
 //	public UserBean updateUserWithTags(UserBean updatedUser, List<Integer> tagNos) {
