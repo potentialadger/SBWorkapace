@@ -120,7 +120,7 @@
         <% } %>
     </div>
     <div class="button-group" align="center">
-        <a href="activityHomepage" class="button">返回活動首頁</a>
+        <a href="activityList" class="button">返回活動首頁</a>
     </div>
 </body>
 </html>
