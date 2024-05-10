@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.match.bean.TagsBean;
 import com.user.bean.UserBean;
 import com.user.dto.LinePayDto;
 import com.user.service.UserService;
+import com.user.util.UserUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -40,9 +42,15 @@ public class UserController {
 			@RequestParam("UEName") String UEName, @RequestParam("Email") String email,
 			@RequestParam("Birthday") String birthday, @RequestParam("Phone") String phone,
 			@RequestParam("UserAddress") String userAddress, @RequestParam("gender") Integer gender,
-			@RequestParam("key") String key, Model m) {
+			@RequestParam("key") String key, @RequestParam("avatar") MultipartFile avatar, 
+			Model m) {
 
 		UserBean insertBean = new UserBean();
+		
+		// 處理頭貼圖片
+		String uploadImgPath = UserUtil.uploadImg(avatar);
+		insertBean.setAvatar(uploadImgPath);
+
 		insertBean.setUserAccount(account);
 		insertBean.setUserPassword(password);
 		insertBean.setUserChineseName(UCName);
@@ -69,13 +77,14 @@ public class UserController {
 		} else {
 			insertBean.setIsManager(0);
 		}
-		
+
 		insertBean.setPoint(0);
 
 		uService.creatUser(insertBean);
 
 		return "user/html/NewLogin.html";
 	}
+
 	@PostMapping("/userLogin")
 	public String processLoginAction(@RequestParam("account") String account, @RequestParam("password") String password,
 			Model m, HttpServletRequest request) {
@@ -185,77 +194,68 @@ public class UserController {
 
 		return "redirect:/users";
 	}
-	
-	
-	@GetMapping("testtesttest")
-	@ResponseBody
-	public UserBean testtesttest() {
-		Optional<UserBean> dataById = uService.getDataById(2);
-		UserBean userBean = dataById.get();
-		return  userBean;
+
+	@GetMapping("user.uploadAvatar")
+	public String userUploadAvatar() {
+		return "";
 	}
-	
-	
-	
-    //---Tags : ManyToMany
-	
-	
+
+	@GetMapping("getTopBarData")
+	@ResponseBody
+	public UserBean getTopBarData() {
+		Optional<UserBean> dataById = uService.getDataById(7);
+		UserBean userBean = dataById.get();
+		return userBean;
+	}
+
+	// ---Tags : ManyToMany
+
 	// 獲取單個使用者及其關聯的標籤
 	@GetMapping(path = "/getUserTags/{userNo}")
 	public ResponseEntity<Set<TagsBean>> getUserTags(@PathVariable("userNo") Integer userNo) {
-	    Optional<UserBean> opUser = uService.getDataById(userNo);
-	    if (opUser.isPresent()) {
-	        UserBean user = opUser.get();
-	        Set<TagsBean> tags = user.getTagsBeans();
-	        return ResponseEntity.ok(tags);
-	    } else {
-	        return ResponseEntity.notFound().build();
-	    }
+		Optional<UserBean> opUser = uService.getDataById(userNo);
+		if (opUser.isPresent()) {
+			UserBean user = opUser.get();
+			Set<TagsBean> tags = user.getTagsBeans();
+			return ResponseEntity.ok(tags);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 	}
-	
-    // 指定返回 JSON 格式的資料，以及資料的編碼格式為 UTF-8
-    // @GetMapping(path = "/getUserTags/{userNo}", produces = "application/json;charset=UTF-8")
 
-	
-	
-	
-	// 獲取所有使用者及其關聯的標籤   ..? 不是返回所有資料是只有標籤的資料
+	// 指定返回 JSON 格式的資料，以及資料的編碼格式為 UTF-8
+	// @GetMapping(path = "/getUserTags/{userNo}", produces =
+	// "application/json;charset=UTF-8")
+
+	// 獲取所有使用者及其關聯的標籤 ..? 不是返回所有資料是只有標籤的資料
 	@GetMapping(path = "/getAllUsersWithTags")
 	public ResponseEntity<List<UserBean>> getAllUsersWithTags() {
-	    List<UserBean> users = uService.getAllUsersWithTags();
-	    return ResponseEntity.ok(users);
+		List<UserBean> users = uService.getAllUsersWithTags();
+		return ResponseEntity.ok(users);
 	}
-	
-	
-	
-	// 使用者添加一個或多個標籤       ..? 不是返回所有資料是只有標籤的資料
+
+	// 使用者添加一個或多個標籤 ..? 不是返回所有資料是只有標籤的資料
 	@PostMapping(path = "/addUserTags/{userNo}/tags")
 	public ResponseEntity<UserBean> addTagsToUser(@PathVariable Integer userNo, @RequestBody List<Integer> tagNos) {
-	    try {
-	        UserBean updatedUser = uService.addTagsToUser(userNo, tagNos);
-	        return ResponseEntity.ok(updatedUser);
-	    } catch (IllegalArgumentException ex) {
-	        return ResponseEntity.notFound().build();
-	    }
+		try {
+			UserBean updatedUser = uService.addTagsToUser(userNo, tagNos);
+			return ResponseEntity.ok(updatedUser);
+		} catch (IllegalArgumentException ex) {
+			return ResponseEntity.notFound().build();
+		}
 	}
-	
-	
-	
+
 	// 使用者移除一個或多個標籤
 	@DeleteMapping(path = "/deleteUserTags/{userNo}/tags")
-	public ResponseEntity<UserBean> removeTagsFromUser(@PathVariable Integer userNo, @RequestBody List<Integer> tagNos) {
-	    try {
-	        UserBean updatedUser = uService.removeTagsFromUser(userNo, tagNos);
-	        return ResponseEntity.ok(updatedUser);
-	    } catch (IllegalArgumentException ex) {
-	        return ResponseEntity.notFound().build();
-	    }
+	public ResponseEntity<UserBean> removeTagsFromUser(@PathVariable Integer userNo,
+			@RequestBody List<Integer> tagNos) {
+		try {
+			UserBean updatedUser = uService.removeTagsFromUser(userNo, tagNos);
+			return ResponseEntity.ok(updatedUser);
+		} catch (IllegalArgumentException ex) {
+			return ResponseEntity.notFound().build();
+		}
 	}
-	
-
-	
-	
-	
 
 	// 更新與現有使用者關聯的標籤
 //	@PutMapping("/users/{userNo}/updateTags")
@@ -264,7 +264,7 @@ public class UserController {
 //		uService.updateUserWithTags(user, tagNos);
 //		return "redirect:/users/" + userNo;
 //	}
-	
+
 //	-----------LinePay------------
 //	public String geLinePay(@RequestBody LinePayDto linePayOrder) {
 //		String orderId = linePayOrder.getOrderId();
@@ -272,10 +272,8 @@ public class UserController {
 //		String confirmUrl = linePayOrder.getConfirmUrl();
 //		String currency = linePayOrder.getCurrency();
 //		String productName = linePayOrder.getProductName();
-	
-	
-    // -----------Test------------
-	
+
+	// -----------Test------------
 
 //	// 關聯 UserBean 與 TagsBean
 //	@PostMapping("/users/{userNo}/tags")
@@ -283,5 +281,5 @@ public class UserController {
 //	    uService.associateUserWithTags(userNo, tagNos);
 //	    return "redirect:/usertagsHP";
 //	}
-	
+
 }

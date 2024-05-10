@@ -168,7 +168,7 @@ Topbar = `<!-- Topbar -->
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="userName">Douglas McGee</span>
-                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                <img class="img-profile rounded-circle" id="topBarAvatar" src="img/undraw_profile.svg">
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -199,7 +199,7 @@ Topbar = `<!-- Topbar -->
 <!-- End of Topbar -->`;
 document.write(Topbar);
 
-fetch("http://localhost:8080/testtesttest").then(function (response) {
+fetch("getTopBarData").then(function (response) {
     if (response.status != 200) {
         console.log(response.status + " " + response.statusText);
 
@@ -209,6 +209,8 @@ fetch("http://localhost:8080/testtesttest").then(function (response) {
     response.json().then(function (data) {
         console.log(data);
         document.querySelector("#userName").innerHTML = data.userChineseName;
+        document.querySelector("#topBarAvatar").src = "localimages/" + data.avatar;
+
         // var resultText = "";
         // for (var i = 0; i < data.length; i++) {
         //     resultText += data[i].houseid + " " + data[i].housename + "<br/>";
