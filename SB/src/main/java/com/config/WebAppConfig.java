@@ -35,6 +35,10 @@ public class WebAppConfig implements WebMvcConfigurer {
 		registry.addViewController("/forum.InsertCategories").setViewName("forum/backstage/categories/html/InsertCategories.html");
 		registry.addViewController("/forumManager.homepage").setViewName("forum/backstage/ManagerHome.html");
 		
+		//前台後台範例
+		registry.addViewController("/Example").setViewName("test/Z_index_useScriptImport.html");
+		registry.addViewController("/backStageExample").setViewName("test/Z_backstageExample.html");
+		registry.addViewController("/fontStageExample").setViewName("test/Z_fontStageExample.html");
 	}
 	
 

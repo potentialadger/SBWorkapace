@@ -21,8 +21,8 @@
 	<link href="css/sb-admin-2.min.css" rel="stylesheet">
 
 	<!-- 要用datetime picker-->
-	<link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
-		rel="stylesheet" />
+	<!-- <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
+		rel="stylesheet" /> -->
 
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
@@ -42,25 +42,40 @@
 							<div class="text-center">
 								<h1 class="h4 text-gray-900 mb-4">歡迎加入Social Book！</h1>
 							</div>
-							<form class="user" method="post" action="userSignUp">
+							<form class="user" method="post" action="userSignUp" enctype="multipart/form-data">
+
+								<div class="form-group row">
+									<figure class="figure col-md-4 col-sm-5 col-xs-12">
+										<img class="rounded responsive mw-100" id="avatarImg"
+											src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+									</figure>
+									<div
+										class="form-inline col-md-8 col-sm-7 col-xs-12 row d-flex align-items-end mb-3">
+										<input type="file" name="avatar" class="file-uploader pull-left col-9"
+											onchange="selectImgFile(this.files)">
+										<!-- <input type="hidden" name="avatarPath"> -->
+										<!-- <button type="submit"
+											class="btn btn-sm btn-default-alt pull-left btn-info col-3">上傳</button> -->
+									</div>
+								</div>
 								<div class="form-group row">
 									<div class="col-sm-6 mb-3 mb-sm-0">
 										<input type="text" class="form-control form-control-user" id="UCName"
-											placeholder="中文姓名" name="UCName">
+											placeholder="中文姓名" name="UCName" autocomplete="off">
 									</div>
 									<div class="col-sm-6">
 										<input type="text" class="form-control form-control-user" id="UEName"
-											placeholder="英文姓名" name="UEName">
+											placeholder="英文姓名" name="UEName" autocomplete="off">
 									</div>
 								</div>
 								<div class="form-group row">
 									<div class="col-sm-6 mb-3 mb-sm-0">
 										<input type="text" class="form-control form-control-user" id="account"
-											placeholder="帳號" name="account">
+											placeholder="帳號" name="account" autocomplete="off">
 									</div>
 									<div class="col-sm-6">
 										<input type="email" class="form-control form-control-user" id="Email"
-											placeholder="電子郵件" name="Email">
+											placeholder="電子郵件" name="Email" autocomplete="off">
 									</div>
 
 								</div>
@@ -90,21 +105,21 @@
 								</div>
 								<div class="form-group">
 									<input type="text" class="form-control form-control-user" id="Phone"
-										placeholder="電話" name="Phone">
+										placeholder="電話" name="Phone" autocomplete="off">
 								</div>
 								<div class="form-group">
 									<input type="text" class="form-control form-control-user" id="UserAddress"
-										placeholder="地址" name="UserAddress">
+										placeholder="地址" name="UserAddress" autocomplete="off">
 								</div>
 
 								<!-- 是否為管理員 -->
 								<div class="form-group row">
-									<div class="col-sm-6 mb-3 mb-sm-0">
-										<input type="checkbox" class="custom-control-input" id="">
+									<div class="col-sm-3 mb-3 mb-sm-0">
+										<button class="btn btn-info btn-user btn-block" id="isManager">我是管理員</button>
 									</div>
-									<div class=" col-sm-6 mb-3 mb-sm-0">
+									<div class=" col-sm-9 mb-3 mb-sm-0">
 										<input class="form-control form-control-user" type="text" name="key" id="key"
-											placeholder="管理者金鑰">
+											placeholder="管理者金鑰" hidden>
 									</div>
 								</div>
 								<div class="row">
@@ -171,6 +186,25 @@
 			$("#Phone").val("0972874898");
 			$("#UserAddress").val("台南市關廟區東勢里和平路22巷9弄5號");
 		});
+
+		document.querySelector("#isManager").addEventListener("click", function (e) {
+			e.preventDefault();
+			document.querySelector("#key").hidden = false;
+		});
+
+		function selectImgFile(files) {
+			if (!files.length) {
+				return false;
+			}
+
+			let file = files[0];
+			let reader = new FileReader();
+			reader.onload = function () {
+				document.querySelector('#avatarImg').src = this.result;
+			};
+
+			reader.readAsDataURL(file);
+		}
 	</script>
 
 </body>
