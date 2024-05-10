@@ -1,6 +1,5 @@
 package com.activity.bean;
 
-import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,16 +9,17 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "event_registrations")
-public class EventRegistrationsBean {
+import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "EventRegistrations")
+public class EventRegistrationsBean {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer registrationID;
 
     private Integer eventNo;
-    private Integer hostUserNo;
+    private Integer userNo;
     private String participantName;
     private String contactInfo;
     private LocalDateTime registrationTime;
@@ -28,8 +28,7 @@ public class EventRegistrationsBean {
     @JoinColumn(name = "eventNo", insertable = false, updatable = false)
     private EventBean event;
 
-    // Getters and Setters
-
+    // Getter and Setter methods
     public Integer getRegistrationID() {
         return registrationID;
     }
@@ -46,12 +45,12 @@ public class EventRegistrationsBean {
         this.eventNo = eventNo;
     }
 
-    public Integer getHostUserNo() {
-        return hostUserNo;
+    public Integer getUserNo() {
+        return userNo;
     }
 
-    public void setHostUserNo(Integer hostUserNo) {
-        this.hostUserNo = hostUserNo;
+    public void setUserNo(Integer userNo) {
+        this.userNo = userNo;
     }
 
     public String getParticipantName() {
@@ -84,8 +83,5 @@ public class EventRegistrationsBean {
 
     public void setEvent(EventBean event) {
         this.event = event;
-        if (event != null) {
-            this.eventNo = event.getEventNo();
-        }
     }
 }

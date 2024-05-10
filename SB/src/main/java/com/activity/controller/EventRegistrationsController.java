@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -62,7 +63,7 @@ public class EventRegistrationsController {
             @RequestParam("userNo") int userNo,
             @RequestParam("participantName") String participantName,
             @RequestParam("contactInfo") String contactInfo,
-            @RequestParam("registrationTime") LocalDateTime registrationTime) {
+            @RequestParam("registrationTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime registrationTime) {
         ModelAndView mav = new ModelAndView();
         try {
             // 檢查是否已註冊
@@ -73,7 +74,7 @@ public class EventRegistrationsController {
             } else {
                 EventRegistrationsBean registration = new EventRegistrationsBean();
                 registration.setEventNo(eventNo);
-                registration.setHostUserNo(userNo);
+                registration.setUserNo(userNo);
                 registration.setParticipantName(participantName);
                 registration.setContactInfo(contactInfo);
                 registration.setRegistrationTime(registrationTime);
@@ -120,14 +121,14 @@ public class EventRegistrationsController {
             @RequestParam("registrationID") int registrationID,
             @RequestParam("participantName") String participantName,
             @RequestParam("contactInfo") String contactInfo,
-            @RequestParam("registrationTime") String registrationTime) {
+            @RequestParam("registrationTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime registrationTime) {
 
         ModelAndView mav = new ModelAndView("redirect:/AllRegistrations");
         try {
             EventRegistrationsBean registrations = eventRegistrationsService.findByRegistration(registrationID);
             registrations.setParticipantName(participantName);
             registrations.setContactInfo(contactInfo);
-            registrations.setRegistrationTime(LocalDateTime.parse(registrationTime));
+            registrations.setRegistrationTime(registrationTime);
             eventRegistrationsService.update(registrations);
         } catch (Exception e) {
             e.printStackTrace();
