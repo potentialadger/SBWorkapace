@@ -7,7 +7,6 @@ public class LinePayDto {
 	private Integer amount;
 	private String currency;
 	private String confirmUrl;
-	private String orderId;
 	public String getProductName() {
 		return productName;
 	}
@@ -32,11 +31,6 @@ public class LinePayDto {
 	public void setConfirmUrl(String confirmUrl) {
 		this.confirmUrl = confirmUrl;
 	}
-	public String getOrderId() {
-		return orderId;
-	}
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
-	}
+
 	
 }

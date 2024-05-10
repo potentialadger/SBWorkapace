@@ -49,9 +49,16 @@ public class GroupController {
 	
 //	全活躍活動
 	@GetMapping(value = "/groups")
-	public String findAllGroup(Model m) {
+	public String findAllGroup(Model m, HttpServletRequest request) {
 		List<Group> groups = gService.findAllGroup();
+		
+		HttpSession session = request.getSession();
+//		UserBean user = (UserBean)session.getAttribute("userData");
+		UserBean user = userService.getUserData(1);
+		
 		m.addAttribute("groups", groups);
+		m.addAttribute("userData", user);
+		
 		return "group/jsp/groups.jsp";
 	}
 	
@@ -157,10 +164,10 @@ public class GroupController {
 			address = newGroup.getAddress();
 		}
 		Group group = gService.insertGroup(userNo, title, description, endTime, payments, minTotalQuantity, minTotalAmount, account, address);
-		Integer eventNo = group.getEventNo();
 		
+		m.addAttribute("group", group);
 		
-		return "redirect:/group/eachgroup/" + eventNo;
+		return "group/jsp/insertitem.jsp";
 	}
 	
 //	修改團購資訊
@@ -191,6 +198,72 @@ public class GroupController {
 		m.addAttribute("itemspecmap", specsmap);
 		
 		return "group/jsp/eachgroup.jsp";
+	}
+	
+	@GetMapping("/groups100")
+	public String getDirect100(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+//		UserBean user = (UserBean)session.getAttribute("userData");
+		UserBean user = userService.getUserData(1);
+		
+		userService.insertPoint100(user);
+		
+		return "redirect:/group/groups";
+	}
+	
+	@GetMapping("/groups300")
+	public String getDirect300(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+//		UserBean user = (UserBean)session.getAttribute("userData");
+		UserBean user = userService.getUserData(1);
+		
+		userService.insertPoint300(user);
+		
+		return "redirect:/group/groups";
+	}
+	
+	@GetMapping("/groups500")
+	public String getDirect500(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+//		UserBean user = (UserBean)session.getAttribute("userData");
+		UserBean user = userService.getUserData(1);
+		
+		userService.insertPoint500(user);
+		
+		return "redirect:/group/groups";
+	}
+	
+	@GetMapping("/groups1000")
+	public String getDirect1000(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+//		UserBean user = (UserBean)session.getAttribute("userData");
+		UserBean user = userService.getUserData(1);
+		
+		userService.insertPoint1000(user);
+		
+		return "redirect:/group/groups";
+	}
+	
+	@GetMapping("/groups2000")
+	public String getDirect2000(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+//		UserBean user = (UserBean)session.getAttribute("userData");
+		UserBean user = userService.getUserData(1);
+		
+		userService.insertPoint2000(user);
+		
+		return "redirect:/group/groups";
+	}
+	
+	@GetMapping("/groups3000")
+	public String getDirect3000(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+//		UserBean user = (UserBean)session.getAttribute("userData");
+		UserBean user = userService.getUserData(1);
+		
+		userService.insertPoint3000(user);
+		
+		return "redirect:/group/groups";
 	}
 	
 }

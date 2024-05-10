@@ -1,13 +1,33 @@
 package com.user.service;
 
+import java.io.IOException;
+import java.net.http.HttpClient;
 import java.time.LocalDateTime;
+
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
+
+
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 
+
+import org.apache.http.ParseException;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+
 import org.hibernate.Hibernate;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.match.bean.TagsBean;
@@ -26,6 +46,8 @@ public class UserService {
 
 	@Autowired
 	private TagsRepository tRepository;
+	
+	
 
 	public UserBean creatUser(UserBean userBean) {
 		return uRepository.save(userBean);
@@ -144,13 +166,76 @@ public class UserService {
     //----Test----	
 	
 	
+	// ---------- LINEPAY金流 ---------------
+	private static final String LinePayUrl = "https://sandbox-api-pay.line.me/v2/payments/request";
+	private static final String ChannelSecret = "64e9607268ad77d84190c95c76a58054";
+    private static final String ChannelId = "2004736885";
 
-//所有的標籤用repository放到set裡面，再用set方法取出
-//先做新增
-//再做selectAll
+    public String getRequestLinePay(UserBean user, Integer amount, String currency, String productName, String confirmUrl) throws ParseException, IOException, JSONException {
+		CloseableHttpClient client = HttpClients.createDefault();
+		HttpPost post = new HttpPost(LinePayUrl);
+		post.setHeader("Content-Type", "application/json");
+		post.setHeader("X-LINE-ChannelId", ChannelId);
+		post.setHeader("X-LINE-ChannelSecret", ChannelSecret);
+		
+		Random random = new Random();
+		int raNum = random.nextInt(10000);
+		
+		String orderId = "Point" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + raNum;
+		
+		String json = String.format("{\"amount\": %d, \"productName\": \"%s\", \"currency\": \"%s\", \"confirmUrl\": \"%s\", \"orderId\": \"%s\"}",
+				amount, productName, currency, confirmUrl, orderId);
 
-	
-	
+        StringEntity entity = new StringEntity(json);
+        post.setEntity(entity);
+        
+        CloseableHttpResponse response = client.execute(post);
+        int statusCode = response.getStatusLine().getStatusCode();
+        String responseBody = EntityUtils.toString(response.getEntity());
+        
+        if(statusCode == 200) {
+        	JSONObject jsonObject = new JSONObject(responseBody);
+        	System.out.println("回傳: " + jsonObject.optString("returnCode"));
+        	if(jsonObject.optString("returnCode").equals("0000")) {
+        		String confirmWeb = jsonObject.getJSONObject("info").getJSONObject("paymentUrl").getString("web");
+        		return confirmWeb;
+        	}
+        }
+        
+        return null;
+	}
+    
+    public UserBean insertPoint100(UserBean user) {
+    	user.setPoint(user.getPoint() + 100);
+    	return uRepository.save(user);
+    }
+    
+    public UserBean insertPoint300(UserBean user) {
+    	user.setPoint(user.getPoint() + 310);
+    	return uRepository.save(user);
+    }
+    
+    public UserBean insertPoint500(UserBean user) {
+    	user.setPoint(user.getPoint() + 520);
+    	return uRepository.save(user);
+    }
+    
+    public UserBean insertPoint1000(UserBean user) {
+    	user.setPoint(user.getPoint() + 1050);
+    	return uRepository.save(user);
+    }
+    
+    public UserBean insertPoint2000(UserBean user) {
+    	user.setPoint(user.getPoint() + 2150);
+    	return uRepository.save(user);
+    }
+    
+    public UserBean insertPoint3000(UserBean user) {
+    	user.setPoint(user.getPoint() + 3250);
+    	return uRepository.save(user);
+    }
+    
+
 //// 更新與現有使用者關聯的標籤。
 //	public UserBean updateUserWithTags(UserBean updatedUser, List<Integer> tagNos) {
 //		Optional<UserBean> optionalUser = uRepository.findById(updatedUser.getUserNo());
@@ -207,6 +292,7 @@ public class UserService {
 //	    }
 //	    return null;
 //	}
+
 	
 
 }

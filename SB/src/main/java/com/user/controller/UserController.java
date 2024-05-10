@@ -1,13 +1,13 @@
 package com.user.controller;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
+import org.apache.http.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,13 +21,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.match.bean.TagsBean;
 import com.user.bean.UserBean;
 import com.user.dto.LinePayDto;
 import com.user.service.UserService;
 import com.user.util.UserUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @SessionAttributes(names = { "userData" })
@@ -291,14 +291,37 @@ public class UserController {
 //	}
 
 //	-----------LinePay------------
-//	public String geLinePay(@RequestBody LinePayDto linePayOrder) {
-//		String orderId = linePayOrder.getOrderId();
-//		Integer amount = linePayOrder.getAmount();
-//		String confirmUrl = linePayOrder.getConfirmUrl();
-//		String currency = linePayOrder.getCurrency();
-//		String productName = linePayOrder.getProductName();
 
-	// -----------Test------------
+	@PostMapping("/getLinePay")
+	@ResponseBody
+	public String getRequestLinePay(@RequestBody LinePayDto linePayOrder, HttpServletRequest request, Model m) throws ParseException, IOException, JSONException {
+		Integer amount = linePayOrder.getAmount();
+		String confirmUrl = linePayOrder.getConfirmUrl();
+		String currency = linePayOrder.getCurrency();
+		String productName = linePayOrder.getProductName();
+		
+		System.out.println("amount = " + amount);
+		System.out.println("url = " + confirmUrl);
+		System.out.println("currency = " + currency);
+		System.out.println("product = " + productName);
+		
+		HttpSession session = request.getSession();
+//		UserBean userBean = (UserBean)session.getAttribute("userData");
+		UserBean userBean = uService.getUserData(1);
+		
+		String confirmWeb = uService.getRequestLinePay(userBean, amount, currency, productName, confirmUrl);
+		System.out.println("回傳網址:--------------------" + confirmWeb);
+		
+		return confirmWeb;
+	}
+	
+
+
+
+	
+	
+    // -----------Test------------
+	
 
 //	// 關聯 UserBean 與 TagsBean
 //	@PostMapping("/users/{userNo}/tags")
@@ -307,4 +330,8 @@ public class UserController {
 //	    return "redirect:/usertagsHP";
 //	}
 
+<<<<<<< HEAD
+=======
+	
+>>>>>>> group
 }
