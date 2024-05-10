@@ -14,33 +14,31 @@ import com.activity.bean.EventRegistrationsRepository;
 @Transactional
 public class EventRegistrationsService {
 
-	@Autowired
-	private EventRegistrationsRepository erRepos;
+    @Autowired
+    private EventRegistrationsRepository erRepos;
 
-	public EventRegistrationsBean insert(EventRegistrationsBean registrations) {
-		return erRepos.save(registrations);
-	}
+    public EventRegistrationsBean insert(EventRegistrationsBean registrations) {
+        return erRepos.save(registrations);
+    }
 
-	public EventRegistrationsBean update(EventRegistrationsBean registrations) {
-		return erRepos.save(registrations);
-	}
+    public EventRegistrationsBean update(EventRegistrationsBean registrations) {
+        return erRepos.save(registrations);
+    }
 
-	public void deleteEventByEventNo(Integer registrationID) {
-		erRepos.deleteById(registrationID);
-	}
+    public void deleteEventByEventNo(Integer registrationID) {
+        erRepos.deleteById(registrationID);
+    }
 
-	public EventRegistrationsBean findByRegistration(Integer registrationID) {
-		Optional<EventRegistrationsBean> op1 = erRepos.findByRegistrationID(registrationID);
+    public EventRegistrationsBean findByRegistration(Integer registrationID) {
+        Optional<EventRegistrationsBean> op1 = erRepos.findByRegistrationID(registrationID);
+        return op1.orElse(null);
+    }
 
-		if (op1.isPresent()) {
-			return op1.get();
+    public List<EventRegistrationsBean> findAllRegistrations() {
+        return erRepos.findAll();
+    }
 
-		}
-		return null;
-	}
-
-	public List<EventRegistrationsBean> findAllRegistrations() {
-		return erRepos.findAll();
-	}
-
+    public List<EventRegistrationsBean> findByEventNoAndUserNo(Integer eventNo, Integer userNo) {
+        return erRepos.findByEventNoAndUserNo(eventNo, userNo);
+    }
 }
