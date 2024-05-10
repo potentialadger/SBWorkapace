@@ -6,33 +6,57 @@
 <head>
 <meta charset="UTF-8">
 <title>回覆管理</title>
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+
+<!-- 引入 jQuery -->
+<script type="text/javascript" charset="utf8"
+    src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<!-- 引入 DataTables JS -->
+<script type="text/javascript" charset="utf8"
+    src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+
+<!-- DataTables initialization -->
+<script>
+    $(document).ready(function() {
+        $('#repliesTable').DataTable(); // 初始化 DataTables
+    });
+</script>
 </head>
 <body>
 <h1>回覆管理</h1>
+
+<!--  
     <br>
     <form method="get" action="/replies/OneReplies">
         查詢: <input type="text" name="repliesBeanKeyword" required>
        	<button type="submit">送出</button>
     </form>   
+-->
 
+<!-- 
     <form method="get" action="/replies/AllReplies">
         <button type="submit">查詢全部</button>
     </form>
+-->
 
-    <form method="get" action="/forumManager.homepage">
-    	<button type="submit">首頁</button>
+	<form method="get" action="/posts/CategoriesPosts">
+		<input type="hidden" name="categoryNo"
+			value="${post.categoriesBean.category_no}">
+		<button type="submit">返回</button>
 	</form>
 
-    <table>
+	<table id="repliesTable">
         <thead>
             <tr>
-                <!--<th>回覆編號</th>-->
-                <th>會員名稱</th>
-                <th>會員信箱</th>
                 <th>文章標題</th>
                 <th>回覆內容</th>
                 <th>日期</th>
-                <th>刪除</th>
+                <th>會員名稱</th>
+                <th>會員信箱</th>
             </tr>
         </thead>
 
@@ -40,32 +64,18 @@
             <c:if test="${not empty repliesM}">
                 <c:forEach var="replies" items="${repliesM}">
                     <tr>
-                        <!--<td><c:out value="${replies.reply_no}" /></td>-->
-                        <td><c:out value="${replies.userBean.userChineseName}" /></td>
-                        <td><c:out value="${replies.userBean.email}" /></td>
-                        <td><c:out value="${replies.postsBean.title}" /></td>
+                        
+                        <td><c:out value="${post.title}" /></td>
                         <td><c:out value="${replies.content}" /></td>
                         <td><c:out value="${replies.update_date}" /></td>
-
-                        <td>
-                            <form method="post" action="/replies/DeleteReplies">
-                                <input type="hidden" name="repliesNo" value="${replies.reply_no}">
-                                <input type="hidden" name="_method" value="delete">
-                                <button type="submit">刪除</button>
-                            </form>
-                        </td>
-                        <td>
-							<form method="get" action="/replies/UpdateSelectReplies">
-							<input type="hidden" name="repliesNo" value="${replies.reply_no}">
-							<button type="submit">編輯</button>
-							</form>
-						</td>
+                        <td><c:out value="${replies.userBean.userChineseName}" /></td>
+                        <td><c:out value="${replies.userBean.email}" /></td>
                     </tr>
                 </c:forEach>
             </c:if>
             <c:if test="${empty repliesM}">
                 <tr>
-                    <td colspan="7">尚無資料</td>
+                    <td colspan="5">尚無資料</td>
                 </tr>
             </c:if>
         </tbody>

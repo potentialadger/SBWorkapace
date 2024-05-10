@@ -31,7 +31,7 @@ public class CategoriesBean {
 	@Column(name = "title_name")
 	private String title_name;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "categoriesBean", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "categoriesBean", cascade = {CascadeType.PERSIST,CascadeType.ALL})
 	private Set<PostsBean> PostsBean =new HashSet<>();
 
 	public Integer getCategory_no() {
@@ -57,5 +57,17 @@ public class CategoriesBean {
 	public void setPostsBean(Set<PostsBean> postsBean) {
 		PostsBean = postsBean;
 	}
-			
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("CategoriesBean [category_no=");
+		builder.append(category_no);
+		builder.append(", title_name=");
+		builder.append(title_name);
+		builder.append(", PostsBean=");
+		builder.append(PostsBean);
+		builder.append("]");
+		return builder.toString();
+	}		
 }

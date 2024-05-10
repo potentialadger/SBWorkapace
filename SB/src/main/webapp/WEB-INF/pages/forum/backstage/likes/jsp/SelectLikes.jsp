@@ -6,19 +6,38 @@
 <head>
 <meta charset="UTF-8">
 <title>喜歡紀錄管理</title>
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+
+<!-- 引入 jQuery -->
+<script type="text/javascript" charset="utf8"
+	src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<!-- 引入 DataTables JS -->
+<script type="text/javascript" charset="utf8"
+	src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+
+<!-- DataTables initialization -->
+<script>
+    $(document).ready(function() {
+        $('#likesTable').DataTable(); // 初始化 DataTables
+    });
+</script>
 </head>
 <body>
 <h1>喜歡紀錄</h1>
-    <br>
 
-    <form method="get" action="/forumManager.homepage">
-    	<button type="submit">首頁</button>
+	<form method="get" action="/posts/CategoriesPosts">
+		<input type="hidden" name="categoryNo"
+			value="${post.categoriesBean.category_no}">
+		<button type="submit">返回</button>
 	</form>
 
-    <table>
+	<table id="likesTable">
         <thead>
             <tr>
-                <!--<th>紀錄編號</th>-->
                 <th>文章標題</th>
                 <th>文章內容</th>
                 <th>案讚會員</th>
@@ -30,9 +49,8 @@
             <c:if test="${not empty PostsLikesListM}">
                 <c:forEach var="postsLikes" items="${PostsLikesListM}">
                     <tr>
-                        <!--<td><c:out value="${postsLikes.like_no}" /></td>-->
-                        <td><c:out value="${postsLikes.postsBean.title}" /></td>
-                        <td><c:out value="${postsLikes.postsBean.content}" /></td>
+                        <td><c:out value="${post.title}" /></td>
+                        <td><c:out value="${post.content}" /></td>
                         <td><c:out value="${postsLikes.userBean.userChineseName}" /></td>
                         <td><c:out value="${postsLikes.userBean.email}" /></td>
                     </tr>
@@ -40,7 +58,7 @@
             </c:if>
             <c:if test="${empty PostsLikesListM}">
                 <tr>
-                    <td colspan="5">尚無資料</td>
+                    <td colspan="4">尚無資料</td>
                 </tr>
             </c:if>
         </tbody>

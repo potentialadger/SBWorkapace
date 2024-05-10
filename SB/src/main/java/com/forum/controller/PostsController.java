@@ -37,7 +37,7 @@ public class PostsController {
 	private CategoriesService categoriesService;
 
 
-	// 單筆查詢
+	//後台 單筆關鍵字模糊查詢
 	@GetMapping("/OnePosts")
 	public String getPostsBeanKeyword(@RequestParam("postsBeanKeyword") String postsBeanKeyword, Model m) {
 		List<PostsBean> postsList = postsService.getPostsBeanKeyword(postsBeanKeyword);
@@ -48,8 +48,23 @@ public class PostsController {
 		}
 		return "/forum/backstage/posts/jsp/SelectPosts.jsp";
 	}
+	
+	//後台 單筆查詢 查詢該分類的文章用
+	@GetMapping("/CategoriesPosts")
+	public String getCategoriesPosts(@RequestParam("categoryNo") int categoryNo, Model m) {
 
-	// 全部查詢
+		CategoriesBean categories = categoriesService.getCategoryNo(categoryNo);
+
+		List<PostsBean> posts = postsService.findBycategoryNo(categoryNo);
+
+		m.addAttribute("categories", categories);
+
+		m.addAttribute("postsM", posts);
+
+		return "/forum/backstage/posts/jsp/SelectPosts.jsp";
+	}
+
+	//後台 全部查詢
 	@GetMapping("/AllPosts")
 	public String getAllPosts(Model m) {
 
@@ -60,7 +75,7 @@ public class PostsController {
 		return "/forum/backstage/posts/jsp/SelectPosts.jsp";
 	}
 	
-	//新增用的取得分類版
+	//前台 新增用的取得分類版
 	@GetMapping("/InsertPostsCategories")
 	public String getAllCategoriesToJsp(Model m) {
 		
@@ -68,10 +83,10 @@ public class PostsController {
 		
 		m.addAttribute("categoriesList", categoriesBeans);
 		
-		return "/forum/backstage/posts/jsp/InsertPosts.jsp";
+		return "/forum/backstage/posts/jsp/InsertPosts.jsp(要改成前台)";
 	}
 
-	// 新增
+	//前台 新增
 	@PostMapping("/InsertPosts")
 	public String insertPosts(
 			@RequestParam("category_no") int category_no,
@@ -129,7 +144,7 @@ public class PostsController {
 		
 		postsService.insertPosts(posts);
 
-		return"redirect:/posts/AllPosts";
+		return"redirect:/posts/AllPosts(跳回所有文章或剛發的該筆文章)";
 
 	}catch(
 
@@ -142,17 +157,17 @@ public class PostsController {
 }
 	
 
-	// 刪除
+	//前台 刪除
 	@DeleteMapping("/DeletePosts")
 	public String deletePosts(@RequestParam("postsNo") String postsNo) {
 
 		postsService.deletePosts(Integer.parseInt(postsNo));
 
-		return "redirect:/posts/AllPosts";
+		return "redirect:/posts/AllPosts(要跳回所有文章)";
 
 	}
 
-	// 更新用查詢和分類
+	//前台 更新用查詢和分類
 	@GetMapping("/UpdateSelectPosts")
 	public String getPostsNo(@RequestParam("postsNo") String postsNo, Model m) {
 
@@ -168,7 +183,7 @@ public class PostsController {
 
 	}
 
-	// 更新
+	//前台 更新
 	@PutMapping("/UpdatePosts")
 	public String updatePosts(
 			@RequestParam("post_no") Integer post_no, 
@@ -230,28 +245,12 @@ public class PostsController {
 		
 		postsService.updatePosts(postsToUpdate);
 
-		return "redirect:/posts/AllPosts";
+		return "redirect:/posts/AllPosts(要跳出更新成功)";
 		
 		} catch (IOException e) {
 	        e.printStackTrace();
-	        // 如果發生 IO 錯誤，提示用戶文件上傳失敗 前台還要再做一個頁面
+	        // 如果發生 IO 錯誤，提示用戶文件上傳失敗 這個再看可不可以刪除
 	        return "redirect:/posts/error?message=文件上傳失敗";
 	    }
 	}
-	
-	//單筆文章
-	@GetMapping("/SelectPosts")
-	public String getPosts(@RequestParam("postsNo") String postsNo, Model m) {
-
-		PostsBean posts = postsService.getPostsNo(Integer.parseInt(postsNo));
-		
-		//用來印出總喜歡數 總回覆數同上
-		posts.getLikesBean().size();
-		
-		m.addAttribute("updateSelect", posts);
-		
-		return "前台用單筆查詢";
-
-	}
-	
 }
