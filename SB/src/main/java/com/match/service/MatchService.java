@@ -1,6 +1,7 @@
 package com.match.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -121,6 +122,24 @@ public class MatchService {
     public List<MatchBean> getSuccessfulMatches() {
         return matchRepos.findByMatchStatus(2); // 獲取 MatchStatus 為 2 (配對成功) 的記錄
     }
+    
+    
+    
+    
+    public List<Integer> getMatchedUserNos() {
+        List<MatchBean> successfulMatches = getSuccessfulMatches();
+        List<Integer> matchedUserNos = new ArrayList<>();
+        for (MatchBean match : successfulMatches) {
+            matchedUserNos.add(match.getUser1No());
+            matchedUserNos.add(match.getUser2No());
+        }
+        return matchedUserNos;
+    }
+    
+    
+    
+    
+    
 }
 
 
