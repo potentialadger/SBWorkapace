@@ -125,7 +125,7 @@ public class MatchService {
     
     
     
-    
+    // 獲取成功的使用者匹配列表，並將每個匹配中的使用者ID提取出來，放入一個列表中返回
     public List<Integer> getMatchedUserNos() {
         List<MatchBean> successfulMatches = getSuccessfulMatches();
         List<Integer> matchedUserNos = new ArrayList<>();
@@ -136,9 +136,7 @@ public class MatchService {
         return matchedUserNos;
     }
     
-    
-    
-    
+   
     
 }
 
