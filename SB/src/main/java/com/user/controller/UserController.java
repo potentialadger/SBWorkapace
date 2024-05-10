@@ -198,10 +198,6 @@ public class UserController {
 		return "redirect:/users";
 	}
 
-	@GetMapping("user.uploadAvatar")
-	public String userUploadAvatar() {
-		return "";
-	}
 
 	@GetMapping("getTopBarData")
 	@ResponseBody
