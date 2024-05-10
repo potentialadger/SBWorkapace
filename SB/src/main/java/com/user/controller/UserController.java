@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.match.bean.TagsBean;
@@ -183,6 +184,15 @@ public class UserController {
 		uService.deleteUser(userNo);
 
 		return "redirect:/users";
+	}
+	
+	
+	@GetMapping("testtesttest")
+	@ResponseBody
+	public UserBean testtesttest() {
+		Optional<UserBean> dataById = uService.getDataById(2);
+		UserBean userBean = dataById.get();
+		return  userBean;
 	}
 	
 	
