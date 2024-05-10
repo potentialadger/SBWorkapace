@@ -164,10 +164,10 @@ public class GroupController {
 			address = newGroup.getAddress();
 		}
 		Group group = gService.insertGroup(userNo, title, description, endTime, payments, minTotalQuantity, minTotalAmount, account, address);
-		Integer eventNo = group.getEventNo();
 		
+		m.addAttribute("group", group);
 		
-		return "redirect:/group/eachgroup/" + eventNo;
+		return "group/jsp/insertitem.jsp";
 	}
 	
 //	修改團購資訊

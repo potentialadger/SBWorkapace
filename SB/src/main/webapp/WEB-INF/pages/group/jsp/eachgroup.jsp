@@ -225,6 +225,8 @@
                                                     </tr>`;
 
                                     $('.cart').append(modalcontext);
+                                    $tr.find('.numberinput').val(0);
+
                                 });
                                 // 購物車取消
                                 $('.cart').on('click', '.btn-danger', function () {
