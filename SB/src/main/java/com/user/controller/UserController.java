@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import org.apache.http.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.match.bean.TagsBean;
 import com.user.bean.UserBean;
 import com.user.dto.LinePayDto;
 import com.user.service.UserService;
@@ -330,8 +334,4 @@ public class UserController {
 //	    return "redirect:/usertagsHP";
 //	}
 
-<<<<<<< HEAD
-=======
-	
->>>>>>> group
 }
