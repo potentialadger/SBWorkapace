@@ -29,17 +29,23 @@
 						    <jsp:useBean id="userData" scope="request" class="com.user.bean.UserBean">
                             </jsp:useBean>
 							<div class="container" style="width: 68%;position: relative;">
-								<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-									data-bs-target="#newgroup" style="height: 40px;">
-									我要開團
-								</button>
-								<a href="/getLinePayPay">購買點數</a>
-								<p>點數: <%=userData.getPoint() %></p>
+								<div style="display: flex; justify-content: space-between; align-items: center;">
+									<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newgroup" style="height: 40px;margin-top: 20px">
+										我要開團
+									</button>
+									
+									<div style="display: flex; align-items: center; gap: 10px;">
+										<div style="margin-top: 20px;">
+											<a href="/getLinePayPay">購買點數</a>
+											<p>點數: <%=userData.getPoint() %></p>
+										</div>
+										<button style="border: none; background: none; padding: 0; width: 70px;">
+											<img src="/images/pigbigbro.jpg" style="border-radius: 50%; object-fit: cover; width: 70px; height: 70px;">
+										</button>
+									</div>
+								</div>
 								
-								<button style="border: none;background: none;padding: 0;width:70px"><img
-										src="/images/pigbigbro.jpg"
-										style="border-radius: 50%;object-fit: cover;width: 70px;height: 70px;margin-left: 1050px;"></button>
-								<div class="row">
+								<div class="row" style="padding-top: 0px;margin-top: 0px">
 									<% List<Group> groups = (ArrayList<Group>)
 											request.getAttribute("groups");
 											for (Group group : groups) { %>

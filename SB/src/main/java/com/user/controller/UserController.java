@@ -206,7 +206,7 @@ public class UserController {
 	@GetMapping("getTopBarData")
 	@ResponseBody
 	public UserBean getTopBarData() {
-		Optional<UserBean> dataById = uService.getDataById(7);
+		Optional<UserBean> dataById = uService.getDataById(1);
 		UserBean userBean = dataById.get();
 		return userBean;
 	}
