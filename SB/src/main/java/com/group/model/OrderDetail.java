@@ -3,6 +3,8 @@ package com.group.model;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,7 +12,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -27,10 +28,12 @@ public class OrderDetail {
 
 	@JoinColumn(name = "orderno")
 	@ManyToOne
+	@JsonBackReference
 	private Order order;
 	
 	@JoinColumn(name = "itemno")
 	@ManyToOne
+	@JsonBackReference
 	private Item item;
 	
 	@Column(name = "itemquantity")

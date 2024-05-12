@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,6 +28,7 @@ public class ItemSpecification {
 
 	@JoinColumn(name = "itemno")
 	@ManyToOne
+	@JsonBackReference
 	public Item item;
 	
 	@Column(name = "specvalue")

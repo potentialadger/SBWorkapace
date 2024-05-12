@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.user.bean.UserBean;
@@ -34,6 +35,7 @@ public class Group {
 	
 	@JoinColumn(name = "hostuserno")
 	@ManyToOne
+	@JsonBackReference
 	private UserBean user;
 	
 	@Column(name = "title")
@@ -76,6 +78,7 @@ public class Group {
 	private List<Item> items ;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List<Order> orders;
 
 	

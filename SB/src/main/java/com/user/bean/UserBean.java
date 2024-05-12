@@ -9,11 +9,14 @@ import java.util.Set;
 import org.springframework.stereotype.Component;
 
 import com.match.bean.TagsBean;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.forum.bean.LikesBean;
 import com.forum.bean.PostsBean;
 import com.forum.bean.RepliesBean;
 import com.forum.bean.ReportsBean;
 import com.group.model.Group;
+import com.group.model.Order;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -118,7 +121,12 @@ public class UserBean implements Serializable{
 	
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List<Group> groups ;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userNo", cascade = CascadeType.ALL)
+	@JsonManagedReference
+	private List<Order> orders ;
 	
 	// getters and setters
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userBean", cascade = {CascadeType.PERSIST,CascadeType.MERGE})

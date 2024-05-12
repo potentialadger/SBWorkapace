@@ -13,7 +13,7 @@ import="com.group.model.Group" %> <%@page import="com.group.model.Item" %>
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>團購活動後台</title>
 
     <!-- Custom fonts for this template-->
     <link
@@ -44,7 +44,7 @@ import="com.group.model.Group" %> <%@page import="com.group.model.Item" %>
 
           <!-- 主要內容 -->
  <div>
-                        <h2>團購列表</h2>
+                        <h2>上架團購列表</h2>
                         <table id="table_id" class="display">
                             <thead>
                                 <tr>
@@ -58,7 +58,8 @@ import="com.group.model.Group" %> <%@page import="com.group.model.Item" %>
                                     <th>成團數量</th>
                                     <th>付款方式</th>
                                     <th>下架</th>
-                                    <th></th>
+                                    <th>商品</th>
+                                    <th>訂單</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -99,7 +100,7 @@ import="com.group.model.Group" %> <%@page import="com.group.model.Item" %>
                                                 <%=group.getEventNo() %>
                                             </th>
                                             <th>
-                                                <%=group.getUser().getUserNo() %>
+                                                <%=group.getUser().getUserNo() %>-<%=group.getUser().getUserChineseName() %>
                                             </th>
                                             <th>
                                                 <%=group.getTitle() %>
@@ -129,6 +130,10 @@ import="com.group.model.Group" %> <%@page import="com.group.model.Item" %>
                                             <th>
                                                 <button class="items" data-eventno="<%=group.getEventNo() %>"><i
                                                         class="fa-solid fa-chevron-down"></i></button>
+                                            </th>
+                                            <th>
+                                            	<button class="orders" data-eventno="<%=group.getEventNo() %>"><i 
+                                            			class="fa-solid fa-cart-plus"></i></button>
                                             </th>
                                         </tr>
                                         <% } %>
@@ -175,7 +180,11 @@ import="com.group.model.Group" %> <%@page import="com.group.model.Item" %>
                     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
                     <script>
                         $(document).ready(function () {
-                            var table = $('#table_id').DataTable();
+                            var table = $('#table_id').DataTable({
+                            	"columnDefs": [
+                            	      { "orderable": false, "targets": [10, 11] } 
+                            	    ]
+                            });
 
 
                             $('#table_id tbody').on('click', 'button.delete', function () {
@@ -217,14 +226,42 @@ import="com.group.model.Group" %> <%@page import="com.group.model.Item" %>
                                         url: '/item/groupitems/' + eventno,
                                         type: 'get',
                                         success: function (items) {
-                                            var content = '<div class="child-row">';
+                                            var content = '<div class="child-row"><table style="width:100%;"> <thead> <tr> <th> 商品名稱 </th> <th> 商品描述 </th> <th> 商品價錢 </th> ' + 
+                                                	'</tr> </thead> <tbody>';
                                             items.forEach(item => {
-                                                content += '<div class="item">' +
-                                                    '<h4><a href="eachitem">' + item.name + '</a></h4>' +
-                                                    '<p>' + item.description + '  價格: ' + item.price + '</p>' +
-                                                    '</div>';
+                                                content += '<tr> <th> <a href="#">' + item.name + '</a> </th> <th>' +   
+                                                	item.description + '</th> <th>' + item.price + '</th> </tr>'
                                             });
-                                            content += '</div>';
+                                            content += '</tbody> </table> </div>';
+                                            row.child(content).show();
+                                            tr.addClass('shown');
+                                        }
+                                    });
+                                }
+                            });
+
+                            $('#table_id tbody').on('click', 'button.orders', function () {
+                                const tr = $(this).closest('tr');
+                                const row = table.row(tr);
+                                const btn = this;
+                                const icon = $(this).find('i');
+
+                                if (row.child.isShown()) {
+                                    row.child.hide();
+                                    tr.removeClass('shown');
+                                } else {
+                                    var eventno = $(this).data('eventno');
+                                    $.ajax({
+                                        url: '/grouporders/' + eventno,
+                                        type: 'get',
+                                        success: function (orders) {
+                                            var content = '<div class="child-row"><table style="width:100%;"> <thead> <tr> <th> 訂購人 </th> <th> 付款方式 </th> <th> 成立時間 </th> ' + 
+                                                	'</tr> </thead> <tbody>';
+                                            orders.forEach(order => {
+                                                content += '<tr> <th> <a href="#">' + order.id + '</a> </th> <th>' +   
+                                                	order.paymentMethod + '</th> <th>' + order.setTime + '</th> </tr>'
+                                            });
+                                            content += '</tbody> </table> </div>';
                                             row.child(content).show();
                                             tr.addClass('shown');
                                         }

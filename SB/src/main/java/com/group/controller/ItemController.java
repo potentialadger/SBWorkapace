@@ -33,7 +33,7 @@ public class ItemController {
 	
 	@GetMapping(value = "/groupitems/{eventno}")
 	@ResponseBody
-	public List<Item> findItemsByEventNo(@PathVariable("eventno") int eventno){
+	public List<Item> findItemsByEventNo(@PathVariable("eventno") Integer eventno){
 		List<Item> items = itemService.findItemsByEventNo(eventno);
 		return items;
 	}

@@ -171,9 +171,9 @@
                                         </table>
                                         <div class="center">
                                             付款方式選擇
-                                            <input type="radio" value="1" name="method">匯款
-                                            <input type="radio" value="2" name="method">面交
-                                            <input type="radio" value="3" name="method">SB點數
+                                            <label><input type="radio" value="1" name="method">匯款</label>
+                                            <label><input type="radio" value="2" name="method">面交</label>
+                                            <label><input type="radio" value="3" name="method">SB點數</label>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -189,6 +189,33 @@
                             src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
                         <script>
                             $(document).ready(function () {
+
+                                function updatePaymentMethods(paymentOptions) {
+                                    const options = {
+                                        '1': '匯款',
+                                        '2': '面交',
+                                        '3': 'SB點數'
+                                    };
+
+                                    // 禁用所有選項
+                                    $('input[name="method"]').prop('disabled', true).prop('checked', false);
+
+                                    // 啟用對應的選項
+                                    paymentOptions.split('').forEach(function(option) {
+                                        $('input[name="method"][value="' + option + '"]').prop('disabled', false);
+                                    });
+
+                                    // 自動選擇第一個可用的選項
+                                    $('input[name="method"]:not(:disabled)').first().prop('checked', true);
+                                }
+
+                                // 假設從後端獲取的group.payment值
+                                const groupPayment = "<%=group.getPaymentMethod() %>"; // 這裡使用JSP語法從後端獲取payment值
+
+                                // 更新付款方式選擇
+                                updatePaymentMethods(groupPayment);
+
+
                                 // 數量選擇
                                 $('.plus').click(function () {
                                     var input = $(this).siblings('.numberinput');
