@@ -30,4 +30,6 @@ public interface PostsServiceInterface {
 	// 刪除文章的相關回覆
     void deletePostAndReplies(int postNo);
     
+    void updateViewCount(PostsBean posts);
+    
 }

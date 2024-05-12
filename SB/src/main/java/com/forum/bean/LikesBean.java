@@ -57,16 +57,4 @@ public class LikesBean {
 		this.postsBean = postsBean;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("LikesBean [like_no=");
-		builder.append(like_no);
-		builder.append(", userBean=");
-		builder.append(userBean);
-		builder.append(", postsBean=");
-		builder.append(postsBean);
-		builder.append("]");
-		return builder.toString();
-	}
 }

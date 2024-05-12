@@ -81,22 +81,5 @@ public class RepliesBean {
 	public void setUpdate_date(Date update_date) {
 		this.update_date = update_date;
 	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("RepliesBean [reply_no=");
-		builder.append(reply_no);
-		builder.append(", userBean=");
-		builder.append(userBean);
-		builder.append(", postsBean=");
-		builder.append(postsBean);
-		builder.append(", content=");
-		builder.append(content);
-		builder.append(", update_date=");
-		builder.append(update_date);
-		builder.append("]");
-		return builder.toString();
-	}
 }
 

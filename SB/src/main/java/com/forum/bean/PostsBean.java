@@ -142,35 +142,6 @@ public class PostsBean {
 	public void setLikesBean(Set<LikesBean> likesBean) {
 		this.likesBean = likesBean;
 	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("PostsBean [post_no=");
-		builder.append(post_no);
-		builder.append(", userBean=");
-		builder.append(userBean);
-		builder.append(", categoriesBean=");
-		builder.append(categoriesBean);
-		builder.append(", title=");
-		builder.append(title);
-		builder.append(", content=");
-		builder.append(content);
-		builder.append(", image_url=");
-		builder.append(image_url);
-		builder.append(", update_date=");
-		builder.append(update_date);
-		builder.append(", view_count=");
-		builder.append(view_count);
-		builder.append(", repliesBean=");
-		builder.append(repliesBean);
-		builder.append(", reportsBean=");
-		builder.append(reportsBean);
-		builder.append(", likesBean=");
-		builder.append(likesBean);
-		builder.append("]");
-		return builder.toString();
-	}	
 }
 
 	

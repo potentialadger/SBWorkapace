@@ -3,6 +3,7 @@ package com.forum.frontdesk;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,22 +41,41 @@ public class FrontDeskPostsController {
 	// 前台 單筆關鍵字模糊查詢
 	@GetMapping("/OnePosts")
 	public String getPostsBeanKeyword(@RequestParam("postsBeanKeyword") String postsBeanKeyword, Model m) {
-		List<PostsBean> postsList = postsService.getPostsBeanKeyword(postsBeanKeyword);
-		if (postsList != null && !postsList.isEmpty()) {
-			m.addAttribute("postsM", postsList);
-		} else {
-			m.addAttribute("noData", true);
-		}
+	    List<PostsBean> postsList = postsService.getPostsBeanKeyword(postsBeanKeyword);
+	    List<CategoriesBean> categoriesList = categoriesService.getAllCategories(); // 获取所有分类数据
+	    if (postsList != null && !postsList.isEmpty()) {
+	        m.addAttribute("postsM", postsList);
+	    } else {
+	        m.addAttribute("noData", true);
+	    }
+	    m.addAttribute("categoriesM", categoriesList); 
+	    return "/forum/frontdesk/posts/jsp/UserHome.jsp";
+	}
+
+	// 前台 單筆查詢 查詢該分類的文章用
+	@GetMapping("/CategoriesPosts")
+	public String getCategoriesPosts(@RequestParam("categoryNo") int categoryNo, Model m) {
+
+		
+		List<CategoriesBean> categoriesList = categoriesService.getAllCategories();
+
+		List<PostsBean> posts = postsService.findBycategoryNo(categoryNo);
+
+		m.addAttribute("categoriesM", categoriesList);
+
+		m.addAttribute("postsM", posts);
+
 		return "/forum/frontdesk/posts/jsp/UserHome.jsp";
 	}
 
 	// 前台 全部查詢
 	@GetMapping("/AllPosts")
 	public String getAllPosts(Model m) {
-
 		List<PostsBean> postsList = postsService.getAllPosts();
+		List<CategoriesBean> categoriesList = categoriesService.getAllCategories();
 
 		m.addAttribute("postsM", postsList);
+		m.addAttribute("categoriesM", categoriesList); // 将分类数据添加到 Model 中
 
 		return "/forum/frontdesk/posts/jsp/UserHome.jsp";
 	}
@@ -222,23 +243,20 @@ public class FrontDeskPostsController {
 			return "redirect:/posts/error?message=文件上傳失敗";
 		}
 	}
-	
-	// 瀏覽次數
-	@GetMapping("/SelectPosts")
-	public String getPosts(@RequestParam("postsNo") String postsNo, Model m) {
-	    
-		PostsBean posts = postsService.getPostsNo(Integer.parseInt(postsNo));
-	    
-	    // 更新瀏覽次數
-	    int newViewCount = posts.getView_count() + 1;
-	    
-	    posts.setView_count(newViewCount);
-	    // 把更新的文章插入資料庫
-	    postsService.updatePosts(posts);
 
-	    m.addAttribute("updateSelect", posts);
+	// 單筆查詢跳轉and瀏覽次數更新
+	@RequestMapping(method = { RequestMethod.GET, RequestMethod.PUT }, value = "/SelectPosts")
+	public String getPosts(@RequestParam("postsNo") String postsNo, @RequestParam("title") String title, Model m) {
+		PostsBean post = postsService.getPostsNo(Integer.parseInt(postsNo));
 
-	    return "前台用單筆查詢";
+		postsService.updateViewCount(post);
+
+		List<PostsBean> postsList = new ArrayList<>();
+		postsList.add(post);
+
+		m.addAttribute("updateSelect", postsList);
+		m.addAttribute("title", title);
+
+		return "/forum/frontdesk/posts/jsp/OnePosts.jsp";
 	}
-
 }

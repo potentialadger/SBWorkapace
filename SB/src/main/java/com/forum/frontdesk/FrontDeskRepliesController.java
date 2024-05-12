@@ -41,6 +41,21 @@ public class FrontDeskRepliesController {
 
 		return "/forum/backstage/replies/jsp/SelectReplies.jsp";
 	}
+	
+	//前台 單筆查詢 查詢該篇文章的回覆用
+	@GetMapping("/PostsReplies")
+	public String getPostsReplies(@RequestParam("postsNo") int postsNo, Model m) {
+	   
+		PostsBean post = postsService.getPostsNo(postsNo);
+	    
+	    List<RepliesBean> replies = repliesService.findByPostNo(postsNo);
+	    
+	    m.addAttribute("post", post);
+	    
+	    m.addAttribute("repliesM", replies);
+	    
+	    return "/forum/backstage/replies/jsp/SelectReplies.jsp";
+	}
 
 	// 前台 新增
 	@PostMapping("/InsertReplies")

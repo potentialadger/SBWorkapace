@@ -71,5 +71,11 @@ public class PostsService implements PostsServiceInterface {
 	}
 	
 	// 更新瀏覽次數
-	
+	public void updateViewCount(PostsBean posts) {
+        // 更新瀏覽次數
+        int newViewCount = posts.getView_count() + 1;
+        posts.setView_count(newViewCount);
+        // 调用DAO层方法更新文章瀏覽次數
+        postsDao.save(posts);
+    }
 }

@@ -30,7 +30,7 @@ public class WebAppConfig implements WebMvcConfigurer {
 		registry.addViewController("/activityInsertRegistrations").setViewName("activity/InsertRegistrations.html");
 		registry.addViewController("/activityList").setViewName("activity/EventList.html");
 		registry.addViewController("/activityAllRegistrations").setViewName("activity/DisplayAllRegistrations.jsp");
-//		registry.addViewController("/forum.homepage").setViewName("/forum/html/Home.html");
+		registry.addViewController("/forum.homepage").setViewName("/forum/frontdesk/Home.html");
 		registry.addViewController("/forum.InsertPosts").setViewName("/forum/backstage/posts/jsp/InsertPosts.jsp");
 		registry.addViewController("/forum.InsertCategories").setViewName("forum/backstage/categories/html/InsertCategories.html");
 		registry.addViewController("/forumManager.homepage").setViewName("forum/backstage/ManagerHome.html");
