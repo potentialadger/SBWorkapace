@@ -174,7 +174,7 @@ public class UserService {
     public String getRequestLinePay(UserBean user, Integer amount, String currency, String productName, String confirmUrl) throws ParseException, IOException, JSONException {
 		CloseableHttpClient client = HttpClients.createDefault();
 		HttpPost post = new HttpPost(LinePayUrl);
-		post.setHeader("Content-Type", "application/json");
+		post.setHeader("Content-Type", "application/json; charset=UTF-8");
 		post.setHeader("X-LINE-ChannelId", ChannelId);
 		post.setHeader("X-LINE-ChannelSecret", ChannelSecret);
 		
@@ -185,8 +185,10 @@ public class UserService {
 		
 		String json = String.format("{\"amount\": %d, \"productName\": \"%s\", \"currency\": \"%s\", \"confirmUrl\": \"%s\", \"orderId\": \"%s\"}",
 				amount, productName, currency, confirmUrl, orderId);
-
-        StringEntity entity = new StringEntity(json);
+		
+		System.out.println(json);
+		
+        StringEntity entity = new StringEntity(json, "UTF-8");
         post.setEntity(entity);
         
         CloseableHttpResponse response = client.execute(post);
