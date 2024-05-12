@@ -28,12 +28,10 @@ public class OrderDetail {
 
 	@JoinColumn(name = "orderno")
 	@ManyToOne
-	@JsonBackReference
 	private Order order;
 	
 	@JoinColumn(name = "itemno")
 	@ManyToOne
-	@JsonBackReference
 	private Item item;
 	
 	@Column(name = "itemquantity")

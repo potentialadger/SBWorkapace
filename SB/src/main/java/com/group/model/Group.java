@@ -35,7 +35,6 @@ public class Group {
 	
 	@JoinColumn(name = "hostuserno")
 	@ManyToOne
-	@JsonBackReference
 	private UserBean user;
 	
 	@Column(name = "title")
@@ -78,7 +77,6 @@ public class Group {
 	private List<Item> items ;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL)
-	@JsonManagedReference
 	private List<Order> orders;
 
 	

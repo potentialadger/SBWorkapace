@@ -28,7 +28,6 @@ public class ItemSpecification {
 
 	@JoinColumn(name = "itemno")
 	@ManyToOne
-	@JsonBackReference
 	public Item item;
 	
 	@Column(name = "specvalue")

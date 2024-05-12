@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.group.dto.BackToFrontOrder;
 import com.group.dto.OrderDetailsDto;
 import com.group.dto.OrderDto;
 import com.group.model.Group;
@@ -82,8 +83,8 @@ public class OrderController {
 	
 	@GetMapping("/grouporders/{eventno}")
 	@ResponseBody
-	public List<Order> findOrdersByEventNo(@PathVariable("eventno") Integer eventNo) {
-		List<Order> orders = orderService.findOrdersByEventNo(eventNo);
+	public List<BackToFrontOrder> findOrdersByEventNo(@PathVariable("eventno") Integer eventNo) {
+		List<BackToFrontOrder> orders = orderService.findOrdersByEventNo(eventNo);
 		return orders;
 	}
 }

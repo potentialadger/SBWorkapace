@@ -121,11 +121,9 @@ public class UserBean implements Serializable{
 	
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
-	@JsonManagedReference
 	private List<Group> groups ;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userNo", cascade = CascadeType.ALL)
-	@JsonManagedReference
 	private List<Order> orders ;
 	
 	// getters and setters

@@ -229,8 +229,8 @@ import="com.group.model.Group" %> <%@page import="com.group.model.Item" %>
                                             var content = '<div class="child-row"><table style="width:100%;"> <thead> <tr> <th> 商品名稱 </th> <th> 商品描述 </th> <th> 商品價錢 </th> ' + 
                                                 	'</tr> </thead> <tbody>';
                                             items.forEach(item => {
-                                                content += '<tr> <th> <a href="#">' + item.name + '</a> </th> <th>' +   
-                                                	item.description + '</th> <th>' + item.price + '</th> </tr>'
+                                                content += '<tr> <th> <a href="#">' + item.itemName + '</a> </th> <th>' +   
+                                                	item.itemDesc + '</th> <th>' + item.itemPrice + '</th> </tr>'
                                             });
                                             content += '</tbody> </table> </div>';
                                             row.child(content).show();
@@ -243,8 +243,6 @@ import="com.group.model.Group" %> <%@page import="com.group.model.Item" %>
                             $('#table_id tbody').on('click', 'button.orders', function () {
                                 const tr = $(this).closest('tr');
                                 const row = table.row(tr);
-                                const btn = this;
-                                const icon = $(this).find('i');
 
                                 if (row.child.isShown()) {
                                     row.child.hide();
@@ -255,11 +253,21 @@ import="com.group.model.Group" %> <%@page import="com.group.model.Item" %>
                                         url: '/grouporders/' + eventno,
                                         type: 'get',
                                         success: function (orders) {
+                                            function parsePaymentMethod(paymentCode) {
+                                                let methods = [];
+                                                if (paymentCode.includes('1')) methods.push("匯款");
+                                                if (paymentCode.includes('2')) methods.push("面交");
+                                                if (paymentCode.includes('3')) methods.push("SB點數");
+
+                                                return methods.join(", ");
+                                            }
+
                                             var content = '<div class="child-row"><table style="width:100%;"> <thead> <tr> <th> 訂購人 </th> <th> 付款方式 </th> <th> 成立時間 </th> ' + 
-                                                	'</tr> </thead> <tbody>';
+                                                            '</tr> </thead> <tbody>';
                                             orders.forEach(order => {
-                                                content += '<tr> <th> <a href="#">' + order.id + '</a> </th> <th>' +   
-                                                	order.paymentMethod + '</th> <th>' + order.setTime + '</th> </tr>'
+                                                let paymentMethods = parsePaymentMethod(order.payment.toString()); // 转换支付方式
+                                                content += '<tr> <td>' + order.userNo + '-' + order.userName + '</td> <td>' +   
+                                                            paymentMethods + '</td> <td>' + order.setTime + '</td> </tr>';
                                             });
                                             content += '</tbody> </table> </div>';
                                             row.child(content).show();

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.group.dto.ItemDto;
 import com.group.model.Item;
 import com.group.service.ItemService;
 
@@ -33,8 +34,8 @@ public class ItemController {
 	
 	@GetMapping(value = "/groupitems/{eventno}")
 	@ResponseBody
-	public List<Item> findItemsByEventNo(@PathVariable("eventno") Integer eventno){
-		List<Item> items = itemService.findItemsByEventNo(eventno);
+	public List<ItemDto> findItemsByEventNoDto(@PathVariable("eventno") Integer eventno){
+		List<ItemDto> items = itemService.findItemsByEventNoDto(eventno);
 		return items;
 	}
 	

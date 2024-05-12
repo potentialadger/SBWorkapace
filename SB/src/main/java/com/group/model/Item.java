@@ -49,11 +49,10 @@ public class Item {
 	private String imgPath;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = CascadeType.ALL)
-	@JsonManagedReference
 	private List<ItemSpecification> itemspec;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = CascadeType.ALL)
-	@JsonManagedReference
+	@JsonIgnore
 	private List<OrderDetail> orderDetails;
 
 

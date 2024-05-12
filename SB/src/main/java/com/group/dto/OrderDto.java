@@ -28,6 +28,7 @@ public class OrderDto {
 	public void setOrderDetail(List<OrderDetailsDto> orderDetail) {
 		this.orderDetail = orderDetail;
 	}
+
 	
 
 	

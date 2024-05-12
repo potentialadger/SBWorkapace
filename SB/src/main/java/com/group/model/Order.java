@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.user.bean.UserBean;
 
@@ -36,12 +35,10 @@ public class Order {
 	
 	@JoinColumn(name = "eventno")
 	@ManyToOne
-	@JsonBackReference
 	private Group group;
 	
 	@JoinColumn(name = "userno")
 	@ManyToOne
-	@JsonBackReference
 	private UserBean userNo;
 	
 	@Column(name = "paymentmethod")
@@ -52,7 +49,6 @@ public class Order {
 	private Date setTime;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
-	@JsonManagedReference
 	private List<OrderDetail> orderDetails;
 	
 	public Integer getId() {

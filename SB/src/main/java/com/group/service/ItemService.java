@@ -1,5 +1,6 @@
 package com.group.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.group.dto.ItemDto;
 import com.group.model.Group;
 import com.group.model.Item;
 import com.group.repository.GroupRepository;
@@ -25,7 +27,29 @@ public class ItemService {
 	private GroupRepository gRepository;
 	
 	public List<Item> findItemsByEventNo(Integer eventno){
-		return iRepository.findItemByEventNo(eventno);
+		List<Item> items = iRepository.findItemByEventNo(eventno);
+		return items;
+	}
+	
+	public List<ItemDto> findItemsByEventNoDto(Integer eventno){
+		List<Item> getItems = iRepository.findItemByEventNo(eventno);
+		ArrayList<ItemDto> items = new ArrayList<>();
+		
+		for (Item item : getItems) {
+			String itemName = item.getName();
+			String itemDesc = item.getDescription();
+			Integer itemPrice = item.getPrice();
+			String itemImgPath = item.getImgPath();
+			
+			ItemDto itemDto = new ItemDto();
+			itemDto.setItemDesc(itemDesc);
+			itemDto.setItemImgPath(itemImgPath);
+			itemDto.setItemName(itemName);
+			itemDto.setItemPrice(itemPrice);
+			
+			items.add(itemDto);
+		}
+		return items;
 	}
 	
 	public Item findItemById(Integer itemno) {
