@@ -3,7 +3,6 @@ package com.forum.frontdesk;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -13,10 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -71,11 +70,11 @@ public class FrontDeskPostsController {
 	// 前台 全部查詢
 	@GetMapping("/AllPosts")
 	public String getAllPosts(Model m) {
-		List<PostsBean> postsList = postsService.getAllPosts();
+		List<PostsBean> postsList = postsService.findAllByOrderByViewCountDesc();
 		List<CategoriesBean> categoriesList = categoriesService.getAllCategories();
 
 		m.addAttribute("postsM", postsList);
-		m.addAttribute("categoriesM", categoriesList); // 将分类数据添加到 Model 中
+		m.addAttribute("categoriesM", categoriesList); 
 
 		return "/forum/frontdesk/posts/jsp/UserHome.jsp";
 	}
@@ -88,13 +87,16 @@ public class FrontDeskPostsController {
 
 		m.addAttribute("categoriesList", categoriesBeans);
 
-		return "/forum/backstage/posts/jsp/InsertPosts.jsp(要改成前台)";
+		return "/forum/frontdesk/posts/jsp/InsertPosts.jsp";
 	}
 
 	// 前台 新增
 	@PostMapping("/InsertPosts")
-	public String insertPosts(@RequestParam("category_no") int category_no, @RequestParam("title") String title,
-			@RequestParam("content") String content, @RequestParam("image_url") MultipartFile image_url,
+	public String insertPosts(
+			@RequestParam("category_no") int category_no, 
+			@RequestParam("title") String title,
+			@RequestParam("content") String content,
+			@RequestParam("image_url") MultipartFile image_url,
 			HttpSession session) {
 
 		UserBean userData = (UserBean) session.getAttribute("userData");
@@ -143,8 +145,10 @@ public class FrontDeskPostsController {
 			posts.setImage_url(fileName);
 
 			postsService.insertPosts(posts);
+			
+			int newPostNo = posts.getPost_no();
 
-			return "redirect:/posts/AllPosts(跳回所有文章或剛發的該筆文章)";
+			return "redirect:/postsFrontDesk/SelectPosts?postsNo=" + newPostNo + "&title=" + posts.getTitle();
 
 		} catch (
 
@@ -161,7 +165,7 @@ public class FrontDeskPostsController {
 
 		postsService.deletePosts(Integer.parseInt(postsNo));
 
-		return "redirect:/posts/AllPosts(要跳回所有文章)";
+		return "redirect:/postsFrontDesk/AllPosts";
 
 	}
 
@@ -176,15 +180,19 @@ public class FrontDeskPostsController {
 
 		m.addAttribute("categoriesList", categoriesList);
 
-		return "/forum/backstage/posts/jsp/UpdatePosts.jsp";
+		return "/forum/frontdesk/posts/jsp/UpdatePosts.jsp";
 
 	}
 
 	// 前台 更新
 	@PutMapping("/UpdatePosts")
-	public String updatePosts(@RequestParam("post_no") Integer post_no, @RequestParam("user_no") int user_no,
-			@RequestParam("category_no") int category_no, @RequestParam("title") String title,
-			@RequestParam("content") String content, @RequestParam("image_url") MultipartFile image_url,
+	public String updatePosts(
+			@RequestParam("post_no") Integer post_no, 
+			@RequestParam("user_no") int user_no,
+			@RequestParam("category_no") int category_no, 
+			@RequestParam("title") String title,
+			@RequestParam("content") String content, 
+			@RequestParam("image_url") MultipartFile image_url,
 			@RequestParam("update_date") String update_date, HttpSession session) {
 
 		try {
@@ -235,7 +243,7 @@ public class FrontDeskPostsController {
 
 			postsService.updatePosts(postsToUpdate);
 
-			return "redirect:/posts/AllPosts(要跳出更新成功)";
+			return "redirect:/postsFrontDesk/SelectPosts?postsNo=" + post_no + "&title=" + postsToUpdate.getTitle();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -245,18 +253,8 @@ public class FrontDeskPostsController {
 	}
 
 	// 單筆查詢跳轉and瀏覽次數更新
-	@RequestMapping(method = { RequestMethod.GET, RequestMethod.PUT }, value = "/SelectPosts")
-	public String getPosts(@RequestParam("postsNo") String postsNo, @RequestParam("title") String title, Model m) {
-		PostsBean post = postsService.getPostsNo(Integer.parseInt(postsNo));
-
-		postsService.updateViewCount(post);
-
-		List<PostsBean> postsList = new ArrayList<>();
-		postsList.add(post);
-
-		m.addAttribute("updateSelect", postsList);
-		m.addAttribute("title", title);
-
-		return "/forum/frontdesk/posts/jsp/OnePosts.jsp";
-	}
+	@PutMapping("/posts/{postId}/update-view-count/{viewCount}")
+    public void updateViewCount(@PathVariable Integer postId, @PathVariable Integer viewCount) {
+        postsService.updateViewCount(postId, viewCount);
+    }
 }

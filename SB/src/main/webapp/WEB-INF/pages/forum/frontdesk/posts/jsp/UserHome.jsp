@@ -47,10 +47,11 @@
 }
 
 .post-image img {
-	max-width: 100%;
-	height: auto;
-	float: right;
-	margin-left: 10px;
+    max-width: 100%; 
+    height: auto; 
+    float: right;
+    margin-left: 10px; 
+    max-height: 200px;
 }
 
 .post-footer {
@@ -111,6 +112,10 @@
 		<form method="get" action="/postsFrontDesk/AllPosts">
 			<button type="submit">全部文章</button>
 		</form>
+		
+		<form method="get" action="/postsFrontDesk/InsertPostsCategories">
+			<button type="submit">發文</button>
+		</form>
 
 		<div class="forum-posts">
 			<c:if test="${not empty postsM}">
@@ -120,12 +125,14 @@
 							<div class="post-date">${post.categoriesBean.title_name}</div>
 							<div class="post-date">${post.update_date}</div>
 						</div>
+						<img src="${post.userBean.avatar}" alt="User Avatar">
 						<a
 							href="/postsFrontDesk/SelectPosts?postsNo=${post.post_no}&title=${post.title}"
-							class="post-title">${post.title}</a>
+							class="post-title">${post.title}
+						</a>
 						<div class="post-content">${post.content}</div>
 						<div class="post-image">
-							<img src="${post.image_url}" alt="Post Image">
+							<td><img src="http://localhost:8080/localimages/${post.image_url}"></td>
 						</div>
 						<div class="post-footer">
 							<div class="post-likes">${post.likesBean.size()}likes</div>

@@ -71,11 +71,14 @@ public class PostsService implements PostsServiceInterface {
 	}
 	
 	// 更新瀏覽次數
-	public void updateViewCount(PostsBean posts) {
-        // 更新瀏覽次數
-        int newViewCount = posts.getView_count() + 1;
-        posts.setView_count(newViewCount);
-        // 调用DAO层方法更新文章瀏覽次數
-        postsDao.save(posts);
-    }
+	 @Override
+	 public void updateViewCount(Integer postId, Integer viewCount) {
+		 postsDao.updateViewCount(postId, viewCount);
+	    }
+	
+	// 依照瀏覽次數排序
+	 @Override
+	    public List<PostsBean> findAllByOrderByViewCountDesc() {
+	        return postsDao.findAllByOrderByViewCountDesc();
+	    }
 }

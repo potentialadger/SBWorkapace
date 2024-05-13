@@ -18,8 +18,43 @@
                         <td><c:out value="${post.content}" /></td>
                         <td><c:out value="${post.view_count}" /></td>
                         <td><c:out value="${post.likesBean.size()}喜歡" /></td>
+                        <td><img src="${post.userBean.avatar}" alt="User Avatar"></td>
+                        <td><img src="http://localhost:8080/localimages/${post.image_url}"></td>
+                        
+                    <td>
+						<form method="post" action="/likesFrontDesk/likeOrUnlike">
+							<input type="hidden" name="user_no" value="${post.userBean.userNo}">
+							<input type="hidden" name="post_no" value="${post.post_no}">
+								<button type="submit">喜歡</button>
+						</form>
+					</td>
+
+					<td>
+    					<form method="post" action="/postsFrontDesk/DeletePosts" onsubmit="return confirm('您確定要刪除這個帖子嗎？');">
+        					<input type="hidden" name="postsNo" value="${post.post_no}">
+        					<input type="hidden" name="_method" value="delete">
+        						<button type="submit">刪除</button>
+    					</form>
+					</td>
+
+					<td>
+						<form method="get" action="/postsFrontDesk/UpdateSelectPosts">
+							<input type="hidden" name="postsNo" value="${post.post_no}">
+								<button type="submit">編輯</button>
+						</form>
+					</td>
+
+
+
+
+
+                        
 					</tr>
                 </c:forEach>
         </tbody>
+        
+        <script>
+      
+        </script>
 </body>
 </html>

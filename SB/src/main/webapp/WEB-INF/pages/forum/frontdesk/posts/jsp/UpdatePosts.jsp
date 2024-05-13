@@ -9,7 +9,7 @@
 </head>
 <body>
 <h1>修改資料</h1>
-<form method="post" action="/posts/UpdatePosts" enctype="multipart/form-data">
+<form method="post" action="/postsFrontDesk/UpdatePosts" enctype="multipart/form-data">
 <input type="hidden" name="_method" value="PUT">
     
    	<input type="hidden" name="post_no" value="${updateSelect.post_no}"/><br>
@@ -38,8 +38,7 @@
     <label for="update_date">日期 :</label><br>
     <input type="text" name="update_date" value="${updateSelect.update_date}" readonly/><br>
     
-    <label for="view_count">瀏覽次數 :</label><br>
-    <input type="text" name="view_count" value="${updateSelect.view_count}" readonly/><br>
+    <input type="hidden" name="view_count" value="${updateSelect.view_count}" readonly/><br>
     
     <input type="submit" value="修改" />
 </form>
