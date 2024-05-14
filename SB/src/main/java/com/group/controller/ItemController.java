@@ -72,6 +72,7 @@ public class ItemController {
 				String base64Image = parts[1];
 				String type = parts[0].split(";")[0].split("/")[1];
 
+//				將base64編碼解成Bytes
 				byte[] imageBytes = Base64.getDecoder().decode(base64Image);
 
 				String fileName = "item" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))

@@ -11,6 +11,8 @@ public class BackToFrontOrder {
 	private Integer payment;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date setTime;
+	private OrderDetailsDto orderDetailsDto;
+	
 	public Integer getUserNo() {
 		return userNo;
 	}
@@ -34,6 +36,12 @@ public class BackToFrontOrder {
 	}
 	public void setSetTime(Date setTime) {
 		this.setTime = setTime;
+	}
+	public OrderDetailsDto getOrderDetailsDto() {
+		return orderDetailsDto;
+	}
+	public void setOrderDetailsDto(OrderDetailsDto orderDetailsDto) {
+		this.orderDetailsDto = orderDetailsDto;
 	}
 	
 }

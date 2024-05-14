@@ -7,9 +7,12 @@ import lombok.Data;
 @Data
 public class OrderDto {
 
+	private Integer userNo;
+	private String userName;
 	private Integer eventNo;
 	private Integer paymentMethod;
 	private List<OrderDetailsDto> orderDetail;
+	
 	public Integer getEventNo() {
 		return eventNo;
 	}

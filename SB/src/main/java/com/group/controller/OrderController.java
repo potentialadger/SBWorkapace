@@ -83,8 +83,10 @@ public class OrderController {
 	
 	@GetMapping("/grouporders/{eventno}")
 	@ResponseBody
-	public List<BackToFrontOrder> findOrdersByEventNo(@PathVariable("eventno") Integer eventNo) {
+	public List<BackToFrontOrder> findOrdersByEventNoBack(@PathVariable("eventno") Integer eventNo) {
 		List<BackToFrontOrder> orders = orderService.findOrdersByEventNo(eventNo);
 		return orders;
 	}
+	
+	public List<BackToFrontOrder> 
 }

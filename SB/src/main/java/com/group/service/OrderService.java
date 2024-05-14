@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.group.dto.BackToFrontOrder;
+import com.group.dto.OrderDto;
 import com.group.model.Group;
 import com.group.model.Order;
+import com.group.model.OrderDetail;
 import com.group.repository.OrderRepository;
 import com.user.bean.UserBean;
 
@@ -36,7 +38,7 @@ public class OrderService {
 		return orderRepository.save(order);
 	}
 	
-//	查詢訂單依活動
+//	查詢訂單依活動給後臺
 	public List<BackToFrontOrder> findOrdersByEventNo(Integer eventNo) {
 		List<Order> getOrders = orderRepository.findOrdersByEventNo(eventNo);
 		List<BackToFrontOrder> orders = new ArrayList<>();
@@ -61,9 +63,23 @@ public class OrderService {
 		
 	}
 	
+	public List<OrderDto> findOrdersByEventNoFront(Integer eventNo){
+		List<Order> getOrders = orderRepository.findOrdersByEventNo(eventNo);
+		ArrayList<OrderDto> orders = new ArrayList<OrderDto>();
+		for (Order getOrder : getOrders) {
+			UserBean userNo = getOrder.getUserNo();
+			String userName = userNo.getUserChineseName();
+			Date setTime = getOrder.getSetTime();
+			Integer paymentMethod = getOrder.getPaymentMethod();
+			List<OrderDetail> orderDetails = getOrder.getOrderDetails();
+//			--------------------------------------------------------------從這開始
+		}
+	}
+	
 //	查詢訂單依訂購人
 	public List<Order> findOrdersByUserNo(Integer userNo){
 		List<Order> orders = orderRepository.findOrdersByUserNo(userNo);
 		return orders;
 	}
+	
 }

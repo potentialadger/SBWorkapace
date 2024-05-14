@@ -8,6 +8,7 @@ public class OrderDetailsDto {
 	private Integer itemNo;
 	private Integer itemQuantity;
 	private Integer ItemSpec;
+	private String specValue;
 	
 	public Integer getItemNo() {
 		return itemNo;
@@ -26,6 +27,12 @@ public class OrderDetailsDto {
 	}
 	public void setItemSpec(Integer itemSpec) {
 		ItemSpec = itemSpec;
+	}
+	public String getSpecValue() {
+		return specValue;
+	}
+	public void setSpecValue(String specValue) {
+		this.specValue = specValue;
 	}
 	
 	
