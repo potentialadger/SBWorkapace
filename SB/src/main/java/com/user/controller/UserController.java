@@ -123,7 +123,7 @@ public class UserController {
 		m.addAttribute("userBeans", allUserData);
 		m.addAttribute("result", "有" + allUserData.size() + "個使用者");
 
-		return "user/jsp/ManagerHomePage.jsp";
+		return "user/jsp/userDate_BackSatge.jsp";
 	}
 
 	@GetMapping("/user/{userno}")
@@ -133,31 +133,39 @@ public class UserController {
 
 		return "user/jsp/UserUpdate.jsp";
 	}
+	
+	@GetMapping("/userResponseBody/{userno}")
+	@ResponseBody
+	public UserBean processResponseBodyFindUserForUpdateAction(@PathVariable("userno") int userNo) {
+		UserBean resultBean = uService.getUserData(userNo);
+
+		return resultBean;
+	}
 
 	@PutMapping("/userUpdate")
 	public String processUpdateUserAction(@RequestParam("userNo") Integer userNo,
 			@RequestParam("account") String account, @RequestParam("password") String password,
 			@RequestParam("UCName") String UCName, @RequestParam("UEName") String UEName,
-			@RequestParam("nickName") String nickName, @RequestParam("avatar") String avatar,
+			@RequestParam("avatar") String avatar,
 			@RequestParam("email") String email, @RequestParam("birthday") String birthday,
 			@RequestParam("phone") String phone, @RequestParam("address") String address,
 			@RequestParam("creationDateTime") String creationDateTime,
 			@RequestParam("lastLoginDatetime") String lastLoginDatetime, @RequestParam("gender") Integer gender,
-			@RequestParam("goalNo") Integer goalNo, @RequestParam("bloodType") String bloodType,
-			@RequestParam("MBTI") String MBTI, @RequestParam("suspension") Integer suspension,
+			@RequestParam("suspension") Integer suspension,
 			@RequestParam("verify") Integer verify, @RequestParam("isDelete") Integer isDelete,
 			@RequestParam("isManager") Integer isManager, Model m) {
 
 		DateTimeFormatter birthdayDF = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm");
 
-		UserBean userBean = new UserBean();
-		userBean.setUserNo(userNo);
+//		UserBean userBean = new UserBean();
+		UserBean userBean = uService.getUserData(userNo);
+		
 		userBean.setUserAccount(account);
 		userBean.setUserPassword(password);
 		userBean.setUserChineseName(UCName);
 		userBean.setUserEnglishName(UEName);
-		userBean.setNickName(nickName);
+//		userBean.setNickName(nickName);
 		userBean.setAvatar(avatar);
 		userBean.setEmail(email);
 
@@ -173,9 +181,9 @@ public class UserController {
 		userBean.setLastLoginDatetime(LocalDateTime.parse(lastLoginDatetime));
 
 		userBean.setGender(gender);
-		userBean.setGoalNo(goalNo);
-		userBean.setBloodType(bloodType);
-		userBean.setMBTI(MBTI);
+//		userBean.setGoalNo(goalNo);
+//		userBean.setBloodType(bloodType);
+//		userBean.setMBTI(MBTI);
 		userBean.setSuspension(suspension);
 		userBean.setIsDelete(verify);
 		userBean.setVerify(isDelete);
