@@ -215,6 +215,15 @@ public class UserController {
 		UserBean userBean = dataById.get();
 		return userBean;
 	}
+	
+	@GetMapping("aboutMe")
+	public String AbountAction(HttpSession session, Model m) {
+		UserBean uBean = (UserBean)session.getAttribute("userData");
+		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
+		UserBean userBean = dataById.get();
+		m.addAttribute(userBean);
+		return "user/jsp/aboutMe_FontSatge.jsp";
+	}
 
 	// ---Tags : ManyToMany
 
