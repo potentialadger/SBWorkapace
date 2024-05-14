@@ -1,11 +1,15 @@
 package com.group.dto;
 
+import java.util.List;
+
 public class ItemDto {
 
 	private String itemName;
 	private String itemDesc;
 	private Integer itemPrice;
 	private String itemImgPath;
+	private List<String> itemSpec;
+	
 	public String getItemName() {
 		return itemName;
 	}
@@ -29,6 +33,12 @@ public class ItemDto {
 	}
 	public void setItemImgPath(String itemImgPath) {
 		this.itemImgPath = itemImgPath;
+	}
+	public List<String> getItemSpec() {
+		return itemSpec;
+	}
+	public void setItemSpec(List<String> itemSpec) {
+		this.itemSpec = itemSpec;
 	}
 	
 	

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.group.model.Item;
 import com.group.model.ItemSpecification;
 import com.group.repository.ItemSpecificationRepository;
 
@@ -24,6 +25,7 @@ public class ItemSpecService {
 		List<ItemSpecification> itemspecs = itemSpecificationRepository.findItemSpecByItemNo(itemno);
 		return itemspecs;
 	}
+	
 //	查詢規格依照ID
 	public ItemSpecification findItemSpecById(Integer itemSpecNo) {
 		Optional<ItemSpecification> itemSpecOptional = itemSpecificationRepository.findById(itemSpecNo);
@@ -36,6 +38,14 @@ public class ItemSpecService {
 		return itemSpecification;
 	}
 
-
+//	新增規格
+	public ItemSpecification insertItemSpec(Item item, String specValue) {
+		ItemSpecification itemSpecification = new ItemSpecification();
+		
+		itemSpecification.setItem(item);
+		itemSpecification.setSpecValue(specValue);
+		
+		return itemSpecificationRepository.save(itemSpecification);
+	}
 	
 }

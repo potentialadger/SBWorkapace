@@ -134,17 +134,20 @@
 															<label style="display: flex;">
 																付款方式:
 															</label>
-															<label><input type="checkbox" name="payment"
+															<br>
+															<label style="width: 70px"><input type="checkbox" name="payment"
 																	value="1">匯款</label>
-															<label><input type="checkbox" name="payment"
+															<label style="width: 70px"><input type="checkbox" name="payment"
 																	value="2">面交</label>
-															<label><input type="checkbox" name="payment"
+															<label style="width: 70px"><input type="checkbox" name="payment"
 																	value="3">SB點數</label>
 														</li>
-														<li class="meetup-address" style="display:none;">
+														<br>
+														<li class="meetup-address" style="display:none;margin: 0;padding: 0">
 															<label style="display: flex;">
 																面交地址:
 															</label>
+															<br>
 															<select id="city" name="city">
 																<option value="">選縣市</option>
 															</select>
@@ -152,17 +155,19 @@
 																<option value="">請選擇</option>
 															</select>
 															<br>
-															<input type="text" name="address"
+															<input class="rounded-input" type="text" name="address"
 																style="display:none; width: 411px;">
 														</li>
-														<li class="bank-account" style="display:none;">
+														<br>
+														<li class="bank-account" style="display:none;margin: 0;padding: 0">
 															<label style="display: flex;">
 																匯款帳戶:
 															</label>
+															<br>
 															<select id="bank" name="bank">
 																<option>銀行</option>
 															</select>
-															<input type="input" name="account" placeholder="帳戶"
+															<input class="rounded-input" type="input" name="account" placeholder="帳戶"
 																style="width: 411px;">
 														</li>
 													</ol>

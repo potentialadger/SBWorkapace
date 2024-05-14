@@ -217,7 +217,6 @@ body {
 fieldset {
   margin: 1.5em 0 0 0;
   padding: 0;
-  border: 1px solid #000000;
 }
 
 legend {
@@ -253,4 +252,10 @@ fieldset li input.fildform {
   border: 1px solid #000000;
   list-style-type: none;
 }
+
+fieldset ol li label {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
 

@@ -165,6 +165,7 @@ public class GroupController {
 		}
 		Group group = gService.insertGroup(userNo, title, description, endTime, payments, minTotalQuantity, minTotalAmount, account, address);
 		
+		session.setAttribute("eventno", group.getEventNo());
 		m.addAttribute("group", group);
 		
 		return "group/jsp/insertitem.jsp";
