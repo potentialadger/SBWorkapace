@@ -28,9 +28,11 @@ public class EventRegistrationsController {
         ModelAndView mav = new ModelAndView("activity/EventDetail.jsp");
         try {
             EventRegistrationsBean registration = eventRegistrationsService.findByRegistration(registrationID);
-            List<EventRegistrationsBean> registrations = new ArrayList<>();
-            registrations.add(registration);
-            mav.addObject("registrations", registrations);
+            if (registration != null) {
+                mav.addObject("event", registration.getEvent()); // 確保這裡添加的是對應的 EventBean 物件
+            } else {
+                mav.addObject("errorMessage", "No registration found with ID " + registrationID);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             mav.addObject("errorMessage", "An error occurred: " + e.getMessage());
