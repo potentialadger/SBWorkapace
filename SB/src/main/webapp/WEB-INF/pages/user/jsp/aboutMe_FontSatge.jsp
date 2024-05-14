@@ -4,6 +4,7 @@
             <%@page import="com.user.bean.UserBean" %>
                 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
                     <%! @SuppressWarnings("unchecked") %>
+                    
                         <!DOCTYPE html>
                         <html lang="en">
 
@@ -473,7 +474,229 @@
                                         <script src="js/layout/Z_TopBar.js"></script>
 
                                         <!-- 主要內容 -->
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+                                                        rel="stylesheet">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div id="content" class="content content-full-width">
+                                                                    <!-- begin profile -->
+                                                                    <div class="profile">
+                                                                        <div class="profile-header">
+                                                                            <!-- BEGIN profile-header-cover -->
+                                                                            <div class="profile-header-cover"></div>
+                                                                            <!-- END profile-header-cover -->
+                                                                            <!-- BEGIN profile-header-content -->
+                                                                            <div class="profile-header-content">
+                                                                                <!-- BEGIN profile-header-img -->
+                                                                                <div class="profile-header-img">
+                                                                                    <img src="localimages/${userBean.avatar}"
+                                                                                        alt="">
+                                                                                </div>
+                                                                                <!-- END profile-header-img -->
+                                                                                <!-- BEGIN profile-header-info -->
+                                                                                <div class="profile-header-info">
+                                                                                    <h4 class="m-t-10 m-b-5">${userBean.userChineseName}</h4>
+                                                                                    <p class="m-b-10">${userBean.userEnglishName}</p>
+                                                                                    <a href="#" class="btn btn-xs btn-success">Edit Profile</a>
+                                                                                </div>
+                                                                                <!-- END profile-header-info -->
+                                                                            </div>
+                                                                            <!-- END profile-header-content -->
+                                                                            <!-- BEGIN profile-header-tab -->
+                                                                            <ul class="profile-header-tab nav nav-tabs">
+                                                                                <li class="nav-item"><a
+                                                                                        href="https://www.bootdey.com/snippets/view/bs4-profile-with-timeline-posts"
+                                                                                        target="__blank" class="nav-link_">貼文</a></li>
+                                                                                <li class="nav-item"><a
+                                                                                        href="https://www.bootdey.com/snippets/view/bs4-profile-about"
+                                                                                        target="__blank" class="nav-link_ active">關於我</a></li>
+                                                                                <li class="nav-item"><a
+                                                                                        href="https://www.bootdey.com/snippets/view/profile-photos"
+                                                                                        target="__blank" class="nav-link_">照片</a></li>
+                                                                                
+                                                                                <li class="nav-item"><a
+                                                                                        href="https://www.bootdey.com/snippets/view/bs4-profile-friend-list"
+                                                                                        target="__blank"
+                                                                                        class="nav-link_ show">好友</a></li>
+                                                                            </ul>
+                                                                            <!-- END profile-header-tab -->
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- end profile -->
+                                                                    <!-- begin profile-content -->
+                                                                    <div class="profile-content">
+                                                                        <!-- begin tab-content -->
+                                                                        <div class="tab-content p-0">
+                        
+                                                                            <!-- begin #profile-about tab -->
+                                                                            <div class="tab-pane fade in active show" id="profile-about">
+                                                                                <!-- begin table -->
+                                                                                <div class="table-responsive">
+                                                                                    <table class="table table-profile">
+                                                                                        <thead>
+                                                                                            <tr>
+                                                                                                <th></th>
+                                                                                                <th>
+                                                                                                    <h3>關於我</h3>
+                                                                                                </th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            
+                                                                                            <tr class="highlight">
+                                                                                                <td></td>
+                                                                                                <td></td>
+                                                                                            </tr>
+                                                                                            <tr class="divider">
+                                                                                                <td colspan="2"></td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td class="field">中文姓名</td>
+                                                                                                <td>
+                                                                                                    <!-- <i class="fa fa-mobile fa-lg m-r-5"></i> -->
+                                                                                                    ${userBean.userChineseName}
+                                                                                                    <!-- <a href="javascript:;" class="m-l-5">Edit</a> -->
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td class="field">英文姓名</td>
+                                                                                                <td>${userBean.userEnglishName}</td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td class="field">暱稱</td>
+                                                                                                <td>${userBean.nickName == null ? "尚未設定" : userBean.nickName}</td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td class="field">性別</td>
+                                                                                                <td>${userBean.gender == 1 ? "生理男" : "生理女"}</td>
+                                                                                            </tr>
+                                                                                            <tr class="divider">
+                                                                                                <td colspan="2"></td>
+                                                                                            </tr>
+                                                                                            <tr class="highlight">
+                                                                                                <td></td>
+                                                                                                <td></td>
+                                                                                            </tr>
+                                                                                            <tr class="divider">
+                                                                                                <td colspan="2"></td>
+                                                                                            </tr>
+                                                                                            <!-- 一個下拉式選單
+                                                                                                 <tr>
+                                                                                                <td class="field">Country/Region</td>
+                                                                                                <td>
+                                                                                                    <select
+                                                                                                        class="form-control input-inline input-xs"
+                                                                                                        name="region">
+                                                                                                        <option value="US" selected="">United
+                                                                                                            State</option>
+                                                                                                        <option value="AF">Afghanistan</option>
+                                                                                                        <option value="AL">Albania</option>
+                                                                                                        <option value="DZ">Algeria</option>
+                                                                                                        <option value="AS">American Samoa
+                                                                                                        </option>
+                                                                                                        <option value="AD">Andorra</option>
+                                                                                                        <option value="AO">Angola</option>
+                                                                                                        <option value="AI">Anguilla</option>
+                                                                                                        <option value="AQ">Antarctica</option>
+                                                                                                        <option value="AG">Antigua and Barbuda
+                                                                                                        </option>
+                                                                                                    </select>
+                                                                                                </td>
+                                                                                            </tr> -->
+                                                                                            
+                                                                                            <tr>
+                                                                                                <td class="field">電話</td>
+                                                                                                <td>${userBean.phone}</td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td class="field">住址</td>
+                                                                                                <td>${userBean.userAddress}</td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td class="field">電子郵件</td>
+                                                                                                <td>${userBean.email}</td>
+                                                                                            </tr>
 
+                                                                                            <tr class="divider">
+                                                                                                <td colspan="2"></td>
+                                                                                            </tr>
+                                                                                            <tr class="highlight">
+                                                                                                <td></td>
+                                                                                                <td></td>
+                                                                                            </tr>
+                                                                                            <tr class="divider">
+                                                                                                <td colspan="2"></td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td class="field">生日</td>
+                                                                                                <td>${localDateTimeDateFormat.format(userBean.birthday)}</td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td class="field">MBTI</td>
+                                                                                                <td>${userBean.MBTI == null ? "尚未設定" : userBean.MBTI}</td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td class="field">血型</td>
+                                                                                                <td>${userBean.bloodType == null ? "尚未設定" : userBean.bloodType}</td>
+                                                                                            </tr>
+
+                                                                                            <tr class="divider">
+                                                                                                <td colspan="2"></td>
+                                                                                            </tr>
+
+                                                                                            <tr class="highlight">
+                                                                                                <td></td>
+                                                                                                <td></td>
+                                                                                            </tr>
+                                                                                            <tr class="divider">
+                                                                                                <td colspan="2"></td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td class="field">創建時間</td>
+                                                                                                <td>${localDateTimeFormat.format(userBean.creationDatetime)}</td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td class="field">登入時間</td>
+                                                                                                <td>${localDateTimeFormat.format(userBean.lastLoginDatetime)}</td>
+                                                                                            </tr>
+                                                                                            <tr class="divider">
+                                                                                                <td colspan="2"></td>
+                                                                                            </tr>
+
+                                                                                            <tr class="highlight">
+                                                                                                <td></td>
+                                                                                                <td></td>
+                                                                                            </tr>
+                                                                                            <!-- <tr class="highlight">
+                                                                                                <td class="field">&nbsp;</td>
+                                                                                                <td class="p-t-10 p-b-10">
+                                                                                                    <button type="submit"
+                                                                                                        class="btn btn-primary width-150">Update</button>
+                                                                                                    <button type="submit"
+                                                                                                        class="btn btn-white btn-white-without-border width-150 m-l-5">Cancel</button>
+                                                                                                </td>
+                                                                                            </tr> -->
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                                <!-- end table -->
+                                                                            </div>
+                                                                            <!-- end #profile-about tab -->
+                                                                        </div>
+                                                                        <!-- end tab-content -->
+                                                                    </div>
+                                                                    <!-- end profile-content -->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <!-- 主要內容結尾 -->
 

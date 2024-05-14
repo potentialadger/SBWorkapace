@@ -221,7 +221,9 @@ public class UserController {
 		UserBean uBean = (UserBean)session.getAttribute("userData");
 		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
 		UserBean userBean = dataById.get();
-		m.addAttribute(userBean);
+		m.addAttribute("userBean", userBean);
+		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		return "user/jsp/aboutMe_FontSatge.jsp";
 	}
 
