@@ -24,7 +24,7 @@ public class WebAppConfig implements WebMvcConfigurer {
 		registry.addViewController("/match.insertGoal").setViewName("match/jsp/InsertGoal.jsp");
 		registry.addViewController("/match.MatchProfileEdit").setViewName("match/html/MatchProfileEdit.html");
 		registry.addViewController("/match.MatchProfileCreate").setViewName("match/html/MatchProfileCreate.html");
-		registry.addViewController("/match.MatchHP").setViewName("match/html/MatchHP.html");
+		registry.addViewController("/match.UsersMatch").setViewName("match/html/UsersMatch.html");
 		registry.addViewController("/match.HeartLoading").setViewName("match/html/HeartLoading.html");
 		registry.addViewController("/activityHomepage").setViewName("activity/HomePage.html");
 		registry.addViewController("/activityInsertpage").setViewName("activity/Insert.html");
