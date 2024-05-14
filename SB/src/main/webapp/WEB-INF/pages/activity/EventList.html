@@ -1,132 +1,207 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>活動列表</title>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-    <style>
-        body {
-            background-color: #f4f7f6;
-            margin-top: 20px;
-            font-family: Arial, sans-serif;
-            color: #333;
-            display: flex;
-            justify-content: center;
-        }
-        .card {
-            background: #fff;
-            transition: .5s;
-            border: 0;
-            margin-bottom: 30px;
-            border-radius: .55rem;
-            position: relative;
-            width: 100%;
-            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
-        }
-        a:hover {
-            text-decoration: none;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-        }
-        li {
-            margin: 10px;
-            padding: 0;
-            width: calc(25% - 20px);
-            background-color: #fff;
-            border-radius: .55rem;
-            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
-        }
-        img {
-            display: block;
-            width: 100%;
-            border-bottom: 1px solid #f7f7f7;
-        }
-        .file-name {
-            padding: 10px;
-        }
-        .details-button {
-            display: block;
-            padding: 10px;
-            margin: 10px auto;
-            border: none;
-            border-radius: 3px;
-            background-color: #3b76e1;
-            color: #fff;
-            text-decoration: none;
-            text-align: center;
-            cursor: pointer;
-            width: 80%;
-        }
-        .details-button:hover {
-            background-color: #555;
-        }
-    </style>
-    <script>
-        window.onload = function() {
-            fetchEvents();
-        };
 
-        function fetchEvents() {
-            fetch('/EventList')
-                .then(response => response.json())
-                .then(events => {
-                    const eventsList = document.getElementById('eventsList');
-                    events.forEach(event => {
-                        const listItem = document.createElement('li');
-                        listItem.className = "col-lg-3 col-md-4 col-sm-12";
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-                        const card = document.createElement('div');
-                        card.className = 'card';
+	<style>
+	        body {
+	            background-color: #f4f7f6;
+	            margin-top: 20px;
+	            font-family: Arial, sans-serif;
+	            color: #333;
+	            display: flex;
+	            justify-content: center;
+	        }
+	        .card {
+	            background: #fff;
+	            transition: .5s;
+	            border: 0;
+	            margin-bottom: 30px;
+	            border-radius: .55rem;
+	            position: relative;
+	            width: 100%;
+	            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+	        }
+	        a:hover {
+	            text-decoration: none;
+	        }
+	        ul {
+	            list-style: none;
+	            padding: 0;
+	            display: flex;
+	            flex-wrap: wrap;
+	            justify-content: center;
+	            gap: 20px;
+	        }
+	        li {
+	            margin: 10px;
+	            padding: 0;
+	            width: calc(25% - 20px);
+	            background-color: #fff;
+	            border-radius: .55rem;
+	            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+	        }
+	        img {
+	            display: block;
+	            width: 100%;
+	            border-bottom: 1px solid #f7f7f7;
+	        }
+	        .file-name {
+	            padding: 10px;
+	        }
+	        .details-button {
+	            display: block;
+	            padding: 10px;
+	            margin: 10px auto;
+	            border: none;
+	            border-radius: 3px;
+	            background-color: #3b76e1;
+	            color: #fff;
+	            text-decoration: none;
+	            text-align: center;
+	            cursor: pointer;
+	            width: 80%;
+	        }
+	        .details-button:hover {
+	            background-color: #555;
+	        }
+	    </style>
+	    <script>
+	        window.onload = function() {
+	            fetchEvents();
+	        };
+	
+	        function fetchEvents() {
+	            fetch('/EventList')
+	                .then(response => response.json())
+	                .then(events => {
+	                    const eventsList = document.getElementById('eventsList');
+	                    events.forEach(event => {
+	                        const listItem = document.createElement('li');
+	                        listItem.className = "col-lg-3 col-md-4 col-sm-12";
+	
+	                        const card = document.createElement('div');
+	                        card.className = 'card';
+	
+	                        const file = document.createElement('div');
+	                        file.className = 'file';
+	
+	                        const image = document.createElement('img');
+	                        image.src = event.imageUrl ? event.imageUrl : 'https://via.placeholder.com/280x280?text=No+Image';
+	                        image.alt = 'Event Image';
+	                        image.className = 'img-fluid';
+	
+	                        const fileName = document.createElement('div');
+	                        fileName.className = 'file-name';
+	
+	                        const title = document.createElement('p');
+	                        title.className = 'm-b-5 text-muted';
+	                        title.textContent = event.title;
+	
+	                        const detailsButton = document.createElement('a');
+	                        detailsButton.textContent = '活動詳情';
+	                        // 假設 userNo 是 event.userNo
+	                        detailsButton.href = "/EventDetail.jsp?eventNo=" + event.eventNo + "&userNo=" + event.userNo;
+	                        detailsButton.className = 'details-button';
+	
+	                        fileName.appendChild(title);
+	                        file.appendChild(image);
+	                        file.appendChild(fileName);
+	                        file.appendChild(detailsButton);
+	                        card.appendChild(file);
+	                        listItem.appendChild(card);
+	                        eventsList.appendChild(listItem);
+	                    });
+	                })
+	                .catch(error => {
+	                    console.error('Error loading events:', error);
+	                    alert('Failed to load events. Please check the console for more details.');
+	                });
+	        }
+	    </script>
+	
+    <title>SB Admin 2 - Dashboard</title>
 
-                        const file = document.createElement('div');
-                        file.className = 'file';
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
-                        const image = document.createElement('img');
-                        image.src = event.imageUrl ? event.imageUrl : 'https://via.placeholder.com/280x280?text=No+Image';
-                        image.alt = 'Event Image';
-                        image.className = 'img-fluid';
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
-                        const fileName = document.createElement('div');
-                        fileName.className = 'file-name';
-
-                        const title = document.createElement('p');
-                        title.className = 'm-b-5 text-muted';
-                        title.textContent = event.title;
-
-                        const detailsButton = document.createElement('a');
-                        detailsButton.textContent = '活動詳情';
-                        // 假設 userNo 是 event.userNo
-                        detailsButton.href = "/EventDetail.jsp?eventNo=" + event.eventNo + "&userNo=" + event.userNo;
-                        detailsButton.className = 'details-button';
-
-                        fileName.appendChild(title);
-                        file.appendChild(image);
-                        file.appendChild(fileName);
-                        file.appendChild(detailsButton);
-                        card.appendChild(file);
-                        listItem.appendChild(card);
-                        eventsList.appendChild(listItem);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error loading events:', error);
-                    alert('Failed to load events. Please check the console for more details.');
-                });
-        }
-    </script>
 </head>
-<body>
-    <h1>活動列表</h1>
-    <div id="main-content" class="file_manager">
-        <div class="container">
-            <ul id="eventsList" class="row clearfix"></ul>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!--        <script src="js/test/Z_slider.js"></script>-->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <script src="js/layout/Z_TopBar.js"></script>
+
+                <!-- 主要內容 -->
+				<h1>活動列表</h1>
+				 <div id="main-content" class="file_manager">
+				     <div class="container">
+				         <ul id="eventsList" class="row clearfix"></ul>
+				     </div>
+				 </div>
+                <!-- 主要內容結尾 -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- footer -->
+            <script src="js/layout/Z_footer.js"></script>
+
         </div>
+        <!-- End of Content Wrapper -->
+
     </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <script src="js/layout/Z_Logout Modal.js"></script>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+
+
 </body>
+
 </html>
