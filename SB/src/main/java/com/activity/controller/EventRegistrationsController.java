@@ -25,7 +25,7 @@ public class EventRegistrationsController {
     // 查詢單筆註冊
     @GetMapping("/OneRegistration")
     public ModelAndView findByRegistrationID(@RequestParam("registrationID") int registrationID) {
-        ModelAndView mav = new ModelAndView("activity/DisplayAllRegistrations.jsp");
+        ModelAndView mav = new ModelAndView("activity/EventDetail.jsp");
         try {
             EventRegistrationsBean registration = eventRegistrationsService.findByRegistration(registrationID);
             List<EventRegistrationsBean> registrations = new ArrayList<>();
