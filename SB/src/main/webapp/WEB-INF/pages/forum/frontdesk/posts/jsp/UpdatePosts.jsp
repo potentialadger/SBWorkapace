@@ -9,7 +9,7 @@
 </head>
 <body>
 <h1>修改資料</h1>
-<form method="post" action="/postsFrontDesk/UpdatePosts" enctype="multipart/form-data">
+<form method="post" action="/postsFrontDesk/UpdatePosts" enctype="multipart/form-data" onsubmit="return confirm('您確定要修改資料嗎？');">
 <input type="hidden" name="_method" value="PUT">
     
    	<input type="hidden" name="post_no" value="${updateSelect.post_no}"/><br>
@@ -42,5 +42,12 @@
     
     <input type="submit" value="修改" />
 </form>
+
+	<button onclick="goBack()">返回</button>
+	<script>
+		function goBack() {
+			window.history.back();
+		}
+	</script>
 </body>
 </html>

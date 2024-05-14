@@ -38,4 +38,6 @@ public interface LikesDaoInterface extends JpaRepository<LikesBean, Integer> {
             return save(newLike);
         }
     }
+    //刪除喜歡紀錄
+    void delete(LikesBean like);
 }

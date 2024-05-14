@@ -125,14 +125,11 @@
 							<div class="post-date">${post.categoriesBean.title_name}</div>
 							<div class="post-date">${post.update_date}</div>
 						</div>
-						<img src="${post.userBean.avatar}" alt="User Avatar">
-						<a
-							href="/postsFrontDesk/SelectPosts?postsNo=${post.post_no}&title=${post.title}"
-							class="post-title">${post.title}
-						</a>
+						<img  class="avatar" src="http://localhost:8080/localimages/${post.userBean.avatar} "alt="" style="width:300px">>
+						<a href="/postsFrontDesk/SelectPosts?postsNo=${post.post_no}" class="post-title">${post.title}</a>
 						<div class="post-content">${post.content}</div>
 						<div class="post-image">
-							<td><img src="http://localhost:8080/localimages/${post.image_url}"></td>
+						<img src="http://localhost:8080/localimages/${post.image_url}">
 						</div>
 						<div class="post-footer">
 							<div class="post-likes">${post.likesBean.size()}likes</div>

@@ -31,7 +31,7 @@ public interface PostsServiceInterface {
     void deletePostAndReplies(int postNo);
     
     // 更新瀏覽次數
-    void updateViewCount(Integer postId, Integer viewCount);
+    void updateViewCount(Integer postId, int viewCount);
     
     // 依照瀏覽次數排序
     List<PostsBean> findAllByOrderByViewCountDesc();

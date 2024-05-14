@@ -3,6 +3,7 @@ package com.forum.frontdesk;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -97,6 +97,7 @@ public class FrontDeskPostsController {
 			@RequestParam("title") String title,
 			@RequestParam("content") String content,
 			@RequestParam("image_url") MultipartFile image_url,
+			Model m,
 			HttpSession session) {
 
 		UserBean userData = (UserBean) session.getAttribute("userData");
@@ -146,9 +147,19 @@ public class FrontDeskPostsController {
 
 			postsService.insertPosts(posts);
 			
-			int newPostNo = posts.getPost_no();
-
-			return "redirect:/postsFrontDesk/SelectPosts?postsNo=" + newPostNo + "&title=" + posts.getTitle();
+			int newPostsNo = posts.getPost_no();
+			
+			PostsBean post = postsService.getPostsNo(newPostsNo);
+			
+			List<PostsBean> postsList = new ArrayList<>();
+			
+			postsList.add(post);
+			
+			m.addAttribute("updateSelect", postsList);
+			
+			m.addAttribute("userNo",userData.getUserNo());
+			
+			return "/forum/frontdesk/posts/jsp/OnePosts.jsp";
 
 		} catch (
 
@@ -242,8 +253,9 @@ public class FrontDeskPostsController {
 			postsToUpdate.setImage_url(fileName);
 
 			postsService.updatePosts(postsToUpdate);
+			
 
-			return "redirect:/postsFrontDesk/SelectPosts?postsNo=" + post_no + "&title=" + postsToUpdate.getTitle();
+			return "redirect:/postsFrontDesk/SelectPosts?postsNo=" + post_no ;
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -252,9 +264,61 @@ public class FrontDeskPostsController {
 		}
 	}
 
+	
 	// 單筆查詢跳轉and瀏覽次數更新
-	@PutMapping("/posts/{postId}/update-view-count/{viewCount}")
-    public void updateViewCount(@PathVariable Integer postId, @PathVariable Integer viewCount) {
-        postsService.updateViewCount(postId, viewCount);
-    }
+	@GetMapping("/SelectPosts")
+	public String selectPosts(
+	        @RequestParam("postsNo") Integer postsNo,
+	        HttpSession session,
+	        Model m) {
+	    PostsBean posts = postsService.getPostsNo(postsNo);
+	    
+	    UserBean userData = (UserBean) session.getAttribute("userData"); 
+	    
+	    // 檢查 Session 中是否存在已訪問標記，如果不存在則增加瀏覽次數並設置已訪問標記
+	    if (session.getAttribute("visitedPost_" + postsNo) == null) {
+	        int originalViewCount = posts.getView_count();
+	        int newViewCount = originalViewCount + 1;
+	        postsService.updateViewCount(postsNo, newViewCount);
+	        
+	        // 設置已訪問標記
+	        session.setAttribute("visitedPost_" + postsNo, true);
+	    }
+	    
+	    List<PostsBean> postsList = new ArrayList<>();
+	    postsList.add(posts);
+	    m.addAttribute("userNo",userData.getUserNo());
+	    m.addAttribute("updateSelect", postsList);
+	    
+	    return "/forum/frontdesk/posts/jsp/OnePosts.jsp";
+	}
 }
+
+//	// 單筆查詢跳轉and瀏覽次數更新 舊編輯的時候瀏覽次數會更新
+//	@GetMapping("/SelectPosts")
+//    public String selectPosts(
+//    		@RequestParam("postsNo") Integer postsNo,
+//    		HttpSession session,
+//            Model m) {
+//		PostsBean posts = postsService.getPostsNo(postsNo);
+//		
+//		UserBean userData = (UserBean) session.getAttribute("userData"); 
+//		
+//		// 取得原有的瀏覽次數
+//	    int originalViewCount = posts.getView_count();
+//	    
+//	    // 新的瀏覽次數加1
+//	    int newViewCount = originalViewCount + 1;
+//		
+//		postsService.updateViewCount(postsNo,newViewCount);
+//		
+//		List<PostsBean> postsList = new ArrayList<>();
+//		
+//		postsList.add(posts);
+//			
+//		m.addAttribute("userNo",userData.getUserNo());
+//		
+//        m.addAttribute("updateSelect", postsList);
+//        
+//        return "/forum/frontdesk/posts/jsp/OnePosts.jsp";
+//    }	

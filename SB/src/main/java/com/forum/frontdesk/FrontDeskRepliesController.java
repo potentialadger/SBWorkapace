@@ -44,17 +44,21 @@ public class FrontDeskRepliesController {
 	
 	//前台 單筆查詢 查詢該篇文章的回覆用
 	@GetMapping("/PostsReplies")
-	public String getPostsReplies(@RequestParam("postsNo") int postsNo, Model m) {
+	public String getPostsReplies(@RequestParam("postsNo") int postsNo, Model m, HttpSession session) {
 	   
 		PostsBean post = postsService.getPostsNo(postsNo);
-	    
-	    List<RepliesBean> replies = repliesService.findByPostNo(postsNo);
-	    
-	    m.addAttribute("post", post);
+		
+		UserBean userData = (UserBean) session.getAttribute("userData"); 
+	   
+		List<RepliesBean> replies = repliesService.findByPostNo(postsNo);
+		
+		m.addAttribute("userNo",userData.getUserNo());
+	   
+		m.addAttribute("post", post);
 	    
 	    m.addAttribute("repliesM", replies);
 	    
-	    return "/forum/backstage/replies/jsp/SelectReplies.jsp";
+	    return "/forum/frontdesk/posts/jsp/OnePosts.jsp";
 	}
 
 	// 前台 新增

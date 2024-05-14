@@ -24,5 +24,5 @@ public interface PostsDaoInterface extends JpaRepository<PostsBean, Integer> {
 	
 	// 更新瀏覽次數
 	@Query("UPDATE PostsBean p SET p.view_count = :viewCount WHERE p.post_no = :postId")
-	void updateViewCount(@Param("postId") Integer postId, @Param("viewCount") Integer viewCount);
+	void updateViewCount(@Param("postId") Integer postId, @Param("viewCount") int viewCount);
 }
