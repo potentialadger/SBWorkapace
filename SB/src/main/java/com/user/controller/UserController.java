@@ -209,8 +209,9 @@ public class UserController {
 
 	@GetMapping("getTopBarData")
 	@ResponseBody
-	public UserBean getTopBarData() {
-		Optional<UserBean> dataById = uService.getDataById(7);
+	public UserBean getTopBarData(HttpSession session) {
+		UserBean uBean = (UserBean)session.getAttribute("userData");
+		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
 		UserBean userBean = dataById.get();
 		return userBean;
 	}
