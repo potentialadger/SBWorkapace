@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,7 +28,7 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <script src="js/layout/Z_slider.js"></script>
+        <!--        <script src="js/test/Z_slider.js"></script>-->
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -38,36 +39,38 @@
                 <!-- Topbar -->
                 <script src="js/layout/Z_TopBar.js"></script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var now = new Date();
+    var datetimeLocal = now.toISOString().slice(0,16); // 轉換為 YYYY-MM-DDTHH:MM 格式
+    document.getElementById('registrationTime').value = datetimeLocal;
+});
+</script>
+
+
                 <!-- 主要內容 -->
-				<div align="center">
-				    <h2>新增活動</h2>
-				    <form action="InsertEvent" method="post" enctype="multipart/form-data">
-				        <input type="hidden" name="_method" value="put">
-				        <label for="title">標題:</label><br>
-				        <input type="text" name="title" id="title" required><br>
-				        <label for="description">描述:</label><br>
-				        <textarea name="description" id="description" required></textarea><br>
-				        <label for="activityTime">活動時間:</label><br>
-				        <input type="datetime-local" name="activityTime" id="activityTime"><br>
-				        <label for="signupStartTime">報名開始時間:</label><br>
-				        <input type="datetime-local" name="signupStartTime" id="signupStartTime"><br>
-				        <label for="signupEndTime">報名結束時間:</label><br>
-				        <input type="datetime-local" name="signupEndTime" id="signupEndTime"><br>
-				        <label for="location">地點:</label><br>
-				        <input type="text" name="location" id="location" required><br>
-				        <label for="status">狀態:</label><br>
-				        <input type="text" name="status" id="status" required><br>
-				        <label for="imagepath">活動圖片:</label><br>
-				        <input type="file" name="imagePath" id="imagepath" required><br>
-				        <!-- 使用圖標分割按鈕 -->
-				        <button type="submit" class="btn btn-success btn-icon-split">
-				            <span class="icon text-white-50">
-				                <i class="fas fa-check"></i>
-				            </span>
-				            <span class="text">確定</span>
-				        </button>
-				    </form>		
-				</div>
+<div align="center">
+    <h1>活動報名</h1>
+    <form action="InsertRegistrations" method="post" enctype="multipart/form-data">
+        <label for="eventNo">活動編號：</label>
+        <input type="number" id="eventNo" name="eventNo" value="<%=request.getParameter("eventNo")%>" required readonly/><br>
+        <label for="userNo">用戶編號：</label>
+        <input type="number" id="userNo" name="userNo" value='<%=request.getParameter("userNo")%>' required readonly><br>
+        <label for="participantName">參與者姓名：</label>
+        <input type="text" id="participantName" name="participantName" required><br>
+        <label for="contactInfo">聯絡電話：</label>
+        <input type="text" id="contactInfo" name="contactInfo" required><br>
+        <label for="registrationTime">註冊時間：</label>
+        <input type="datetime-local" id="registrationTime" name="registrationTime" required readonly><br>
+        <!-- 更新按鈕樣式 -->
+        <button type="submit" class="btn btn-primary btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-sign-in-alt"></i>
+            </span>
+            <span class="text">提交報名</span>
+        </button>
+    </form>
+</div>
 
                 <!-- 主要內容結尾 -->
 
