@@ -1,4 +1,5 @@
 <%@ page import="com.activity.bean.EventBean" %>
+<%@ page import="com.activity.bean.EventRegistrationsBean" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <% 
