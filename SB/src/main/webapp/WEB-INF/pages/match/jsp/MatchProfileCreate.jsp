@@ -231,12 +231,12 @@ fieldset:not(:first-of-type) {
            			 style="font-size: inherit;"/>
 		   	</div>
 
-			<!-- 性別 -->
+			<!-- 性別 : 動態傳入user設定好的資料 -->
 			<div class="form-group">
 				<select class="form-control" name="gender" placeholder="性別">
 					<!-- <option value="" disabled selected>性別</option> -->
-					<option value="1" ${userBean.gender == 1? "selected" : ""}>男</option>
-					<option value="0" ${userBean.gender == 0? "selected" : ""}>女</option>
+					<option value="1" ${userBean.gender == 1? "selected" : ""}>生理男</option>
+					<option value="0" ${userBean.gender == 0? "selected" : ""}>生理女</option>
 				</select>
 			</div>
 
