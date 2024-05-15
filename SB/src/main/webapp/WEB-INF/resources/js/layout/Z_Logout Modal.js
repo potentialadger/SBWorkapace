@@ -11,7 +11,7 @@ aria-hidden="true">
         <div class="modal-body">確定要登出請點選下方登出按鈕。</div>
         <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
-            <a class="btn btn-primary" href="user.login">登出</a>
+            <a class="btn btn-primary" href="/user.login">登出</a>
         </div>
     </div>
 </div>
