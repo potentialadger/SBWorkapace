@@ -6,6 +6,7 @@ import lombok.Data;
 public class OrderDetailsDto {
 	
 	private Integer itemNo;
+	private String itemName;
 	private Integer itemQuantity;
 	private Integer ItemSpec;
 	private String specValue;
@@ -33,6 +34,12 @@ public class OrderDetailsDto {
 	}
 	public void setSpecValue(String specValue) {
 		this.specValue = specValue;
+	}
+	public String getItemName() {
+		return itemName;
+	}
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
 	}
 	
 	

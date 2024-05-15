@@ -7,11 +7,14 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Base64Utils;
@@ -50,7 +53,7 @@ public class ItemController {
 	}
 
 	@PostMapping(value = "/insertitem")
-	public String insertItem(@RequestBody List<ItemDto> insertItemsJson, HttpServletRequest request)
+	public ResponseEntity<Map<String, String>> insertItem(@RequestBody List<ItemDto> insertItemsJson, HttpServletRequest request)
 			throws IllegalStateException, IOException {
 		HttpSession session = request.getSession();
 		Integer eventno = (Integer) session.getAttribute("eventno");
@@ -91,8 +94,12 @@ public class ItemController {
 				
 			}
 		}
-
-		return "redirct:/group/eachgroup/" + eventno;
+		
+		System.out.println("eventNO: ------" + eventno);
+		
+		Map<String, String> response = new HashMap<>();
+        response.put("redirectUrl", "/group/eachgroup/" + eventno);
+        return ResponseEntity.ok(response);
 	}
 
 	@PostMapping(value = "/updateitem", produces = "text/plain;charset=UTF-8")

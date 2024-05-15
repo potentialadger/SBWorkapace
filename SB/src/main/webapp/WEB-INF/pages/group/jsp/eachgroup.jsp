@@ -113,12 +113,10 @@
                                                             </td>
                                                             <td>
                                                                 <p style="margin-bottom: 5px">數量:</p>
-                                                                <button class="minus btn btn-primary btn-sm"><i
-                                                                        class="fa-solid fa-minus"></i></button>
+                                                                <button class="minus btn btn-primary btn-sm">-</button>
                                                                 <input class="numberinput" type="number"
                                                                     style="width: 32px; height: 31px" value="0" min="0">
-                                                                <button class="plus btn btn-primary btn-sm"><i
-                                                                        class="fa-solid fa-plus"></i></button>
+                                                                <button class="plus btn btn-primary btn-sm">+</button>
                                                             </td>
                                                             <td>
                                                                 <button type="button"

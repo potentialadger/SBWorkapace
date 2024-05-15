@@ -31,6 +31,18 @@ public class OrderDto {
 	public void setOrderDetail(List<OrderDetailsDto> orderDetail) {
 		this.orderDetail = orderDetail;
 	}
+	public Integer getUserNo() {
+		return userNo;
+	}
+	public void setUserNo(Integer userNo) {
+		this.userNo = userNo;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
 	
 

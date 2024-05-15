@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.group.dto.BackToFrontOrder;
+import com.group.dto.OrderDetailsDto;
 import com.group.dto.OrderDto;
 import com.group.model.Group;
+import com.group.model.Item;
 import com.group.model.Order;
 import com.group.model.OrderDetail;
 import com.group.repository.OrderRepository;
@@ -63,18 +65,32 @@ public class OrderService {
 		
 	}
 	
-	public List<OrderDto> findOrdersByEventNoFront(Integer eventNo){
-		List<Order> getOrders = orderRepository.findOrdersByEventNo(eventNo);
-		ArrayList<OrderDto> orders = new ArrayList<OrderDto>();
-		for (Order getOrder : getOrders) {
-			UserBean userNo = getOrder.getUserNo();
-			String userName = userNo.getUserChineseName();
-			Date setTime = getOrder.getSetTime();
-			Integer paymentMethod = getOrder.getPaymentMethod();
-			List<OrderDetail> orderDetails = getOrder.getOrderDetails();
-//			--------------------------------------------------------------從這開始
-		}
-	}
+//	public List<OrderDto> findOrdersByEventNoFront(Integer eventNo){
+//		List<Order> getOrders = orderRepository.findOrdersByEventNo(eventNo);
+//		ArrayList<OrderDto> orders = new ArrayList<OrderDto>();
+//		for (Order getOrder : getOrders) {
+//			UserBean userNo = getOrder.getUserNo();
+//			String userName = userNo.getUserChineseName();
+//			Date setTime = getOrder.getSetTime();
+//			Integer paymentMethod = getOrder.getPaymentMethod();
+//			
+//			OrderDto orderDto = new OrderDto();
+//			List<OrderDetail> orderDetails = getOrder.getOrderDetails();
+//			for (OrderDetail orderDetail : orderDetails) {
+//				Integer itemNo = orderDetail.getItem().getItemNo();
+//				String itemName = orderDetail.getItem().getName();
+//				Integer itemQuantity = orderDetail.getItemQuantity();
+//				String specValue = orderDetail.getItemSpec().getSpecValue();
+//				
+//				OrderDetailsDto orderDetailsDto = new OrderDetailsDto();
+//				orderDetailsDto.setItemQuantity(itemQuantity);
+//				orderDetailsDto.setSpecValue(specValue);
+//				orderDetailsDto.setItemNo(itemQuantity);
+//				orderDetailsDto.setItemName(itemName);
+//				orderDto.setOrderDetail(orderDetailsDto);
+//			}
+//		}
+//	}
 	
 //	查詢訂單依訂購人
 	public List<Order> findOrdersByUserNo(Integer userNo){
