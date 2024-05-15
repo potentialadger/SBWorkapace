@@ -27,10 +27,11 @@ public class EventRegistrationsController {
 
     // 查詢單筆註冊
     @GetMapping("/OneRegistration")
-    public ModelAndView findByRegistrationID(@RequestParam("registrationID") int registrationID) {
+    public ModelAndView findByRegistrationID(@RequestParam("eventNo") int eventNo) {
         ModelAndView mav = new ModelAndView("activity/EventDetail.jsp");
         try {
-            Optional<EventRegistrationsBean> registrationOptional = eventRegistrationsService.findByRegistration(registrationID);
+        	System.out.println(eventNo);
+            Optional<EventRegistrationsBean> registrationOptional = eventRegistrationsService.findByRegistration(eventNo);
             if (registrationOptional.isPresent()) {
                 EventRegistrationsBean registration = registrationOptional.get();
                 List<EventRegistrationsBean> registrations = new ArrayList<>();
@@ -38,7 +39,7 @@ public class EventRegistrationsController {
                 mav.addObject("registrations", registrations);
                 mav.addObject("event", registration.getEvent());
             } else {
-                mav.addObject("errorMessage", "No registration found with ID " + registrationID);
+                mav.addObject("errorMessage", "No registration found with ID " + eventNo);
             }
         } catch (Exception e) {
             e.printStackTrace();
