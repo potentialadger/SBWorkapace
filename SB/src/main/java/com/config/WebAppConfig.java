@@ -41,6 +41,9 @@ public class WebAppConfig implements WebMvcConfigurer {
 		registry.addViewController("/fontStageExample").setViewName("test/Z_fontStageExample.html");
 		
 		registry.addViewController("/getLinePayPay").setViewName("group/html/linpay.html");
+
+		
+		registry.addViewController("/adger.test").setViewName("user/html/AboutMeTest.html");
 	}
 	
 

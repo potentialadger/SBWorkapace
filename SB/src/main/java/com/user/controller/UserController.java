@@ -52,8 +52,15 @@ public class UserController {
 		UserBean insertBean = new UserBean();
 		
 		// 處理頭貼圖片
-		String uploadImgPath = UserUtil.uploadImg(avatar);
-		insertBean.setAvatar(uploadImgPath);
+		if(!avatar.isEmpty() || avatar.getSize() > 0)
+		{
+			String uploadImgPath = UserUtil.uploadImg(avatar);
+			insertBean.setAvatar(uploadImgPath);
+		}
+		else {
+			insertBean.setAvatar("userDefault.png");
+		}
+		
 
 		insertBean.setUserAccount(account);
 		insertBean.setUserPassword(password);
@@ -109,9 +116,9 @@ public class UserController {
 //			request.getSession().setAttribute("userData", resultBean);
 
 			if (resultBean.getIsManager() == 1) {
-				return "ManagerIndex.jsp";
+				return "redirect:/users";
 			} else {
-				return "user/jsp/UserHomePage.jsp";
+				return "redirect:/aboutMe";
 			}
 		}
 	}
@@ -123,7 +130,7 @@ public class UserController {
 		m.addAttribute("userBeans", allUserData);
 		m.addAttribute("result", "有" + allUserData.size() + "個使用者");
 
-		return "user/jsp/ManagerHomePage.jsp";
+		return "user/jsp/userDate_BackSatge.jsp";
 	}
 
 	@GetMapping("/user/{userno}")
@@ -133,32 +140,46 @@ public class UserController {
 
 		return "user/jsp/UserUpdate.jsp";
 	}
+	
+	@GetMapping("/userResponseBody/{userno}")
+	@ResponseBody
+	public UserBean processResponseBodyFindUserForUpdateAction(@PathVariable("userno") int userNo) {
+		UserBean resultBean = uService.getUserData(userNo);
+
+		return resultBean;
+	}
 
 	@PutMapping("/userUpdate")
 	public String processUpdateUserAction(@RequestParam("userNo") Integer userNo,
 			@RequestParam("account") String account, @RequestParam("password") String password,
 			@RequestParam("UCName") String UCName, @RequestParam("UEName") String UEName,
-			@RequestParam("nickName") String nickName, @RequestParam("avatar") String avatar,
+			@RequestParam("avatar") MultipartFile avatar,
 			@RequestParam("email") String email, @RequestParam("birthday") String birthday,
 			@RequestParam("phone") String phone, @RequestParam("address") String address,
 			@RequestParam("creationDateTime") String creationDateTime,
 			@RequestParam("lastLoginDatetime") String lastLoginDatetime, @RequestParam("gender") Integer gender,
-			@RequestParam("goalNo") Integer goalNo, @RequestParam("bloodType") String bloodType,
-			@RequestParam("MBTI") String MBTI, @RequestParam("suspension") Integer suspension,
+			@RequestParam("suspension") Integer suspension,
 			@RequestParam("verify") Integer verify, @RequestParam("isDelete") Integer isDelete,
 			@RequestParam("isManager") Integer isManager, Model m) {
 
 		DateTimeFormatter birthdayDF = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm");
 
-		UserBean userBean = new UserBean();
-		userBean.setUserNo(userNo);
+//		UserBean userBean = new UserBean();
+		UserBean userBean = uService.getUserData(userNo);
+		
 		userBean.setUserAccount(account);
 		userBean.setUserPassword(password);
 		userBean.setUserChineseName(UCName);
 		userBean.setUserEnglishName(UEName);
-		userBean.setNickName(nickName);
-		userBean.setAvatar(avatar);
+//		userBean.setNickName(nickName);
+		
+		if(!avatar.isEmpty() || avatar.getSize() > 0)
+		{
+			String uploadImgPath = UserUtil.uploadImg(avatar);
+			userBean.setAvatar(uploadImgPath);
+		}
+//		userBean.setAvatar(avatar);
 		userBean.setEmail(email);
 
 		birthday += " 00-00-00";
@@ -173,9 +194,9 @@ public class UserController {
 		userBean.setLastLoginDatetime(LocalDateTime.parse(lastLoginDatetime));
 
 		userBean.setGender(gender);
-		userBean.setGoalNo(goalNo);
-		userBean.setBloodType(bloodType);
-		userBean.setMBTI(MBTI);
+//		userBean.setGoalNo(goalNo);
+//		userBean.setBloodType(bloodType);
+//		userBean.setMBTI(MBTI);
 		userBean.setSuspension(suspension);
 		userBean.setIsDelete(verify);
 		userBean.setVerify(isDelete);
@@ -198,18 +219,97 @@ public class UserController {
 		return "redirect:/users";
 	}
 
-	@GetMapping("user.uploadAvatar")
-	public String userUploadAvatar() {
-		return "";
-	}
 
 	@GetMapping("getTopBarData")
 	@ResponseBody
-	public UserBean getTopBarData() {
-		Optional<UserBean> dataById = uService.getDataById(1);
+	public UserBean getTopBarData(HttpSession session) {
+		UserBean uBean = (UserBean)session.getAttribute("userData");
+		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
 		UserBean userBean = dataById.get();
 		return userBean;
 	}
+	
+	@GetMapping("aboutMe")
+	public String abountAction(HttpSession session, Model m) {
+		UserBean uBean = (UserBean)session.getAttribute("userData");
+		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
+		UserBean userBean = dataById.get();
+		m.addAttribute("userBean", userBean);
+		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		return "user/jsp/aboutMe_FontSatge.jsp";
+	}
+	
+	@GetMapping("aboutMeForUpdate")
+	public String aboutMeForUpdateAction(HttpSession session, Model m) {
+		UserBean uBean = (UserBean)session.getAttribute("userData");
+		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
+		UserBean userBean = dataById.get();
+		
+		m.addAttribute("userBean", userBean);
+		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		return "user/jsp/updateAboutMe_FontSatge.jsp";
+	}
+	
+	@PutMapping("/aboutMeUserUpdate")
+	public String processaboutMeUserUpdateAction(@RequestParam("userNo") Integer userNo,
+			@RequestParam("UCName") String UCName, @RequestParam("UEName") String UEName,
+			@RequestParam("avatar") MultipartFile avatar,
+			@RequestParam("email") String email, @RequestParam("birthday") String birthday,
+			@RequestParam("phone") String phone, @RequestParam("address") String address,
+			@RequestParam("gender") Integer gender,
+			 Model m) {
+
+		DateTimeFormatter birthdayDF = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm");
+
+//		UserBean userBean = new UserBean();
+		UserBean userBean = uService.getUserData(userNo);
+		
+		if(!avatar.isEmpty() || avatar.getSize() > 0)
+		{
+			String uploadImgPath = UserUtil.uploadImg(avatar);
+			userBean.setAvatar(uploadImgPath);
+		}
+		
+		userBean.setUserChineseName(UCName);
+		userBean.setUserEnglishName(UEName);
+//		userBean.setNickName(nickName);
+		
+		userBean.setEmail(email);
+
+		birthday += " 00-00-00";
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss");
+		LocalDateTime birthdayDateTime = LocalDateTime.parse(birthday, dateTimeFormatter);
+		userBean.setBirthday(birthdayDateTime);
+
+		userBean.setPhone(phone);
+		userBean.setUserAddress(address);
+
+//		userBean.setCreationDatetime(LocalDateTime.parse(creationDateTime));
+//		userBean.setLastLoginDatetime(LocalDateTime.parse(lastLoginDatetime));
+
+		userBean.setGender(gender);
+//		userBean.setGoalNo(goalNo);
+//		userBean.setBloodType(bloodType);
+//		userBean.setMBTI(MBTI);
+//		userBean.setSuspension(suspension);
+//		userBean.setIsDelete(verify);
+//		userBean.setVerify(isDelete);
+//		userBean.setIsManager(isManager);
+
+		UserBean updateUserBean = uService.updateUser(userBean);
+		int updateRow = 1;
+
+		m.addAttribute("changeState", "更新");
+		m.addAttribute("changeRow", updateRow + "");
+		m.addAttribute("changeNo", userBean.getUserNo() + "");
+
+		return "redirect:/aboutMe";
+	}
+	
+	
 
 	// ---Tags : ManyToMany
 
