@@ -3,12 +3,14 @@ package com.activity.controller;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.activity.bean.EventBean;
 import com.activity.bean.EventRegistrationsBean;
 import com.activity.service.EventRegistrationsService;
 import com.activity.service.EventService;
@@ -27,9 +29,13 @@ public class EventRegistrationsController {
     public ModelAndView findByRegistrationID(@RequestParam("registrationID") int registrationID) {
         ModelAndView mav = new ModelAndView("activity/EventDetail.jsp");
         try {
-            EventRegistrationsBean registration = eventRegistrationsService.findByRegistration(registrationID);
-            if (registration != null) {
-                mav.addObject("event", registration.getEvent()); // 確保這裡添加的是對應的 EventBean 物件
+            Optional<EventRegistrationsBean> registrationOptional = eventRegistrationsService.findByRegistration(registrationID);
+            if (registrationOptional.isPresent()) {
+                EventRegistrationsBean registration = registrationOptional.get();
+                List<EventRegistrationsBean> registrations = new ArrayList<>();
+                registrations.add(registration);
+                mav.addObject("registrations", registrations);
+                mav.addObject("event", registration.getEvent());
             } else {
                 mav.addObject("errorMessage", "No registration found with ID " + registrationID);
             }
@@ -108,8 +114,12 @@ public class EventRegistrationsController {
     public ModelAndView getRegistrationDataForUpdate(@RequestParam("registrationID") int registrationID) {
         ModelAndView mav = new ModelAndView("activity/UpdateRegistration.jsp");
         try {
-            EventRegistrationsBean registration = eventRegistrationsService.findByRegistration(registrationID);
-            mav.addObject("registration", registration);
+            Optional<EventRegistrationsBean> registrationOptional = eventRegistrationsService.findByRegistration(registrationID);
+            if (registrationOptional.isPresent()) {
+                mav.addObject("registration", registrationOptional.get());
+            } else {
+                mav.addObject("errorMessage", "No registration found with ID " + registrationID);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             mav.addObject("errorMessage", "An error occurred: " + e.getMessage());
@@ -127,11 +137,16 @@ public class EventRegistrationsController {
 
         ModelAndView mav = new ModelAndView("redirect:/AllRegistrations");
         try {
-            EventRegistrationsBean registrations = eventRegistrationsService.findByRegistration(registrationID);
-            registrations.setParticipantName(participantName);
-            registrations.setContactInfo(contactInfo);
-            registrations.setRegistrationTime(registrationTime);
-            eventRegistrationsService.update(registrations);
+            Optional<EventRegistrationsBean> registrationOptional = eventRegistrationsService.findByRegistration(registrationID);
+            if (registrationOptional.isPresent()) {
+                EventRegistrationsBean registration = registrationOptional.get();
+                registration.setParticipantName(participantName);
+                registration.setContactInfo(contactInfo);
+                registration.setRegistrationTime(registrationTime);
+                eventRegistrationsService.update(registration);
+            } else {
+                mav.addObject("errorMessage", "No registration found with ID " + registrationID);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             mav.addObject("errorMessage", "An error occurred: " + e.getMessage());

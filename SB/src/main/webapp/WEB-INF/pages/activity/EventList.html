@@ -2,137 +2,137 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-	<style>
-	        body {
-	            background-color: #f4f7f6;
-	            margin-top: 20px;
-	            font-family: Arial, sans-serif;
-	            color: #333;
-	            display: flex;
-	            justify-content: center;
-	        }
-	        .card {
-	            background: #fff;
-	            transition: .5s;
-	            border: 0;
-	            margin-bottom: 30px;
-	            border-radius: .55rem;
-	            position: relative;
-	            width: 100%;
-	            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
-	        }
-	        a:hover {
-	            text-decoration: none;
-	        }
-	        ul {
-	            list-style: none;
-	            padding: 0;
-	            display: flex;
-	            flex-wrap: wrap;
-	            justify-content: center;
-	            gap: 20px;
-	        }
-	        li {
-	            margin: 10px;
-	            padding: 0;
-	            width: calc(25% - 20px);
-	            background-color: #fff;
-	            border-radius: .55rem;
-	            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
-	        }
-	        img {
-	            display: block;
-	            width: 100%;
-	            border-bottom: 1px solid #f7f7f7;
-	        }
-	        .file-name {
-	            padding: 10px;
-	        }
-	        .details-button {
-	            display: block;
-	            padding: 10px;
-	            margin: 10px auto;
-	            border: none;
-	            border-radius: 3px;
-	            background-color: #3b76e1;
-	            color: #fff;
-	            text-decoration: none;
-	            text-align: center;
-	            cursor: pointer;
-	            width: 80%;
-	        }
-	        .details-button:hover {
-	            background-color: #555;
-	        }
-	    </style>
-	    <script>
-	        window.onload = function() {
-	            fetchEvents();
-	        };
-	
-	        function fetchEvents() {
-	            fetch('/EventList')
-	                .then(response => response.json())
-	                .then(events => {
-	                    const eventsList = document.getElementById('eventsList');
-	                    events.forEach(event => {
-	                        const listItem = document.createElement('li');
-	                        listItem.className = "col-lg-3 col-md-4 col-sm-12";
-	
-	                        const card = document.createElement('div');
-	                        card.className = 'card';
-	
-	                        const file = document.createElement('div');
-	                        file.className = 'file';
-	
-	                        const image = document.createElement('img');
-	                        image.src = event.imageUrl ? event.imageUrl : 'https://via.placeholder.com/280x280?text=No+Image';
-	                        image.alt = 'Event Image';
-	                        image.className = 'img-fluid';
-	
-	                        const fileName = document.createElement('div');
-	                        fileName.className = 'file-name';
-	
-	                        const title = document.createElement('p');
-	                        title.className = 'm-b-5 text-muted';
-	                        title.textContent = event.title;
-	
-	                        const detailsButton = document.createElement('a');
-	                        detailsButton.textContent = '活動詳情';
-	                        // 假設 userNo 是 event.userNo
-	                        detailsButton.href = "/EventDetail.jsp?eventNo=" + event.eventNo + "&userNo=" + event.userNo;
-	                        detailsButton.className = 'details-button';
-	
-	                        fileName.appendChild(title);
-	                        file.appendChild(image);
-	                        file.appendChild(fileName);
-	                        file.appendChild(detailsButton);
-	                        card.appendChild(file);
-	                        listItem.appendChild(card);
-	                        eventsList.appendChild(listItem);
-	                    });
-	                })
-	                .catch(error => {
-	                    console.error('Error loading events:', error);
-	                    alert('Failed to load events. Please check the console for more details.');
-	                });
-	        }
-	    </script>
-	
+    <style>
+        body {
+            background-color: #f4f7f6;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        #content-wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 100%;
+            padding: 20px;
+        }
+        .card {
+            background: #fff;
+            transition: .5s;
+            border: 0;
+            margin-bottom: 30px;
+            border-radius: .55rem;
+            position: relative;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+        }
+        a:hover {
+            text-decoration: none;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        li {
+            margin: 10px;
+            padding: 0;
+            width: calc(25% - 20px);
+            background-color: #fff;
+            border-radius: .55rem;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+        }
+        img {
+            display: block;
+            width: 100%;
+            border-bottom: 1px solid #f7f7f7;
+        }
+        .file-name {
+            padding: 10px;
+        }
+        .details-button {
+            display: block;
+            padding: 10px;
+            margin: 10px auto;
+            border: none;
+            border-radius: 3px;
+            background-color: #3b76e1;
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            width: 80%;
+        }
+        .details-button:hover {
+            background-color: #555;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            fetchEvents();
+        };
+
+        function fetchEvents() {
+            fetch('/EventList')
+                .then(response => response.json())
+                .then(events => {
+                    const eventsList = document.getElementById('eventsList');
+                    events.forEach(event => {
+                        const listItem = document.createElement('li');
+                        listItem.className = "col-lg-3 col-md-4 col-sm-12";
+
+                        const card = document.createElement('div');
+                        card.className = 'card';
+
+                        const file = document.createElement('div');
+                        file.className = 'file';
+
+                        const image = document.createElement('img');
+                        image.src = event.imageUrl ? event.imageUrl : 'https://via.placeholder.com/280x280?text=No+Image';
+                        image.alt = 'Event Image';
+                        image.className = 'img-fluid';
+
+                        const fileName = document.createElement('div');
+                        fileName.className = 'file-name';
+
+                        const title = document.createElement('p');
+                        title.className = 'm-b-5 text-muted';
+                        title.textContent = event.title;
+
+                        const detailsButton = document.createElement('a');
+                        detailsButton.textContent = '活動詳情';
+                        detailsButton.href = "/EventDetail.jsp?eventNo=" + event.eventNo + "&userNo=" + event.userNo;
+                        detailsButton.className = 'details-button';
+
+                        fileName.appendChild(title);
+                        file.appendChild(image);
+                        file.appendChild(fileName);
+                        file.appendChild(detailsButton);
+                        card.appendChild(file);
+                        listItem.appendChild(card);
+                        eventsList.appendChild(listItem);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading events:', error);
+                    alert('Failed to load events. Please check the console for more details.');
+                });
+        }
+    </script>
+
     <title>SB Admin 2 - Dashboard</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -144,8 +144,6 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!--        <script src="js/test/Z_slider.js"></script>-->
-
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
@@ -156,12 +154,12 @@
                 <script src="js/layout/Z_TopBar.js"></script>
 
                 <!-- 主要內容 -->
-				<h1>活動列表</h1>
-				 <div id="main-content" class="file_manager">
-				     <div class="container">
-				         <ul id="eventsList" class="row clearfix"></ul>
-				     </div>
-				 </div>
+                <h1>活動列表</h1>
+                <div id="main-content" class="file_manager">
+                    <div class="container">
+                        <ul id="eventsList" class="row clearfix"></ul>
+                    </div>
+                </div>
                 <!-- 主要內容結尾 -->
 
             </div>
@@ -200,7 +198,6 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-
 
 </body>
 
