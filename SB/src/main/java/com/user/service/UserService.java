@@ -166,6 +166,72 @@ public class UserService {
     //----Test----	
 	
 	
+
+//所有的標籤用repository放到set裡面，再用set方法取出
+//先做新增
+//再做selectAll
+
+	
+	
+//// 更新與現有使用者關聯的標籤。
+//	public UserBean updateUserWithTags(UserBean updatedUser, List<Integer> tagNos) {
+//		Optional<UserBean> optionalUser = uRepository.findById(updatedUser.getUserNo());
+//		if (optionalUser.isPresent()) {
+//			UserBean user = optionalUser.get();
+//
+//			// 清空原有的標籤關聯
+//			user.getTags().clear();
+//
+//			// 添加新的標籤關聯
+//			Set<TagsBean> tags = new HashSet<>();
+//			for (Integer tagNo : tagNos) {
+//				Optional<TagsBean> optionalTag = tRepository.findById(tagNo);
+//				if (optionalTag.isPresent()) {
+//					tags.add(optionalTag.get());
+//				} else {
+//					throw new IllegalArgumentException("標籤不存在: " + tagNo);
+//				}
+//			}
+//			user.setTags(tags);
+//
+//			return uRepository.save(user);
+//		}
+//		return null;
+//	}
+//	
+//
+//	
+//	
+//	//關聯 UserBean 與 TagsBean
+//	public UserBean associateUserWithTags(Integer userNo, List<Integer> tagNos) {
+//	    // 獲取 UserBean
+//	    Optional<UserBean> optionalUser = uRepository.findById(userNo);
+//	    if (optionalUser.isPresent()) {
+//	        UserBean user = optionalUser.get();
+//	        Set<TagsBean> tags = new HashSet<>();
+//
+//	        // 獲取 TagsBean 列表
+//	        for (Integer tagNo : tagNos) {
+//	            Optional<TagsBean> optionalTag = tRepository.findById(tagNo);
+//	            if (optionalTag.isPresent()) {
+//	                TagsBean tag = optionalTag.get();
+//	                tags.add(tag);
+//	                tag.getUsers().add(user); // 將 UserBean 添加到 TagsBean 的 users 集合中
+//	                tRepository.save(tag); // 保存 TagsBean
+//	            }
+//	        }
+//
+//	        // 關聯 UserBean 與 TagsBean
+//	        user.setTags(tags);
+//
+//	        // 保存 UserBean
+//	        return uRepository.save(user);
+//	    }
+//	    return null;
+//	}
+	
+	
+	
 	// ---------- LINEPAY金流 ---------------
 	private static final String LinePayUrl = "https://sandbox-api-pay.line.me/v2/payments/request";
 	private static final String ChannelSecret = "64e9607268ad77d84190c95c76a58054";
@@ -238,62 +304,6 @@ public class UserService {
     }
     
 
-//// 更新與現有使用者關聯的標籤。
-//	public UserBean updateUserWithTags(UserBean updatedUser, List<Integer> tagNos) {
-//		Optional<UserBean> optionalUser = uRepository.findById(updatedUser.getUserNo());
-//		if (optionalUser.isPresent()) {
-//			UserBean user = optionalUser.get();
-//
-//			// 清空原有的標籤關聯
-//			user.getTags().clear();
-//
-//			// 添加新的標籤關聯
-//			Set<TagsBean> tags = new HashSet<>();
-//			for (Integer tagNo : tagNos) {
-//				Optional<TagsBean> optionalTag = tRepository.findById(tagNo);
-//				if (optionalTag.isPresent()) {
-//					tags.add(optionalTag.get());
-//				} else {
-//					throw new IllegalArgumentException("標籤不存在: " + tagNo);
-//				}
-//			}
-//			user.setTags(tags);
-//
-//			return uRepository.save(user);
-//		}
-//		return null;
-//	}
-//	
-//
-//	
-//	
-//	//關聯 UserBean 與 TagsBean
-//	public UserBean associateUserWithTags(Integer userNo, List<Integer> tagNos) {
-//	    // 獲取 UserBean
-//	    Optional<UserBean> optionalUser = uRepository.findById(userNo);
-//	    if (optionalUser.isPresent()) {
-//	        UserBean user = optionalUser.get();
-//	        Set<TagsBean> tags = new HashSet<>();
-//
-//	        // 獲取 TagsBean 列表
-//	        for (Integer tagNo : tagNos) {
-//	            Optional<TagsBean> optionalTag = tRepository.findById(tagNo);
-//	            if (optionalTag.isPresent()) {
-//	                TagsBean tag = optionalTag.get();
-//	                tags.add(tag);
-//	                tag.getUsers().add(user); // 將 UserBean 添加到 TagsBean 的 users 集合中
-//	                tRepository.save(tag); // 保存 TagsBean
-//	            }
-//	        }
-//
-//	        // 關聯 UserBean 與 TagsBean
-//	        user.setTags(tags);
-//
-//	        // 保存 UserBean
-//	        return uRepository.save(user);
-//	    }
-//	    return null;
-//	}
 
 	
 

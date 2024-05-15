@@ -1,16 +1,23 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.user.bean.UserBean"%>
+<%@ page import="java.util.List"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <title>Document</title>
+
 <style>
 /*custom font*/
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
-
 
 /*basic reset*/
 * {
@@ -214,24 +221,26 @@ fieldset:not(:first-of-type) {
 			<!-- 暱稱 -->
 			<div class="form-group">
 				<input type="text" class="form-control" name="nickname"
-					   placeholder="暱稱" style="font-size: inherit;">
+					placeholder="暱稱" style="font-size: inherit;">
 			</div>
 
 			<!-- 生日 : 動態傳入user設定好的資料 -->
-			<div class="form-group">
-    			<input type="date" class="form-control" name="birthday" 
-           		       value="<fmt:formatDate value='${userBean.birthday}' pattern='yyyy-MM-dd'/>"
-                       style="font-size: inherit;">
-			</div>
+		   	<div class="form-group">
+    		  	<input type="date" class="form-control" name="birthday" 
+           			 value="${localDateTimeDateFormat.format(userBean.birthday)}" pattern='yyyy-MM-dd'
+           			 style="font-size: inherit;"/>
+		   	</div>
 
-			<!-- 性別 -->
+			<!-- 性別 : 動態傳入user設定好的資料 -->
 			<div class="form-group">
 				<select class="form-control" name="gender" placeholder="性別">
-					<option value="" disabled selected>性別</option>
-					<option value="male">男</option>
-					<option value="female">女</option>
+					<!-- <option value="" disabled selected>性別</option> -->
+					<option value="1" ${userBean.gender == 1? "selected" : ""}>生理男</option>
+					<option value="0" ${userBean.gender == 0? "selected" : ""}>生理女</option>
 				</select>
 			</div>
+
+
 
 			<input type="button" name="next" class="next action-button"
 				value="Next" onclick="nextStep()" />
@@ -361,3 +370,4 @@ fieldset:not(:first-of-type) {
 	</script>
 </body>
 </html>
+    

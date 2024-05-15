@@ -1,15 +1,20 @@
+//新增、刪除跟修改應該由用戶來做，這裡的管理員操作按鈕先關掉
+
+
 package com.match.controller;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +34,27 @@ public class SocialPhotosController {
 
 	@Autowired
 	private SocialPhotosService spService;
+	
+	
+	
+	// 查詢編號+姓名 for GoalsHP.jsp
+	@GetMapping("/queryPhotoNo")
+	public String queryPhotos(@RequestParam(required = false, name = "photoNo") Integer photoNo,
+	                         @RequestParam(required = false, name = "photoTheme") String photoTheme,
+	                         Model model) {
+	    List<SocialPhotosBean> photos;
+	    if (photoNo != null) {
+	    	SocialPhotosBean bean = spService.getById(photoNo);
+	        photos = bean != null ? Collections.singletonList(bean) : Collections.emptyList();
+	    } else if (photoTheme != null && !photoTheme.isEmpty()) {
+	        photos = spService.findByPhotoTheme(photoTheme);
+	    } else {
+	        photos = spService.findAll();
+	    }
+	    model.addAttribute("photos", photos);
+	    return "match/jsp/SocialPhotosHP.jsp";
+	}
+
 
 	
 	// 查詢單張照片
@@ -42,11 +68,27 @@ public class SocialPhotosController {
 	}
 
 	
-	// 查詢所有照片
-	@GetMapping("/getAllSPhotos")
-	public ResponseEntity<List<SocialPhotosBean>> getAllPhotos() {
-		List<SocialPhotosBean> photos = spService.findAll();
-		return ResponseEntity.ok(photos);
+	// 查詢所有照片  -  從這裡傳全部資料到前端
+	@GetMapping("/socialPhotosHP")
+	public String getAllPhotos(Model model) {
+	    List<SocialPhotosBean> photos = spService.findAll();
+	    model.addAttribute("photos", photos);
+	    return "match/jsp/SocialPhotosHP.jsp";
+	}
+	
+	
+	// 查詢所有照片 (傳JSON)
+//	@GetMapping("/getAllSPhotos")
+//	public ResponseEntity<List<SocialPhotosBean>> getAllPhotos() {
+//		List<SocialPhotosBean> photos = spService.findAll();
+//		return ResponseEntity.ok(photos);
+//	}
+	
+	
+	// 刷新全部頁面
+	@GetMapping("/refreshPhotos")
+	public String refreshPhotosPage() {
+		return "redirect:socialPhotosHP";
 	}
 
 	
@@ -56,13 +98,33 @@ public class SocialPhotosController {
 //        List<SocialPhotosBean> photos = spService.findByPhotoTheme(photoTheme);
 //        return ResponseEntity.ok(photos);
 //    }
+	
+	
+    // 删除照片
+    @DeleteMapping("/deletePhoto/{photoNo}")
+    public String deletePhoto(@PathVariable Integer photoNo) {
+        spService.deleteById(photoNo);
+        return "redirect:/socialPhotosHP";
+    }
 
 	
-	// 删除照片
-	@DeleteMapping("/deleteSPhotos/{photoNo}")
-	public ResponseEntity<Void> deletePhoto(@PathVariable Integer photoNo) {
-		spService.deleteById(photoNo);
-		return ResponseEntity.noContent().build();
+	// 删除照片 (傳JSON)
+//	@DeleteMapping("/deleteSPhotos/{photoNo}")
+//	public ResponseEntity<Void> deletePhoto(@PathVariable Integer photoNo) {
+//		spService.deleteById(photoNo);
+//		return ResponseEntity.noContent().build();
+//	}
+    
+    
+	//批量刪除
+	@PostMapping("/deleteBatchPhotos")
+	public String deleteBatchPhotos(@RequestParam("photoNos") List<Integer> photoNos) {
+	    if (!photoNos.isEmpty()) {
+	        for (Integer photoNo : photoNos) {
+	        	spService.deleteById(photoNo);
+	        }
+	    }
+	    return "redirect:/socialPhotosHP";
 	}
 
 	

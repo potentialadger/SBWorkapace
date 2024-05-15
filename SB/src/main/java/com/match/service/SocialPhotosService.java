@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.match.bean.SocialPhotosBean;
 import com.match.repository.SocialPhotosRepository;
 import jakarta.transaction.Transactional;
@@ -35,10 +36,10 @@ public class SocialPhotosService {
 	}
 	
 	
-	// 根據主題查詢照片
-//    public List<SocialPhotosBean> findByPhotoTheme(String photoTheme) {
-//        return spRepos.findByPhotoTheme(photoTheme);
-//    }
+	//根據主題查詢照片
+    public List<SocialPhotosBean> findByPhotoTheme(String photoTheme) {
+        return spRepos.findByPhotoTheme(photoTheme);
+    }
     
     
     // 根據用戶ID和主題查詢照片
@@ -50,6 +51,8 @@ public class SocialPhotosService {
             return photos.get(0);                                                                //返回符合條件的第一張照片
         }
     }
+    
+
     
     
     // 新增或更新照片                                                                 //檔案上傳的

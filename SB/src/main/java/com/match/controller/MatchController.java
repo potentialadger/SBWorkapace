@@ -1,12 +1,16 @@
 package com.match.controller;
 
+import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.match.bean.MatchBean;
 import com.match.service.MatchService;
 
@@ -39,10 +43,48 @@ public class MatchController {
             return ResponseEntity.badRequest().body("Invalid user numbers.");
         }
     }
+    
 
     @GetMapping("/successful")
     public ResponseEntity<List<MatchBean>> getSuccessfulMatches() {
         List<MatchBean> successfulMatches = mService.getSuccessfulMatches();
         return ResponseEntity.ok(successfulMatches);
     }
+    
+    
+    
+	// 查詢編號+姓名 for GoalsHP.jsp
+    @GetMapping("/queryMatchNo")
+    public String queryMatches(@RequestParam(required = false, name = "matchNo") Integer matchNo,
+                               @RequestParam(required = false, name = "matchStatus") Integer matchStatus,
+                               Model model) {
+        List<MatchBean> matches;
+        if (matchNo != null) {
+            MatchBean bean = mService.getById(matchNo);
+            matches = bean != null ? Collections.singletonList(bean) : Collections.emptyList();
+        } else if (matchStatus != null) {
+            matches = mService.findByMatchStatus(matchStatus);
+        } else {
+            matches = mService.findAll();
+        }
+        model.addAttribute("matches", matches);
+        return "match/jsp/MatchHP.jsp";
+    }
+    
+    
+    
+    
+    //查詢全部
+	@GetMapping("/matchHP")
+	public String getAllMatches(Model model) {
+	    List<MatchBean> matches = mService.findAll();
+	    model.addAttribute("matches", matches);
+	    return "match/jsp/MatchHP.jsp";
+	}
+    
+	// 刷新全部頁面
+	@GetMapping("/refreshMatches")
+	public String refreshMatchesPage() {
+	    return "redirect:/matchHP";
+	}
 }
