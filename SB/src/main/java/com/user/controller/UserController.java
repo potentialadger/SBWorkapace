@@ -15,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -293,6 +295,76 @@ public class UserController {
 //		uService.updateUserWithTags(user, tagNos);
 //		return "redirect:/users/" + userNo;
 //	}
+	
+	
+	
+// -----------Test------------
+	
+
+//	// 關聯 UserBean 與 TagsBean
+//	@PostMapping("/users/{userNo}/tags")
+//	public String associateUserWithTags(@PathVariable Integer userNo, @RequestParam("tagNos") List<Integer> tagNos) {
+//	    uService.associateUserWithTags(userNo, tagNos);
+//	    return "redirect:/usertagsHP";
+//	}
+
+	
+	
+	
+	
+// -----------前端創建資料-------
+	
+	
+	
+	@GetMapping("createMatchProfile")           //創建交友資料的路徑
+    public String createMatchProfile(HttpSession session, Model m) {
+        UserBean uBean = (UserBean)session.getAttribute("userData");
+        Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
+        UserBean userBean = dataById.get();
+
+        m.addAttribute("userBean", userBean);
+        m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return "match/jsp/MatchProfileCreate.jsp";
+    }
+	
+	
+	
+	
+/*	@PostMapping("/createProfile")
+	public String createProfile(@ModelAttribute("user") UserBean user, 
+	                             @RequestParam("targetPage") String targetPage) {
+	    // 將生日字串轉換為 LocalDateTime 類型
+	    String birthdayStr = user.getBirthday();
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	    LocalDateTime birthday = LocalDateTime.parse(birthdayStr + "T00:00:00");
+	    user.setBirthday(birthday);
+
+	    // 將性別整數轉換為字串
+	    String genderStr = String.valueOf(user.getGender());
+	    Integer gender;
+	    if (genderStr.equals("1")) {
+	        gender = 1;
+	    } else if (genderStr.equals("0")) {
+	        gender = 0;
+	    } else {
+	        throw new IllegalArgumentException("Invalid gender value: " + genderStr);
+	    }
+	    user.setGender(gender);
+
+	    // 將表單資料儲存到資料庫
+	    uService.creatUser(user);
+	    
+	    // 根據目標頁面進行重定向
+	    return "redirect:" + targetPage;
+	}*/
+	
+	
+	
+	
+	
+	
+	
 
 //	-----------LinePay------------
 
@@ -324,14 +396,5 @@ public class UserController {
 
 	
 	
-    // -----------Test------------
-	
-
-//	// 關聯 UserBean 與 TagsBean
-//	@PostMapping("/users/{userNo}/tags")
-//	public String associateUserWithTags(@PathVariable Integer userNo, @RequestParam("tagNos") List<Integer> tagNos) {
-//	    uService.associateUserWithTags(userNo, tagNos);
-//	    return "redirect:/usertagsHP";
-//	}
 
 }
