@@ -1,4 +1,3 @@
-<%@ page import="com.forum.bean.PostsBean" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -8,7 +7,7 @@
     <title>文章資料</title>
 </head>
 <body>
-   <form method="post" action="/posts/InsertPosts" enctype="multipart/form-data">
+   <form method="post" action="/postsFrontDesk/InsertPosts" enctype="multipart/form-data" onsubmit="return confirmPublish()">
     <label for="title">新增文章標題 :</label><br>
     <input type="text" id="title" name="title" required /><br>
     
@@ -26,7 +25,16 @@
     <input type="file" id="image_url" name="image_url" /><br>
     
     <input type="submit" value="發佈" />
-    <input type="submit" value="返回" /><!--前台返回首頁 還沒做-->
+    
 </form>
+    <form method="get" action="/postsFrontDesk/AllPosts">
+		<button type="submit">返回</button>
+	</form>
+	
+	<script>
+    function confirmPublish() {
+        return confirm("確定要發佈這篇文章嗎？");
+    }
+	</script>
 </body>
 </html>

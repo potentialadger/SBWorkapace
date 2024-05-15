@@ -69,4 +69,26 @@ public class PostsService implements PostsServiceInterface {
 		// 然后刪除文章
 		postsDao.deleteById(postNo);
 	}
+	
+	// 更新瀏覽次數
+	@Override
+	public void updateViewCount(Integer postId, int viewCount) {
+	    
+		Optional<PostsBean> optionalPosts = postsDao.findById(postId);
+	    
+		if (optionalPosts.isPresent()) {
+	        
+			PostsBean posts = optionalPosts.get();
+	        
+			posts.setView_count(viewCount);
+	        
+			postsDao.save(posts);
+	    }
+	}
+	
+	// 依照瀏覽次數排序
+	 @Override
+	    public List<PostsBean> findAllByOrderByViewCountDesc() {
+	        return postsDao.findAllByOrderByViewCountDesc();
+	    }
 }

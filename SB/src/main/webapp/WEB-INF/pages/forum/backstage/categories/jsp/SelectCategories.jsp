@@ -66,12 +66,12 @@
                 <td><c:out value="${category.title_name}"/></td>
 
                 <td>
-                    <form method="post" action="/CategoriesController/DeleteCategories">
-                        <input type="hidden" name="categoryNo" value="${category.category_no}">
-                        <input type="hidden" name="_method" value="delete">
-                        <button type="submit">刪除</button>
-                    </form>
-                </td>
+    				<form method="post" action="/CategoriesController/DeleteCategories" onsubmit="return confirm('確定要刪除嗎？');">
+        				<input type="hidden" name="categoryNo" value="${category.category_no}">
+        				<input type="hidden" name="_method" value="delete">
+        			<button type="submit">刪除</button>
+    			</form>
+				</td>
 				<td>
 					<form method="get" action="/posts/CategoriesPosts">
 						<input type="hidden" name="categoryNo" value="${category.category_no}">

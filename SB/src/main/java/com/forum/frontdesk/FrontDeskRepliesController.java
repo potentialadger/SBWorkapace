@@ -39,7 +39,26 @@ public class FrontDeskRepliesController {
 
 		m.addAttribute("repliesM", RepliesList);
 
-		return "/forum/backstage/replies/jsp/SelectReplies.jsp";
+		return "/forum/frontdesk/replies/jsp/OnePosts.jsp";
+	}
+	
+	//前台 單筆查詢 查詢該篇文章的回覆用
+	@GetMapping("/PostsReplies")
+	public String getPostsReplies(@RequestParam("postsNo") int postsNo, Model m, HttpSession session) {
+	   
+		PostsBean post = postsService.getPostsNo(postsNo);
+		
+		UserBean userData = (UserBean) session.getAttribute("userData"); 
+	   
+		List<RepliesBean> replies = repliesService.findByPostNo(postsNo);
+		
+		m.addAttribute("userNo",userData.getUserNo());
+	   
+		m.addAttribute("post", post);
+	    
+	    m.addAttribute("repliesM", replies);
+	    
+	    return "/forum/frontdesk/posts/jsp/OnePosts.jsp";
 	}
 
 	// 前台 新增
@@ -58,7 +77,7 @@ public class FrontDeskRepliesController {
 
 		repliesService.insertReplies(replies);
 
-		return "redirect:/posts/AllPosts(要跳轉回該篇文章)";
+		return "redirect:/postsFrontDesk/SelectPosts?postsNo=" + post_no;
 	}
 
 	// 前台 刪除

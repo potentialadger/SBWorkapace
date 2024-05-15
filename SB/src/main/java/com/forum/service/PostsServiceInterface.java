@@ -29,4 +29,11 @@ public interface PostsServiceInterface {
 	
 	// 刪除文章的相關回覆
     void deletePostAndReplies(int postNo);
+    
+    // 更新瀏覽次數
+    void updateViewCount(Integer postId, int viewCount);
+    
+    // 依照瀏覽次數排序
+    List<PostsBean> findAllByOrderByViewCountDesc();
+    
 }

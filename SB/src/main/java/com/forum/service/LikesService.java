@@ -42,7 +42,7 @@ public class LikesService implements LikesServiceInterface {
 
 		// 如果已存在，則刪除該按讚記錄；否則，插入新的按讚記錄
 		if (existingLike != null) {
-			likesDao.delete(existingLike);
+			likesDao. delete(existingLike);
 			return null;
 		} else {
 			LikesBean newLike = new LikesBean();
