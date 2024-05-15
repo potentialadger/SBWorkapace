@@ -125,8 +125,8 @@
 							<div class="post-date">${post.categoriesBean.title_name}</div>
 							<div class="post-date">${post.update_date}</div>
 						</div>
-						<img  class="avatar" src="http://localhost:8080/localimages/${post.userBean.avatar} "alt="" style="width:300px">>
-						<a href="/postsFrontDesk/SelectPosts?postsNo=${post.post_no}" class="post-title">${post.title}</a>
+						<img  class="avatar" src="http://localhost:8080/localimages/${post.userBean.avatar} "alt="" style="width:300px">
+						<a href="/postsFrontDesk/SelectPosts?postsNo=${post.post_no}" class="post-title" >${post.title}</a>
 						<div class="post-content">${post.content}</div>
 						<div class="post-image">
 						<img src="http://localhost:8080/localimages/${post.image_url}">

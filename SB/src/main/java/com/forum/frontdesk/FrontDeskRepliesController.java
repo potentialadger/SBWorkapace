@@ -39,7 +39,7 @@ public class FrontDeskRepliesController {
 
 		m.addAttribute("repliesM", RepliesList);
 
-		return "/forum/backstage/replies/jsp/SelectReplies.jsp";
+		return "/forum/frontdesk/replies/jsp/OnePosts.jsp";
 	}
 	
 	//前台 單筆查詢 查詢該篇文章的回覆用
@@ -77,7 +77,7 @@ public class FrontDeskRepliesController {
 
 		repliesService.insertReplies(replies);
 
-		return "redirect:/posts/AllPosts(要跳轉回該篇文章)";
+		return "redirect:/postsFrontDesk/SelectPosts?postsNo=" + post_no;
 	}
 
 	// 前台 刪除

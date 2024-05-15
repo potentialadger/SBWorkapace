@@ -33,13 +33,16 @@ public class FrontDeskReportsController {
 		UserBean userData = (UserBean) session.getAttribute("userData");
 		model.addAttribute("reportsPosts", posts);
 		model.addAttribute("userData", userData);
-		return "/forum/backstage/reports/jsp/InsertReports.jsp";
+		return "/forum/frontdesk/reports/jsp/InsertReports.jsp";
 	}
 
 	// 前台 新增檢舉
 	@PostMapping("/InsertReports")
-	public String insertReports(@RequestParam("post_no") Integer post_no, @RequestParam("reason") String reason,
-			HttpSession session, Model m) {
+	public String insertReports(
+			@RequestParam("post_no") Integer post_no, 
+			@RequestParam("reason") String reason,
+			Model m,		
+			HttpSession session) {
 
 		// 從 session 中獲取當前用訊息
 		UserBean userData = (UserBean) session.getAttribute("userData");
@@ -51,11 +54,12 @@ public class FrontDeskReportsController {
 		ReportsBean existingReports = reportsService.findByUserAndPost(userData, posts);
 
 		if (existingReports != null) {
-			return "/forum/backstage/reports/jsp/RepeatedReports.jsp";
+			 m.addAttribute("postNo", posts);
+			return "/forum/frontdesk/reports/jsp/RepeatedReports.jsp";
 		} else {
 			// 未檢舉過 執行檢舉
 			reportsService.checkAndInsertReports(userData, posts, reason);
-			return "redirect:/posts/detail?post_no=(要跳回該篇文章)" + post_no;
+			return "redirect:/postsFrontDesk/SelectPosts?postsNo=" + post_no;
 		}
 	}
 }

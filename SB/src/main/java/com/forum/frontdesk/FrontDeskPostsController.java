@@ -21,8 +21,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.forum.bean.CategoriesBean;
 import com.forum.bean.PostsBean;
+import com.forum.bean.RepliesBean;
 import com.forum.service.CategoriesService;
 import com.forum.service.PostsServiceInterface;
+import com.forum.service.RepliesService;
 import com.user.bean.UserBean;
 
 import jakarta.servlet.http.HttpSession;
@@ -36,6 +38,9 @@ public class FrontDeskPostsController {
 
 	@Autowired
 	private CategoriesService categoriesService;
+	
+	@Autowired
+	private RepliesService repliesService;
 
 	// 前台 單筆關鍵字模糊查詢
 	@GetMapping("/OnePosts")
@@ -285,10 +290,16 @@ public class FrontDeskPostsController {
 	        session.setAttribute("visitedPost_" + postsNo, true);
 	    }
 	    
+	    List<RepliesBean> repliesList = repliesService.findByPostNo(postsNo);
+	    
 	    List<PostsBean> postsList = new ArrayList<>();
 	    postsList.add(posts);
+	    
 	    m.addAttribute("userNo",userData.getUserNo());
+	    
 	    m.addAttribute("updateSelect", postsList);
+	    
+	    m.addAttribute("repliesM", repliesList);
 	    
 	    return "/forum/frontdesk/posts/jsp/OnePosts.jsp";
 	}

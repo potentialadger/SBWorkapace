@@ -7,10 +7,12 @@
 <title>重複檢舉警告</title>
 </head>
 <body>
-<h1>以檢舉過該篇文</h1>
-<!--要有一個跳轉回該篇文章的方法 例如:
-form method="get" action="/CategoriesController/CategoriesAll">
-<button type="submit">返回</button>
-</form>-->
+<h1>重複檢舉</h1>
+
+<form method="get" action="/postsFrontDesk/SelectPosts">
+    <input type="hidden" name="postsNo" value="${postNo.post_no}">
+    <button type="submit">返回</button>
+</form>
+
 </body>
 </html>

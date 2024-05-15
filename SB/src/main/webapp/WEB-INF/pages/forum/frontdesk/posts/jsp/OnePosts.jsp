@@ -10,69 +10,113 @@
 </head>
 <body>
 
-  					<form method="get" action="/postsFrontDesk/AllPosts">
-						<button type="submit">返回</button>
-					</form>
-                
-                <c:forEach var="post" items="${updateSelect}">
-                    <tr>
-                        <td><c:out value="${post.categoriesBean.title_name}" /></td>
-                        <td><c:out value="${post.title}" /></td>
-                        <td><c:out value="${post.userBean.userChineseName}" /></td>
-                        <td><c:out value="${post.update_date}" /></td>
-                        <td><c:out value="${post.content}" /></td>
-                        <td><c:out value="${post.view_count}" /></td>
-                        <td><span id="likesCount${post.post_no}">${post.likesBean.size()}</span> 喜歡</td>
-                        <td><img  class="avatar" src="http://localhost:8080/localimages/${post.userBean.avatar} "alt="" style="width:300px">>
-                        <td><img src="http://localhost:8080/localimages/${post.image_url}"></td>
-                        
-                   <td>
-    					<button class="like-btn" onclick="likeOrUnlike(${post.post_no})">喜歡</button>
-				   </td>
-					
-				
+<div>
+    <form method="get" action="/postsFrontDesk/AllPosts">
+        <button type="submit">返回</button>
+    </form>
+</div>
 
-					<td>
-    					<form method="post" action="/postsFrontDesk/DeletePosts" onsubmit="return confirm('您確定要刪除這個帖子嗎？');">
-        					<input type="hidden" name="postsNo" value="${post.post_no}">
-        					<input type="hidden" name="_method" value="delete">
-        					<button type="submit" ${post.userBean.userNo==userNo?"":"hidden"}>刪除</button>
-    					</form>
-					</td>
+<c:forEach var="post" items="${updateSelect}">
+    <div>
+        <div><c:out value="${post.categoriesBean.title_name}" /></div>
+        <div><c:out value="${post.title}" /></div>
+        <div><c:out value="${post.userBean.userChineseName}" /></div>
+        <div><c:out value="${post.update_date}" /></div>
+        <div><c:out value="${post.content}" /></div>
+        <div><c:out value="${post.view_count}" /></div>
+        <div><span id="likesCount${post.post_no}">${post.likesBean.size()}</span></div>
+        <div><img class="avatar" src="http://localhost:8080/localimages/${post.userBean.avatar}" alt="" style="width:300px"></div>
+        <div><img src="http://localhost:8080/localimages/${post.image_url}"></div>
+        <div>
+            <button class="like-btn" onclick="likeOrUnlike(${post.post_no})">喜歡</button>
+        </div>
+        <div>
+            <form method="post" action="/postsFrontDesk/DeletePosts" onsubmit="return confirm('您確定要刪除這個帖子嗎？');">
+                <input type="hidden" name="postsNo" value="${post.post_no}">
+                <input type="hidden" name="_method" value="delete">
+                <button type="submit" ${post.userBean.userNo==userNo?"":"hidden"}>刪除</button>
+            </form>
+        </div>
+        <div>
+            <form method="get" action="/postsFrontDesk/UpdateSelectPosts">
+                <input type="hidden" name="postsNo" value="${post.post_no}">
+                <button type="submit" ${post.userBean.userNo==userNo?"":"hidden"}>編輯</button>
+            </form>
+        </div>
+        <div>
+            <form method="get" action="/reportsFrontDesk/SelectReportsPosts">
+                <input type="hidden" name="postsNo" value="${post.post_no}">
+                <button type="submit">檢舉</button>
+            </form>
+        </div>
+        <div>
+    		<form id="replyForm" method="post" action="/repliesFrontDesk/InsertReplies">
+        		<input type="hidden" name="user_no" value="${post.userBean.userNo}">
+        		<input type="hidden" name="post_no" value="${post.post_no}">
+        		<h2>回覆：</h2>
+        		<textarea id="replyContent" name="content" rows="4" cols="50" required></textarea>
+        		<br>
+        		<button type="button" onclick="submitReply()">提交回覆</button>
+    		</form>
+		</div>
+    </div>
+</c:forEach>
 
-					<td>
-						<form method="get" action="/postsFrontDesk/UpdateSelectPosts">
-							<input type="hidden" name="postsNo" value="${post.post_no}">
-								<button type="submit" ${post.userBean.userNo==userNo?"":"hidden"}>編輯</button>
-						</form>
-					</td>
+<div>
+    <c:if test="${not empty repliesM}">
+        <c:forEach var="replies" items="${repliesM}">
+            <div>
+                <div><c:out value="${replies.content}" /></div>
+                <div><c:out value="${replies.update_date}" /></div>
+                <div><c:out value="${replies.userBean.userChineseName}" /></div>
+                <div><img class="avatar" src="http://localhost:8080/localimages/${replies.userBean.avatar}" alt="" style="width:300px"></div>
+            </div>
+        </c:forEach>
+    </c:if>
+    <c:if test="${empty repliesM}">
+        <div>
+            <div colspan="5">尚無回覆</div>
+        </div>
+    </c:if>
+</div>
 
-					</tr>
-                </c:forEach>
-        
-        <script>
-        function likeOrUnlike(post_no) {
-            $.ajax({
-                url: "/likesFrontDesk/likeOrUnlike?post_no=" + post_no, // 修改 AJAX 请求路径
-                method: 'POST',
-                success: function (response) {
-                    var likesCountSpan = document.getElementById('likesCount' + post_no);
-                    var currentLikesCount = parseInt(likesCountSpan.innerText);
-                    
-                 	// 根據響應信息判斷是喜歡還是取消喜歡，並更新喜歡數量
-                    if (response === "Liked") {
-                    	// 喜歡帖子，喜歡數加1
-                        likesCountSpan.innerText = currentLikesCount + 1;
-                    } else if (response === "Unliked") {
-                    	 // 取消喜歡帖子，喜歡數減1
-                        likesCountSpan.innerText = currentLikesCount - 1;
-                    }
-                },
-                error: function (error) {
-                    console.log(error);
+<script>
+    function likeOrUnlike(post_no) {
+        $.ajax({
+            url: "/likesFrontDesk/likeOrUnlike?post_no=" + post_no,
+            method: 'POST',
+            success: function (response) {
+                var likesCountSpan = document.getElementById('likesCount' + post_no);
+                var currentLikesCount = parseInt(likesCountSpan.innerText);
+                if (response === "Liked") {
+                    likesCountSpan.innerText = currentLikesCount + 1;
+                } else if (response === "Unliked") {
+                    likesCountSpan.innerText = currentLikesCount - 1;
                 }
-            });
-        }
-        </script>
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+    
+    function submitReply() {
+        $.ajax({
+            url: "/repliesFrontDesk/InsertReplies",
+            method: 'POST',
+            data: {
+                user_no: $("#replyForm input[name='user_no']").val(),
+                post_no: $("#replyForm input[name='post_no']").val(),
+                content: $("#replyContent").val()
+            },
+            success: function (response) {
+                // 根據需要執行的操作，例如更新回覆列表或重整頁面
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
 </body>
 </html>

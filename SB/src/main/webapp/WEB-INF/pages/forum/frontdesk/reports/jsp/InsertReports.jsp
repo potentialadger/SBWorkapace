@@ -8,7 +8,7 @@
     <title>檢舉資料</title>
 </head>
 <body>
-   <form method="post" action="/reports/InsertReports">
+   <form method="post" action="/reportsFrontDesk/InsertReports" onsubmit="return confirmSubmission()">
 	<input type="hidden" name="post_no" value="${reportsPosts.post_no}"> 
     <!--<input type="hidden" name="user_no" value="${userData.userNo}">-->
     <label for="reason">檢舉原因 :</label><br>
@@ -17,5 +17,12 @@
     <input type="submit" value="提交" />
        
 </form>
+
+   <script>
+        function confirmSubmission() {
+            return confirm("您確定要檢舉嗎？");
+        }
+    </script>
+    
 </body>
 </html>
