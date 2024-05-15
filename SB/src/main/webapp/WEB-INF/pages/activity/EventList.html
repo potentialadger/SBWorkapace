@@ -118,7 +118,8 @@
 	
 	                    // 隱藏欄位
 	                    const registrationIDInput = document.createElement('input');
-	                    registrationIDInput.type = 'hidden';
+	                    //registrationIDInput.type = 'hidden';						
+						registrationIDInput.style.display = 'none';
 	                    registrationIDInput.name = 'registrationID';
 	                    registrationIDInput.value = event.registrationID; // 假設每個活動都有唯一的registrationID
 	
