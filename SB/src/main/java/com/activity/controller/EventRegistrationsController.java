@@ -2,7 +2,9 @@ package com.activity.controller;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.activity.bean.EventBean;
 import com.activity.bean.EventRegistrationsBean;
 import com.activity.service.EventRegistrationsService;
 import com.activity.service.EventService;
@@ -25,26 +26,26 @@ public class EventRegistrationsController {
     private EventService eventService;
 
     // 查詢單筆註冊
-//    @GetMapping("/OneRegistration")
-//    public ModelAndView findByRegistrationID(@RequestParam("registrationID") int registrationID) {
-//        ModelAndView mav = new ModelAndView("activity/EventDetail.jsp");
-//        try {
-//            Optional<EventRegistrationsBean> registrationOptional = eventRegistrationsService.findByRegistration(registrationID);
-//            if (registrationOptional.isPresent()) {
-//                EventRegistrationsBean registration = registrationOptional.get();
-//                List<EventRegistrationsBean> registrations = new ArrayList<>();
-//                registrations.add(registration);
-//                mav.addObject("registrations", registrations);
-//                mav.addObject("event", registration.getEvent());
-//            } else {
-//                mav.addObject("errorMessage", "No registration found with ID " + registrationID);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            mav.addObject("errorMessage", "An error occurred: " + e.getMessage());
-//        }
-//        return mav;
-//    }
+    @GetMapping("/OneRegistration")
+    public ModelAndView findByRegistrationID(@RequestParam("registrationID") int registrationID) {
+        ModelAndView mav = new ModelAndView("activity/EventDetail.jsp");
+        try {
+            Optional<EventRegistrationsBean> registrationOptional = eventRegistrationsService.findByRegistration(registrationID);
+            if (registrationOptional.isPresent()) {
+                EventRegistrationsBean registration = registrationOptional.get();
+                List<EventRegistrationsBean> registrations = new ArrayList<>();
+                registrations.add(registration);
+                mav.addObject("registrations", registrations);
+                mav.addObject("event", registration.getEvent());
+            } else {
+                mav.addObject("errorMessage", "No registration found with ID " + registrationID);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            mav.addObject("errorMessage", "An error occurred: " + e.getMessage());
+        }
+        return mav;
+    }
 
     // 查詢所有註冊
     @GetMapping("/AllRegistrations")
@@ -110,47 +111,70 @@ public class EventRegistrationsController {
     }
 
     // 查詢欲更新的資料
-//    @GetMapping("/getRegistrationsDataForUpdate")
-//    public ModelAndView getRegistrationDataForUpdate(@RequestParam("registrationID") int registrationID) {
-//        ModelAndView mav = new ModelAndView("activity/UpdateRegistration.jsp");
-//        try {
-//            Optional<EventRegistrationsBean> registrationOptional = eventRegistrationsService.findByRegistration(registrationID);
-//            if (registrationOptional.isPresent()) {
-//                mav.addObject("registration", registrationOptional.get());
-//            } else {
-//                mav.addObject("errorMessage", "No registration found with ID " + registrationID);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            mav.addObject("errorMessage", "An error occurred: " + e.getMessage());
-//        }
-//        return mav;
-//    }
+    @GetMapping("/getRegistrationsDataForUpdate")
+    public ModelAndView getRegistrationDataForUpdate(@RequestParam("registrationID") int registrationID) {
+        ModelAndView mav = new ModelAndView("activity/UpdateRegistration.jsp");
+        try {
+            Optional<EventRegistrationsBean> registrationOptional = eventRegistrationsService.findByRegistration(registrationID);
+            if (registrationOptional.isPresent()) {
+                mav.addObject("registration", registrationOptional.get());
+            } else {
+                mav.addObject("errorMessage", "No registration found with ID " + registrationID);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            mav.addObject("errorMessage", "An error occurred: " + e.getMessage());
+        }
+        return mav;
+    }
 
     // 更新註冊
-//    @PutMapping("/UpdateRegistrations")
-//    public ModelAndView updateRegistrations(
-//            @RequestParam("registrationID") int registrationID,
-//            @RequestParam("participantName") String participantName,
-//            @RequestParam("contactInfo") String contactInfo,
-//            @RequestParam("registrationTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime registrationTime) {
-//
-//        ModelAndView mav = new ModelAndView("redirect:/AllRegistrations");
-//        try {
-//            Optional<EventRegistrationsBean> registrationOptional = eventRegistrationsService.findByRegistration(registrationID);
-//            if (registrationOptional.isPresent()) {
-//                EventRegistrationsBean registration = registrationOptional.get();
-//                registration.setParticipantName(participantName);
-//                registration.setContactInfo(contactInfo);
-//                registration.setRegistrationTime(registrationTime);
-//                eventRegistrationsService.update(registration);
-//            } else {
-//                mav.addObject("errorMessage", "No registration found with ID " + registrationID);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            mav.addObject("errorMessage", "An error occurred: " + e.getMessage());
-//        }
-//        return mav;
-//    }
+    @PutMapping("/UpdateRegistrations")
+    public ModelAndView updateRegistrations(
+            @RequestParam("registrationID") int registrationID,
+            @RequestParam("participantName") String participantName,
+            @RequestParam("contactInfo") String contactInfo,
+            @RequestParam("registrationTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime registrationTime) {
+
+        ModelAndView mav = new ModelAndView("redirect:/AllRegistrations");
+        try {
+            Optional<EventRegistrationsBean> registrationOptional = eventRegistrationsService.findByRegistration(registrationID);
+            if (registrationOptional.isPresent()) {
+                EventRegistrationsBean registration = registrationOptional.get();
+                registration.setParticipantName(participantName);
+                registration.setContactInfo(contactInfo);
+                registration.setRegistrationTime(registrationTime);
+                eventRegistrationsService.update(registration);
+            } else {
+                mav.addObject("errorMessage", "No registration found with ID " + registrationID);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            mav.addObject("errorMessage", "An error occurred: " + e.getMessage());
+        }
+        return mav;
+    }
+
+    // 返回所有活動和註冊資料的API，避免和EventController衝突
+    @GetMapping("/EventRegistrationsList")
+    public List<Map<String, Object>> getAllEventsWithRegistrations() {
+        List<EventRegistrationsBean> registrations = eventRegistrationsService.findAllRegistrations();
+        List<Map<String, Object>> response = new ArrayList<>();
+
+        for (EventRegistrationsBean registration : registrations) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("registrationID", registration.getRegistrationID());
+            map.put("eventNo", registration.getEventNo());
+            map.put("title", registration.getEvent().getTitle());
+            map.put("description", registration.getEvent().getDescription());
+            map.put("location", registration.getEvent().getLocation());
+            map.put("imagePath", registration.getEvent().getImagePath());
+            map.put("activityTime", registration.getEvent().getActivityTime());
+            map.put("signupStartTime", registration.getEvent().getSignupStartTime());
+            map.put("signupEndTime", registration.getEvent().getSignupEndTime());
+            map.put("status", registration.getEvent().getStatus());
+            response.add(map);
+        }
+        return response;
+    }
 }
