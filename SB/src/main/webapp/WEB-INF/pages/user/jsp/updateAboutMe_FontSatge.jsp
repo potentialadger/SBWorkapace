@@ -502,10 +502,11 @@
                                                                                 <div class="profile-header-info">
                                                                                     <h4 class="m-t-10 m-b-5">
                                                                                         ${userBean.userChineseName}</h4>
-                                                                                    <p class="m-b-10">
+                                                                                    <p class="mb-5">
                                                                                         ${userBean.userEnglishName}</p>
-                                                                                    <a href="/aboutMeForUpdate"
-                                                                                        class="btn btn-xs btn-success">編輯</a>
+                                                                                    <!-- <a href="#"
+                                                                                        class="btn btn-xs btn-success disabled">編輯</a> -->
+
                                                                                 </div>
                                                                                 <!-- END profile-header-info -->
                                                                             </div>
@@ -547,64 +548,146 @@
                                                                                 <!-- begin table -->
                                                                                 <div class="table-responsive">
                                                                                     <table class="table table-profile">
-                                                                                        <thead>
-                                                                                            <tr>
-                                                                                                <th></th>
-                                                                                                <th>
-                                                                                                    <h3>關於我</h3>
-                                                                                                </th>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
+                                                                                        <form method="post"
+                                                                                            action="aboutMeUserUpdate"
+                                                                                            enctype="multipart/form-data">
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                    <th></th>
+                                                                                                    <th>
+                                                                                                        <h3>關於我</h3>
+                                                                                                    </th>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                                <tr class="highlight">
+                                                                                                    <td></td>
+                                                                                                    <td></td>
+                                                                                                </tr>
+                                                                                                <tr class="divider">
+                                                                                                    <td colspan="2">
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        <figure
+                                                                                                            class="figure col-md-4 col-sm-5 col-xs-12">
+                                                                                                            <img class="rounded"
+                                                                                                                style="width: 100px;"
+                                                                                                                id="avatarImg"
+                                                                                                                src="/localimages/${userBean.avatar}"
+                                                                                                                alt="">
+                                                                                                        </figure>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <div
+                                                                                                            class="form-inline col-md-8 col-sm-7 col-xs-12 row d-flex align-items-end">
+                                                                                                            <input
+                                                                                                                type="file"
+                                                                                                                name="avatar"
+                                                                                                                class="file-uploader pull-left col-9"
+                                                                                                                onchange="selectImgFile(this.files)">
+                                                                                                        </div>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr class="divider">
+                                                                                                    <td colspan="2">
+                                                                                                    </td>
+                                                                                                </tr>
 
-                                                                                            <tr class="highlight">
-                                                                                                <td></td>
-                                                                                                <td></td>
-                                                                                            </tr>
-                                                                                            <tr class="divider">
-                                                                                                <td colspan="2"></td>
-                                                                                            </tr>
-                                                                                            <tr>
-                                                                                                <td class="field">中文姓名
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    <!-- <i class="fa fa-mobile fa-lg m-r-5"></i> -->
-                                                                                                    ${userBean.userChineseName}
-                                                                                                    <!-- <a href="javascript:;" class="m-l-5">Edit</a> -->
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <tr>
-                                                                                                <td class="field">英文姓名
-                                                                                                </td>
-                                                                                                <td>${userBean.userEnglishName}
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <tr>
-                                                                                                <td class="field">暱稱
-                                                                                                </td>
-                                                                                                <td>${userBean.nickName
-                                                                                                    == null ? "尚未設定" :
-                                                                                                    userBean.nickName}
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <tr>
-                                                                                                <td class="field">性別
-                                                                                                </td>
-                                                                                                <td>${userBean.gender ==
-                                                                                                    1 ? "生理男" : "生理女"}
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <tr class="divider">
-                                                                                                <td colspan="2"></td>
-                                                                                            </tr>
-                                                                                            <tr class="highlight">
-                                                                                                <td></td>
-                                                                                                <td></td>
-                                                                                            </tr>
-                                                                                            <tr class="divider">
-                                                                                                <td colspan="2"></td>
-                                                                                            </tr>
-                                                                                            <!-- 一個下拉式選單
+                                                                                                <tr class="highlight">
+                                                                                                    <td></td>
+                                                                                                    <td></td>
+                                                                                                </tr>
+                                                                                                <tr class="divider">
+                                                                                                    <td colspan="2">
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td class="field">
+                                                                                                        中文姓名
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <input
+                                                                                                            type="text"
+                                                                                                            id="updateUCName"
+                                                                                                            name="UCName"
+                                                                                                            class="form-control"
+                                                                                                            value="${userBean.userChineseName}">
+
+                                                                                                        <!-- <i class="fa fa-mobile fa-lg m-r-5"></i> -->
+
+                                                                                                        <!-- <a href="javascript:;" class="m-l-5">Edit</a> -->
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td class="field">
+                                                                                                        英文姓名
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <input
+                                                                                                            type="text"
+                                                                                                            id="updateUEName"
+                                                                                                            name="UEName"
+                                                                                                            class="form-control"
+                                                                                                            value="${userBean.userEnglishName}">
+
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td class="field">暱稱
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <input
+                                                                                                            type="text"
+                                                                                                            id="updateNickName"
+                                                                                                            name="nickName"
+                                                                                                            class="form-control"
+                                                                                                            disabled
+                                                                                                            value="請前往交友頁面設定">
+
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td class="field">性別
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <select
+                                                                                                            name="gender"
+                                                                                                            id="updateGender"
+                                                                                                            class="form-control"
+                                                                                                            value="${userBean.gender}">
+                                                                                                            <option
+                                                                                                                ${userBean.gender==1
+                                                                                                                ? "selected"
+                                                                                                                :""}
+                                                                                                                value="1">
+                                                                                                                生理男
+                                                                                                            </option>
+                                                                                                            <option
+                                                                                                                ${userBean.gender==0
+                                                                                                                ? "selected"
+                                                                                                                :""}
+                                                                                                                value="0">
+                                                                                                                生理女
+                                                                                                            </option>
+                                                                                                        </select>
+
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr class="divider">
+                                                                                                    <td colspan="2">
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr class="highlight">
+                                                                                                    <td></td>
+                                                                                                    <td></td>
+                                                                                                </tr>
+                                                                                                <tr class="divider">
+                                                                                                    <td colspan="2">
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <!-- 一個下拉式選單
                                                                                                  <tr>
                                                                                                 <td class="field">Country/Region</td>
                                                                                                 <td>
@@ -628,98 +711,161 @@
                                                                                                 </td>
                                                                                             </tr> -->
 
-                                                                                            <tr>
-                                                                                                <td class="field">電話
-                                                                                                </td>
-                                                                                                <td>${userBean.phone}
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <tr>
-                                                                                                <td class="field">住址
-                                                                                                </td>
-                                                                                                <td>${userBean.userAddress}
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <tr>
-                                                                                                <td class="field">電子郵件
-                                                                                                </td>
-                                                                                                <td>${userBean.email}
-                                                                                                </td>
-                                                                                            </tr>
+                                                                                                <tr>
+                                                                                                    <td class="field">電話
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <input
+                                                                                                            type="text"
+                                                                                                            id="updatePhone"
+                                                                                                            name="phone"
+                                                                                                            class="form-control"
+                                                                                                            value="${userBean.phone}">
 
-                                                                                            <tr class="divider">
-                                                                                                <td colspan="2"></td>
-                                                                                            </tr>
-                                                                                            <tr class="highlight">
-                                                                                                <td></td>
-                                                                                                <td></td>
-                                                                                            </tr>
-                                                                                            <tr class="divider">
-                                                                                                <td colspan="2"></td>
-                                                                                            </tr>
-                                                                                            <tr>
-                                                                                                <td class="field">生日
-                                                                                                </td>
-                                                                                                <td>${localDateTimeDateFormat.format(userBean.birthday)}
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <tr>
-                                                                                                <td class="field">MBTI
-                                                                                                </td>
-                                                                                                <td>${userBean.MBTI ==
-                                                                                                    null ? "尚未設定" :
-                                                                                                    userBean.MBTI}</td>
-                                                                                            </tr>
-                                                                                            <tr>
-                                                                                                <td class="field">血型
-                                                                                                </td>
-                                                                                                <td>${userBean.bloodType
-                                                                                                    == null ? "尚未設定" :
-                                                                                                    userBean.bloodType}
-                                                                                                </td>
-                                                                                            </tr>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td class="field">住址
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <input
+                                                                                                            type="text"
+                                                                                                            id="updateAddress"
+                                                                                                            name="address"
+                                                                                                            class="form-control"
+                                                                                                            value="${userBean.userAddress}">
 
-                                                                                            <tr class="divider">
-                                                                                                <td colspan="2"></td>
-                                                                                            </tr>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td class="field">
+                                                                                                        電子郵件
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <input
+                                                                                                            type="text"
+                                                                                                            id="updateEmail"
+                                                                                                            name="email"
+                                                                                                            class="form-control"
+                                                                                                            value="${userBean.email}">
 
-                                                                                            <tr class="highlight">
-                                                                                                <td></td>
-                                                                                                <td></td>
-                                                                                            </tr>
-                                                                                            <tr class="divider">
-                                                                                                <td colspan="2"></td>
-                                                                                            </tr>
-                                                                                            <tr>
-                                                                                                <td class="field">創建時間
-                                                                                                </td>
-                                                                                                <td>${localDateTimeFormat.format(userBean.creationDatetime)}
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <tr>
-                                                                                                <td class="field">登入時間
-                                                                                                </td>
-                                                                                                <td>${localDateTimeFormat.format(userBean.lastLoginDatetime)}
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <tr class="divider">
-                                                                                                <td colspan="2"></td>
-                                                                                            </tr>
+                                                                                                    </td>
+                                                                                                </tr>
 
-                                                                                            <tr class="highlight">
-                                                                                                <td></td>
-                                                                                                <td></td>
-                                                                                            </tr>
-                                                                                            <!-- <tr class="highlight">
-                                                                                                <td class="field">&nbsp;</td>
-                                                                                                <td class="p-t-10 p-b-10">
-                                                                                                    <button type="submit"
-                                                                                                        class="btn btn-primary width-150">Update</button>
-                                                                                                    <button type="submit"
-                                                                                                        class="btn btn-white btn-white-without-border width-150 m-l-5">Cancel</button>
-                                                                                                </td>
-                                                                                            </tr> -->
-                                                                                        </tbody>
+                                                                                                <tr class="divider">
+                                                                                                    <td colspan="2">
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr class="highlight">
+                                                                                                    <td></td>
+                                                                                                    <td></td>
+                                                                                                </tr>
+                                                                                                <tr class="divider">
+                                                                                                    <td colspan="2">
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td class="field">生日
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <input
+                                                                                                            type="date"
+                                                                                                            id="updateBirthday"
+                                                                                                            name="birthday"
+                                                                                                            class="form-control"
+                                                                                                            value="${localDateTimeDateFormat.format(userBean.birthday)}">
+
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td class="field">
+                                                                                                        MBTI
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <input
+                                                                                                            type="text"
+                                                                                                            id="updateMBTI"
+                                                                                                            name="MBTI"
+                                                                                                            class="form-control"
+                                                                                                            disabled
+                                                                                                            value="請前往交友頁面設定">
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td class="field">血型
+                                                                                                    </td>
+                                                                                                    <td><input
+                                                                                                            type="text"
+                                                                                                            id="updateBloodType"
+                                                                                                            name="bloodType"
+                                                                                                            class="form-control"
+                                                                                                            disabled
+                                                                                                            value="請前往交友頁面設定">
+                                                                                                    </td>
+                                                                                                </tr>
+
+                                                                                                <tr class="divider">
+                                                                                                    <td colspan="2">
+                                                                                                    </td>
+                                                                                                </tr>
+
+                                                                                                <tr class="highlight">
+                                                                                                    <td></td>
+                                                                                                    <td></td>
+                                                                                                </tr>
+                                                                                                <tr class="divider">
+                                                                                                    <td colspan="2">
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td class="field">
+                                                                                                        創建時間
+                                                                                                    </td>
+                                                                                                    <td>${localDateTimeFormat.format(userBean.creationDatetime)}
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td class="field">
+                                                                                                        登入時間
+                                                                                                    </td>
+                                                                                                    <td>${localDateTimeFormat.format(userBean.lastLoginDatetime)}
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr class="divider">
+                                                                                                    <td colspan="2">
+                                                                                                    </td>
+                                                                                                </tr>
+
+                                                                                                <tr class="highlight">
+                                                                                                    <td></td>
+                                                                                                    <td></td>
+                                                                                                </tr>
+                                                                                                <tr class="">
+                                                                                                    <td class="field">
+                                                                                                        &nbsp;</td>
+                                                                                                    <td
+                                                                                                        class="p-t-10 p-b-10">
+                                                                                                        <input
+                                                                                                            type="hidden"
+                                                                                                            id="updateUserNo"
+                                                                                                            class="form-control"
+                                                                                                            name="userNo"
+                                                                                                            value="${userBean.userNo}">
+                                                                                                        <input
+                                                                                                            type="hidden"
+                                                                                                            name="_method"
+                                                                                                            value="put">
+                                                                                                        <button
+                                                                                                            type="submit"
+                                                                                                            class="btn btn-primary width-150">更新</button>
+                                                                                                        <a
+                                                                                                            href="/aboutMe"><button
+                                                                                                                type="button"
+                                                                                                                class="btn btn-white btn-white-without-border width-150 m-l-5">取消</button></a>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </form>
                                                                                     </table>
                                                                                 </div>
                                                                                 <!-- end table -->
@@ -777,6 +923,21 @@
                             <script src="js/demo/datatables-demo.js"></script>
 
 
+                            <script>
+                                function selectImgFile(files) {
+                                    if (!files.length) {
+                                        return false;
+                                    }
+
+                                    let file = files[0];
+                                    let reader = new FileReader();
+                                    reader.onload = function () {
+                                        document.querySelector('#avatarImg').src = this.result;
+                                    };
+
+                                    reader.readAsDataURL(file);
+                                }
+                            </script>
                         </body>
 
                         </html>
