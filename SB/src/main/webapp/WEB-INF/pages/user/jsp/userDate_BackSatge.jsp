@@ -161,7 +161,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form method="post" action="../userUpdate">
+                                            <form method="post" action="../userUpdate" enctype="multipart/form-data">
                                                 <table class="table">
                                                     <tr>
                                                         <td>使用者編號</td>
@@ -196,9 +196,18 @@
                                                         </td>
                                                     </tr> -->
                                                     <tr>
-                                                        <td>頭像</td>
-                                                        <td><input type="text" id="updateAvatar" name="avatar"
-                                                                class="form-control"></td>
+                                                        <td>
+                                                            <figure class="figure col-md-4 col-sm-5 col-xs-12">
+                                                                <img class="rounded" style="width: 100px;"
+                                                                    id="avatarImg" alt="">
+                                                            </figure>
+                                                        </td>
+
+                                                        <td>
+                                                            <input type="file" name="avatar"
+                                                                class="file-uploader pull-left col-9"
+                                                                onchange="selectImgFile(this.files)">
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td>電子信箱</td>
@@ -371,7 +380,9 @@
                                             document.querySelector("#updateUCName").value = data.userChineseName;
                                             document.querySelector("#updateUEName").value = data.userEnglishName;
                                             // document.querySelector("#updateNickName").value = data.nickName;
-                                            document.querySelector("#updateAvatar").value = data.avatar;
+
+                                            document.querySelector("#avatarImg").src = "/localimages/" + data.avatar;
+                                            // document.querySelector("#updateAvatar").value = data.avatar;
                                             document.querySelector("#updateEmail").value = data.email;
 
                                             const dateData = data.birthday;
@@ -404,7 +415,22 @@
                                         });
                                     });
                                 };
+
+                                function selectImgFile(files) {
+                                    if (!files.length) {
+                                        return false;
+                                    }
+
+                                    let file = files[0];
+                                    let reader = new FileReader();
+                                    reader.onload = function () {
+                                        document.querySelector('#avatarImg').src = this.result;
+                                    };
+
+                                    reader.readAsDataURL(file);
+                                }
                             </script>
+
                         </body>
 
                         </html>

@@ -116,9 +116,9 @@ public class UserController {
 //			request.getSession().setAttribute("userData", resultBean);
 
 			if (resultBean.getIsManager() == 1) {
-				return "ManagerIndex.jsp";
+				return "redirect:/users";
 			} else {
-				return "user/jsp/UserHomePage.jsp";
+				return "redirect:/aboutMe";
 			}
 		}
 	}
@@ -153,7 +153,7 @@ public class UserController {
 	public String processUpdateUserAction(@RequestParam("userNo") Integer userNo,
 			@RequestParam("account") String account, @RequestParam("password") String password,
 			@RequestParam("UCName") String UCName, @RequestParam("UEName") String UEName,
-			@RequestParam("avatar") String avatar,
+			@RequestParam("avatar") MultipartFile avatar,
 			@RequestParam("email") String email, @RequestParam("birthday") String birthday,
 			@RequestParam("phone") String phone, @RequestParam("address") String address,
 			@RequestParam("creationDateTime") String creationDateTime,
@@ -173,7 +173,13 @@ public class UserController {
 		userBean.setUserChineseName(UCName);
 		userBean.setUserEnglishName(UEName);
 //		userBean.setNickName(nickName);
-		userBean.setAvatar(avatar);
+		
+		if(!avatar.isEmpty() || avatar.getSize() > 0)
+		{
+			String uploadImgPath = UserUtil.uploadImg(avatar);
+			userBean.setAvatar(uploadImgPath);
+		}
+//		userBean.setAvatar(avatar);
 		userBean.setEmail(email);
 
 		birthday += " 00-00-00";
@@ -239,6 +245,7 @@ public class UserController {
 		UserBean uBean = (UserBean)session.getAttribute("userData");
 		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
 		UserBean userBean = dataById.get();
+		
 		m.addAttribute("userBean", userBean);
 		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));

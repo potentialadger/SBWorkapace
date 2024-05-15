@@ -514,21 +514,16 @@
                                                                             <ul class="profile-header-tab nav nav-tabs">
                                                                                 <li class="nav-item"><a
                                                                                         href="https://www.bootdey.com/snippets/view/bs4-profile-with-timeline-posts"
-                                                                                        target="__blank"
                                                                                         class="nav-link_">貼文</a></li>
-                                                                                <li class="nav-item"><a
-                                                                                        href="https://www.bootdey.com/snippets/view/bs4-profile-about"
-                                                                                        target="__blank"
+                                                                                <li class="nav-item"><a href=""
                                                                                         class="nav-link_ active">關於我</a>
                                                                                 </li>
                                                                                 <li class="nav-item"><a
                                                                                         href="https://www.bootdey.com/snippets/view/profile-photos"
-                                                                                        target="__blank"
                                                                                         class="nav-link_">照片</a></li>
 
                                                                                 <li class="nav-item"><a
                                                                                         href="https://www.bootdey.com/snippets/view/bs4-profile-friend-list"
-                                                                                        target="__blank"
                                                                                         class="nav-link_ show">好友</a>
                                                                                 </li>
                                                                             </ul>
