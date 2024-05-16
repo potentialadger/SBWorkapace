@@ -15,6 +15,9 @@ public class GroupDto {
 	private String gMinTotalQuantity;
 	private String address;
 	private String account;
+	private String userName;
+	private Integer userNo;
+	private Integer eventNo;
 	public String getgTitle() {
 		return gTitle;
 	}
@@ -64,6 +67,25 @@ public class GroupDto {
 	public void setAccount(String account) {
 		this.account = account;
 	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public Integer getUserNo() {
+		return userNo;
+	}
+	public void setUserNo(Integer userNo) {
+		this.userNo = userNo;
+	}
+	public Integer getEventNo() {
+		return eventNo;
+	}
+	public void setEventNo(Integer eventNo) {
+		this.eventNo = eventNo;
+	}
+	
 	
 	
 }

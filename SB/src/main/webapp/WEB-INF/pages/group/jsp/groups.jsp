@@ -15,6 +15,10 @@
 
 						<head>
 							<meta charset="UTF-8">
+							<meta http-equiv="X-UA-Compatible" content="IE=edge">
+							<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+							<meta name="description" content="">
+							<meta name="author" content="">
 							<title>SB 團購活動</title>
 							<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
 								rel="stylesheet"
@@ -23,60 +27,131 @@
 							<link rel="stylesheet" href="/mycss/groups.css">
 							<link rel="stylesheet"
 								href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+							<link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+							<link
+								href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+								rel="stylesheet">
+
+							<!-- Custom styles for this template-->
+							<link href="/css/sb-admin-2.min.css" rel="stylesheet">
+							<style>
+								.suggestions {
+									position: absolute;
+									top: 100%;
+									left: 0;
+									z-index: 1000;
+									border: 1px solid #ddd;
+									background-color: #fff;
+									max-height: 200px;
+									overflow-y: auto;
+									width: 100%;
+								}
+
+								.suggestions div {
+									padding: 10px;
+									cursor: pointer;
+								}
+
+								.suggestions div:hover {
+									background-color: #f0f0f0;
+								}
+							</style>
 						</head>
 
-						<body>
-						    <jsp:useBean id="userData" scope="request" class="com.user.bean.UserBean">
-                            </jsp:useBean>
-							<div class="container" style="width: 68%;position: relative;">
-								<div style="display: flex; justify-content: space-between; align-items: center;">
-									<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newgroup" style="height: 40px;margin-top: 20px">
-										我要開團
-									</button>
-									
-									<div style="display: flex; align-items: center; gap: 10px;">
-										<div style="margin-top: 20px;">
-											<a href="/getLinePayPay">購買點數</a>
-											<p>點數: <%=userData.getPoint() %></p>
-										</div>
-										<button style="border: none; background: none; padding: 0; width: 70px;">
-											<img src="/images/pigbigbro.jpg" style="border-radius: 50%; object-fit: cover; width: 70px; height: 70px;">
-										</button>
-									</div>
-								</div>
-								
-								<div class="row" style="padding-top: 0px;margin-top: 0px">
-									<% List<Group> groups = (ArrayList<Group>)
-											request.getAttribute("groups");
-											for (Group group : groups) { %>
-											<div class="col-lg-4 col-md-6 col-12 mt-4 pt-2 position-relative">
-												<div class="card service-wrapper rounded border-0 shadow p-4">
-													<div class="content mt-4">
-														<h5 class="title">
-															<%=group.getTitle() %>
-														</h5>
-														<p class="text-muted mt-3 mb-0">
-															<%=group.getDescription() %>
-														</p>
-														<% Date startDate=group.getStartTime(); String
-															timeAgo=formatTimeAgo(startDate); %>
+						<body id="page-top">
+							<jsp:useBean id="userData" scope="request" class="com.user.bean.UserBean">
+							</jsp:useBean>
 
-															<p class="link-wrapper"
-																style="position: absolute; bottom: 5px; left: 10px; color: gray">
-																<%=timeAgo %>
-															</p>
-															<div class="link-wrapper"
-																style="position: absolute; bottom: 10px; right: 10px;">
-																<a href="<%= " /group/eachgroup/" + group.getEventNo()
-																	%>" class="text-custom">前往團購 <i
-																		class="mdi mdi-chevron-right"></i></a>
-															</div>
+							<div id="wrapper">
+
+								<!--        <script src="js/test/Z_slider.js"></script>-->
+
+								<!-- Content Wrapper -->
+								<div id="content-wrapper" class="d-flex flex-column">
+
+									<!-- Main Content -->
+									<div id="content">
+
+										<!-- Topbar -->
+										<script src="/js/layout/Z_TopBar.js"></script>
+
+										<!-- 主要內容 -->
+										<div class="container" style="width: 68%;position: relative;">
+											<div
+												style="display: flex; justify-content: space-between; align-items: center;">
+												<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+													data-bs-target="#newgroup" style="height: 40px;margin-top: 20px">
+													我要開團
+												</button>
+
+												<div style="display: flex; align-items: center; gap: 10px;">
+													<div style="margin-top: 20px;">
+														<a href="/getLinePayPay">購買點數</a>
+														<p>點數: <%=userData.getPoint() %>
+														</p>
 													</div>
+													<button
+														style="border: none; background: none; padding: 0; width: 70px;">
+														<img src="/images/pigbigbro.jpg"
+															style="border-radius: 50%; object-fit: cover; width: 70px; height: 70px;">
+													</button>
 												</div>
 											</div>
-											<% } %>
+
+											<div class="row" style="padding-top: 0px;margin-top: 0px">
+												<% List<Group> groups = (ArrayList<Group>)
+														request.getAttribute("groups");
+														for (Group group : groups) { %>
+														<div
+															class="col-lg-4 col-md-6 col-12 mt-4 pt-2 position-relative">
+															<div
+																class="card service-wrapper rounded border-0 shadow p-4">
+																<div class="content mt-4">
+																	<h5 class="title">
+																		<%=group.getTitle() %>
+																	</h5>
+																	<p class="text-muted mt-3 mb-0">
+																		<%=group.getDescription() %>
+																	</p>
+																	<% Date startDate=group.getStartTime(); String
+																		timeAgo=formatTimeAgo(startDate); %>
+
+																		<p class="link-wrapper"
+																			style="position: absolute; bottom: 5px; left: 10px; color: gray">
+																			<%=timeAgo %>
+																		</p>
+																		<div class="link-wrapper"
+																			style="position: absolute; bottom: 10px; right: 10px;">
+																			<a href="<%= " /group/eachgroup/" +
+																				group.getEventNo() %>"
+																				class="text-custom">前往團購 <i
+																					class="mdi mdi-chevron-right"></i></a>
+																		</div>
+																</div>
+															</div>
+														</div>
+														<% } %>
+											</div>
+										</div>
+										<!-- 主要內容結尾 -->
+
+									</div>
+									<!-- End of Main Content -->
+
+									<!-- footer -->
+									<script src="/js/layout/Z_footer.js"></script>
+
 								</div>
+								<!-- End of Content Wrapper -->
+
 							</div>
+
+							<a class="scroll-to-top rounded" href="#page-top">
+								<i class="fas fa-angle-up"></i>
+							</a>
+
+
+
 
 							<!-- Modal -->
 							<div class="modal fade" id="newgroup" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -135,15 +210,16 @@
 																付款方式:
 															</label>
 															<br>
-															<label style="width: 70px"><input type="checkbox" name="payment"
-																	value="1">匯款</label>
-															<label style="width: 70px"><input type="checkbox" name="payment"
-																	value="2">面交</label>
-															<label style="width: 70px"><input type="checkbox" name="payment"
-																	value="3">SB點數</label>
+															<label style="width: 70px"><input type="checkbox"
+																	name="payment[]" value="1">匯款</label>
+															<label style="width: 70px"><input type="checkbox"
+																	name="payment[]" value="2">面交</label>
+															<label style="width: 70px"><input type="checkbox"
+																	name="payment[]" value="3">SB點數</label>
 														</li>
 														<br>
-														<li class="meetup-address" style="display:none;margin: 0;padding: 0">
+														<li class="meetup-address"
+															style="display:none;margin: 0;padding: 0">
 															<label style="display: flex;">
 																面交地址:
 															</label>
@@ -159,7 +235,8 @@
 																style="display:none; width: 411px;">
 														</li>
 														<br>
-														<li class="bank-account" style="display:none;margin: 0;padding: 0">
+														<li class="bank-account"
+															style="display:none;margin: 0;padding: 0">
 															<label style="display: flex;">
 																匯款帳戶:
 															</label>
@@ -167,8 +244,8 @@
 															<select id="bank" name="bank">
 																<option>銀行</option>
 															</select>
-															<input class="rounded-input" type="input" name="account" placeholder="帳戶"
-																style="width: 411px;">
+															<input class="rounded-input" type="input" name="account"
+																placeholder="帳戶" style="width: 411px;">
 														</li>
 													</ol>
 												</fieldset>
@@ -186,9 +263,31 @@
 							</div>
 
 							<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+							<script src="https://kit.fontawesome.com/f8f71426ea.js" crossorigin="anonymous"></script>
 							<script
 								src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 							<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+							<script src="/js/layout/Z_Logout Modal.js"></script>
+
+							<!-- Bootstrap core JavaScript-->
+							<script src="/vendor/jquery/jquery.min.js"></script>
+							<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+							<!-- Core plugin JavaScript-->
+							<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+							<!-- Custom scripts for all pages-->
+							<script src="/js/sb-admin-2.min.js"></script>
+
+							<!-- Page level plugins -->
+							<script src="/vendor/chart.js/Chart.min.js"></script>
+
+							<!-- Page level custom scripts -->
+							<script src="/js/demo/chart-area-demo.js"></script>
+							<script src="/js/demo/chart-pie-demo.js"></script>
+
+							<!-- 地區json -->
 							<script>
 								$(document).ready(function () {
 									const url = '/json/taiwancity.json'
@@ -245,6 +344,8 @@
 									});
 								});
 							</script>
+
+							<!-- 銀行json -->
 							<script>
 								$(document).ready(function () {
 									const url = '/json/taiwanbank.json'
@@ -275,22 +376,24 @@
 									function updateAccountInput(data) {
 										const bankvalue = $('#bank').val();
 										if (data[bankvalue]) {
-											const bankcode = data[bankvalue].code + data[bankvalue].a;
+											const bankcode = data[bankvalue].code + data[bankvalue].name;
 											$('input[name="account"]').val(bankcode);
 										}
 									}
 								})
 							</script>
+
+							<!-- 匯款方式 -->
 							<script>
 								$(document).ready(function () {
-									$('input[name="payment"]').change(function () {
-										if ($('input[name="payment"][value="2"]').is(':checked')) {
+									$('input[name="payment[]"]').change(function () {
+										if ($('input[name="payment[]"][value="2"]').is(':checked')) {
 											$('.meetup-address').show();
 										} else {
 											$('.meetup-address').hide();
 										}
 
-										if ($('input[name="payment"][value="1"]').is(':checked')) {
+										if ($('input[name="payment[]"][value="1"]').is(':checked')) {
 											$('.bank-account').show();
 										} else {
 											$('.bank-account').hide();
@@ -298,6 +401,8 @@
 									})
 								})
 							</script>
+
+							<!-- 團購細節confirm -->
 							<script>
 								$(document).ready(function () {
 									$('#newgroupform').submit(function (e) {
@@ -327,6 +432,48 @@
 										}
 									});
 								});
+							</script>
+
+							<script>
+								$(document).ready(function () {
+									$('#search').on('input', function () {
+										const search = $(this).val();
+										if (search.length > 0) {
+											$.ajax({
+												url: '/group/groupsearch',
+												method: 'get',
+												data: { search: search },
+												success: function (response) {
+													console.log("對囉");
+													console.log(response);
+													console.log(response.eventNo);
+													displaySuggestions(response);
+												},
+												error: function (err) {
+													console.log("錯了白痴" + err);
+												}
+											})
+
+										} else {
+											$('#searchSuggestions').empty();
+										}
+
+									});
+
+									function displaySuggestions(suggestions) {
+										const suggestionsContainer = $('#searchSuggestions');
+										suggestionsContainer.empty();
+										suggestions.forEach(function (suggestion) {
+											const suggestionItem = $('<div>').text(suggestion.gTitle); // 根据实际数据结构显示结果
+											suggestionItem.on('click', function () {
+												const eventno = suggestion.eventNo;
+												console.log(eventno);
+												window.location.href = '/group/eachgroup/' + eventno;
+											});
+											suggestionsContainer.append(suggestionItem);
+										});
+									}
+								})
 							</script>
 						</body>
 

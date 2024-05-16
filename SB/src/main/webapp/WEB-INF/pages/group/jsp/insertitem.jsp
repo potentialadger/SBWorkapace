@@ -16,7 +16,7 @@
         <jsp:useBean id="group" scope="request" class="com.group.model.Group">
         </jsp:useBean>
 
-        <section class="section-medium section-arrow--bottom-center section-arrow-primary-color bg-primary">
+        <section class="section-medium section-arrow--bottom-center section-arrow-primary-color bg-info">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 text-white text-center">
@@ -30,16 +30,20 @@
                 </div>
             </div>
         </section>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            新增商品
-        </button>
+        <div></div>
+        <br>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop" style="width: 100%">
+                            新增商品
+                        </button>
         <section class="section-primary t-bordered">
             <div class="container">
                 <div class="row testimonial-three testimonial-three--col-three">
                 </div>
             </div>
         </section>
-        <button type="button" class="btn btn-success" id="submitAllItems">提交所有商品</button>
+        <br>
+        <button type="button" class="btn btn-success" id="submitAllItems" style="width: 100%">提交所有商品</button>
 
         <!-- modal視窗 -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"

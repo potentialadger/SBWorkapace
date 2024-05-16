@@ -81,14 +81,17 @@ public class OrderController {
 		return "redirect:/group/eachgroup/" + group.getEventNo();
 	}
 	
-	@GetMapping("/grouporders/{eventno}")
+	@GetMapping("/groupbackorders/{eventno}")
 	@ResponseBody
 	public List<BackToFrontOrder> findOrdersByEventNoBack(@PathVariable("eventno") Integer eventNo) {
 		List<BackToFrontOrder> orders = orderService.findOrdersByEventNo(eventNo);
 		return orders;
 	}
 	
-//	public List<BackToFrontOrder> findOrdersByEventNoFornt(Model m){
-//		or
-//	}
+	@GetMapping("/groupfrontorders/{eventno}")
+	public String findOrdersByEventNoFront(@PathVariable("eventno") Integer eventNo, Model m){
+		List<OrderDto> orders = orderService.findOrdersByEventNoFront(eventNo);
+		m.addAttribute("orders", orders);
+		return "/group/jsp/grouporder.jsp";
+	}
 }

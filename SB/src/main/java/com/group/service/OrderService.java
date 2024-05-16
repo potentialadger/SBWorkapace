@@ -65,32 +65,47 @@ public class OrderService {
 		
 	}
 	
-//	public List<OrderDto> findOrdersByEventNoFront(Integer eventNo){
-//		List<Order> getOrders = orderRepository.findOrdersByEventNo(eventNo);
-//		ArrayList<OrderDto> orders = new ArrayList<OrderDto>();
-//		for (Order getOrder : getOrders) {
-//			UserBean userNo = getOrder.getUserNo();
-//			String userName = userNo.getUserChineseName();
-//			Date setTime = getOrder.getSetTime();
-//			Integer paymentMethod = getOrder.getPaymentMethod();
-//			
-//			OrderDto orderDto = new OrderDto();
-//			List<OrderDetail> orderDetails = getOrder.getOrderDetails();
-//			for (OrderDetail orderDetail : orderDetails) {
-//				Integer itemNo = orderDetail.getItem().getItemNo();
-//				String itemName = orderDetail.getItem().getName();
-//				Integer itemQuantity = orderDetail.getItemQuantity();
-//				String specValue = orderDetail.getItemSpec().getSpecValue();
-//				
-//				OrderDetailsDto orderDetailsDto = new OrderDetailsDto();
-//				orderDetailsDto.setItemQuantity(itemQuantity);
-//				orderDetailsDto.setSpecValue(specValue);
-//				orderDetailsDto.setItemNo(itemQuantity);
-//				orderDetailsDto.setItemName(itemName);
-//				orderDto.setOrderDetail(orderDetailsDto);
-//			}
-//		}
-//	}
+	public List<OrderDto> findOrdersByEventNoFront(Integer eventNo){
+		List<Order> getOrders = orderRepository.findOrdersByEventNo(eventNo);
+		ArrayList<OrderDto> orders = new ArrayList<OrderDto>();
+		
+		for (Order getOrder : getOrders) {
+			OrderDto orderDto = new OrderDto();
+
+			UserBean user = getOrder.getUserNo();
+			int userNo = user.getUserNo();
+			String userName = user.getUserChineseName();
+			Date setTime = getOrder.getSetTime();
+			Integer paymentMethod = getOrder.getPaymentMethod();
+			List<OrderDetail> orderDetails = getOrder.getOrderDetails();
+			
+			List<OrderDetailsDto> orderDetailsDto = new ArrayList<OrderDetailsDto>();
+			for (OrderDetail orderDetail : orderDetails) {
+				Integer itemNo = orderDetail.getItem().getItemNo();
+				String itemName = orderDetail.getItem().getName();
+				Integer itemQuantity = orderDetail.getItemQuantity();
+				String specValue = orderDetail.getItemSpec().getSpecValue();
+				
+				OrderDetailsDto orderDetailDto = new OrderDetailsDto();
+				
+				orderDetailDto.setItemQuantity(itemQuantity);
+				orderDetailDto.setSpecValue(specValue);
+				orderDetailDto.setItemNo(itemQuantity);
+				orderDetailDto.setItemName(itemName);
+				orderDetailDto.setItemNo(itemNo);
+				
+				orderDetailsDto.add(orderDetailDto);
+			}
+			orderDto.setEventNo(eventNo);
+			orderDto.setOrderDetail(orderDetailsDto);
+			orderDto.setPaymentMethod(paymentMethod);
+			orderDto.setUserName(userName);
+			orderDto.setUserNo(userNo);
+			
+			orders.add(orderDto);
+		}
+		return orders;
+	}
 	
 //	查詢訂單依訂購人
 	public List<Order> findOrdersByUserNo(Integer userNo){

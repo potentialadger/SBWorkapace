@@ -250,7 +250,7 @@ import="com.group.model.Group" %> <%@page import="com.group.model.Item" %>
                                 } else {
                                     var eventno = $(this).data('eventno');
                                     $.ajax({
-                                        url: '/grouporders/' + eventno,
+                                        url: '/groupbackorders/' + eventno,
                                         type: 'get',
                                         success: function (orders) {
                                             function parsePaymentMethod(paymentCode) {

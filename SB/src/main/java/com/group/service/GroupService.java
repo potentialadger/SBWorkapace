@@ -86,18 +86,18 @@ public class GroupService {
 		if(pay != null) {
 			if(Arrays.asList(pay).containsAll(Arrays.asList("1","2","3"))) {
 				paymentMethod = "123";
-			}else if (Arrays.asList(pay).contains("1")) {
-				paymentMethod = "1";
-			}else if (Arrays.asList(pay).contains("2")) {
-				paymentMethod = "2";
-			}else if (Arrays.asList(pay).contains("3")) {
-				paymentMethod = "3";
 			}else if (Arrays.asList(pay).containsAll(Arrays.asList("1","2"))) {
 				paymentMethod = "12";
 			}else if (Arrays.asList(pay).containsAll(Arrays.asList("1","3"))) {
 				paymentMethod = "13";
 			}else if (Arrays.asList(pay).containsAll(Arrays.asList("2","3"))) {
 				paymentMethod = "23";
+			}else if (Arrays.asList(pay).contains("1")) {
+				paymentMethod = "1";
+			}else if (Arrays.asList(pay).contains("2")) {
+				paymentMethod = "2";
+			}else if (Arrays.asList(pay).contains("3")) {
+				paymentMethod = "3";
 			}
 		}else {
 			paymentMethod = "0";

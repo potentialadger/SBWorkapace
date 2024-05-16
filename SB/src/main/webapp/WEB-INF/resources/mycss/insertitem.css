@@ -4,7 +4,7 @@ body {
 
 .btn.btn-outline-primary:hover,
 .bg-primary {
-    background-color: #0cb4ce !important;
+    background-color: #17a2b8 !important;
 }
 
 .section-medium {
@@ -13,13 +13,13 @@ body {
 
 .testimonial-four blockquote:hover::after,
 .section-arrow-primary-color.section-arrow--bottom-center:after {
-    border-right-color: #0cb4ce;
+    border-right-color: #17a2b8;
 }
 
 .section-arrow-primary-color.section-arrow--bottom-center:after {
-    background-color: #0cb4ce;
-    border-right-color: #0cb4ce;
-    border-bottom-color: #0cb4ce;
+    background-color: #17a2b8;
+    border-right-color: #17a2b8;
+    border-bottom-color: #17a2b8;
 }
 
 .section-arrow--bottom-center:after {
@@ -69,11 +69,11 @@ body {
 }
 
 .section-arrow-primary-color.section-arrow--bottom-center:after {
-    border-bottom-color: #0cb4ce;
+    border-bottom-color: #17a2b8;
 }
 
 .section-arrow-primary-color.section-arrow--bottom-center:after {
-    background-color: #0cb4ce;
+    background-color: #17a2b8;
 }
 
 .special-heading.line span:before,
@@ -99,7 +99,7 @@ section {
 
 .testimonial-two {
     padding: 20px;
-    border: 2px solid #0cb4ce;
+    border: 2px solid #17a2b8;
     border-radius: 2px;
 }
 
@@ -107,7 +107,7 @@ section {
 .testimonial-two blockquote p:before {
     font-family: 'Playfair Display';
     font-size: 54px;
-    color: #0cb4ce;
+    color: #17a2b8;
     font-weight: 900;
     left: 10px;
     color: #FFF;
@@ -122,7 +122,7 @@ section {
 .testimonial-two blockquote p:after {
     font-family: 'Playfair Display';
     font-size: 54px;
-    color: #0cb4ce;
+    color: #17a2b8;
     content: "”";
     font-size: 80px;
     font-style: normal;

@@ -1,5 +1,6 @@
 package com.group.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -109,11 +110,30 @@ public class GroupController {
 	}
 	
 //	依搜尋找活躍活動
-	@GetMapping(value = "/groupsbysearch")
+	@GetMapping("/groupsearch")
 	@ResponseBody
-	public List<Group> findGroupBySearch(@RequestParam("search") String search){
+	public List<GroupDto> findGroupBySearch(@RequestParam("search") String search){
 		List<Group> groups = gService.findGroupBySearch(search);
-		return groups;
+		ArrayList<GroupDto> groupsDto = new ArrayList<GroupDto>();
+		
+		for (Group group : groups) {
+			String title = group.getTitle();
+			String description = group.getDescription();
+			int userNo = group.getUser().getUserNo();
+			String userName = group.getUser().getUserChineseName();
+			Integer eventNo = group.getEventNo();
+			
+			GroupDto groupDto = new GroupDto();
+			groupDto.setgTitle(title);
+			groupDto.setgDescription(description);
+			groupDto.setUserName(userName);
+			groupDto.setUserNo(userNo);
+			groupDto.setEventNo(eventNo);
+			
+			groupsDto.add(groupDto);
+		}
+		
+		return groupsDto;
 	}
 	
 //	後臺全活躍活動
@@ -201,6 +221,9 @@ public class GroupController {
 		return "group/jsp/eachgroup.jsp";
 	}
 	
+	
+	
+//	linepay金流
 	@GetMapping("/groups100")
 	public String getDirect100(HttpServletRequest request) {
 		HttpSession session = request.getSession();
