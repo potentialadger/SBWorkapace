@@ -9,12 +9,19 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.activity.bean.EventBean;
 import com.activity.bean.EventRegistrationsBean;
 import com.activity.service.EventRegistrationsService;
 import com.activity.service.EventService;
+import com.user.bean.UserBean;
+import com.user.service.UserService;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 public class EventRegistrationsController {
@@ -64,18 +71,45 @@ public class EventRegistrationsController {
         }
         return mav;
     }
+    
+    // 處理我要報名按鈕 - InsertRegistrations.jsp
+    @GetMapping("/activityInsertRegistrations")
+    public ModelAndView insertRegistrations(@RequestParam("eventNo") int eventNo) {
+        ModelAndView mav = new ModelAndView("activity/InsertRegistrations.jsp");
+        try {
+            // 根據 eventNo 獲取相關數據
+            EventBean event = eventService.findEventByEventNo(eventNo);
 
-    // 新增註冊
+            // 將數據添加到 ModelAndView 中
+            mav.addObject("event", event);
+            mav.addObject("hostUserNo", event.getHostUserNo());
+        } catch (Exception e) {
+            e.printStackTrace();
+            mav.addObject("errorMessage", "An error occurred: " + e.getMessage());
+        }
+        return mav;
+    }
+
+ // 新增註冊
     @PostMapping("/InsertRegistrations")
-    @ResponseBody
     public ModelAndView insert(
             @RequestParam("eventNo") int eventNo,
-            @RequestParam("userNo") int userNo,
             @RequestParam("participantName") String participantName,
             @RequestParam("contactInfo") String contactInfo,
-            @RequestParam("registrationTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime registrationTime) {
+            @RequestParam("registrationTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime registrationTime,
+            HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
         try {
+            // 從 session 中獲取 userNo
+            HttpSession session = request.getSession();
+            UserBean userBean = (UserBean) session.getAttribute("userData");
+            if (userBean == null) {
+                mav.setViewName("activity/DisplayAllRegistrations.jsp");
+                mav.addObject("errorMessage", "您尚未登入。");
+                return mav;
+            }
+            int userNo = userBean.getUserNo();
+
             // 檢查是否已註冊
             List<EventRegistrationsBean> existingRegistrations = eventRegistrationsService.findByEventNoAndUserNo(eventNo, userNo);
             if (existingRegistrations != null && !existingRegistrations.isEmpty()) {
@@ -98,6 +132,9 @@ public class EventRegistrationsController {
         return mav;
     }
 
+
+    
+    
     // 刪除註冊
     @DeleteMapping("/DeleteRegistrations")
     public ModelAndView deleteRegistrationByRegistrationID(@RequestParam("registrationID") int registrationID) {
@@ -178,4 +215,7 @@ public class EventRegistrationsController {
         }
         return response;
     }
+    
+   
+    
 }
