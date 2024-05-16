@@ -1,6 +1,3 @@
-<%@ page import="com.forum.bean.RepliesBean" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>回覆</title>
+    <title>檢舉管理</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -28,18 +25,6 @@
 	    href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
 	    
 	<link rel="stylesheet" type="text/css" href="/mycss/forumBackstage.css">
-	
-	<style>
-	
-	td.replies-content {
-    max-width: 300px; 
-    word-wrap: break-word; 
-	}
-	
-	.right-align {
-    margin-left: 100px;
-	}
-	</style>
 	
 </head>
 
@@ -61,60 +46,63 @@
 
                 <!-- 主要內容 -->
                
-               <h1>回覆</h1>
-               
-				<!--  
+				<h1>檢舉管理</h1>
 				    <br>
-				    <form method="get" action="/replies/OneReplies">
-				        查詢: <input type="text" name="repliesBeanKeyword" required>
-				       	<button type="submit">送出</button>
-				    </form>   
-				-->
-				
-				<!-- 
-				    <form method="get" action="/replies/AllReplies">
-				        <button type="submit">查詢全部</button>
+				<!--  
+				    <form method="get" action="/reports/AllReports">
+				        <button type="submit">檢舉紀錄</button>
 				    </form>
 				-->
 				
-					<form method="get" action="/posts/CategoriesPosts" class="right-align">
+				    <form method="get" action="/posts/CategoriesPosts">
 						<input type="hidden" name="categoryNo"
 							value="${post.categoriesBean.category_no}">
-						<button type="submit" class="btn-green">返回</button>
+						<button type="submit">返回</button>
 					</form>
-					
-					<div class="table-container">
-					<table id="repliesTable">
+				
+				    <table id="reportsTable">
 				        <thead>
 				            <tr>
 				                <th>文章標題</th>
-				                <th>回覆內容</th>
-				                <th>日期</th>
-				                <th>會員名稱</th>
-				                <th>會員信箱</th>
+				                <th>文章內容</th>
+				                <th>檢舉人</th>
+				                <th>檢舉人信箱</th>
+				                <th>檢舉原因</th>
+				                <th>檢舉日期</th>
+				                <th>刪除</th>
 				            </tr>
 				        </thead>
 				
 				        <tbody>
-				            <c:if test="${not empty repliesM}">
-				                <c:forEach var="replies" items="${repliesM}">
+				            <c:if test="${not empty reportsM}">
+				                <c:forEach var="reports" items="${reportsM}">
 				                    <tr>
 				                        <td><c:out value="${post.title}" /></td>
-				                        <td class="replies-content"><c:out value="${replies.content}" /></td>
-				                        <td><c:out value="${replies.update_date}" /></td>
-				                        <td><c:out value="${replies.userBean.userChineseName}" /></td>
-				                        <td><c:out value="${replies.userBean.email}" /></td>
+				                        <td><c:out value="${post.content}" /></td>
+				                        <td><c:out value="${reports.userBean.userChineseName}" /></td>
+				                        <td><c:out value="${reports.userBean.email}" /></td>
+				                        <td><c:out value="${reports.reason}" /></td>
+				                        <td><c:out value="${reports.report_date}" /></td>
+				
+				          <td>
+				    		<form method="post" action="/reports/DeleteReports" onsubmit="return confirm('確定要刪除嗎？');">
+				       			 <input type="hidden" name="postNo" value="${reports.postsBean.post_no}">
+				        		 <input type="hidden" name="reportNo" value="${reports.report_no}">
+				        		 <input type="hidden" name="categoryNo" value="${post.categoriesBean.category_no}">
+				        		 <input type="hidden" name="_method" value="delete">
+				        			<button type="submit">刪除</button>
+				    		</form>
+						</td>
 				                    </tr>
 				                </c:forEach>
 				            </c:if>
-				            <c:if test="${empty repliesM}">
+				            <c:if test="${empty reportsM}">
 				                <tr>
-				                    <td colspan="5">尚無資料</td>
+				                    <td colspan="7">尚無資料</td>
 				                </tr>
 				            </c:if>
 				        </tbody>
-				    </table>
-				 </div>   
+				    </table>  
                 <!-- 主要內容結尾 -->
 
             </div>
@@ -163,9 +151,10 @@
 	    src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
 	
 	<!-- DataTables initialization -->
+	<!-- DataTables initialization -->
 	<script>
 	    $(document).ready(function() {
-	        $('#repliesTable').DataTable(); // 初始化 DataTables
+	        $('#reportsTable').DataTable(); // 初始化 DataTables
 	    });
 	</script>
 

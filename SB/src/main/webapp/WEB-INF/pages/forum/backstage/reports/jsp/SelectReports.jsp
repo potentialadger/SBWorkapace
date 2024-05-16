@@ -2,88 +2,168 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>檢舉管理</title>
 
-<!-- DataTables CSS -->
-<link rel="stylesheet" type="text/css"
-    href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-<!-- 引入 jQuery -->
-<script type="text/javascript" charset="utf8"
-    src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <title>檢舉管理</title>
 
-<!-- 引入 DataTables JS -->
-<script type="text/javascript" charset="utf8"
-    src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
-<!-- DataTables initialization -->
-<script>
-    $(document).ready(function() {
-        $('#reportsTable').DataTable(); // 初始化 DataTables
-    });
-</script>
-  
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+	
+	<!-- DataTables CSS -->
+	<link rel="stylesheet" type="text/css"
+	    href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+	    
+	<link rel="stylesheet" type="text/css" href="/mycss/forumBackstage.css">
+	
 </head>
-<body>
-<h1>檢舉管理</h1>
-    <br>
-<!--  
-    <form method="get" action="/reports/AllReports">
-        <button type="submit">檢舉紀錄</button>
-    </form>
--->
 
-    <form method="get" action="/posts/CategoriesPosts">
-		<input type="hidden" name="categoryNo"
-			value="${post.categoriesBean.category_no}">
-		<button type="submit">返回</button>
-	</form>
+<body id="page-top">
 
-    <table id="reportsTable">
-        <thead>
-            <tr>
-                <th>文章標題</th>
-                <th>文章內容</th>
-                <th>檢舉人</th>
-                <th>檢舉人信箱</th>
-                <th>檢舉原因</th>
-                <th>檢舉日期</th>
-                <th>刪除</th>
-            </tr>
-        </thead>
+    <!-- Page Wrapper -->
+    <div id="wrapper">
 
-        <tbody>
-            <c:if test="${not empty reportsM}">
-                <c:forEach var="reports" items="${reportsM}">
-                    <tr>
-                        <td><c:out value="${post.title}" /></td>
-                        <td><c:out value="${post.content}" /></td>
-                        <td><c:out value="${reports.userBean.userChineseName}" /></td>
-                        <td><c:out value="${reports.userBean.email}" /></td>
-                        <td><c:out value="${reports.reason}" /></td>
-                        <td><c:out value="${reports.report_date}" /></td>
+        <script src="/js/layout/Z_slider.js"></script>
 
-          <td>
-    		<form method="post" action="/reports/DeleteReports" onsubmit="return confirm('確定要刪除嗎？');">
-       			 <input type="hidden" name="postNo" value="${reports.postsBean.post_no}">
-        		 <input type="hidden" name="reportNo" value="${reports.report_no}">
-        		 <input type="hidden" name="categoryNo" value="${post.categoriesBean.category_no}">
-        		 <input type="hidden" name="_method" value="delete">
-        			<button type="submit">刪除</button>
-    		</form>
-		</td>
-                    </tr>
-                </c:forEach>
-            </c:if>
-            <c:if test="${empty reportsM}">
-                <tr>
-                    <td colspan="7">尚無資料</td>
-                </tr>
-            </c:if>
-        </tbody>
-    </table>  
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <script src="/js/layout/Z_TopBar.js"></script>
+
+                <!-- 主要內容 -->
+               
+				<h1>檢舉管理</h1>
+				    <br>
+				<!--  
+				    <form method="get" action="/reports/AllReports">
+				        <button type="submit">檢舉紀錄</button>
+				    </form>
+				-->
+				
+				    <form method="get" action="/posts/CategoriesPosts">
+						<input type="hidden" name="categoryNo"
+							value="${post.categoriesBean.category_no}">
+						<button type="submit" class="btn-green">返回</button>
+					</form>
+					
+					<div class="table-container">
+				    <table id="reportsTable">
+				        <thead>
+				            <tr>
+				                <th>文章標題</th>
+				                <th>文章內容</th>
+				                <th>檢舉人</th>
+				                <th>檢舉人信箱</th>
+				                <th>檢舉原因</th>
+				                <th>檢舉日期</th>
+				                <th>刪除</th>
+				            </tr>
+				        </thead>
+				
+				        <tbody>
+				            <c:if test="${not empty reportsM}">
+				                <c:forEach var="reports" items="${reportsM}">
+				                    <tr>
+				                        <td><c:out value="${post.title}" /></td>
+				                        <td><c:out value="${post.content}" /></td>
+				                        <td><c:out value="${reports.userBean.userChineseName}" /></td>
+				                        <td><c:out value="${reports.userBean.email}" /></td>
+				                        <td><c:out value="${reports.reason}" /></td>
+				                        <td><c:out value="${reports.report_date}" /></td>
+				
+				          <td>
+				    		<form method="post" action="/reports/DeleteReports" onsubmit="return confirm('確定要刪除嗎？');">
+				       			 <input type="hidden" name="postNo" value="${reports.postsBean.post_no}">
+				        		 <input type="hidden" name="reportNo" value="${reports.report_no}">
+				        		 <input type="hidden" name="categoryNo" value="${post.categoriesBean.category_no}">
+				        		 <input type="hidden" name="_method" value="delete">
+				        			<button type="submit" class="btn-red">刪除</button>
+				    		</form>
+						</td>
+				                    </tr>
+				                </c:forEach>
+				            </c:if>
+				            <c:if test="${empty reportsM}">
+				                <tr>
+				                    <td colspan="7">尚無資料</td>
+				                </tr>
+				            </c:if>
+				        </tbody>
+				    </table>  
+				  </div> 
+                <!-- 主要內容結尾 -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- footer -->
+            <script src="/js/layout/Z_footer.js"></script>
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <script src="/js/layout/Z_Logout Modal.js"></script>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="/vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="/js/demo/chart-area-demo.js"></script>
+    <script src="/js/demo/chart-pie-demo.js"></script>
+    
+    <!-- 引入 jQuery -->
+	<script type="text/javascript" charset="utf8"
+	    src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	
+	<!-- 引入 DataTables JS -->
+	<script type="text/javascript" charset="utf8"
+	    src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+	
+	<!-- DataTables initialization -->
+	<!-- DataTables initialization -->
+	<script>
+	    $(document).ready(function() {
+	        $('#reportsTable').DataTable(); // 初始化 DataTables
+	    });
+	</script>
+
+
 </body>
+
 </html>
