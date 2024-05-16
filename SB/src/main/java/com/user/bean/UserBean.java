@@ -104,6 +104,9 @@ public class UserBean implements Serializable{
 	@Column(name = "point")
 	private Integer point;
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userBean", cascade = CascadeType.ALL)
+	private List<UserImageBean> userImages ;
+	
 	
 	public UserBean() {
 	}
@@ -167,6 +170,8 @@ public class UserBean implements Serializable{
 	public Set<RepliesBean> getRepliesBean() {return repliesBean;}
 	public Set<ReportsBean> getReportsBean() {return reportsBean;}
 	public Set<LikesBean> getLikesBean() {return likesBean;}
+	public List<UserImageBean> getUserImages() {return userImages;}
+	
 	
 	
 	public void setUserNo(int userNo) {this.userNo = userNo;}
@@ -197,6 +202,9 @@ public class UserBean implements Serializable{
 	public void setRepliesBean(Set<RepliesBean> repliesBean) {this.repliesBean = repliesBean;}
 	public void setReportsBean(Set<ReportsBean> reportsBean) {this.reportsBean = reportsBean;}
 	public void setLikesBean(Set<LikesBean> likesBean) {this.likesBean = likesBean;}
+	
+	public void setUserImages(List<UserImageBean> userImages) {this.userImages = userImages;}
+	
 	@Override
 	public String toString() {
 		return "UserBean [userNo=" + userNo + ", userAccount=" + userAccount + ", userPassword=" + userPassword

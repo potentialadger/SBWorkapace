@@ -61,6 +61,7 @@ public class UserController {
 		}
 		else {
 			insertBean.setAvatar("userDefault.png");
+			
 		}
 		
 
@@ -311,6 +312,17 @@ public class UserController {
 		return "redirect:/aboutMe";
 	}
 	
+	@GetMapping("userPhotos")
+	public String userPhotosAction(HttpSession session, Model m) {
+		UserBean uBean = (UserBean)session.getAttribute("userData");
+		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
+		UserBean userBean = dataById.get();
+		
+		m.addAttribute("userBean", userBean);
+		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		return "user/jsp/MyPhoto_FontSatge.jsp";
+	}
 	
 
 	// ---Tags : ManyToMany

@@ -3,6 +3,7 @@
         <%@page import="java.util.List" %>
             <%@page import="com.user.bean.UserBean" %>
                 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+                <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
                     <%! @SuppressWarnings("unchecked") %>
 
                         <!DOCTYPE html>
@@ -32,16 +33,88 @@
 
                             <!-- 主要內容的樣式 -->
                             <style>
-                                body {
-                                    /* margin-top: 20px; */
-                                    background: #eee;
+                                body{
+                                    background: #eaeaea;
+                                    /* margin-top:20px; */
                                 }
-
+                                .profile-info-list {
+                                    padding: 0;
+                                    margin: 0;
+                                    list-style-type: none;
+                                }
+                                .friend-list,
+                                .img-grid-list {
+                                    margin: -1px;
+                                    list-style-type: none;
+                                }
+                                .profile-info-list > li.title {
+                                    font-size: 0.625rem;
+                                    font-weight: 700;
+                                    color: #8a8a8f;
+                                    padding: 0 0 0.3125rem;
+                                }
+                                .profile-info-list > li + li.title {
+                                    padding-top: 1.5625rem;
+                                }
+                                .profile-info-list > li {
+                                    padding: 0.625rem 0;
+                                }
+                                .profile-info-list > li .field {
+                                    font-weight: 700;
+                                }
+                                .profile-info-list > li .value {
+                                    color: #666;
+                                }
+                                .profile-info-list > li.img-list a {
+                                    display: inline-block;
+                                }
+                                .profile-info-list > li.img-list a img {
+                                    max-width: 2.25rem;
+                                    -webkit-border-radius: 2.5rem;
+                                    -moz-border-radius: 2.5rem;
+                                    border-radius: 2.5rem;
+                                }
+                                .coming-soon-cover img,
+                                .email-detail-attachment .email-attachment .document-file img,
+                                .email-sender-img img,
+                                .friend-list .friend-img img,
+                                .profile-header-img img {
+                                    max-width: 100%;
+                                }
+                                .table.table-profile th {
+                                    border: none;
+                                    color: #000;
+                                    padding-bottom: 0.3125rem;
+                                    padding-top: 0;
+                                }
+                                .table.table-profile td {
+                                    border-color: #c8c7cc;
+                                }
+                                .table.table-profile tbody + thead > tr > th {
+                                    padding-top: 1.5625rem;
+                                }
+                                .table.table-profile .field {
+                                    color: #666;
+                                    font-weight: 600;
+                                    width: 25%;
+                                    text-align: right;
+                                }
+                                .table.table-profile .value {
+                                    font-weight: 500;
+                                }
                                 .profile-header {
                                     position: relative;
-                                    overflow: hidden
+                                    overflow: hidden;
                                 }
-
+                                /* .profile-header .profile-header-cover {
+                                    background: url(https://www.bootdey.com/image/600x350/6495ED/000000) center no-repeat;
+                                    background-size: 100% auto;
+                                    position: absolute;
+                                    left: 0;
+                                    right: 0;
+                                    top: 0;
+                                    bottom: 0;
+                                } */
                                 .profile-header .profile-header-cover {
                                     background-color: #00b5ec;
                                     background-size: cover;
@@ -53,406 +126,217 @@
                                     top: 0;
                                     bottom: 0
                                 }
-
                                 .profile-header .profile-header-cover:before {
-                                    content: '';
+                                    content: "";
                                     position: absolute;
                                     top: 0;
                                     left: 0;
                                     right: 0;
                                     bottom: 0;
-                                    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, .75) 100%)
+                                    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.25) 0, rgba(0, 0, 0, 0.85) 100%);
                                 }
-
-                                .profile-header .profile-header-content {
-                                    color: #fff;
-                                    padding: 25px
-                                }
-
-                                .profile-header-img {
-                                    float: left;
-                                    width: 120px;
-                                    height: 120px;
-                                    overflow: hidden;
-                                    position: relative;
-                                    z-index: 10;
-                                    margin: 0 0 -20px;
-                                    padding: 3px;
-                                    border-radius: 4px;
-                                    background: #fff
-                                }
-
-                                .profile-header-img img {
-                                    max-width: 100%
-                                }
-
-                                .profile-header-info h4 {
-                                    font-weight: 500;
-                                    color: #fff
-                                }
-
-                                .profile-header-img+.profile-header-info {
-                                    margin-left: 140px
-                                }
-
                                 .profile-header .profile-header-content,
-                                .profile-header .profile-header-tab {
-                                    position: relative
+                                .profile-header .profile-header-tab,
+                                .profile-header-img,
+                                body .fc-icon {
+                                    position: relative;
                                 }
-
-                                .b-minus-1,
-                                .b-minus-10,
-                                .b-minus-2,
-                                .b-minus-3,
-                                .b-minus-4,
-                                .b-minus-5,
-                                .b-minus-6,
-                                .b-minus-7,
-                                .b-minus-8,
-                                .b-minus-9,
-                                .b-plus-1,
-                                .b-plus-10,
-                                .b-plus-2,
-                                .b-plus-3,
-                                .b-plus-4,
-                                .b-plus-5,
-                                .b-plus-6,
-                                .b-plus-7,
-                                .b-plus-8,
-                                .b-plus-9,
-                                .l-minus-1,
-                                .l-minus-2,
-                                .l-minus-3,
-                                .l-minus-4,
-                                .l-minus-5,
-                                .l-minus-6,
-                                .l-minus-7,
-                                .l-minus-8,
-                                .l-minus-9,
-                                .l-plus-1,
-                                .l-plus-10,
-                                .l-plus-2,
-                                .l-plus-3,
-                                .l-plus-4,
-                                .l-plus-5,
-                                .l-plus-6,
-                                .l-plus-7,
-                                .l-plus-8,
-                                .l-plus-9,
-                                .r-minus-1,
-                                .r-minus-10,
-                                .r-minus-2,
-                                .r-minus-3,
-                                .r-minus-4,
-                                .r-minus-5,
-                                .r-minus-6,
-                                .r-minus-7,
-                                .r-minus-8,
-                                .r-minus-9,
-                                .r-plus-1,
-                                .r-plus-10,
-                                .r-plus-2,
-                                .r-plus-3,
-                                .r-plus-4,
-                                .r-plus-5,
-                                .r-plus-6,
-                                .r-plus-7,
-                                .r-plus-8,
-                                .r-plus-9,
-                                .t-minus-1,
-                                .t-minus-10,
-                                .t-minus-2,
-                                .t-minus-3,
-                                .t-minus-4,
-                                .t-minus-5,
-                                .t-minus-6,
-                                .t-minus-7,
-                                .t-minus-8,
-                                .t-minus-9,
-                                .t-plus-1,
-                                .t-plus-10,
-                                .t-plus-2,
-                                .t-plus-3,
-                                .t-plus-4,
-                                .t-plus-5,
-                                .t-plus-6,
-                                .t-plus-7,
-                                .t-plus-8,
-                                .t-plus-9 {
-                                    position: relative !important
-                                }
-
                                 .profile-header .profile-header-tab {
                                     background: #fff;
                                     list-style-type: none;
-                                    margin: -10px 0 0;
-                                    padding: 0 0 0 140px;
+                                    margin: -1.25rem 0 0;
+                                    padding: 0 0 0 8.75rem;
+                                    border-bottom: 1px solid #c8c7cc;
                                     white-space: nowrap;
-                                    border-radius: 0
                                 }
-
-                                .text-ellipsis,
-                                .text-nowrap {
-                                    white-space: nowrap !important
-                                }
-
-                                .profile-header .profile-header-tab>li {
+                                .profile-header .profile-header-tab > li {
                                     display: inline-block;
-                                    margin: 0
+                                    margin: 0;
                                 }
-
-                                .profile-header .profile-header-tab>li>a {
+                                .profile-header .profile-header-tab > li > a {
                                     display: block;
-                                    color: #929ba1;
-                                    line-height: 20px;
-                                    padding: 10px 20px;
+                                    color: #000;
+                                    line-height: 1.25rem;
+                                    padding: 0.625rem 1.25rem;
                                     text-decoration: none;
                                     font-weight: 700;
-                                    font-size: 12px;
-                                    border: none
-                                }
-
-                                .profile-header .profile-header-tab>li.active>a,
-                                .profile-header .profile-header-tab>li>a.active {
-                                    color: #242a30
-                                }
-
-                                .profile-content {
-                                    padding: 25px;
-                                    border-radius: 4px
-                                }
-
-                                .profile-content:after,
-                                .profile-content:before {
-                                    content: '';
-                                    display: table;
-                                    clear: both
-                                }
-
-                                .profile-content .tab-content,
-                                .profile-content .tab-pane {
-                                    background: 0 0
-                                }
-
-                                .profile-left {
-                                    width: 200px;
-                                    float: left
-                                }
-
-                                .profile-right {
-                                    margin-left: 240px;
-                                    padding-right: 20px
-                                }
-
-                                .profile-image {
-                                    height: 175px;
-                                    line-height: 175px;
-                                    text-align: center;
-                                    font-size: 72px;
-                                    margin-bottom: 10px;
-                                    border: 2px solid #E2E7EB;
-                                    overflow: hidden;
-                                    border-radius: 4px
-                                }
-
-                                .profile-image img {
-                                    display: block;
-                                    max-width: 100%
-                                }
-
-                                .profile-highlight {
-                                    padding: 12px 15px;
-                                    background: #FEFDE1;
-                                    border-radius: 4px
-                                }
-
-                                .profile-highlight h4 {
-                                    margin: 0 0 7px;
-                                    font-size: 12px;
-                                    font-weight: 700
-                                }
-
-                                .table.table-profile>thead>tr>th {
-                                    border-bottom: none !important
-                                }
-
-                                .table.table-profile>thead>tr>th h4 {
-                                    font-size: 20px;
-                                    margin-top: 0
-                                }
-
-                                .table.table-profile>thead>tr>th h4 small {
-                                    display: block;
-                                    font-size: 12px;
-                                    font-weight: 400;
-                                    margin-top: 5px
-                                }
-
-                                .table.table-profile>tbody>tr>td,
-                                .table.table-profile>thead>tr>th {
+                                    font-size: 0.75rem;
                                     border: none;
-                                    padding-top: 7px;
-                                    padding-bottom: 7px;
-                                    color: #242a30;
-                                    background: 0 0
                                 }
-
-                                .table.table-profile>tbody>tr>td.field {
-                                    width: 20%;
-                                    text-align: right;
-                                    font-weight: 600;
-                                    color: #2d353c
+                                .profile-header .profile-header-tab > li.active > a,
+                                .profile-header .profile-header-tab > li > a.active {
+                                    color: #007aff;
                                 }
-
-                                .table.table-profile>tbody>tr.highlight>td {
-                                    border-top: 1px solid #b9c3ca;
-                                    border-bottom: 1px solid #b9c3ca
-                                }
-
-                                .table.table-profile>tbody>tr.divider>td {
-                                    padding: 0 !important;
-                                    height: 10px
-                                }
-
-                                .profile-section+.profile-section {
-                                    margin-top: 20px;
-                                    padding-top: 20px;
-                                    border-top: 1px solid #b9c3ca
-                                }
-
-                                .profile-section:after,
-                                .profile-section:before {
-                                    content: '';
+                                .profile-header .profile-header-content:after,
+                                .profile-header .profile-header-content:before {
+                                    content: "";
                                     display: table;
-                                    clear: both
+                                    clear: both;
+                                }
+                                .profile-header .profile-header-content {
+                                    color: #fff;
+                                    padding: 1.25rem;
+                                }
+                                body .fc th a,
+                                body .fc-ltr .fc-basic-view .fc-day-top .fc-day-number,
+                                body .fc-widget-header a {
+                                    color: #000;
+                                }
+                                .profile-header-img {
+                                    float: left;
+                                    width: 7.5rem;
+                                    height: 7.5rem;
+                                    overflow: hidden;
+                                    z-index: 10;
+                                    margin: 0 1.25rem -1.25rem 0;
+                                    padding: 0.1875rem;
+                                    -webkit-border-radius: 0.25rem;
+                                    -moz-border-radius: 0.25rem;
+                                    border-radius: 0.25rem;
+                                    background: #fff;
+                                }
+                                .profile-header-info h4 {
+                                    font-weight: 500;
+                                    margin-bottom: 0.3125rem;
+                                }
+                                .profile-container {
+                                    padding: 1.5625rem;
+                                }
+                                @media (max-width: 967px) {
+                                    .profile-header-img {
+                                        width: 5.625rem;
+                                        height: 5.625rem;
+                                        margin: 0;
+                                    }
+                                    .profile-header-info {
+                                        margin-left: 6.5625rem;
+                                        padding-bottom: 0.9375rem;
+                                    }
+                                    .profile-header .profile-header-tab {
+                                        padding-left: 0;
+                                    }
+                                }
+                                @media (max-width: 767px) {
+                                    .profile-header .profile-header-cover {
+                                        background-position: top;
+                                    }
+                                    .profile-header-img {
+                                        width: 3.75rem;
+                                        height: 3.75rem;
+                                        margin: 0;
+                                    }
+                                    .profile-header-info {
+                                        margin-left: 4.6875rem;
+                                        padding-bottom: 0.9375rem;
+                                    }
+                                    .profile-header-info h4 {
+                                        margin: 0 0 0.3125rem;
+                                    }
+                                    .profile-header .profile-header-tab {
+                                        white-space: nowrap;
+                                        overflow: scroll;
+                                        padding: 0;
+                                    }
+                                    .profile-container {
+                                        padding: 0.9375rem 0.9375rem 3.6875rem;
+                                    }
+                                    .friend-list > li {
+                                        float: none;
+                                        width: auto;
+                                    }
+                                }
+                                .profile-info-list {
+                                    padding: 0;
+                                    margin: 0;
+                                    list-style-type: none;
+                                }
+                                .friend-list,
+                                .img-grid-list {
+                                    margin: -1px;
+                                    list-style-type: none;
+                                }
+                                .profile-info-list > li.title {
+                                    font-size: 0.625rem;
+                                    font-weight: 700;
+                                    color: #8a8a8f;
+                                    padding: 0 0 0.3125rem;
+                                }
+                                .profile-info-list > li + li.title {
+                                    padding-top: 1.5625rem;
+                                }
+                                .profile-info-list > li {
+                                    padding: 0.625rem 0;
+                                }
+                                .profile-info-list > li .field {
+                                    font-weight: 700;
+                                }
+                                .profile-info-list > li .value {
+                                    color: #666;
+                                }
+                                .profile-info-list > li.img-list a {
+                                    display: inline-block;
+                                }
+                                .profile-info-list > li.img-list a img {
+                                    max-width: 2.25rem;
+                                    -webkit-border-radius: 2.5rem;
+                                    -moz-border-radius: 2.5rem;
+                                    border-radius: 2.5rem;
+                                }
+                                .coming-soon-cover img,
+                                .email-detail-attachment .email-attachment .document-file img,
+                                .email-sender-img img,
+                                .friend-list .friend-img img,
+                                .profile-header-img img {
+                                    max-width: 100%;
+                                }
+                                .table.table-profile th {
+                                    border: none;
+                                    color: #000;
+                                    padding-bottom: 0.3125rem;
+                                    padding-top: 0;
+                                }
+                                .table.table-profile td {
+                                    border-color: #c8c7cc;
+                                }
+                                .table.table-profile tbody + thead > tr > th {
+                                    padding-top: 1.5625rem;
+                                }
+                                .table.table-profile .field {
+                                    color: #666;
+                                    font-weight: 600;
+                                    width: 25%;
+                                    text-align: right;
+                                }
+                                .table.table-profile .value {
+                                    font-weight: 500;
                                 }
 
-                                .profile-section .title {
-                                    font-size: 20px;
-                                    margin: 0 0 15px
+                                .friend-list,
+                                .img-grid-list {
+                                    margin: -1px;
+                                    list-style-type: none;
                                 }
-
-                                .profile-section .title small {
-                                    font-weight: 400
+                                .img-grid-list {
+                                    padding: 0;
                                 }
-
-                                body.flat-black {
-                                    background: #E7E7E7
+                                .img-grid-list > li {
+                                    float: left;
+                                    width: 20%;
+                                    padding: 1px;
                                 }
-
-                                .flat-black .navbar.navbar-inverse {
-                                    background: #212121
+                                .img-grid-list > li a {
+                                    position: relative;
+                                    overflow: hidden;
+                                    padding-top: 75%;
+                                    display: block;
                                 }
-
-                                .flat-black .navbar.navbar-inverse .navbar-form .form-control {
-                                    background: #4a4a4a;
-                                    border-color: #4a4a4a
-                                }
-
-                                .flat-black .sidebar,
-                                .flat-black .sidebar-bg {
-                                    background: #3A3A3A
-                                }
-
-                                .flat-black .page-with-light-sidebar .sidebar,
-                                .flat-black .page-with-light-sidebar .sidebar-bg {
-                                    background: #fff
-                                }
-
-                                .flat-black .sidebar .nav>li>a {
-                                    color: #b2b2b2
-                                }
-
-                                .flat-black .sidebar.sidebar-grid .nav>li>a {
-                                    border-bottom: 1px solid #474747;
-                                    border-top: 1px solid #474747
-                                }
-
-                                .flat-black .sidebar .active .sub-menu>li.active>a,
-                                .flat-black .sidebar .nav>li.active>a,
-                                .flat-black .sidebar .nav>li>a:focus,
-                                .flat-black .sidebar .nav>li>a:hover,
-                                .flat-black .sidebar .sub-menu>li>a:focus,
-                                .flat-black .sidebar .sub-menu>li>a:hover,
-                                .sidebar .nav>li.nav-profile>a {
-                                    color: #fff
-                                }
-
-                                .flat-black .sidebar .sub-menu>li>a,
-                                .flat-black .sidebar .sub-menu>li>a:before {
-                                    color: #999
-                                }
-
-                                .flat-black .page-with-light-sidebar .sidebar .active .sub-menu>li.active>a,
-                                .flat-black .page-with-light-sidebar .sidebar .active .sub-menu>li.active>a:focus,
-                                .flat-black .page-with-light-sidebar .sidebar .active .sub-menu>li.active>a:hover,
-                                .flat-black .page-with-light-sidebar .sidebar .nav>li.active>a,
-                                .flat-black .page-with-light-sidebar .sidebar .nav>li.active>a:focus,
-                                .flat-black .page-with-light-sidebar .sidebar .nav>li.active>a:hover {
-                                    color: #000
-                                }
-
-                                .flat-black .page-sidebar-minified .sidebar .nav>li.has-sub:focus>a,
-                                .flat-black .page-sidebar-minified .sidebar .nav>li.has-sub:hover>a {
-                                    background: #323232
-                                }
-
-                                .flat-black .page-sidebar-minified .sidebar .nav li.has-sub>.sub-menu,
-                                .flat-black .sidebar .nav>li.active>a,
-                                .flat-black .sidebar .nav>li.active>a:focus,
-                                .flat-black .sidebar .nav>li.active>a:hover,
-                                .flat-black .sidebar .nav>li.nav-profile,
-                                .flat-black .sidebar .sub-menu>li.has-sub>a:before,
-                                .flat-black .sidebar .sub-menu>li:before,
-                                .flat-black .sidebar .sub-menu>li>a:after {
-                                    background: #2A2A2A
-                                }
-
-                                .flat-black .page-sidebar-minified .sidebar .sub-menu>li:before,
-                                .flat-black .page-sidebar-minified .sidebar .sub-menu>li>a:after {
-                                    background: #3e3e3e
-                                }
-
-                                .flat-black .sidebar .nav>li.nav-profile .cover.with-shadow:before {
-                                    background: rgba(42, 42, 42, .75)
-                                }
-
-                                .bg-white {
-                                    background-color: #fff !important;
-                                }
-
-                                .p-10 {
-                                    padding: 10px !important;
-                                }
-
-                                .media.media-xs .media-object {
-                                    width: 32px;
-                                }
-
-                                .m-b-2 {
-                                    margin-bottom: 2px !important;
-                                }
-
-                                .media>.media-left,
-                                .media>.pull-left {
-                                    padding-right: 15px;
-                                }
-
-                                .media-body,
-                                .media-left,
-                                .media-right {
-                                    display: table-cell;
-                                    vertical-align: top;
-                                }
-
-                                select.form-control:not([size]):not([multiple]) {
-                                    height: 34px;
-                                }
-
-                                .form-control.input-inline {
-                                    display: inline;
-                                    width: auto;
-                                    padding: 0 7px;
+                                .img-grid-list > li a img {
+                                    position: absolute;
+                                    right: 0;
+                                    top: 0;
+                                    bottom: 0;
+                                    left: 0;
+                                    max-width: 100%;
                                 }
                             </style>
                         </head>
@@ -461,9 +345,6 @@
 
                             <!-- Page Wrapper -->
                             <div id="wrapper">
-
-
-
                                 <!-- Content Wrapper -->
                                 <div id="content-wrapper" class="d-flex flex-column">
 
@@ -517,11 +398,11 @@
                                                                                         href="https://www.bootdey.com/snippets/view/bs4-profile-with-timeline-posts"
                                                                                         class="nav-link_">貼文</a></li>
                                                                                 <li class="nav-item"><a href="/aboutMe"
-                                                                                        class="nav-link_ active">關於我</a>
+                                                                                        class="nav-link_">關於我</a>
                                                                                 </li>
                                                                                 <li class="nav-item"><a
-                                                                                        href="https://www.bootdey.com/snippets/view/profile-photos"
-                                                                                        class="nav-link_">照片</a></li>
+                                                                                        href="/userPhotos"
+                                                                                        class="nav-link_ active">照片</a></li>
 
                                                                                 <li class="nav-item"><a
                                                                                         href="https://www.bootdey.com/snippets/view/bs4-profile-friend-list"
@@ -533,7 +414,153 @@
                                                                     </div>
                                                                     <!-- end profile -->
                                                                     <!-- begin 不包括上面那攔 -->
-
+                                                                    <div class="profile-container">
+                                                                        <div class="row row-space-20">
+                                                                            <div class="col-md-8">
+                                                                                <div class="tab-content p-0">
+                                                                                    <div class="tab-pane active show" id="profile-photos">
+                                                                                        <div class="m-b-10"><b>照片 (30)</b></div>
+                                                                                        <ul class="img-grid-list">
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/008B8B/000000" alt="" class="img-portrait" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/6495ED/000000" alt="" class="img-portrait" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/4169E1/000000" alt="" class="img-portrait" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/FF7F50/000000" alt="" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/FF0000/000000" alt="" class="img-portrait" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/6495ED/000000" alt="" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/B0E0E6/000000" alt="" class="img-portrait" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/9932CC/000000" alt="" class="img-portrait" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/DB7093/000000" alt="" class="img-portrait" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/FF1493/000000" alt="" class="img-portrait" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/191970/000000" alt="" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/FF8C00/000000" alt="" class="img-portrait" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/EEE8AA/000000" alt="" class="img-portrait" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/1E90FF/000000" alt="" class="img-portrait" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/3CB371/000000" alt="" class="img-portrait" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/9932CC/000000" alt="" class="img-portrait" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/B0C4DE/000000" alt="" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/ADD8E6/000000" alt="" class="img-portrait" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/008B8B/000000" alt="" class="img-portrait" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/D3D3D3/000000" alt="" class="img-portrait" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/008B8B/000000" alt="" class="img-portrait" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/20B2AA/000000" alt="" class="img-portrait" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/48D1CC/000000" alt="" class="img-portrait" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/008B8B/000000" alt="" class="img-portrait" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/6495ED/000000" alt="" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/008B8B/000000" alt="" class="img-portrait" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/FFC0CB/000000" alt="" class="img-portrait" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/008B8B/000000" alt="" class="img-portrait" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/DDA0DD/000000" alt="" /></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/008B8B/000000" alt="" /></a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>                    
+                                                                                </div>
+                                                                            </div>
+                                                                
+                                                                            <div class="col-md-4 hidden-xs hidden-sm">
+                                                                                <ul class="profile-info-list">
+                                                                                    <li class="title">個人資訊</li>
+                                                                                    <li>
+                                                                                        <div class="field">姓名:</div>
+                                                                                        <div class="value">${userBean.userChineseName}</div>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <div class="field">暱稱:</div>
+                                                                                        <div class="value">${userBean.nickName
+                                                                                            == null ? "尚未設定" :
+                                                                                            userBean.nickName}</div>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <div class="field">生日:</div>
+                                                                                        <div class="value">${localDateTimeDateFormat.format(userBean.birthday)}</div>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <div class="field">來自:</div>
+                                                                                        <div class="value">${userBean.userAddress}</div>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <div class="field">電子郵件:</div>
+                                                                                        <div class="value">${userBean.email}</div>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <div class="field">Phone No.:</div>
+                                                                                        <div class="value">${userBean.phone}</div>
+                                                                                    </li>
+                                                                                    <li class="title">朋友清單 (9)</li>
+                                                                                    <li class="img-list">
+                                                                                        <a href="#" class="m-b-5"><img src="https://www.bootdey.com/image/150x150/008B8B/000000" alt="" /></a>
+                                                                                        <a href="#" class="m-b-5"><img src="https://www.bootdey.com/image/150x150/008B8B/000000" alt="" /></a>
+                                                                                        <a href="#" class="m-b-5"><img src="https://www.bootdey.com/image/150x150/008B8B/000000" alt="" /></a>
+                                                                                        <a href="#" class="m-b-5"><img src="https://www.bootdey.com/image/150x150/008B8B/000000" alt="" /></a>
+                                                                                        <a href="#" class="m-b-5"><img src="https://www.bootdey.com/image/150x150/008B8B/000000" alt="" /></a>
+                                                                                        <a href="#" class="m-b-5"><img src="https://www.bootdey.com/image/150x150/008B8B/000000" alt="" /></a>
+                                                                                        <a href="#" class="m-b-5"><img src="https://www.bootdey.com/image/150x150/008B8B/000000" alt="" /></a>
+                                                                                        <a href="#" class="m-b-5"><img src="https://www.bootdey.com/image/150x150/008B8B/000000" alt="" /></a>
+                                                                                        <a href="#" class="m-b-5"><img src="https://www.bootdey.com/image/150x150/008B8B/000000" alt="" /></a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                     <!-- end 不包括上面那攔 -->
                                                                 </div>
                                                             </div>

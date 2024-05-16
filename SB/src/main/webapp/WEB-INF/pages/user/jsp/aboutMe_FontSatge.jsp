@@ -214,7 +214,7 @@
 
                                 .profile-header .profile-header-tab>li.active>a,
                                 .profile-header .profile-header-tab>li>a.active {
-                                    color: #242a30
+                                    color: #007aff
                                 }
 
                                 .profile-content {
@@ -519,7 +519,7 @@
                                                                                         class="nav-link_ active">關於我</a>
                                                                                 </li>
                                                                                 <li class="nav-item"><a
-                                                                                        href="https://www.bootdey.com/snippets/view/profile-photos"
+                                                                                        href="/userPhotos"
                                                                                         class="nav-link_">照片</a></li>
 
                                                                                 <li class="nav-item"><a
