@@ -98,20 +98,24 @@ public class EventRegistrationsController {
             @RequestParam("contactInfo") String contactInfo,
             @RequestParam("registrationTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime registrationTime,
             HttpServletRequest request) {
+    	System.out.println(participantName);
+    	System.out.println(contactInfo);
         ModelAndView mav = new ModelAndView();
         try {
             // 從 session 中獲取 userNo
             HttpSession session = request.getSession();
             UserBean userBean = (UserBean) session.getAttribute("userData");
-            if (userBean == null) {
-                mav.setViewName("activity/DisplayAllRegistrations.jsp");
-                mav.addObject("errorMessage", "您尚未登入。");
-                return mav;
-            }
-            int userNo = userBean.getUserNo();
-
+//            if (userBean == null) {
+//                mav.setViewName("activity/DisplayAllRegistrations.jsp");
+//                mav.addObject("errorMessage", "您尚未登入。");
+//                return mav;
+//            }
+//            int userNo = userBean.getUserNo();
+            int userNo = 1;
+//            System.out.println(userNo);
             // 檢查是否已註冊
             List<EventRegistrationsBean> existingRegistrations = eventRegistrationsService.findByEventNoAndUserNo(eventNo, userNo);
+            System.out.println(existingRegistrations);
             if (existingRegistrations != null && !existingRegistrations.isEmpty()) {
                 mav.setViewName("activity/DisplayAllRegistrations.jsp");
                 mav.addObject("errorMessage", "您已經報名過此活動。");

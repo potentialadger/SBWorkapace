@@ -1,6 +1,7 @@
 package com.activity.bean;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,20 +13,25 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "EventRegistrations")
+@Table(name = "eventregistrations")
 public class EventRegistrationsBean {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer registrationID;
-
+    
+    @Column(name = "eventno")
     private Integer eventNo;
+    @Column(name = "userno")
     private Integer userNo;
+    @Column(name = "participantname")
     private String participantName;
+    @Column(name = "contactinfo")
     private String contactInfo;
+    @Column(name = "registrationtime")
     private LocalDateTime registrationTime;
 
     @ManyToOne
-    @JoinColumn(name = "eventNo", insertable = false, updatable = false)
+    @JoinColumn(name = "eventno", insertable = false, updatable = false)
     private EventBean event;
 
     // Getter and Setter methods
