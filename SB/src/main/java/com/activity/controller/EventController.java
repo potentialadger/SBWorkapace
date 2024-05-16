@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,9 +54,23 @@ public class EventController {
         return mav;
     }
 
-    //活動詳情
+    // 前端使用者介面 - EventDetail.jsp
+    @GetMapping("/EventDetail")
+    public ModelAndView getEventDetail(@RequestParam("eventNo") int eventNo) {
+        ModelAndView mav = new ModelAndView("activity/EventDetail.jsp");
+        try {
+            EventBean event = eventService.findEventByEventNo(eventNo);
+            mav.addObject("event", event);
+        } catch (Exception e) {
+            e.printStackTrace();
+            mav.addObject("errorMessage", "An error occurred: " + e.getMessage());
+        }
+        return mav;
+    }
+
+    // 活動列表
     @GetMapping("/EventList")
-    public ResponseEntity<?> EventList(HttpServletRequest request) {
+    public ResponseEntity<?> getEventList(HttpServletRequest request) {
         try {
             List<EventBean> events = eventService.findAllEvents();
             List<Map<String, String>> eventsWithImages = new ArrayList<>();
@@ -71,28 +86,27 @@ public class EventController {
                 eventsWithImages.add(eventMap);
             }
 
-            return ResponseEntity.ok(eventsWithImages); 
+            return ResponseEntity.ok(eventsWithImages);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
         }
     }
-
-
-  //單筆查詢活動詳情
-    @GetMapping("/getEventDetail")
-    public ModelAndView getEventDetail(@RequestParam("eventNo") int eventNo) {
-        ModelAndView mav = new ModelAndView("activity/EventDetail.jsp");
-        try {
-        	EventBean event = eventService.findEventByEventNo(eventNo);
-
-            mav.addObject("event", event);
-        } catch (Exception e) {
-            e.printStackTrace();
-            mav.addObject("errorMessage", "An error occurred: " + e.getMessage());
-        }
-        return mav;
-    }
+    
+    
+//    // 處理我要報名按鈕 - InsertRegistrations.jsp
+//    @GetMapping("/activityInsertRegistrations")
+//    public String insertRegistrations(@RequestParam("eventNo") int eventNo, Model model) {
+//        // 根據 eventNo 獲取相關數據
+//        EventBean event = eventService.findEventByEventNo(eventNo);
+//
+//        // 將數據添加到模型中
+//        model.addAttribute("event", event);
+//        model.addAttribute("hostUserNo", event.getHostUserNo()); 
+//
+//        // 返回 InsertRegistrations.jsp
+//        return "activity/InsertRegistrations";
+//    }
 
     
     
