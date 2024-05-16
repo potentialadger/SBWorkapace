@@ -74,92 +74,83 @@
             background-color: #555;
         }
     </style>
-	<script>
-	    window.onload = function() {
-	        fetchEvents();
-	    };
-	
-	    function fetchEvents() {
-	        fetch('/EventList')
-	            .then(response => response.json())
-	            .then(events => {
-	                console.log('Fetched events:', events); // 日誌輸出取得的活動資料
-	                const eventsList = document.getElementById('eventsList');
-	                eventsList.innerHTML = ''; // 清空列表
-	
-	                events.forEach(event => {
-	                    console.log('Event:', event); // 日誌輸出每個活動資料
-	
-	                    const listItem = document.createElement('li');
-	                    listItem.className = "col-lg-3 col-md-4 col-sm-12";
-	
-	                    const card = document.createElement('div');
-	                    card.className = 'card';
-	
-	                    const file = document.createElement('div');
-	                    file.className = 'file';
-	
-	                    const image = document.createElement('img');
-	                    image.src = event.imageUrl ? event.imageUrl : 'https://via.placeholder.com/280x280?text=No+Image';
-	                    image.alt = 'Event Image';
-	                    image.className = 'img-fluid';
-	
-	                    const fileName = document.createElement('div');
-	                    fileName.className = 'file-name';
-	
-	                    const title = document.createElement('p');
-	                    title.className = 'm-b-5 text-muted';
-	                    title.textContent = event.title;
-	
-	                    // 建立表單
-	                    const form = document.createElement('form');
-	                    form.action = '/OneRegistration';
-	                    form.method = 'GET';
-	
-	                    // 隱藏欄位
-	                    const registrationIDInput = document.createElement('input');
-	                    //registrationIDInput.type = 'hidden';						
-						registrationIDInput.style.display = 'none';
-	                    registrationIDInput.name = 'registrationID';
-	                    registrationIDInput.value = event.registrationID; // 假設每個活動都有唯一的registrationID
-	
-	                    const eventNoInput = document.createElement('input');
-	                    eventNoInput.type = 'hidden';
-	                    eventNoInput.name = 'eventNo';
-	                    eventNoInput.value = event.eventNo;
-	
-	                    // 活動詳情按鈕
-	                    const detailsButton = document.createElement('button');
-	                    detailsButton.type = 'submit';
-	                    detailsButton.textContent = '活動詳情';
-	                    detailsButton.className = 'details-button';
-						detailsButton.name  = 'registrationID';
-						detailsButton.value  = event.registrationID;
-						
-	
-	                    // 將隱藏欄位和按鈕添加到表單
-	                    form.appendChild(registrationIDInput);
-	                    form.appendChild(eventNoInput);
-	                    form.appendChild(detailsButton);
-	
-	                    fileName.appendChild(title);
-	                    file.appendChild(image);
-	                    file.appendChild(fileName);
-	                    file.appendChild(form); // 將表單添加到 file 中
-	                    card.appendChild(file);
-	                    listItem.appendChild(card);
-	                    eventsList.appendChild(listItem);
-	                });
-	            })
-	            .catch(error => {
-	                console.error('Error loading events:', error);
-	                alert('Failed to load events. Please check the console for more details.');
-	            });
-	    }
-	</script>
+    <script>
+        window.onload = function() {
+            fetchEvents();
+        };
 
+        function fetchEvents() {
+            fetch('/EventList')
+                .then(response => response.json())
+                .then(events => {
+                    console.log('Fetched events:', events); // 日誌輸出取得的活動資料
+                    const eventsList = document.getElementById('eventsList');
+                    eventsList.innerHTML = ''; // 清空列表
 
-    <title>SB Admin 2 - Dashboard</title>
+                    events.forEach(event => {
+                        console.log('Event:', event); // 日誌輸出每個活動資料
+
+                        const listItem = document.createElement('li');
+                        listItem.className = "col-lg-3 col-md-4 col-sm-12";
+
+                        const card = document.createElement('div');
+                        card.className = 'card';
+
+                        const file = document.createElement('div');
+                        file.className = 'file';
+
+                        const image = document.createElement('img');
+                        image.src = event.imageUrl ? event.imageUrl : 'https://via.placeholder.com/280x280?text=No+Image';
+                        image.alt = 'Event Image';
+                        image.className = 'img-fluid';
+
+                        const fileName = document.createElement('div');
+                        fileName.className = 'file-name';
+
+                        const title = document.createElement('p');
+                        title.className = 'm-b-5 text-muted';
+                        title.textContent = event.title;
+
+                        // 建立表單
+                        const form = document.createElement('form');
+                        form.action = '/EventDetail';
+                        form.method = 'GET';
+
+                        // 隱藏欄位
+                        const eventNoInput = document.createElement('input');
+                        eventNoInput.type = 'hidden';
+                        eventNoInput.name = 'eventNo';
+                        eventNoInput.value = event.eventNo;
+
+                        // 活動詳情按鈕
+                        const detailsButton = document.createElement('button');
+                        detailsButton.type = 'submit';
+                        detailsButton.textContent = '活動詳情';
+                        detailsButton.className = 'details-button';
+                        detailsButton.name = 'eventNo';
+                        detailsButton.value = event.eventNo;
+
+                        // 將隱藏欄位和按鈕添加到表單
+                        form.appendChild(eventNoInput);
+                        form.appendChild(detailsButton);
+
+                        fileName.appendChild(title);
+                        file.appendChild(image);
+                        file.appendChild(fileName);
+                        file.appendChild(form); // 將表單添加到 file 中
+                        card.appendChild(file);
+                        listItem.appendChild(card);
+                        eventsList.appendChild(listItem);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading events:', error);
+                    alert('Failed to load events. Please check the console for more details.');
+                });
+        }
+    </script>
+
+    <title>活動列表</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
