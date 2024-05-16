@@ -168,7 +168,7 @@ public class SocialPhotosController {
 //  看需不需要寫上傳多張
 //  第一種方式 : 沒有使用 photoNoToUpdate 參數，是從 Session 中獲取 photoNo    //  1.讓使用者選擇要更新的照片，並進行修改或上傳新的版本    //  2.當使用者按下保存按鈕時，從會話中獲取照片編號，然後將更新後的照片信息（如用戶編號、照片主題和新的照片文件）作為參數傳遞到後端，然後使用第一種方法進行處理。
 	
-	@PostMapping(value = "/updateSPhoto", produces = "application/json;charset=UTF-8")   //注意要加 .json", produces = "application/json;charset=UTF-8"
+	@PostMapping(value = "/updatePhotos", produces = "application/json;charset=UTF-8")   //注意要加 .json", produces = "application/json;charset=UTF-8"
 	@ResponseBody
 	public SocialPhotosBean updateSPhoto(@RequestParam("userNo") Integer userNo,
 										 @RequestParam("photoTheme") String photoTheme, 

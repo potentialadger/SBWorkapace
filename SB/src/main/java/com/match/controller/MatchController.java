@@ -87,4 +87,20 @@ public class MatchController {
 	public String refreshMatchesPage() {
 	    return "redirect:/matchHP";
 	}
+	
+	
+	
+	
+	
+	
+	
+	//-------前端
+	
+	
+	
+	
+	
+	
+	
+	
 }

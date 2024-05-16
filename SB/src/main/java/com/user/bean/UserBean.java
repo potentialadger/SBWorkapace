@@ -9,8 +9,6 @@ import java.util.Set;
 import org.springframework.stereotype.Component;
 
 import com.match.bean.TagsBean;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.forum.bean.LikesBean;
 import com.forum.bean.PostsBean;
 import com.forum.bean.RepliesBean;

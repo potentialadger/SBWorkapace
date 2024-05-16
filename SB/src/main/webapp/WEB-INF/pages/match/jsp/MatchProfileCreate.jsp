@@ -206,7 +206,7 @@ fieldset:not(:first-of-type) {
 
 <body>
 	<!-- multistep form -->
-	<form id="msform" action="/createProfile" method="post">
+	<form id="msform" action="/editMatchProfile" method="post">     <!-- 表單提交時,請求會被發送到 editMatchProfile 路徑, -->
 		<!-- progressbar -->
 		<ul id="progressbar">
 			<li id="step1Tab" class="active">Account Setup</li>
@@ -219,8 +219,8 @@ fieldset:not(:first-of-type) {
 			<h3 class="fs-subtitle">This is step 1</h3>
 
 			<!-- 暱稱 -->
-			<div class="form-group">
-				<input type="text" class="form-control" name="nickname"
+			<div class="form-group">                    <!-- 注意name要跟userbean的屬性一樣 -->
+				<input type="text" class="form-control" name="nickName"
 					placeholder="暱稱" style="font-size: inherit;">
 			</div>
 
@@ -252,12 +252,12 @@ fieldset:not(:first-of-type) {
 			<h2 class="fs-title">個人特徵</h2>
 			<h3 class="fs-subtitle">Your presence on the social network</h3>
 			<div class="form-group">
-				<select class="form-control" name="bloodtype" placeholder="血型">
+				<select class="form-control" name="bloodType" placeholder="血型">
 					<option value="" disabled selected>血型</option>
-					<option value="TYPE-A">A</option>
-					<option value="TYPE-B">B</option>
-					<option value="TYPE-AB">AB</option>
-					<option value="TYPE-OTHERS">其他</option>
+					<option value="A">A</option>
+					<option value="B">B</option>
+					<option value="AB">AB</option>
+					<option value="OTHERS">其他</option>
 				</select>
 			</div>
 
@@ -265,7 +265,7 @@ fieldset:not(:first-of-type) {
 			<div class="form-group">
 				<select class="form-control" name="MBTI" placeholder="MBTI">
 					<option value="" disabled selected>MBTI</option>
-					<option value="ISTJ">ISTJ</option>
+					<option value="ISTJ">ISTJ</option>      <!--   在後端的 UserBean 類中,mbti 屬性的類型通常是 String,而不是 Integer -->
 					<option value="ISTP">ISTP</option>
 					<option value="ISFJ">ISFJ</option>
 					<option value="ISFP">ISFP</option>
@@ -287,29 +287,31 @@ fieldset:not(:first-of-type) {
 
 			<!-- 尋找關係 -->
 			<div class="form-group">
-				<select class="form-control" name="goal.goals" placeholder="尋找關係">
+				<select class="form-control" name="goalNo" placeholder="尋找關係">
 					<option value="" disabled selected>尋找關係</option>
-					<option>不回答</option>
-					<option>網友</option>
-					<option>飯友</option>
-					<option>酒友</option>
-					<option>牌友</option>
-					<option>山友</option>
-					<option>旅伴</option>
-					<option>戀愛伴侶</option>
-					<option>結婚對象</option>
-					<option>朋友關係</option>
-					<option>短暫浪漫</option>
-					<option>匿名網友</option>
-					<option>一起運動</option>
-					<option>一起團購</option>
-					<option>外送拼單</option>
-					<option>不設限</option>
+					<option value="1">不回答</option>
+					<option value="2">網友</option>
+					<option value="3">飯友</option>
+					<option value="4">酒友</option>
+					<option value="5">牌友</option>
+					<option value="6">山友</option>
+					<option value="7">旅伴</option>
+					<option value="8">戀愛伴侶</option>
+					<option value="9">結婚對象</option>
+					<option value="10">朋友關係</option>
+					<option value="11">短暫浪漫</option>
+					<option value="12">匿名網友</option>
+					<option value="13">一起運動</option>
+					<option value="14">一起團購</option>
+					<option value="15">外送拼單</option>
+					<option value="16">不設限</option>
 				</select>
 			</div>
 
 			<input type="button" name="previous" class="previous action-button"
-				value="Previous" onclick="prevStep()" /> <input type="button"
+				value="Previous" onclick="prevStep()" /> 
+			
+			<input type="button"
 				name="next" class="next action-button" value="Next"
 				onclick="nextStep()" />
 		</fieldset>
@@ -319,11 +321,12 @@ fieldset:not(:first-of-type) {
 		<fieldset id="step3">
 			<h2 class="fs-title">基本資料填寫完成</h2>
 			<h3 class="fs-subtitle">We will never sell it</h3>
-			<div class="edit-match">
-    			<button type="submit" name="targetPage" value="/match.MatchProfileEdit" class="icon-button">
+			<div class="edit-match">                           <!-- 路徑 -->
+    			<button type="submit" name="targetPage" value="/editMatchProfile" class="icon-button">
         			<i class="fa-solid fa-user-pen" style="color: #8f8f8f; font-size: 4em; margin-right: 25px; margin-bottom: 66px;"></i>
    			 	</button>
-    			<button type="submit" name="targetPage" value="/match.UsersMatch" class="icon-button">
+   			 	                                               <!-- 路徑 -->
+    			<button type="submit" name="targetPage" value="/matchPage" class="icon-button">
         			<i class="fa-solid fa-heart-circle-xmark" style="color: #8f8f8f; font-size: 4em;margin-top: 66px;"></i>
     			</button>
 			</div>
