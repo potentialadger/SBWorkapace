@@ -31,6 +31,21 @@ public class UserImageBean {
 	
 	public UserImageBean() {
 	}
+	
+	
+
+	public UserImageBean(Integer userImageNo, UserBean userBean, String imagePath) {
+		this.userImageNo = userImageNo;
+		this.userBean = userBean;
+		this.imagePath = imagePath;
+	}
+
+	public UserImageBean(UserBean userBean, String imagePath) {
+		this.userBean = userBean;
+		this.imagePath = imagePath;
+	}
+
+
 
 	public Integer getUserImageNo() {
 		return userImageNo;

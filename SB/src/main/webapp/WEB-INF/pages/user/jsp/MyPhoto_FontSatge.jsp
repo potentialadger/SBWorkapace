@@ -417,100 +417,20 @@
                                                                     <div class="profile-container">
                                                                         <div class="row row-space-20">
                                                                             <div class="col-md-8">
+                                                                                <div class="d-flex justify-content-end">
+                                                                                    <div class="tab-content p-0">
+                                                                                        <button type="button" class="btn btn-primary btn-lg float-right" id="uploadBtn" data-toggle="modal" data-target="#uploadImgs">上傳</button>
+                                                                                    </div>
+                                                                                </div>
                                                                                 <div class="tab-content p-0">
                                                                                     <div class="tab-pane active show" id="profile-photos">
-                                                                                        <div class="m-b-10"><b>照片 (30)</b></div>
+                                                                                        <div class="m-b-10"><b>照片 (${userImagesCount})</b></div>
                                                                                         <ul class="img-grid-list">
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/008B8B/000000" alt="" class="img-portrait" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/6495ED/000000" alt="" class="img-portrait" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/4169E1/000000" alt="" class="img-portrait" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/FF7F50/000000" alt="" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/FF0000/000000" alt="" class="img-portrait" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/6495ED/000000" alt="" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/B0E0E6/000000" alt="" class="img-portrait" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/9932CC/000000" alt="" class="img-portrait" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/DB7093/000000" alt="" class="img-portrait" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/FF1493/000000" alt="" class="img-portrait" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/191970/000000" alt="" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/FF8C00/000000" alt="" class="img-portrait" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/EEE8AA/000000" alt="" class="img-portrait" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/1E90FF/000000" alt="" class="img-portrait" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/3CB371/000000" alt="" class="img-portrait" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/9932CC/000000" alt="" class="img-portrait" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/B0C4DE/000000" alt="" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/ADD8E6/000000" alt="" class="img-portrait" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/008B8B/000000" alt="" class="img-portrait" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/D3D3D3/000000" alt="" class="img-portrait" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/008B8B/000000" alt="" class="img-portrait" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/20B2AA/000000" alt="" class="img-portrait" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/48D1CC/000000" alt="" class="img-portrait" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/008B8B/000000" alt="" class="img-portrait" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/6495ED/000000" alt="" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/008B8B/000000" alt="" class="img-portrait" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/FFC0CB/000000" alt="" class="img-portrait" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/008B8B/000000" alt="" class="img-portrait" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/DDA0DD/000000" alt="" /></a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#"><img src="https://www.bootdey.com/image/150x150/008B8B/000000" alt="" /></a>
-                                                                                            </li>
+                                                                                            <c:forEach var="aImg" items="${userBean.userImages}">
+                                                                                                <li>
+                                                                                                    <a href="#"><img src="localimages/<c:out value="${aImg.imagePath}"/>" alt="" class="img-portrait" /></a>
+                                                                                                </li>
+                                                                                            </c:forEach>
                                                                                         </ul>
                                                                                     </div>                    
                                                                                 </div>
@@ -584,6 +504,36 @@
                             </div>
                             <!-- End of Page Wrapper -->
 
+                            <!-- 上傳多張照片的modal -->
+                            <div class="modal fade" id="uploadImgs" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <form action="userUploadImages" method="post" enctype="multipart/form-data">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">上傳圖片</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div id="showImgs">
+
+                                            </div>
+                                            <div class="pt-5">
+                                                <input type="file" name="images" multiple onchange="selectImgFile(this.files)">
+                                            </div>
+                                        
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                                        <button type="submit" class="btn btn-primary">上傳</button>
+                                        </div>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
                             <!-- Scroll to Top Button-->
                             <a class="scroll-to-top rounded" href="#page-top">
                                 <i class="fas fa-angle-up"></i>
@@ -612,17 +562,27 @@
 
                             <script>
                                 function selectImgFile(files) {
+
                                     if (!files.length) {
                                         return false;
                                     }
 
-                                    let file = files[0];
-                                    let reader = new FileReader();
-                                    reader.onload = function () {
-                                        document.querySelector('#avatarImg').src = this.result;
-                                    };
+                                    document.querySelector('#showImgs').innerHTML = "";
+                                    for(var i = 0; i < files.length; i++){
+                                        let file = files[i];
+                                        let reader = new FileReader();
+                                        reader.onload = function () {
+                                            let currentImg = document.createElement("img");
+                                            currentImg.classList.add("img-fluid", "border", "border-secondary", "rounded");
+                                            currentImg.style.width = "150px";
+                                            currentImg.style.height = "150px";
+                                            currentImg.style.objectFit = "cover";
+                                            currentImg.src = this.result;
+                                            document.querySelector('#showImgs').append(currentImg);
+                                        };
 
-                                    reader.readAsDataURL(file);
+                                        reader.readAsDataURL(file);
+                                    }
                                 }
                             </script>
                         </body>
