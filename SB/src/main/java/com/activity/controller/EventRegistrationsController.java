@@ -9,7 +9,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,7 +17,6 @@ import com.activity.bean.EventRegistrationsBean;
 import com.activity.service.EventRegistrationsService;
 import com.activity.service.EventService;
 import com.user.bean.UserBean;
-import com.user.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -61,9 +59,7 @@ public class EventRegistrationsController {
         ModelAndView mav = new ModelAndView("activity/DisplayAllRegistrations.jsp");
         try {
             List<EventRegistrationsBean> registrations = eventRegistrationsService.findAllRegistrations();
-            for (EventRegistrationsBean registration : registrations) {
-                registration.setEvent(eventService.findEventByEventNo(registration.getEventNo()));
-            }
+            System.out.println("Registrations size: " + registrations.size()); 
             mav.addObject("registrations", registrations);
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,6 +67,7 @@ public class EventRegistrationsController {
         }
         return mav;
     }
+
     
     // 處理我要報名按鈕 - InsertRegistrations.jsp
     @GetMapping("/activityInsertRegistrations")
@@ -142,15 +139,18 @@ public class EventRegistrationsController {
     // 刪除註冊
     @DeleteMapping("/DeleteRegistrations")
     public ModelAndView deleteRegistrationByRegistrationID(@RequestParam("registrationID") int registrationID) {
-        ModelAndView mav = new ModelAndView("redirect:/AllRegistrations");
+        ModelAndView mav = new ModelAndView();
         try {
             eventRegistrationsService.deleteEventByEventNo(registrationID);
+            mav.setViewName("redirect:/AllRegistrations");
         } catch (Exception e) {
             e.printStackTrace();
+            mav.setViewName("error");
             mav.addObject("errorMessage", "An error occurred: " + e.getMessage());
         }
         return mav;
     }
+
 
     // 查詢欲更新的資料
     @GetMapping("/getRegistrationsDataForUpdate")
@@ -207,19 +207,33 @@ public class EventRegistrationsController {
             Map<String, Object> map = new HashMap<>();
             map.put("registrationID", registration.getRegistrationID());
             map.put("eventNo", registration.getEventNo());
-            map.put("title", registration.getEvent().getTitle());
-            map.put("description", registration.getEvent().getDescription());
-            map.put("location", registration.getEvent().getLocation());
-            map.put("imagePath", registration.getEvent().getImagePath());
-            map.put("activityTime", registration.getEvent().getActivityTime());
-            map.put("signupStartTime", registration.getEvent().getSignupStartTime());
-            map.put("signupEndTime", registration.getEvent().getSignupEndTime());
-            map.put("status", registration.getEvent().getStatus());
+            
+            if (registration.getEvent() != null) {
+                map.put("title", registration.getEvent().getTitle());
+                map.put("description", registration.getEvent().getDescription());
+                map.put("location", registration.getEvent().getLocation());
+                map.put("imagePath", registration.getEvent().getImagePath());
+                map.put("activityTime", registration.getEvent().getActivityTime());
+                map.put("signupStartTime", registration.getEvent().getSignupStartTime());
+                map.put("signupEndTime", registration.getEvent().getSignupEndTime());
+                map.put("status", registration.getEvent().getStatus());
+            } else {
+                map.put("title", null);
+                map.put("description", null);
+                map.put("location", null);
+                map.put("imagePath", null);
+                map.put("activityTime", null);
+                map.put("signupStartTime", null);
+                map.put("signupEndTime", null);
+                map.put("status", null);
+            }
+
             response.add(map);
         }
+
         return response;
     }
-    
+
    
     
 }
