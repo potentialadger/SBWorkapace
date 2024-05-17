@@ -33,8 +33,20 @@
 
 	/* 調整圖片的寬度和高度 */
 	img {
-    width: 100px; /* 設置圖片的寬度為 */
-    height: 100px; /* 設置圖片的高度為 */
+	width: 100px; /* 設置圖片的寬度為 */
+	height: 100px; /* 設置圖片的高度為 */
+	}
+
+	/* 將標題和按鈕包裹在同一個容器中 */
+	.title-and-button {
+	display: flex; /* 使用 Flexbox 佈局 */
+	flex-direction: column; /* 垂直佈局 */
+	align-items: center; /* 將內容水平居中對齊 */
+	}
+
+	/* 調整標題的底部間距 */
+	.title-and-button h1 {
+	margin-bottom: 10px; /* 調整標題底部間距 */
 	}
 	
 	</style>
@@ -60,7 +72,6 @@
                 <!-- 主要內容 -->
                
                <!--  
-				    <br>
 				    <form method="get" action="/posts/OnePosts">
 				        查詢: <input type="text" name="postsBeanKeyword" required>
 				        <button type="submit">送出</button>
@@ -73,19 +84,16 @@
 				    </form>
 				-->
                
-               
+               	<div class="title-and-button">
                		<h1>文章</h1> 
-					
-					<div class="right-align">
-				     <form method="get" action="/CategoriesController/CategoriesAll" class="right-align">
+				     <form method="get" action="/CategoriesController/CategoriesAll">
 				        <button type="submit" class="btn-green">返回</button>
 				    </form>
-				   	</div>
+				</div>
 				    
 				    <div class="table-container">
 				    <table id="postsTable">
 				        <thead>
-				   
 				            <tr>
 				                <th>分類</th>
 				                <th>文章標題</th>
@@ -100,6 +108,7 @@
 				                <th>喜歡紀錄</th>
 				            </tr>
 				        </thead>
+				        
 				        <tbody>
 				            <c:if test="${not empty postsM}">
 				                <c:forEach var="posts" items="${postsM}">
@@ -144,7 +153,7 @@
 				            </c:if>
 				        </tbody>
 				    </table>
-				    
+				    <!-- 文章內容模態框 -->
 				    <div class="modal fade" id="contentModal" tabindex="-1"
                             aria-labelledby="contentModalLabel" aria-hidden="true">
                             <div class="modal-dialog">

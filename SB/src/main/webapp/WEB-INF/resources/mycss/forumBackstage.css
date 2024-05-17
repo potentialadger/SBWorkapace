@@ -4,6 +4,7 @@
     color: #fff; /* 文字顏色 */
     border: none; /* 移除邊框 */
     outline: none; /* 移除外框 */
+    transition: background-color 0.3s ease; /* 添加過渡效果 */
 }
 
 /* 按鈕綠色樣式 */
@@ -12,6 +13,7 @@
     color: #fff; /* 文字顏色 */
     border: none; /* 移除邊框 */
     outline: none; /* 移除外框 */
+    transition: background-color 0.3s ease; /* 添加過渡效果 */
 }
 
 /* 按鈕紅色樣式 */
@@ -20,6 +22,7 @@
     color: #fff; /* 文字顏色 */
     border: none; /* 移除邊框 */
     outline: none; /* 移除外框 */
+    transition: background-color 0.3s ease; /* 添加過渡效果 */
 }
 
 /* 按鈕黃色樣式 */
@@ -28,6 +31,7 @@
     color: #fff; /* 文字顏色 */
     border: none; /* 移除邊框 */
     outline: none; /* 移除外框 */
+    transition: background-color 0.3s ease; /* 添加過渡效果 */
 }
 
 /* 標題樣式 */
@@ -65,4 +69,10 @@ th, td {
     border: 1px solid rgb(128, 128, 128); /* 表格線 */
     padding: 8px; /* 內邊距 */
     color: rgb(0, 0, 0); /* 文字顏色 */
+    transition: background-color 0.3s ease; /* 添加過渡效果 */
+}
+
+/* DataTables行懸停時的樣式 */
+table.dataTable tbody tr:hover {
+    background-color: #f2f2f2; /* 反灰顏色 */
 }

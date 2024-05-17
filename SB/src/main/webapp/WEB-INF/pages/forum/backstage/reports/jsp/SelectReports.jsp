@@ -29,6 +29,22 @@
 	    
 	<link rel="stylesheet" type="text/css" href="/mycss/forumBackstage.css">
 	
+	<style>
+	
+	/* 將標題和按鈕包裹在同一個容器中 */
+	.title-and-button {
+	display: flex; /* 使用 Flexbox 佈局 */
+	flex-direction: column; /* 垂直佈局 */
+	align-items: center; /* 將內容水平居中對齊 */
+	}
+
+	/* 調整標題的底部間距 */
+	.title-and-button h1 {
+	margin-bottom: 10px; /* 調整標題底部間距 */
+	}
+	
+	</style>
+	
 </head>
 
 <body id="page-top">
@@ -49,19 +65,21 @@
 
                 <!-- 主要內容 -->
                
-				<h1>檢舉管理</h1>
-				    <br>
 				<!--  
 				    <form method="get" action="/reports/AllReports">
 				        <button type="submit">檢舉紀錄</button>
 				    </form>
 				-->
 				
+				<div class="title-and-button">
+				<h1>檢舉管理</h1>
+				
 				    <form method="get" action="/posts/CategoriesPosts">
 						<input type="hidden" name="categoryNo"
 							value="${post.categoriesBean.category_no}">
 						<button type="submit" class="btn-green">返回</button>
 					</form>
+				</div>
 					
 					<div class="table-container">
 				    <table id="reportsTable">
@@ -82,10 +100,10 @@
 				                <c:forEach var="reports" items="${reportsM}">
 				                    <tr>
 				                        <td><c:out value="${post.title}" /></td>
-				                        <td><c:out value="${post.content}" /></td>
+				                        <td class="content" data-toggle="modal" data-target="#contentModal" data-content="${post.content}"><c:out value="${post.content}" /></td>
 				                        <td><c:out value="${reports.userBean.userChineseName}" /></td>
 				                        <td><c:out value="${reports.userBean.email}" /></td>
-				                        <td><c:out value="${reports.reason}" /></td>
+				                        <td class="reason-content" data-toggle="modal" data-target="#reasonModal" data-reason="${reports.reason}"><c:out value="${reports.reason}" /></td>
 				                        <td><c:out value="${reports.report_date}" /></td>
 				
 				          <td>
@@ -106,8 +124,48 @@
 				                </tr>
 				            </c:if>
 				        </tbody>
-				    </table>  
-				  </div> 
+				    </table>
+					<!-- 文章內容模態框 -->
+					<div class="modal fade" id="contentModal" tabindex="-1"
+						role="dialog" aria-labelledby="contentModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="contentModalLabel">文章內容</h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<p id="contentModalBody"></p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- 檢舉原因模態框 -->
+					<div class="modal fade" id="reasonModal" tabindex="-1"
+						role="dialog" aria-labelledby="reasonModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="reasonModalLabel">檢舉原因</h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<p id="reasonModalBody"></p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div> 
                 <!-- 主要內容結尾 -->
 
             </div>
@@ -161,6 +219,22 @@
 	    $(document).ready(function() {
 	        $('#reportsTable').DataTable(); // 初始化 DataTables
 	    });
+	</script>
+	
+	<script>
+    // 顯示文章內容
+    $('.content').click(function() {
+        var content = $(this).data('content');
+        $('#contentModalBody').text(content);
+        $('#contentModal').modal('show');
+    });
+
+    // 顯示檢舉原因
+    $('.reason-content').click(function() {
+        var reason = $(this).data('reason');
+        $('#reasonModalBody').text(reason);
+        $('#reasonModal').modal('show');
+    });
 	</script>
 
 
