@@ -1307,7 +1307,6 @@ body {
     var selectedTags = tagify.value.map(function(tag) {
         return tag.value;
     });
-    console.log("cccc", JSON.stringify(optionsList))
     // 發送 POST 請求到後端
     fetch('/updateTags', {
         method: 'POST',
