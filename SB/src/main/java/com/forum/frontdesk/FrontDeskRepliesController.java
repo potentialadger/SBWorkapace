@@ -6,12 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.forum.bean.PostsBean;
 import com.forum.bean.RepliesBean;
@@ -63,6 +63,7 @@ public class FrontDeskRepliesController {
 
 	// 前台 新增
 	@PostMapping("/InsertReplies")
+	@ResponseBody
 	public String insertReplies(@RequestParam("post_no") int post_no, @RequestParam("user_no") int user_no,
 			@RequestParam("content") String content, HttpSession session) {
 
@@ -74,20 +75,18 @@ public class FrontDeskRepliesController {
 		replies.setUserBean(userData);
 		replies.setContent(content);
 		replies.setUpdate_date(new Date());
-
+		System.out.println(replies);
 		repliesService.insertReplies(replies);
-
-		return "redirect:/postsFrontDesk/SelectPosts?postsNo=" + post_no;
+		
+		return "OK";
 	}
-
-	// 前台 刪除
-	@DeleteMapping("/DeleteReplies")
+	
+	//前台刪除
+	@PostMapping("/DeleteReplies")
+	@ResponseBody
 	public String deleteReplies(@RequestParam("repliesNo") String repliesNo) {
-
-		repliesService.deleteReplies(Integer.parseInt(repliesNo));
-
-		return "redirect:/replies/AllReplies(要跳轉回該篇文章)";
-
+	    repliesService.deleteReplies(Integer.parseInt(repliesNo));
+	    return "OK"; 
 	}
 
 	// 前台 更新用查詢
@@ -98,10 +97,10 @@ public class FrontDeskRepliesController {
 
 		m.addAttribute("updateSelect", replies);
 
-		return "/forum/backstage/replies/jsp/UpdateReplies.jsp";
+		return "/forum/frontdesk/replies/jsp/UpdateReplies.jsp";
 
 	}
-
+	
 	// 前台 更新
 	@PutMapping("/UpdateReplies")
 	public String updateReplies(@RequestParam("reply_no") int reply_no, @RequestParam("post_no") int post_no,
@@ -121,7 +120,7 @@ public class FrontDeskRepliesController {
 
 		repliesService.updateReplies(repliesToUpdate);
 
-		return "redirect:/replies/AllReplies(要跳轉回該篇文章)";
+		return "redirect:/postsFrontDesk/SelectPosts?postsNo=" + post_no;
 	}
 
 }

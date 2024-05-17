@@ -17,11 +17,15 @@
     <input type="submit" value="提交" />
        
 </form>
-
+	 <button onclick="goBack()">返回</button>
    <script>
         function confirmSubmission() {
             return confirm("您確定要檢舉嗎？");
         }
+        
+    		function goBack() {
+    			window.history.back();
+    		}
     </script>
     
 </body>
