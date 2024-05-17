@@ -109,6 +109,7 @@ public class PostsController {
 		
 		try {
 			
+		if(image_url != null && !image_url.getName().equals("image_url")) {
 		// 從上傳的文件 image_url 中獲取原始文件名。
 		String fileName = image_url.getOriginalFilename();
 		// 以下判斷是為了過濾掉非圖檔的 檔案 只要.jpg, .png, .pdf 等
@@ -140,7 +141,7 @@ public class PostsController {
 		image_url.transferTo(fileDirPath);
 
 		posts.setImage_url(fileName);
-
+		}
 		
 		postsService.insertPosts(posts);
 
@@ -211,6 +212,7 @@ public class PostsController {
 		postsToUpdate.setContent(content);
 		postsToUpdate.setUpdate_date(new Date());
 		
+		if(image_url != null && !image_url.getName().equals("image_url")) {
 		//從上傳的文件 image_url 中獲取原始文件名。
 		String fileName = image_url.getOriginalFilename();
 		//以下判斷是為了過濾掉非圖檔的 檔案 只要.jpg, .png, .pdf 等
@@ -242,6 +244,7 @@ public class PostsController {
 		image_url.transferTo(fileDirPath);
 		
 		postsToUpdate.setImage_url(fileName);
+		}
 		
 		postsService.updatePosts(postsToUpdate);
 

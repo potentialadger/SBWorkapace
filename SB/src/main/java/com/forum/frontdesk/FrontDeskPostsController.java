@@ -104,7 +104,7 @@ public class FrontDeskPostsController {
 			@RequestParam("image_url") MultipartFile image_url,
 			Model m,
 			HttpSession session) {
-
+		
 		UserBean userData = (UserBean) session.getAttribute("userData");
 
 		CategoriesBean category = categoriesService.getCategoryNo(category_no);
@@ -117,38 +117,40 @@ public class FrontDeskPostsController {
 		posts.setUpdate_date(new Date());
 
 		try {
-
-			// 從上傳的文件 image_url 中獲取原始文件名。
-			String fileName = image_url.getOriginalFilename();
-			// 以下判斷是為了過濾掉非圖檔的 檔案 只要.jpg, .png, .pdf 等
-			// 創建一個空字符串來保存文件的擴展名 例如 .jpg, .png, .pdf 等 用於識別文件的類型。
-			String SaveFileType = "";
-			// 找到最後一個點的索引位置 例:example.txt =從e開始0123456(7)為點的位置
-			int i = fileName.lastIndexOf('.');
-			// 如果找到了擴展名，則從文件名中截取擴展名部分 從索引位置點開始取 = .txt
-			if (i >= 0) {
-				SaveFileType = fileName.substring(i);
+			if(!image_url.isEmpty()) {
+				// 從上傳的文件 image_url 中獲取原始文件名。
+				String fileName = image_url.getOriginalFilename();
+				// 以下判斷是為了過濾掉非圖檔的 檔案 只要.jpg, .png, .pdf 等
+				// 創建一個空字符串來保存文件的擴展名 例如 .jpg, .png, .pdf 等 用於識別文件的類型。
+				String SaveFileType = "";
+				// 找到最後一個點的索引位置 例:example.txt =從e開始0123456(7)為點的位置
+				int i = fileName.lastIndexOf('.');
+				// 如果找到了擴展名，則從文件名中截取擴展名部分 從索引位置點開始取 = .txt
+				if (i >= 0) {
+					SaveFileType = fileName.substring(i);
+				}
+				// 生成一個隨機數，作為文件名的一部分，以避免文件名衝突 增加一個辨別條件(怕兩個人上傳同樣名稱之類的檔案的情況)
+				Random random = new Random();
+				int raNumber = random.nextInt(10000);
+				
+				// 獲取當前日期和時間
+				Date currentDate = new Date();
+				// 定義日期格式
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+				// 將日期格式化為字符串
+				String formattedDate = formatter.format(currentDate);
+				// 構建新的文件名，將格式化後的日期、隨機數和擴展名組合在一起 成為此檔案新的辨別的方式
+				fileName = formattedDate + "_" + raNumber + SaveFileType;
+				// 指定文件上傳的目錄路徑
+				String fileDir = "C:/temp/upload/";
+				// 創建一個文件，把路徑跟新的檔案辨別名稱加上去。
+				File fileDirPath = new File(fileDir, fileName);
+				
+				image_url.transferTo(fileDirPath);
+				
+				posts.setImage_url(fileName);
+				
 			}
-			// 生成一個隨機數，作為文件名的一部分，以避免文件名衝突 增加一個辨別條件(怕兩個人上傳同樣名稱之類的檔案的情況)
-			Random random = new Random();
-			int raNumber = random.nextInt(10000);
-
-			// 獲取當前日期和時間
-			Date currentDate = new Date();
-			// 定義日期格式
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-			// 將日期格式化為字符串
-			String formattedDate = formatter.format(currentDate);
-			// 構建新的文件名，將格式化後的日期、隨機數和擴展名組合在一起 成為此檔案新的辨別的方式
-			fileName = formattedDate + "_" + raNumber + SaveFileType;
-			// 指定文件上傳的目錄路徑
-			String fileDir = "C:/temp/upload/";
-			// 創建一個文件，把路徑跟新的檔案辨別名稱加上去。
-			File fileDirPath = new File(fileDir, fileName);
-
-			image_url.transferTo(fileDirPath);
-
-			posts.setImage_url(fileName);
 
 			postsService.insertPosts(posts);
 			
@@ -224,7 +226,8 @@ public class FrontDeskPostsController {
 			postsToUpdate.setTitle(title);
 			postsToUpdate.setContent(content);
 			postsToUpdate.setUpdate_date(new Date());
-
+			
+			if(image_url != null && !image_url.getName().equals("image_url")) {
 			// 從上傳的文件 image_url 中獲取原始文件名。
 			String fileName = image_url.getOriginalFilename();
 			// 以下判斷是為了過濾掉非圖檔的 檔案 只要.jpg, .png, .pdf 等
@@ -254,8 +257,10 @@ public class FrontDeskPostsController {
 			File fileDirPath = new File(fileDir, fileName);
 
 			image_url.transferTo(fileDirPath);
-
+			
 			postsToUpdate.setImage_url(fileName);
+			
+			}
 
 			postsService.updatePosts(postsToUpdate);
 			
