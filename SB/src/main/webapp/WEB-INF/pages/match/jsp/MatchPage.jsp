@@ -877,7 +877,7 @@ img { max-width: auto; height: auto; }
   transition: all .3s ease;   /*在屬性值變化時平滑過渡*/
 }   
     
-.aboutme {
+.aboutMe {
   text-align: center;
   font-family: "cwTeXYen", sans-serif;
   font-size: 24px;
@@ -897,17 +897,17 @@ img { max-width: auto; height: auto; }
   font-size: 21px;
 }
 
-.starsign {
+.starSign {
   margin-right: 140px; /* 向右移動 20 像素 */
   font-size: 21px;
 }
     
-.bloodtype {
+.bloodType {
   margin-right: 140px; /* 向右移動 20 像素 */
   font-size: 21px;
 }
     
-.mbti {
+.MBTI {
   margin-right: 140px; /* 向右移動 20 像素 */
   font-size: 18px;
 }
@@ -1381,7 +1381,7 @@ border-radius:6px;
 <div id="menu">
 	<!--列出了一個朋友清單。這個清單可能是用來顯示聯繫人列表的-->
 	<div id="friendslist">
-		<!--包含了一個顶部菜单，裡面包含了三個 <span> 元素，每個 <span> 元素可能用於不同的操作，如顯示好友、聊天、或歷史記錄-->
+		<!--包含了一個頂部菜單，裡面包含了三個 <span> 元素，每個 <span> 元素可能用於不同的操作，如顯示好友、聊天、或歷史記錄-->
     	<div id="leftmenu">
         	<span class="friends"></span>
             <!--<span class="chats"></span>
@@ -1562,12 +1562,12 @@ border-radius:6px;
   
   
 
-   <!--表示應用程式的主要部分-->
+   <!--Tinder-->
    <div class="app-main"> 
 
      
 
-<!--刪除的部分-->
+<!--照片-->
    <div class="card-container">
     <div class="carousel">
       <img src="https://images.unsplash.com/photo-1566821582776-92b13ab46bb4?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" width="580" height="230" alt="destination">
@@ -1594,11 +1594,10 @@ border-radius:6px;
       <img src="http://fakeimg.pl/580x230/FFF/121212/?text=destination9&font=lobster" width="580" height="230" alt="destination">
     </div>
   </div>
-     <!--刪除的部分-->
 
 
 
-     <!--包裝視訊通話的操作按鈕-->
+     <!--按鈕-->
       <div class="tinder">
      	 <div class="tinder--buttons">
      	 <button id="nope"><i class="fa fa-remove"></i></button>
@@ -1641,23 +1640,38 @@ border-radius:6px;
         我想聊的話題是
         <hr class="hr">
         </div>
-        <div class="aboutme">
+        <div class="aboutMe">
         關於我
-          <div class="gender">
-           性別
+        
+		<div class="gender">		
+   	      性別 <span><c:choose>
+          <c:when test="${userBean.gender == 0}">生理女</c:when>
+          <c:otherwise>生理男</c:otherwise>
+          </c:choose></span>
           </div>
+          
           <div class="age">
-           年齡
+          年齡 <span id="userAge"></span>
           </div>
-          <div class="starsign">
-           星座
+          <div class="starSign">
+          星座 <span id="userStarSign"></span>
           </div>
-          <div class="bloodtype">
-           血型
-          </div>
-          <div class="mbti">
-           MBTI
-          </div>
+          
+<div class="bloodType">
+  血型: <span>
+    <c:if test="${userBean.bloodType == 'A'}">A</c:if>
+    <c:if test="${userBean.bloodType == 'B'}">B</c:if>
+    <c:if test="${userBean.bloodType == 'O'}">O</c:if>
+    <c:if test="${userBean.bloodType == 'AB'}">AB</c:if>
+    <c:if test="${userBean.bloodType != 'A' && userBean.bloodType != 'B' && userBean.bloodType != 'O' && userBean.bloodType != 'AB'}">其他</c:if>
+  </span>
+</div>
+          
+<div class="MBTI">
+  MBTI: <span><c:out value="${userBean.MBTI}" default="未知" /></span>
+</div>
+		   
+		  </div>
         </div>
 
 
@@ -4888,8 +4902,58 @@ function handleLove() {
 nopeButton.addEventListener('click', handleNope);
 loveButton.addEventListener('click', handleLove);*/
                           
-                          
-                          
+          
+
+
+
+
+// ---從資料庫取資料
+
+
+// 假設從伺服器獲取的使用者資料
+/*var userData = {
+  gender: 0, // 0 表示生理男，1 表示生理女
+  MBTI: "INTP"
+};*/
+
+// 更新性別顯示
+/*var genderElement = document.getElementById("userGender");
+genderElement.textContent = userData.gender == 0 ? "生理男" : "生理女";*/
+
+// 更新 MBTI 顯示
+/*var mbtiElement = document.getElementById("userMBTI");
+mbtiElement.textContent = userData.MBTI;*/    
+
+
+// 從 userBean 中獲取生日資訊
+var birthday = new Date("${userBean.birthday}");
+
+// 計算年齡
+var today = new Date();
+var age = today.getFullYear() - birthday.getFullYear();
+var monthDiff = today.getMonth() - birthdate.getMonth();
+if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthday.getDate())) {
+  age--;
+}
+document.getElementById("userAge").textContent = age;
+
+// 計算星座
+var month = birthday.getMonth() + 1;
+var day = birthday.getDate();
+var starSigns = [    "摩羯座", "水瓶座", "雙魚座", "牡羊座", "金牛座", "雙子座",    "巨蟹座", "獅子座", "處女座", "天秤座", "天蠍座", "射手座"  ];
+var starSignDates = [    [1, 20], [2, 19], [3, 21], [4, 20], [5, 21], [6, 22],    [7, 23], [8, 23], [9, 23], [10, 24], [11, 23], [12, 22]  ];
+var starSign = "";
+for (var i = 0; i < 12; i++) {
+  if (month === starSignDates[i][0] && day >= starSignDates[i][1]) {
+    starSign = starSigns[i];
+    break;
+  }
+  if (month === starSignDates[(i + 1) % 12][0] && day < starSignDates[(i + 1) % 12][1]) {
+    starSign = starSigns[i];
+    break;
+  }
+}
+document.getElementById("userStarSign").textContent = starSign;
                                  
                           
       

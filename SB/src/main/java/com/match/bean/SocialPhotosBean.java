@@ -25,7 +25,7 @@ public class SocialPhotosBean {
 	@Column(name="photopath")
 	private String photoPath;
 	
-	@Column(name="phototheme")
+    @Column(name="phototheme", columnDefinition = "VARCHAR(255) DEFAULT '我的照片'")
 	private String photoTheme; //NOT NULL
 
 	
@@ -36,18 +36,16 @@ public class SocialPhotosBean {
 	
 	
 	//根據所有屬性來初始化
-	public SocialPhotosBean(Integer photoNo, Integer userNo, String photoPath, String photoTheme) {
+	public SocialPhotosBean(Integer photoNo, Integer userNo, String photoPath) {
 		this.photoNo = photoNo;
 		this.userNo = userNo;
 		this.photoPath = photoPath;
-		this.photoTheme = photoTheme;
 	}
 	
 	//根據除了photoNo以外的屬性來初始化
-	public SocialPhotosBean(Integer userNo, String photoPath, String photoTheme) {
+	public SocialPhotosBean(Integer userNo, String photoPath) {
 		this.userNo = userNo;
 		this.photoPath = photoPath;
-		this.photoTheme = photoTheme;
 	}
 
 

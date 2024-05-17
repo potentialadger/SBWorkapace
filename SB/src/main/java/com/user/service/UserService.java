@@ -159,8 +159,31 @@ public class UserService {
         }
     }
    
-	
     
+    
+    
+    // ----- 實作Tags------
+    
+    public void updateUserTags(UserBean userBean, List<String> selectedTags) {
+        // 清空使用者原有的標籤
+        userBean.getTagsBeans().clear();
+        
+        // 根據選擇的標籤名稱列表批量查詢標籤實體
+        List<TagsBean> tags = tRepository.findByTagNameIn(selectedTags);
+        
+        if (!tags.isEmpty()) {
+            // 如果查詢結果不為空,添加查詢到的標籤實體到使用者的標籤集合中
+            userBean.getTagsBeans().addAll(tags);
+        } else {
+            // 如果查詢結果為空,可以選擇忽略或進行錯誤處理
+            // 這裡選擇忽略空結果,不做任何操作
+        }
+        
+        // 儲存更新後的使用者資料
+        uRepository.save(userBean);
+    }
+    
+
     
 	
     //----Test----	

@@ -1,8 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ page import="com.user.bean.UserBean"%>
 <%@ page import="java.util.List"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +38,8 @@ html {
 body {
 	font-family: montserrat, arial, verdana;
 	/*新的背景色*/
-	background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/38816/image-from-rawpixel-id-2042508-jpeg.jpg");
+	background:
+		url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/38816/image-from-rawpixel-id-2042508-jpeg.jpg");
 	height: 100vh;
 	width: 100vw;
 	position: relative;
@@ -206,7 +208,8 @@ fieldset:not(:first-of-type) {
 
 <body>
 	<!-- multistep form -->
-	<form id="msform" action="/editMatchProfile" method="post">     <!-- 表單提交時,請求會被發送到 editMatchProfile 路徑, -->
+	<form id="msform" action="/editMatchProfile" method="post">
+		<!-- 表單提交時,請求會被發送到 editMatchProfile 路徑, -->
 		<!-- progressbar -->
 		<ul id="progressbar">
 			<li id="step1Tab" class="active">Account Setup</li>
@@ -219,17 +222,18 @@ fieldset:not(:first-of-type) {
 			<h3 class="fs-subtitle">This is step 1</h3>
 
 			<!-- 暱稱 -->
-			<div class="form-group">                    <!-- 注意name要跟userbean的屬性一樣 -->
+			<div class="form-group">
+				<!-- 注意name要跟userbean的屬性一樣 -->
 				<input type="text" class="form-control" name="nickName"
 					placeholder="暱稱" style="font-size: inherit;">
 			</div>
 
 			<!-- 生日 : 動態傳入user設定好的資料 -->
-		   	<div class="form-group">
-    		  	<input type="date" class="form-control" name="birthday" 
-           			 value="${localDateTimeDateFormat.format(userBean.birthday)}" pattern='yyyy-MM-dd'
-           			 style="font-size: inherit;"/>
-		   	</div>
+			<div class="form-group">
+				<input type="date" class="form-control" name="birthday"
+					value="${localDateTimeDateFormat.format(userBean.birthday)}"
+					pattern='yyyy-MM-dd' style="font-size: inherit;" />
+			</div>
 
 			<!-- 性別 : 動態傳入user設定好的資料 -->
 			<div class="form-group">
@@ -261,11 +265,30 @@ fieldset:not(:first-of-type) {
 				</select>
 			</div>
 
+			<div class="form-group">
+				<select class="form-control" name="starSign" placeholder="星座">
+					<option value="" disabled selected>星座</option>
+					<option value="水瓶座">水瓶座</option>
+					<option value="雙魚座">雙魚座</option>
+					<option value="牡羊座">牡羊座</option>
+					<option value="金牛座">金牛座</option>
+					<option value="雙子座">雙子座</option>
+					<option value="巨蟹座">巨蟹座</option>
+					<option value="獅子座">獅子座</option>
+					<option value="處女座">處女座</option>
+					<option value="天秤座">天秤座</option>
+					<option value="天蠍座">天蠍座</option>
+					<option value="射手座">射手座</option>
+					<option value="魔羯座">魔羯座</option>
+				</select>
+			</div>
+
 
 			<div class="form-group">
 				<select class="form-control" name="MBTI" placeholder="MBTI">
 					<option value="" disabled selected>MBTI</option>
-					<option value="ISTJ">ISTJ</option>      <!--   在後端的 UserBean 類中,mbti 屬性的類型通常是 String,而不是 Integer -->
+					<option value="ISTJ">ISTJ</option>
+					<!--   在後端的 UserBean 類中,mbti 屬性的類型通常是 String,而不是 Integer -->
 					<option value="ISTP">ISTP</option>
 					<option value="ISFJ">ISFJ</option>
 					<option value="ISFP">ISFP</option>
@@ -309,9 +332,7 @@ fieldset:not(:first-of-type) {
 			</div>
 
 			<input type="button" name="previous" class="previous action-button"
-				value="Previous" onclick="prevStep()" /> 
-			
-			<input type="button"
+				value="Previous" onclick="prevStep()" /> <input type="button"
 				name="next" class="next action-button" value="Next"
 				onclick="nextStep()" />
 		</fieldset>
@@ -321,22 +342,28 @@ fieldset:not(:first-of-type) {
 		<fieldset id="step3">
 			<h2 class="fs-title">基本資料填寫完成</h2>
 			<h3 class="fs-subtitle">We will never sell it</h3>
-			<div class="edit-match">                           <!-- 路徑 -->
-    			<button type="submit" name="targetPage" value="/editMatchProfile" class="icon-button">
-        			<i class="fa-solid fa-user-pen" style="color: #8f8f8f; font-size: 4em; margin-right: 25px; margin-bottom: 66px;"></i>
-   			 	</button>
-   			 	                                               <!-- 路徑 -->
-    			<button type="submit" name="targetPage" value="/matchPage" class="icon-button">
-        			<i class="fa-solid fa-heart-circle-xmark" style="color: #8f8f8f; font-size: 4em;margin-top: 66px;"></i>
-    			</button>
+			<div class="edit-match">
+				<!-- 路徑 -->
+				<button type="submit" name="targetPage" value="/editMatchProfile"
+					class="icon-button">
+					<i class="fa-solid fa-user-pen"
+						style="color: #8f8f8f; font-size: 4em; margin-right: 25px; margin-bottom: 66px;"></i>
+				</button>
+				<!-- 路徑 -->
+				<button type="submit" name="targetPage" value="/matchPage"
+					class="icon-button">
+					<i class="fa-solid fa-heart-circle-xmark"
+						style="color: #8f8f8f; font-size: 4em; margin-top: 66px;"></i>
+				</button>
 			</div>
-			<input type="button" name="previous" class="previous action-button" value="Previous" onclick="prevStep()" />
+			<input type="button" name="previous" class="previous action-button"
+				value="Previous" onclick="prevStep()" />
 		</fieldset>
-		
-		
+
+
 		<!-- 在這裡添加隱藏的輸入框   表單提交時能夠被正確傳遞到後端-->
 		<input type="hidden" name="targetPage" id="targetPage" value="">
-		
+
 	</form>
 
 	<script>
@@ -373,4 +400,3 @@ fieldset:not(:first-of-type) {
 	</script>
 </body>
 </html>
-    

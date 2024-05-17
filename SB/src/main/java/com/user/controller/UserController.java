@@ -4,13 +4,16 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import org.apache.http.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -397,6 +400,44 @@ public class UserController {
 //		return "redirect:/users/" + userNo;
 //	}
 	
+	
+	
+// -----------前端實作Tags------
+	
+	
+    // 保存使用者選擇的標籤
+    @PostMapping("/{userNo}/tags")
+    public ResponseEntity<?> saveUserTags(@PathVariable("userNo") Integer userNo, 
+                                          @RequestBody List<Integer> tagNos) {
+        try {
+            UserBean user = uService.addTagsToUser(userNo, tagNos);
+            return ResponseEntity.ok(user);
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
+    
+    // 處理標籤更新
+    @PostMapping("/updateTags")
+    public ResponseEntity<UserBean> updateTags(@RequestBody List<String> selectedTags, HttpSession session) {
+        try {
+            // 從 session 中獲取當前使用者
+            UserBean userBean = (UserBean) session.getAttribute("userData");
+            
+            // 更新使用者的標籤
+            uService.updateUserTags(userBean, selectedTags);
+            
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+	
+	
+	
+	
+	
 
 
 	
@@ -436,6 +477,7 @@ public class UserController {
 	
 	//當會員點擊 fa-solid fa-user-pen 按鈕時,表單將被提交到 /editMatchProfile 路徑,並由 processEditMatchProfile 方法處理。在該方法中,我們更新資料庫中的用戶資料,並跳轉到 MatchProfileEdit.jsp 頁面
 	
+	                        //編輯交友資料的路徑
 	@RequestMapping(value = "/editMatchProfile", method = {RequestMethod.GET, RequestMethod.POST})
 	public String editMatchProfile(@RequestParam(value = "nickName", required = false) String nickName,   //將 @RequestParam 註解的 required 屬性設置為 false,表示這些參數是可選的。這樣即使在重新整理頁面時沒有傳遞這些參數,也不會拋出異常。
 	                               @RequestParam(value = "bloodType", required = false) String bloodType,
@@ -473,10 +515,12 @@ public class UserController {
 	    return "match/jsp/MatchProfileEdit.jsp";
 	}
 	
-
-
 	
-	@RequestMapping(value = "/matchPage", method = {RequestMethod.GET, RequestMethod.POST})
+	
+
+
+    						//配對頁面的路徑	
+/*	@RequestMapping(value = "/matchPage", method = {RequestMethod.GET, RequestMethod.POST})
 	public String matchPage(@RequestParam(value = "nickName", required = false) String nickName,
 	                        @RequestParam(value = "bloodType", required = false) String bloodType,
 	                        @RequestParam(value = "MBTI", required = false) String MBTI,
@@ -506,7 +550,7 @@ public class UserController {
 	    session.setAttribute("userData", userBean);
 	    
 	    return "match/jsp/MatchPage.jsp";
-	}
+	}*/
 	
 	
 

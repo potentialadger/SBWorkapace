@@ -20,7 +20,10 @@ public interface TagsRepository extends JpaRepository<TagsBean, Integer> {
     @Query(value="SELECT t FROM TagsBean t JOIN t.userBeans u WHERE u.userNo = :userNo")
     List<TagsBean> findTagsByUserNo(@Param("userNo") Integer userNo);
     
-    
+
+    //根據標籤名稱列表批量查詢標籤實體
+    @Query("SELECT t FROM TagsBean t WHERE t.tagName IN (:tagNames)")
+    List<TagsBean> findByTagNameIn(@Param("tagNames") List<String> tagNames);
     
     
     
