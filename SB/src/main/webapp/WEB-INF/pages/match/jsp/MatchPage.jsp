@@ -1,3 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.match.bean.MatchBean"%>
+<%@ page import="java.util.List"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -871,7 +877,7 @@ img { max-width: auto; height: auto; }
   transition: all .3s ease;   /*在屬性值變化時平滑過渡*/
 }   
     
-.aboutme {
+.aboutMe {
   text-align: center;
   font-family: "cwTeXYen", sans-serif;
   font-size: 24px;
@@ -886,22 +892,22 @@ img { max-width: auto; height: auto; }
 
 }
     
-.age {
+.birthday {
   margin-right: 140px; /* 向右移動 20 像素 */
   font-size: 21px;
 }
 
-.starsign {
+.starSign {
   margin-right: 140px; /* 向右移動 20 像素 */
   font-size: 21px;
 }
     
-.bloodtype {
+.bloodType {
   margin-right: 140px; /* 向右移動 20 像素 */
   font-size: 21px;
 }
     
-.mbti {
+.MBTI {
   margin-right: 140px; /* 向右移動 20 像素 */
   font-size: 18px;
 }
@@ -1375,7 +1381,7 @@ border-radius:6px;
 <div id="menu">
 	<!--列出了一個朋友清單。這個清單可能是用來顯示聯繫人列表的-->
 	<div id="friendslist">
-		<!--包含了一個顶部菜单，裡面包含了三個 <span> 元素，每個 <span> 元素可能用於不同的操作，如顯示好友、聊天、或歷史記錄-->
+		<!--包含了一個頂部菜單，裡面包含了三個 <span> 元素，每個 <span> 元素可能用於不同的操作，如顯示好友、聊天、或歷史記錄-->
     	<div id="leftmenu">
         	<span class="friends"></span>
             <!--<span class="chats"></span>
@@ -1556,12 +1562,12 @@ border-radius:6px;
   
   
 
-   <!--表示應用程式的主要部分-->
+   <!--Tinder-->
    <div class="app-main"> 
 
      
 
-<!--刪除的部分-->
+<!--照片-->
    <div class="card-container">
     <div class="carousel">
       <img src="https://images.unsplash.com/photo-1566821582776-92b13ab46bb4?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" width="580" height="230" alt="destination">
@@ -1588,11 +1594,10 @@ border-radius:6px;
       <img src="http://fakeimg.pl/580x230/FFF/121212/?text=destination9&font=lobster" width="580" height="230" alt="destination">
     </div>
   </div>
-     <!--刪除的部分-->
 
 
 
-     <!--包裝視訊通話的操作按鈕-->
+     <!--按鈕-->
       <div class="tinder">
      	 <div class="tinder--buttons">
      	 <button id="nope"><i class="fa fa-remove"></i></button>
@@ -1619,7 +1624,7 @@ border-radius:6px;
         <!--用於打開或關閉聊天視窗，其中顯示了 "Live Chat" 這個文本。-->
 
         <div class="matchsname">
-        YVETTE
+         ${userBean.nickName}  
         </div>
         <div class="social">
         <a href="#"><i class="fa fa-facebook"></i></a>
@@ -1627,32 +1632,63 @@ border-radius:6px;
         <a href="#"> <i class="fa fa-google-plus"></i></a>
         <hr class="hr">
         </div>
+        
         <div class="goal">
-        尋找關係
+        尋找關係 <span><c:choose>
+        <c:when test="${userBean.goalNo == 1}">不回答</c:when> 
+        <c:when test="${userBean.goalNo == 2}">網友</c:when> 
+        <c:when test="${userBean.goalNo == 3}">飯友</c:when> 
+        <c:when test="${userBean.goalNo == 4}">酒友</c:when> 
+        <c:when test="${userBean.goalNo == 5}">牌友</c:when> 
+        <c:when test="${userBean.goalNo == 6}">山友</c:when> 
+        <c:when test="${userBean.goalNo == 7}">旅伴</c:when>         
+        <c:when test="${userBean.goalNo == 8}">戀愛伴侶</c:when> 
+        <c:when test="${userBean.goalNo == 9}">結婚對象</c:when> 
+        <c:when test="${userBean.goalNo == 10}">朋友關係</c:when> 
+        <c:when test="${userBean.goalNo == 11}">短暫浪漫</c:when> 
+        <c:when test="${userBean.goalNo == 12}">匿名網友</c:when> 
+        <c:when test="${userBean.goalNo == 13}">一起運動</c:when> 
+        <c:when test="${userBean.goalNo == 14}">一起團購</c:when> 
+        <c:when test="${userBean.goalNo == 15}">外送拼單</c:when> 
+        <c:when test="${userBean.goalNo == 16}">不設限</c:when> 
+
+        <c:otherwise>其他</c:otherwise>         
+        </c:choose></span>
         <hr class="hr">
         </div>
+        
         <div class="topic">
         我想聊的話題是
         <hr class="hr">
         </div>
-        <div class="aboutme">
+        
+        <div class="aboutMe">
         關於我
-          <div class="gender">
-           性別
+        
+		<div class="gender">		
+   	      性別 <span><c:choose>
+          <c:when test="${userBean.gender == 0}">生理女</c:when>
+          <c:otherwise>生理男</c:otherwise>
+          </c:choose></span>
           </div>
-          <div class="age">
-           年齡
+          
+          <div class="birthday">
+          生日 ${userBean.birthday}  
           </div>
-          <div class="starsign">
-           星座
-          </div>
-          <div class="bloodtype">
-           血型
-          </div>
-          <div class="mbti">
-           MBTI
-          </div>
-        </div>
+          
+          <!-- <div class="starSign">
+          星座 
+          </div> -->
+          
+		  <div class="bloodType">
+  		  血型 ${userBean.bloodType}  		  
+		  </div>
+          
+		  <div class="MBTI">
+    	  MBTI ${userBean.MBTI}  
+		</div>		   
+	</div>
+  </div>
 
 
 
@@ -4797,62 +4833,57 @@ $(document).ready(function(){
   });
 });
          
-                          
-'use strict';
 
-const tinderContainer = document.querySelector('.tinder');
-const allCards = document.querySelectorAll('.carousel');
-const nope = document.getElementById('nope');
-const love = document.getElementById('love');
+$(document).ready(function() {
+	  var cardContainer = $('.card-container');
+	  var allCards = cardContainer.find('.carousel');
+	  var nope = $('#nope');
+	  var love = $('#love');
 
-function initCards() {
-  allCards.forEach((card, index) => {
-    card.style.zIndex = allCards.length - index;
-    card.style.transform = index === 0 ? 'scale(1)' : 'scale(1)';    card.style.opacity = 1;   
-    card.style.opacity = 1;
-  });
-  
-  /*可以實現堆疊效果以及第二張有透明度*/
-  /*card.style.transform = `scale(${(20 - index) / 20}) translateY(-${30 * index}px)`;
-  card.style.opacity = (10 - index) / 10;
+	  function initCards() {
+	    allCards.each(function(index, card) {
+	      $(card).css({
+	        'z-index': allCards.length - index,
+	        'transform': 'scale(1)',
+	        'opacity': 1,
+	        'transition': 'transform 0.5s'
+	      });
+	    });
+	  }
 
-  tinderContainer.classList.add('loaded');*/
-}
+	  initCards();
 
-initCards();
+	  function createButtonListener(love) {
+	    return function(event) {
+	      var cards = cardContainer.find('.carousel:not(.removed)');
+	      var moveOutWidth = document.body.clientWidth * 1.5;
 
-function createButtonListener(love) {
-  return (event) => {
-    const cards = document.querySelectorAll('.carousel:not(.removed)');
-    const moveOutWidth = document.body.clientWidth * 1.5;
+	      if (!cards.length) return false;
 
-    if (!cards.length) return false;
+	      var card = cards.eq(0);
+	      card.addClass('removed');
 
-    const card = cards[0];
-    card.classList.add('removed');
+	      if (love) {
+	        card.css('transform', 'translate(' + moveOutWidth + 'px, -100px) rotate(-30deg)');
+	      } else {
+	        card.css('transform', 'translate(-' + moveOutWidth + 'px, -100px) rotate(30deg)');
+	      }
 
-    if (love) {
-      card.style.transform = `translate(${moveOutWidth}px, -100px) rotate(-30deg)`;
-    } else {
-      card.style.transform = `translate(-${moveOutWidth}px, -100px) rotate(30deg)`;
-    }
+	      setTimeout(function() {
+	        card.css('display', 'none');
+	        initCards();
+	      }, 500);
 
-    setTimeout(() => {
-      card.style.display = 'none';
-      initCards();
-    }, 500);
+	      event.preventDefault();
+	    };
+	  }
 
-    event.preventDefault();
-  };
-}
+	  var nopeListener = createButtonListener(false);
+	  var loveListener = createButtonListener(true);
 
-const nopeListener = createButtonListener(false);
-const loveListener = createButtonListener(true);
-
-nope.addEventListener('click', nopeListener);
-love.addEventListener('click', loveListener);                   
-
-
+	  nope.on('click', nopeListener);
+	  love.on('click', loveListener);
+	});
 
 
                           
@@ -4882,10 +4913,19 @@ function handleLove() {
 nopeButton.addEventListener('click', handleNope);
 loveButton.addEventListener('click', handleLove);*/
                           
-                          
-                          
-                                 
-                          
+          
+
+
+
+
+// ---從資料庫取資料
+
+
+
+
+                   
+
+
       
       
     </script>

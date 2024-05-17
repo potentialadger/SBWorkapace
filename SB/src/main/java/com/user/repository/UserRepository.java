@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
 import com.user.bean.UserBean;
 
 public interface UserRepository extends JpaRepository<UserBean, Integer> {
@@ -17,10 +18,10 @@ public interface UserRepository extends JpaRepository<UserBean, Integer> {
     List<Object[]> findUserFields();
     
     
-    //據標籤編號查詢相關的使用者。查詢會返回符合標籤編號的使用者列表
+    //根據標籤編號查詢相關的使用者。查詢會返回符合標籤編號的使用者列表
     @Query("SELECT u FROM UserBean u JOIN u.tagsBeans t WHERE t.tagNo = ?1")
     List<UserBean> findUserBeansByTagNo(Integer tagNo);
-    
+
 
 
 }

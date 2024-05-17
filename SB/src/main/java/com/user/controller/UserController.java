@@ -1,26 +1,30 @@
 package com.user.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import org.apache.http.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -398,71 +402,164 @@ public class UserController {
 	
 	
 	
-// -----------Test------------
+// -----------前端實作Tags------
+	
+	
+    // 保存使用者選擇的標籤
+    @PostMapping("/{userNo}/tags")
+    public ResponseEntity<?> saveUserTags(@PathVariable("userNo") Integer userNo, 
+                                          @RequestBody List<Integer> tagNos) {
+        try {
+            UserBean user = uService.addTagsToUser(userNo, tagNos);
+            return ResponseEntity.ok(user);
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
+    
+    // 處理標籤更新
+    @PostMapping("/updateTags")
+    public ResponseEntity<UserBean> updateTags(@RequestBody List<String> selectedTags, HttpSession session) {
+        System.err.println(selectedTags);
+    	try {
+            // 從 session 中獲取當前使用者
+            UserBean userBean = (UserBean) session.getAttribute("userData");
+            
+            // 更新使用者的標籤
+            uService.updateUserTags(userBean, selectedTags);
+            
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+	
+	
+	
+	
 	
 
-//	// 關聯 UserBean 與 TagsBean
-//	@PostMapping("/users/{userNo}/tags")
-//	public String associateUserWithTags(@PathVariable Integer userNo, @RequestParam("tagNos") List<Integer> tagNos) {
-//	    uService.associateUserWithTags(userNo, tagNos);
-//	    return "redirect:/usertagsHP";
-//	}
 
-	
-	
 	
 	
 // -----------前端創建資料-------
 	
 	
 	
-	@GetMapping("createMatchProfile")           //創建交友資料的路徑
+	            //創建交友資料的路徑
+	@GetMapping("/createMatchProfile")           
     public String createMatchProfile(HttpSession session, Model m) {
-        UserBean uBean = (UserBean)session.getAttribute("userData");
+        UserBean uBean = (UserBean)session.getAttribute("userData");     //從存使用者資料的session中取出它放資料的變數   //為什麼要轉成UserBean的型態?因為userData只有存資料，它不知道每個資料的型態是什麼，UserBean會設定每個屬性的型態
         Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
         UserBean userBean = dataById.get();
 
+        //載入已經儲存的資料到輸入框
         m.addAttribute("userBean", userBean);
         m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        
+        uBean.setNickName(userBean.getNickName());
+        uBean.setBloodType(userBean.getBloodType());
+        uBean.setMBTI(userBean.getMBTI());
+        uBean.setGoalNo(userBean.getGoalNo());
+        
+        // 將更新後的用戶資料保存到資料庫
+        uService.updateUser(uBean);
+        
+        // 重設 session 中的 "userData" attribute
+        session.setAttribute("userData", uBean);
+        
         return "match/jsp/MatchProfileCreate.jsp";
     }
 	
 	
 	
 	
-/*	@PostMapping("/createProfile")
-	public String createProfile(@ModelAttribute("user") UserBean user, 
-	                             @RequestParam("targetPage") String targetPage) {
-	    // 將生日字串轉換為 LocalDateTime 類型
-	    String birthdayStr = user.getBirthday();
-	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	    LocalDateTime birthday = LocalDateTime.parse(birthdayStr + "T00:00:00");
-	    user.setBirthday(birthday);
+	//當會員點擊 fa-solid fa-user-pen 按鈕時,表單將被提交到 /editMatchProfile 路徑,並由 processEditMatchProfile 方法處理。在該方法中,我們更新資料庫中的用戶資料,並跳轉到 MatchProfileEdit.jsp 頁面
+	
+	                        //編輯交友資料的路徑     //傳資料到前端的方式
+	@RequestMapping(value = "/editMatchProfile", method = {RequestMethod.GET, RequestMethod.POST})
+	public String editMatchProfile(@RequestParam(value = "nickName", required = false) String nickName,   //將 @RequestParam 註解的 required 屬性設置為 false,表示這些參數是可選的。這樣即使在重新整理頁面時沒有傳遞這些參數,也不會拋出異常。
+	                               @RequestParam(value = "bloodType", required = false) String bloodType,
+	                               @RequestParam(value = "MBTI", required = false) String MBTI,
+	                               @RequestParam(value = "goalNo", required = false) Integer goalNo,
+	                               HttpSession session, Model m) {
 
-	    // 將性別整數轉換為字串
-	    String genderStr = String.valueOf(user.getGender());
-	    Integer gender;
-	    if (genderStr.equals("1")) {
-	        gender = 1;
-	    } else if (genderStr.equals("0")) {
-	        gender = 0;
-	    } else {
-	        throw new IllegalArgumentException("Invalid gender value: " + genderStr);
-	    }
-	    user.setGender(gender);
-
-	    // 將表單資料儲存到資料庫
-	    uService.creatUser(user);
+	    UserBean uBean = (UserBean)session.getAttribute("userData");
+	    Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
+	    UserBean userBean = dataById.get();
 	    
-	    // 根據目標頁面進行重定向
-	    return "redirect:" + targetPage;
-	}*/
+	    // 如果請求參數為 null,則從 userBean 中獲取對應的屬性值
+	    nickName = (nickName != null) ? nickName : userBean.getNickName();           //在方法中添加相應的邏輯來處理請求參數為 null 的情況。你可以從 session 中獲取用戶資料,並將其設置到模型中,以便在頁面中顯示。
+	    bloodType = (bloodType != null) ? bloodType : userBean.getBloodType();
+	    MBTI = (MBTI != null) ? MBTI : userBean.getMBTI();
+	    goalNo = (goalNo != null) ? goalNo : userBean.getGoalNo();
+	    
+	    // 設置表單提交的數據到 UserBean 對象中
+	    userBean.setNickName(nickName);
+	    userBean.setBloodType(bloodType);
+	    userBean.setMBTI(MBTI);
+	    userBean.setGoalNo(goalNo);
+	    
+	    // 將更新後的用戶資料保存到資料庫
+	    uService.updateUser(userBean);
+	    
+	    // 載入已經儲存的資料到輸入框
+	    m.addAttribute("userBean", userBean);
+	    m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	    m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+	    
+	    // 重設 session 中的 "userData" attribute
+	    session.setAttribute("userData", userBean);
+	    
+	    return "match/jsp/MatchProfileEdit.jsp";
+	}
 	
 	
 	
-	
-	
+
+
+    						//配對頁面的路徑	      //傳資料到前端的方式
+	@RequestMapping(value = "/matchPage", method = {RequestMethod.GET, RequestMethod.POST})
+	public String matchPage(@RequestParam(value = "nickName", required = false) String nickName,
+	                        @RequestParam(value = "bloodType", required = false) String bloodType,
+	                        @RequestParam(value = "MBTI", required = false) String MBTI,
+	                        @RequestParam(value = "goalNo", required = false) Integer goalNo,
+	                        @RequestParam(value = "birthday", required = false) Integer birthday,
+
+	                        HttpSession session, Model m) {
+
+	    UserBean uBean = (UserBean)session.getAttribute("userData");
+	    Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
+	    UserBean userBean = dataById.get();
+	    
+	    // 如果請求參數為 null,則從 userBean 中獲取對應的屬性值
+	    nickName = (nickName != null) ? nickName : userBean.getNickName();
+	    bloodType = (bloodType != null) ? bloodType : userBean.getBloodType();
+	    MBTI = (MBTI != null) ? MBTI : userBean.getMBTI();
+	    goalNo = (goalNo != null) ? goalNo : userBean.getGoalNo();
+
+	    
+	    // 設置表單提交的數據到 UserBean 對象中
+	    userBean.setNickName(nickName);
+	    userBean.setBloodType(bloodType);
+	    userBean.setMBTI(MBTI);
+	    userBean.setGoalNo(goalNo);
+	    
+	    // 將更新後的用戶資料保存到資料庫
+	    uService.updateUser(userBean);
+	    
+	    // 載入已經儲存的資料到輸入框
+	    m.addAttribute("userBean", userBean);
+	    m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	    m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+	    
+	    // 重設 session 中的 "userData" attribute
+	    session.setAttribute("userData", userBean);
+	    
+	    return "match/jsp/MatchPage.jsp";
+	}
 	
 	
 
