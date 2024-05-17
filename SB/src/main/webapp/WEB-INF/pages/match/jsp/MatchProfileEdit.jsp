@@ -9,20 +9,13 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>MatchProfileEdit</title>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
-	integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA="
-	crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
 <link rel="stylesheet" href="/mycss/custom.css" />
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.carousel.min.css">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css">
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css"
-	rel="stylesheet" type="text/css" />
+<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 
 
 <style type="text/css">
@@ -1064,17 +1057,14 @@ body {
 							<div class="bg-secondary-soft px-4 py-5 rounded">
 								<div class="row g-3">
 									<h4 class="my-4 mt-0">聊天話題</h4>
-									<input name='tags-outside' class='tagify--outside' type="text"
-										placeholder='選擇聊天話題 / 限制只能選3個'>
+									<input name='tags-outside' class='tagify--outside' type="text" placeholder='選擇聊天話題 / 限制只能選3個'>
 								</div>
 							</div>
 						</div>
 					</div>
 
-					<div
-						class="gap-3 d-md-flex justify-content-md-end text-center my-5">
-						<button type="button" class="btn btn-primary btn-lg"
-							onclick="updateTags()">確定修改</button>
+					<div class="gap-3 d-md-flex justify-content-md-end text-center my-5">
+						<button type="button" class="btn btn-primary btn-lg" onclick="updateTags()">確定修改</button>
 						<button type="button" class="btn btn-danger btn-lg">確定刪除</button>
 					</div>
 				</div>
@@ -1083,15 +1073,10 @@ body {
 
 
 
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-			integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-			crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 		<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/owl.carousel.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/owl.carousel.min.js"></script>
 
 
 
@@ -1290,7 +1275,7 @@ body {
             
             // ------實作-----
             
-            
+            var optionsList = [];
             
             // 獲取 Tagify 實例中用戶選擇的標籤值，我們可以在 Tagify 實例上註冊一個事件監聽器,監聽標籤值的變化,並在事件處理函數中獲取用戶選擇的標籤值。
             
@@ -1302,12 +1287,17 @@ body {
 			// 監聽標籤值的變化
 			tagify.on('add', function(e) {
 			  console.log('新增標籤:', e.detail.data.value);
+			  optionsList.push(e.detail.data.value);
 			});
 
 			tagify.on('remove', function(e) {
 			  console.log('移除標籤:', e.detail.data.value);
+			  let index = optionsList.indexOf(e.detail.data.value);
+			  optionsList.splice(index, 1)
 			});
 			
+			tagify.on("dropdown:show", onSuggestionsListUpdate)
+
 			
 			
 			//將標籤值封裝成 JSON 格式
@@ -1317,14 +1307,14 @@ body {
     var selectedTags = tagify.value.map(function(tag) {
         return tag.value;
     });
-    
+    console.log("cccc", JSON.stringify(optionsList))
     // 發送 POST 請求到後端
     fetch('/updateTags', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(selectedTags)
+        body: JSON.stringify(optionsList)
     })
     .then(function(response) {
         // 處理後端的回應

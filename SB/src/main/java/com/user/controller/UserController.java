@@ -421,7 +421,8 @@ public class UserController {
     // 處理標籤更新
     @PostMapping("/updateTags")
     public ResponseEntity<UserBean> updateTags(@RequestBody List<String> selectedTags, HttpSession session) {
-        try {
+        System.err.println(selectedTags);
+    	try {
             // 從 session 中獲取當前使用者
             UserBean userBean = (UserBean) session.getAttribute("userData");
             

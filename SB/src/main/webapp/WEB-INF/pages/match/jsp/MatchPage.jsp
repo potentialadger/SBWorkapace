@@ -4817,62 +4817,57 @@ $(document).ready(function(){
   });
 });
          
-                          
-'use strict';
 
-const tinderContainer = document.querySelector('.tinder');
-const allCards = document.querySelectorAll('.carousel');
-const nope = document.getElementById('nope');
-const love = document.getElementById('love');
+$(document).ready(function() {
+	  var cardContainer = $('.card-container');
+	  var allCards = cardContainer.find('.carousel');
+	  var nope = $('#nope');
+	  var love = $('#love');
 
-function initCards() {
-  allCards.forEach((card, index) => {
-    card.style.zIndex = allCards.length - index;
-    card.style.transform = index === 0 ? 'scale(1)' : 'scale(1)';    card.style.opacity = 1;   
-    card.style.opacity = 1;
-  });
-  
-  /*可以實現堆疊效果以及第二張有透明度*/
-  /*card.style.transform = `scale(${(20 - index) / 20}) translateY(-${30 * index}px)`;
-  card.style.opacity = (10 - index) / 10;
+	  function initCards() {
+	    allCards.each(function(index, card) {
+	      $(card).css({
+	        'z-index': allCards.length - index,
+	        'transform': 'scale(1)',
+	        'opacity': 1,
+	        'transition': 'transform 0.5s'
+	      });
+	    });
+	  }
 
-  tinderContainer.classList.add('loaded');*/
-}
+	  initCards();
 
-initCards();
+	  function createButtonListener(love) {
+	    return function(event) {
+	      var cards = cardContainer.find('.carousel:not(.removed)');
+	      var moveOutWidth = document.body.clientWidth * 1.5;
 
-function createButtonListener(love) {
-  return (event) => {
-    const cards = document.querySelectorAll('.carousel:not(.removed)');
-    const moveOutWidth = document.body.clientWidth * 1.5;
+	      if (!cards.length) return false;
 
-    if (!cards.length) return false;
+	      var card = cards.eq(0);
+	      card.addClass('removed');
 
-    const card = cards[0];
-    card.classList.add('removed');
+	      if (love) {
+	        card.css('transform', 'translate(' + moveOutWidth + 'px, -100px) rotate(-30deg)');
+	      } else {
+	        card.css('transform', 'translate(-' + moveOutWidth + 'px, -100px) rotate(30deg)');
+	      }
 
-    if (love) {
-      card.style.transform = `translate(${moveOutWidth}px, -100px) rotate(-30deg)`;
-    } else {
-      card.style.transform = `translate(-${moveOutWidth}px, -100px) rotate(30deg)`;
-    }
+	      setTimeout(function() {
+	        card.css('display', 'none');
+	        initCards();
+	      }, 500);
 
-    setTimeout(() => {
-      card.style.display = 'none';
-      initCards();
-    }, 500);
+	      event.preventDefault();
+	    };
+	  }
 
-    event.preventDefault();
-  };
-}
+	  var nopeListener = createButtonListener(false);
+	  var loveListener = createButtonListener(true);
 
-const nopeListener = createButtonListener(false);
-const loveListener = createButtonListener(true);
-
-nope.addEventListener('click', nopeListener);
-love.addEventListener('click', loveListener);                   
-
-
+	  nope.on('click', nopeListener);
+	  love.on('click', loveListener);
+	});
 
 
                           
