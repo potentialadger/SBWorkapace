@@ -1,9 +1,12 @@
 package com.activity.service;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.activity.bean.EventRegistrationsBean;
 import com.activity.bean.EventRegistrationsRepository;
 
@@ -26,8 +29,8 @@ public class EventRegistrationsService {
         erRepos.deleteById(registrationID);
     }
 
-    public EventRegistrationsBean findByRegistration(Integer registrationID) {
-        return erRepos.findById(registrationID).orElse(null);
+    public Optional<EventRegistrationsBean> findByRegistration(Integer registrationID) {
+        return erRepos.findById(registrationID);
     }
 
     public List<EventRegistrationsBean> findAllRegistrations() {

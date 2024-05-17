@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -84,8 +83,13 @@
             fetch('/EventList')
                 .then(response => response.json())
                 .then(events => {
+                    console.log('Fetched events:', events); // 日誌輸出取得的活動資料
                     const eventsList = document.getElementById('eventsList');
+                    eventsList.innerHTML = ''; // 清空列表
+
                     events.forEach(event => {
+                        console.log('Event:', event); // 日誌輸出每個活動資料
+
                         const listItem = document.createElement('li');
                         listItem.className = "col-lg-3 col-md-4 col-sm-12";
 
@@ -107,15 +111,33 @@
                         title.className = 'm-b-5 text-muted';
                         title.textContent = event.title;
 
-                        const detailsButton = document.createElement('a');
+                        // 建立表單
+                        const form = document.createElement('form');
+                        form.action = '/EventDetail';
+                        form.method = 'GET';
+
+                        // 隱藏欄位
+                        const eventNoInput = document.createElement('input');
+                        eventNoInput.type = 'hidden';
+                        eventNoInput.name = 'eventNo';
+                        eventNoInput.value = event.eventNo;
+
+                        // 活動詳情按鈕
+                        const detailsButton = document.createElement('button');
+                        detailsButton.type = 'submit';
                         detailsButton.textContent = '活動詳情';
-                        detailsButton.href = "/EventDetail.jsp?eventNo=" + event.eventNo + "&userNo=" + event.userNo;
                         detailsButton.className = 'details-button';
+                        detailsButton.name = 'eventNo';
+                        detailsButton.value = event.eventNo;
+
+                        // 將隱藏欄位和按鈕添加到表單
+                        form.appendChild(eventNoInput);
+                        form.appendChild(detailsButton);
 
                         fileName.appendChild(title);
                         file.appendChild(image);
                         file.appendChild(fileName);
-                        file.appendChild(detailsButton);
+                        file.appendChild(form); // 將表單添加到 file 中
                         card.appendChild(file);
                         listItem.appendChild(card);
                         eventsList.appendChild(listItem);
@@ -128,7 +150,7 @@
         }
     </script>
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>活動列表</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
