@@ -1300,21 +1300,24 @@ body {
 
 			
 			
-			//將標籤值封裝成 JSON 格式
+	//將標籤值封裝成 JSON 格式
 			
     function updateTags() {
     // 獲取用戶選擇的標籤值
     var selectedTags = tagify.value.map(function(tag) {
         return tag.value;
     });
+    
     // 發送 POST 請求到後端
     fetch('/updateTags', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json'   // 告訴服務器請求體的格式是 JSON
         },
-        body: JSON.stringify(optionsList)
-    })
+        body: JSON.stringify(optionsList)  // 將 optionsList 物件轉換為 JSON 字符串並作為請求的主體
+    })                                     // selectList  : 包含用戶選擇的一組選項    
+                                           // optionsList : 包含所有可供選擇的選項 
+    console.log(optionsList)
     .then(function(response) {
         // 處理後端的回應
         if (response.ok) {
@@ -1349,6 +1352,20 @@ body {
 
 
 
+		<script>
+/*				// 獲取 LocalDateTime 對象
+		LocalDateTime birthday = ${localDateTimeDateFormat.format(userBean.birthday)};
+
+		// 檢查是否為 null
+		if (birthday != null) {
+		    // 格式化為 "yyyy-MM-dd" 字串
+		    String birthdayStr = birthday.format(DateTimeFormatter.ISO_LOCAL_DATE);
+		    
+		    // 將 birthdayStr 傳給前端
+		} else {
+		    // 處理 birthday 為 null 的情況
+		}*/
+</script>
 
 
 

@@ -478,7 +478,7 @@ public class UserController {
 	
 	//當會員點擊 fa-solid fa-user-pen 按鈕時,表單將被提交到 /editMatchProfile 路徑,並由 processEditMatchProfile 方法處理。在該方法中,我們更新資料庫中的用戶資料,並跳轉到 MatchProfileEdit.jsp 頁面
 	
-	                        //編輯交友資料的路徑
+	                        //編輯交友資料的路徑     //傳資料到前端的方式
 	@RequestMapping(value = "/editMatchProfile", method = {RequestMethod.GET, RequestMethod.POST})
 	public String editMatchProfile(@RequestParam(value = "nickName", required = false) String nickName,   //將 @RequestParam 註解的 required 屬性設置為 false,表示這些參數是可選的。這樣即使在重新整理頁面時沒有傳遞這些參數,也不會拋出異常。
 	                               @RequestParam(value = "bloodType", required = false) String bloodType,
@@ -520,12 +520,14 @@ public class UserController {
 	
 
 
-    						//配對頁面的路徑	
-/*	@RequestMapping(value = "/matchPage", method = {RequestMethod.GET, RequestMethod.POST})
+    						//配對頁面的路徑	      //傳資料到前端的方式
+	@RequestMapping(value = "/matchPage", method = {RequestMethod.GET, RequestMethod.POST})
 	public String matchPage(@RequestParam(value = "nickName", required = false) String nickName,
 	                        @RequestParam(value = "bloodType", required = false) String bloodType,
 	                        @RequestParam(value = "MBTI", required = false) String MBTI,
 	                        @RequestParam(value = "goalNo", required = false) Integer goalNo,
+	                        @RequestParam(value = "birthday", required = false) Integer birthday,
+
 	                        HttpSession session, Model m) {
 
 	    UserBean uBean = (UserBean)session.getAttribute("userData");
@@ -537,6 +539,7 @@ public class UserController {
 	    bloodType = (bloodType != null) ? bloodType : userBean.getBloodType();
 	    MBTI = (MBTI != null) ? MBTI : userBean.getMBTI();
 	    goalNo = (goalNo != null) ? goalNo : userBean.getGoalNo();
+
 	    
 	    // 設置表單提交的數據到 UserBean 對象中
 	    userBean.setNickName(nickName);
@@ -547,11 +550,16 @@ public class UserController {
 	    // 將更新後的用戶資料保存到資料庫
 	    uService.updateUser(userBean);
 	    
+	    // 載入已經儲存的資料到輸入框
+	    m.addAttribute("userBean", userBean);
+	    m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	    m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+	    
 	    // 重設 session 中的 "userData" attribute
 	    session.setAttribute("userData", userBean);
 	    
 	    return "match/jsp/MatchPage.jsp";
-	}*/
+	}
 	
 	
 

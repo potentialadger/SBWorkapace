@@ -397,6 +397,12 @@ fieldset:not(:first-of-type) {
 				document.getElementById(formSteps[currentStep]).style.display = "block";
 			}
 		}
+		
+		
+		
+		
+
+		
 	</script>
 </body>
 </html>

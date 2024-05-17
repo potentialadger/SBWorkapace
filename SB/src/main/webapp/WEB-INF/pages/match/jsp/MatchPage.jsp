@@ -892,7 +892,7 @@ img { max-width: auto; height: auto; }
 
 }
     
-.age {
+.birthday {
   margin-right: 140px; /* 向右移動 20 像素 */
   font-size: 21px;
 }
@@ -1624,7 +1624,7 @@ border-radius:6px;
         <!--用於打開或關閉聊天視窗，其中顯示了 "Live Chat" 這個文本。-->
 
         <div class="matchsname">
-        YVETTE
+         ${userBean.nickName}  
         </div>
         <div class="social">
         <a href="#"><i class="fa fa-facebook"></i></a>
@@ -1632,14 +1632,36 @@ border-radius:6px;
         <a href="#"> <i class="fa fa-google-plus"></i></a>
         <hr class="hr">
         </div>
+        
         <div class="goal">
-        尋找關係
+        尋找關係 <span><c:choose>
+        <c:when test="${userBean.goalNo == 1}">不回答</c:when> 
+        <c:when test="${userBean.goalNo == 2}">網友</c:when> 
+        <c:when test="${userBean.goalNo == 3}">飯友</c:when> 
+        <c:when test="${userBean.goalNo == 4}">酒友</c:when> 
+        <c:when test="${userBean.goalNo == 5}">牌友</c:when> 
+        <c:when test="${userBean.goalNo == 6}">山友</c:when> 
+        <c:when test="${userBean.goalNo == 7}">旅伴</c:when>         
+        <c:when test="${userBean.goalNo == 8}">戀愛伴侶</c:when> 
+        <c:when test="${userBean.goalNo == 9}">結婚對象</c:when> 
+        <c:when test="${userBean.goalNo == 10}">朋友關係</c:when> 
+        <c:when test="${userBean.goalNo == 11}">短暫浪漫</c:when> 
+        <c:when test="${userBean.goalNo == 12}">匿名網友</c:when> 
+        <c:when test="${userBean.goalNo == 13}">一起運動</c:when> 
+        <c:when test="${userBean.goalNo == 14}">一起團購</c:when> 
+        <c:when test="${userBean.goalNo == 15}">外送拼單</c:when> 
+        <c:when test="${userBean.goalNo == 16}">不設限</c:when> 
+
+        <c:otherwise>其他</c:otherwise>         
+        </c:choose></span>
         <hr class="hr">
         </div>
+        
         <div class="topic">
         我想聊的話題是
         <hr class="hr">
         </div>
+        
         <div class="aboutMe">
         關於我
         
@@ -1650,29 +1672,23 @@ border-radius:6px;
           </c:choose></span>
           </div>
           
-          <div class="age">
-          年齡 <span id="userAge"></span>
-          </div>
-          <div class="starSign">
-          星座 <span id="userStarSign"></span>
+          <div class="birthday">
+          生日 ${userBean.birthday}  
           </div>
           
-<div class="bloodType">
-  血型: <span>
-    <c:if test="${userBean.bloodType == 'A'}">A</c:if>
-    <c:if test="${userBean.bloodType == 'B'}">B</c:if>
-    <c:if test="${userBean.bloodType == 'O'}">O</c:if>
-    <c:if test="${userBean.bloodType == 'AB'}">AB</c:if>
-    <c:if test="${userBean.bloodType != 'A' && userBean.bloodType != 'B' && userBean.bloodType != 'O' && userBean.bloodType != 'AB'}">其他</c:if>
-  </span>
-</div>
+          <!-- <div class="starSign">
+          星座 
+          </div> -->
           
-<div class="MBTI">
-  MBTI: <span><c:out value="${userBean.MBTI}" default="未知" /></span>
-</div>
-		   
+		  <div class="bloodType">
+  		  血型 ${userBean.bloodType}  		  
 		  </div>
-        </div>
+          
+		  <div class="MBTI">
+    	  MBTI ${userBean.MBTI}  
+		</div>		   
+	</div>
+  </div>
 
 
 
@@ -4905,52 +4921,11 @@ loveButton.addEventListener('click', handleLove);*/
 // ---從資料庫取資料
 
 
-// 假設從伺服器獲取的使用者資料
-/*var userData = {
-  gender: 0, // 0 表示生理男，1 表示生理女
-  MBTI: "INTP"
-};*/
-
-// 更新性別顯示
-/*var genderElement = document.getElementById("userGender");
-genderElement.textContent = userData.gender == 0 ? "生理男" : "生理女";*/
-
-// 更新 MBTI 顯示
-/*var mbtiElement = document.getElementById("userMBTI");
-mbtiElement.textContent = userData.MBTI;*/    
 
 
-// 從 userBean 中獲取生日資訊
-var birthday = new Date("${userBean.birthday}");
+                   
 
-// 計算年齡
-var today = new Date();
-var age = today.getFullYear() - birthday.getFullYear();
-var monthDiff = today.getMonth() - birthdate.getMonth();
-if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthday.getDate())) {
-  age--;
-}
-document.getElementById("userAge").textContent = age;
 
-// 計算星座
-var month = birthday.getMonth() + 1;
-var day = birthday.getDate();
-var starSigns = [    "摩羯座", "水瓶座", "雙魚座", "牡羊座", "金牛座", "雙子座",    "巨蟹座", "獅子座", "處女座", "天秤座", "天蠍座", "射手座"  ];
-var starSignDates = [    [1, 20], [2, 19], [3, 21], [4, 20], [5, 21], [6, 22],    [7, 23], [8, 23], [9, 23], [10, 24], [11, 23], [12, 22]  ];
-var starSign = "";
-for (var i = 0; i < 12; i++) {
-  if (month === starSignDates[i][0] && day >= starSignDates[i][1]) {
-    starSign = starSigns[i];
-    break;
-  }
-  if (month === starSignDates[(i + 1) % 12][0] && day < starSignDates[(i + 1) % 12][1]) {
-    starSign = starSigns[i];
-    break;
-  }
-}
-document.getElementById("userStarSign").textContent = starSign;
-                                 
-                          
       
       
     </script>
