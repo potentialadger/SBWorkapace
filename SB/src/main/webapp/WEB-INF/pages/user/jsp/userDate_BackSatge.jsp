@@ -367,7 +367,6 @@
                                     fetch("userResponseBody/" + userNo).then(function (response) {
                                         if (response.status != 200) {
                                             console.log(response.status + " " + response.statusText);
-
                                             return;
                                         }
 

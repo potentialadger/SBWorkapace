@@ -409,7 +409,7 @@
                                                                                         class="nav-link_ active">照片</a></li>
 
                                                                                 <li class="nav-item"><a
-                                                                                        href="https://www.bootdey.com/snippets/view/bs4-profile-friend-list"
+                                                                                        href="/userFriends"
                                                                                         class="nav-link_ show">好友</a>
                                                                                 </li>
                                                                             </ul>
@@ -632,7 +632,7 @@
                                 const deleteBtn = document.querySelector('#imgPreviewDelBtn');
                                 
                                 deleteBtn.addEventListener('click', (e) => {
-                                    e.preventDefault(); // 阻止表單提交
+                                    e.preventDefault();
 
                                     Swal.fire({
                                         title: '確定要刪除嗎?',
@@ -640,7 +640,7 @@
                                         icon: 'warning',
                                         showCancelButton: true,
                                         confirmButtonColor: '#d33',
-                                        cancelButtonColor: '#3085d6',
+                                        cancelButtonColor: '#858796',
                                         confirmButtonText: '刪除',
                                         cancelButtonText: '取消'
                                     }).then((result) => {

@@ -351,9 +351,41 @@ public class UserController {
 				uImgService.saveUserImageBean(userImageBean);
 			}
 		}
-		
-		
 		return "redirect:/userPhotos";
+	}
+	
+	@GetMapping("userFriends")
+	public String userFriendsAction(HttpSession session, Model m) {
+		UserBean uBean = (UserBean)session.getAttribute("userData");
+		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
+		UserBean userBean = dataById.get();
+		
+		List<UserBean> allUserData = uService.getAllUserData();
+		
+		m.addAttribute("userBean", userBean);
+		
+		m.addAttribute("userFriendsCount", allUserData.size());
+		m.addAttribute("userFriends", allUserData);
+		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		return "user/jsp/MyFriends_FontSatge.jsp";
+	}
+	
+	@GetMapping("userFriendsTest")
+	public String userFriendsTestAction(HttpSession session, Model m) {
+		UserBean uBean = (UserBean)session.getAttribute("userData");
+		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
+		UserBean userBean = dataById.get();
+		
+		List<UserBean> allUserData = uService.getAllUserData();
+		
+		m.addAttribute("userBean", userBean);
+		
+		m.addAttribute("userFriendsCount", allUserData.size());
+		m.addAttribute("userFriends", allUserData);
+		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		return "user/jsp/MyFriends_FontSatgeTest.jsp";
 	}
 	
 

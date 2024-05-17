@@ -523,7 +523,7 @@
                                                                                         class="nav-link_">照片</a></li>
 
                                                                                 <li class="nav-item"><a
-                                                                                        href="https://www.bootdey.com/snippets/view/bs4-profile-friend-list"
+                                                                                        href="/userFriends"
                                                                                         class="nav-link_ show">好友</a>
                                                                                 </li>
                                                                             </ul>

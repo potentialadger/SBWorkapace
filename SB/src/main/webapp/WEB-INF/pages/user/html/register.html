@@ -136,8 +136,8 @@
 									註冊帳號
 								</a> -->
 								<hr>
-								<a href="index.html" class="btn btn-google btn-user btn-block">
-									<i class="fab fa-google fa-fw"></i> Register with Google
+								<a href="" class="btn btn-google btn-user btn-block" id="googleLogin">
+									<i class="fab fa-google fa-fw"></i> 使用Google創建帳號
 								</a>
 								<a href="index.html" class="btn btn-facebook btn-user btn-block">
 									<i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
@@ -168,7 +168,8 @@
 	<!-- Custom scripts for all pages-->
 	<script src="js/sb-admin-2.min.js"></script>
 
-
+	<!-- Google 第三方登入需要的東西 -->
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	<script>
 		// $("#oneToInput").on("click", function (e) {
 		// 	e.defaultPrevented();
@@ -204,6 +205,28 @@
 			};
 
 			reader.readAsDataURL(file);
+		}
+
+		//第三方登入
+		function initGoogleLogin() {
+			gapi.load('auth2', function () {
+				gapi.auth2.init({
+					client_id: 'YOUR_CLIENT_ID.apps.googleusercontent.com'
+				}).then(function (googleAuth) {
+					var googleLoginBtn = document.getElementById('googleLogin');
+					googleLoginBtn.onclick = function () {
+						googleAuth.signIn().then(function (googleUser) {
+							// 處理登入成功的回調
+							var profile = googleUser.getBasicProfile();
+							console.log('Full Name: ' + profile.getName());
+							console.log('Email: ' + profile.getEmail());
+						}, function (error) {
+							// 處理登入失敗的回調
+							console.error('Google Login Error:', error);
+						});
+					};
+				});
+			});
 		}
 	</script>
 
