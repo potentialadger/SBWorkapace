@@ -32,7 +32,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.match.bean.TagsBean;
 import com.user.bean.UserBean;
+import com.user.bean.UserImageBean;
 import com.user.dto.LinePayDto;
+import com.user.service.UserImageService;
 import com.user.service.UserService;
 import com.user.util.UserUtil;
 
@@ -45,6 +47,9 @@ public class UserController {
 
 	@Autowired
 	private UserService uService;
+	
+	@Autowired
+	private UserImageService uImgService;
 
 	@PostMapping("/userSignUp")
 	public String processSignUpAction(@RequestParam("account") String account,
@@ -97,8 +102,12 @@ public class UserController {
 
 		insertBean.setPoint(0);
 
-		uService.creatUser(insertBean);
-
+		UserBean creatUser = uService.creatUser(insertBean);
+		
+		//將頭貼存進使用者圖片的資料庫裡
+		UserImageBean userImageBean = new UserImageBean(creatUser, creatUser.getAvatar());
+		uImgService.saveUserImageBean(userImageBean);
+		
 		return "user/html/NewLogin.html";
 	}
 
@@ -277,6 +286,9 @@ public class UserController {
 		{
 			String uploadImgPath = UserUtil.uploadImg(avatar);
 			userBean.setAvatar(uploadImgPath);
+			
+			UserImageBean userImageBean = new UserImageBean(userBean, uploadImgPath);
+			uImgService.saveUserImageBean(userImageBean);
 		}
 		
 		userBean.setUserChineseName(UCName);
@@ -315,6 +327,70 @@ public class UserController {
 		return "redirect:/aboutMe";
 	}
 	
+	@GetMapping("userPhotos")
+	public String userPhotosAction(HttpSession session, Model m) {
+		UserBean uBean = (UserBean)session.getAttribute("userData");
+		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
+		UserBean userBean = dataById.get();
+		
+		m.addAttribute("userBean", userBean);
+		m.addAttribute("userImagesCount", userBean.getUserImages().size());
+		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		return "user/jsp/MyPhoto_FontSatge.jsp";
+	}
+	
+	@PostMapping("userUploadImages")
+	public String userUploadImagesAction(HttpSession session, Model m,@RequestParam("images") MultipartFile[] imgs) {
+		UserBean uBean = (UserBean)session.getAttribute("userData");
+		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
+		UserBean userBean = dataById.get();
+		
+		for(MultipartFile img : imgs) {
+			if(!img.isEmpty() || img.getSize() > 0)
+			{
+				String uploadImgPath = UserUtil.uploadImg(img);
+				
+				UserImageBean userImageBean = new UserImageBean(userBean, uploadImgPath);
+				uImgService.saveUserImageBean(userImageBean);
+			}
+		}
+		return "redirect:/userPhotos";
+	}
+	
+	@GetMapping("userFriends")
+	public String userFriendsAction(HttpSession session, Model m) {
+		UserBean uBean = (UserBean)session.getAttribute("userData");
+		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
+		UserBean userBean = dataById.get();
+		
+		List<UserBean> allUserData = uService.getAllUserData();
+		
+		m.addAttribute("userBean", userBean);
+		
+		m.addAttribute("userFriendsCount", allUserData.size());
+		m.addAttribute("userFriends", allUserData);
+		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		return "user/jsp/MyFriends_FontSatge.jsp";
+	}
+	
+	@GetMapping("userFriendsTest")
+	public String userFriendsTestAction(HttpSession session, Model m) {
+		UserBean uBean = (UserBean)session.getAttribute("userData");
+		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
+		UserBean userBean = dataById.get();
+		
+		List<UserBean> allUserData = uService.getAllUserData();
+		
+		m.addAttribute("userBean", userBean);
+		
+		m.addAttribute("userFriendsCount", allUserData.size());
+		m.addAttribute("userFriends", allUserData);
+		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		return "user/jsp/MyFriends_FontSatgeTest.jsp";
+	}
 	
 
 	// ---Tags : ManyToMany

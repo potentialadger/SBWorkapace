@@ -204,23 +204,23 @@ Topbar = `<!-- Topbar -->
 <!-- End of Topbar -->`;
 document.write(Topbar);
 
-fetch("getTopBarData").then(function (response) {
-  if (response.status != 200) {
-    console.log(response.status + " " + response.statusText);
+fetch("/getTopBarData").then(function (response) {
+    if (response.status != 200) {
+        console.log(response.status + " " + response.statusText);
 
-    return;
-  }
+        return;
+    }
 
-  response.json().then(function (data) {
-    console.log(data);
-    document.querySelector("#userName").innerHTML = data.userChineseName;
-    document.querySelector("#topBarAvatar").src = "localimages/" + data.avatar;
+    response.json().then(function (data) {
+        console.log(data);
+        document.querySelector("#userName").innerHTML = data.userChineseName;
+        document.querySelector("#topBarAvatar").src = "/localimages/" + data.avatar;
 
-    // var resultText = "";
-    // for (var i = 0; i < data.length; i++) {
-    //     resultText += data[i].houseid + " " + data[i].housename + "<br/>";
-    // }
+        // var resultText = "";
+        // for (var i = 0; i < data.length; i++) {
+        //     resultText += data[i].houseid + " " + data[i].housename + "<br/>";
+        // }
 
-    // document.querySelector("#result").innerHTML = resultText;
-  });
+        // document.querySelector("#result").innerHTML = resultText;
+    });
 });
