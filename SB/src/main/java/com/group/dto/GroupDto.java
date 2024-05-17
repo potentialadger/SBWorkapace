@@ -18,6 +18,8 @@ public class GroupDto {
 	private String userName;
 	private Integer userNo;
 	private Integer eventNo;
+	private Integer paymentMethod;
+	
 	public String getgTitle() {
 		return gTitle;
 	}
@@ -84,6 +86,12 @@ public class GroupDto {
 	}
 	public void setEventNo(Integer eventNo) {
 		this.eventNo = eventNo;
+	}
+	public Integer getPaymentMethod() {
+		return paymentMethod;
+	}
+	public void setPaymentMethod(Integer paymentMethod) {
+		this.paymentMethod = paymentMethod;
 	}
 	
 	

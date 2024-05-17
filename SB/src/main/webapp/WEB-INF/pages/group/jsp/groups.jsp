@@ -55,6 +55,21 @@
 								.suggestions div:hover {
 									background-color: #f0f0f0;
 								}
+
+								.suggestion-item {
+									margin-bottom: 10px;
+								}
+
+								.suggestion-title {
+									font-size: 16px;
+									font-weight: bold;
+								}
+
+								.suggestion-description {
+									font-size: 12px;
+									color: gray;
+								}
+
 							</style>
 						</head>
 
@@ -444,27 +459,26 @@
 												method: 'get',
 												data: { search: search },
 												success: function (response) {
-													console.log("對囉");
-													console.log(response);
-													console.log(response.eventNo);
 													displaySuggestions(response);
 												},
 												error: function (err) {
 													console.log("錯了白痴" + err);
 												}
 											})
-
 										} else {
 											$('#searchSuggestions').empty();
 										}
-
 									});
 
 									function displaySuggestions(suggestions) {
 										const suggestionsContainer = $('#searchSuggestions');
 										suggestionsContainer.empty();
 										suggestions.forEach(function (suggestion) {
-											const suggestionItem = $('<div>').text(suggestion.gTitle); // 根据实际数据结构显示结果
+											const suggestionItem = $('<div>').addClass('suggestion-item');
+											const title = $('<div>').text(suggestion.gTitle).addClass('suggestion-title');
+											const description = $('<div>').text(suggestion.gDescription).addClass('suggestion-description');
+											console.log(suggestion.gDescription);
+											suggestionItem.append(title).append(description);
 											suggestionItem.on('click', function () {
 												const eventno = suggestion.eventNo;
 												console.log(eventno);
@@ -473,6 +487,7 @@
 											suggestionsContainer.append(suggestionItem);
 										});
 									}
+
 								})
 							</script>
 						</body>

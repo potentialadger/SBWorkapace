@@ -71,9 +71,35 @@ public class GroupController {
 //		int userNo = userbean.getUserNo();
 		Integer userNo = 1;
 		
-		System.out.println("aaa");
 		List<Group> groups = gService.findGroupByUser(userNo);
-		m.addAttribute("groups",groups);
+		ArrayList<GroupDto> groupDtos = new ArrayList<GroupDto>();
+		for (Group group : groups) {
+			String title = group.getTitle();
+			Integer paymentMethod = group.getPaymentMethod();
+			String description = group.getDescription();
+			Date endTime = group.getEndTime();
+			String account = group.getAccount();
+			String address = group.getAddress();
+			Integer eventNo = group.getEventNo();
+			Integer minAmount = group.getMinTotalAmount();
+			Integer minQuantity = group.getMinTotalQuantity();
+			
+			GroupDto groupDto = new GroupDto();
+			groupDto.setAccount(account);
+			groupDto.setAddress(address);
+			groupDto.setgDescription(description);
+			groupDto.setgTitle(title);
+			groupDto.setPaymentMethod(paymentMethod);
+			groupDto.setgEndTime(endTime);
+			groupDto.setEventNo(eventNo);
+			groupDto.setgMinTotalAmount(minAmount.toString());
+			groupDto.setgMinTotalQuantity(minQuantity.toString());
+			
+			groupDtos.add(groupDto);
+		}
+		
+		m.addAttribute("groups", groupDtos);
+		
 		return "group/jsp/mygroup.jsp";
 	}
 	

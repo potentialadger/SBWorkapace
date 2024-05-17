@@ -1,7 +1,8 @@
+<%@page import="com.group.dto.GroupDto"%>
 <%@page import="java.text.SimpleDateFormat" %>
 	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 		<%@page import="java.util.*" %>
-			<%@page import="com.group.model.Group" %>
+			<%@page import="com.group.dto.GroupDto" %>
 				<%@page import="com.group.model.Item" %>
 					<!DOCTYPE html>
 					<html>
@@ -34,39 +35,44 @@
 								<th>最小成團數量
 								<th>付款方式
 								<th>修改
-								<th>刪除 <% List<Group> groups = (ArrayList<Group>)
+								<th>刪除 <% List<GroupDto> groups = (ArrayList<GroupDto>)
 											request.getAttribute("groups");
-											for (Group group : groups) {
+											for (GroupDto group : groups) {
 											%>
 							<tr>
 								<td>
 									<%=group.getEventNo()%>
 								<td>
-									<%=group.getTitle()%>
+									<%=group.getgTitle()%>
 								<td>
-									<%=group.getDescription()%>
-										<% Date endTime=group.getEndTime(); SimpleDateFormat sdf=new
+									<%=group.getgDescription()%>
+										<% Date endTime=group.getgEndTime(); SimpleDateFormat sdf=new
 											SimpleDateFormat("yyyy-MM-dd"); String formattedEndTime=sdf.format(endTime);
 											%>
 								<td>
 									<%=formattedEndTime%>
 								<td>
-									<%=group.getMinTotalAmount()%>
+									<%=group.getgMinTotalAmount()%>
 								<td>
-									<%=group.getMinTotalQuantity()%>
+									<%=group.getgMinTotalQuantity()%>
 										<% String paymentMethodDisplay="" ; switch (group.getPaymentMethod()) { case 1 :
-											paymentMethodDisplay="LinePay" ; break; case 2 : paymentMethodDisplay="匯款" ;
-											break; case 12 : paymentMethodDisplay="LinePay, 匯款" ; break; default :
+											paymentMethodDisplay="匯款" ; break; case 2 : paymentMethodDisplay="面交" ;
+											break; case 3 : paymentMethodDisplay="SB點數" ;
+											break; case 12 : paymentMethodDisplay="匯款, 面交" ; 
+											break; case 13 : paymentMethodDisplay="匯款, SB點數" ; 
+											break; case 23 : paymentMethodDisplay="面交, SB點數" ; 
+											break; case 123 : paymentMethodDisplay="匯款, 面交, SB點數" ; 
+											break; default :
 											paymentMethodDisplay="未知支付方式" ; break; } %>
 								<td>
 									<%=paymentMethodDisplay%>
 								<td><button class="update btn btn-primary btn-lg"
 										data-groupeventno="<%=group.getEventNo()%>"
-										data-grouptitle="<%=group.getTitle()%>"
-										data-groupdescription="<%=group.getDescription()%>"
+										data-grouptitle="<%=group.getgTitle()%>"
+										data-groupdescription="<%=group.getgDescription()%>"
 										data-groupendtime="<%=formattedEndTime%>"
-										data-groupmintotalamount="<%=group.getMinTotalAmount()%>"
-										data-groupmintotalquantity="<%=group.getMinTotalQuantity()%>"
+										data-groupmintotalamount="<%=group.getgMinTotalAmount()%>"
+										data-groupmintotalquantity="<%=group.getgMinTotalQuantity()%>"
 										data-grouppaymentmethod="<%=paymentMethodDisplay%>" data-bs-toggle="modal"
 										data-bs-target="#exampleModal">
 										<i class="fa-solid fa-pen-to-square"></i>
@@ -88,14 +94,14 @@
 												style="display: flex; align-items: center; margin-bottom: 10px">
 												<div style="width: 150px">團購標題:</div>
 												<input name="gtitle" class="swal2-input"
-													value="<%=group.getTitle()%>" />
+													value="<%=group.getgTitle()%>" />
 												
 											</div>
 											<div
 												style="display: flex; align-items: center; margin-bottom: 10px">
 												<div style="width: 150px">團購描述:</div>
 												<textarea name="gdescription" class="swal2-input"
-													style="height: 80px"><%=group.getDescription()%></textarea>
+													style="height: 80px"><%=group.getgDescription()%></textarea>
 											</div>
 											<div
 												style="display: flex; align-items: center; margin-bottom: 10px">
@@ -115,13 +121,13 @@
 												style="display: flex; align-items: center; margin-bottom: 10px">
 												<div style="width: 150px">成團金額:</div>
 												<input type="number" name="MinTotalAmount"
-													class="swal2-input" value="<%=group.getMinTotalAmount()%>" />
+													class="swal2-input" value="<%=group.getgMinTotalAmount()%>" />
 											</div>
 											<div
 												style="display: flex; align-items: center; margin-bottom: 10px">
 												<div style="width: 150px">成團數量:</div>
 												<input name="MinTotalQuantity" class="swal2-input"
-													value="<%=group.getMinTotalQuantity()%>" />
+													value="<%=group.getgMinTotalQuantity()%>" />
 											</div>
 										</div>
 								<div class="modal-footer">

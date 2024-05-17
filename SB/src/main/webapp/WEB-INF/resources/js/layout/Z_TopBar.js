@@ -182,6 +182,10 @@ Topbar = `<!-- Topbar -->
                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                     Settings
                 </a>
+                <a class="dropdown-item" href="/group/mygroups">
+                    <i class="fa fa-folder fa-sm fa-fw mr-2 text-gray-400"></i>
+                    我的團購
+                </a>
                 <a class="dropdown-item" href="#">
                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                     Activity Log
@@ -201,22 +205,22 @@ Topbar = `<!-- Topbar -->
 document.write(Topbar);
 
 fetch("getTopBarData").then(function (response) {
-    if (response.status != 200) {
-        console.log(response.status + " " + response.statusText);
+  if (response.status != 200) {
+    console.log(response.status + " " + response.statusText);
 
-        return;
-    }
+    return;
+  }
 
-    response.json().then(function (data) {
-        console.log(data);
-        document.querySelector("#userName").innerHTML = data.userChineseName;
-        document.querySelector("#topBarAvatar").src = "localimages/" + data.avatar;
+  response.json().then(function (data) {
+    console.log(data);
+    document.querySelector("#userName").innerHTML = data.userChineseName;
+    document.querySelector("#topBarAvatar").src = "localimages/" + data.avatar;
 
-        // var resultText = "";
-        // for (var i = 0; i < data.length; i++) {
-        //     resultText += data[i].houseid + " " + data[i].housename + "<br/>";
-        // }
+    // var resultText = "";
+    // for (var i = 0; i < data.length; i++) {
+    //     resultText += data[i].houseid + " " + data[i].housename + "<br/>";
+    // }
 
-        // document.querySelector("#result").innerHTML = resultText;
-    });
+    // document.querySelector("#result").innerHTML = resultText;
+  });
 });
