@@ -16,11 +16,15 @@ public class UserImageService {
 	@Autowired
 	private UserImagesRepository uImgRepository;
 
+	public UserImageBean seleteUserImageBean(Integer imageNo) {
+		return uImgRepository.findById(imageNo).get();
+	}
+	
 	public UserImageBean saveUserImageBean(UserImageBean UIB) {
 		return uImgRepository.save(UIB);
 	}
 	
-
-	
-
+	public void deleteUserImage(UserImageBean UIB) {
+		uImgRepository.delete(UIB);
+	}
 }

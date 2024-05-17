@@ -31,6 +31,10 @@
                             <!-- Custom styles for this page -->
                             <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
+                            <!-- swing alert要用的一些工具 -->
+                            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css">
+                            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
+
                             <!-- 主要內容的樣式 -->
                             <style>
                                 body{
@@ -428,7 +432,10 @@
                                                                                         <ul class="img-grid-list">
                                                                                             <c:forEach var="aImg" items="${userBean.userImages}">
                                                                                                 <li>
-                                                                                                    <a href="#"><img src="localimages/<c:out value="${aImg.imagePath}"/>" alt="" class="img-portrait" /></a>
+                                                                                                    <!-- <button type="button" class="btn btn-primary btn-lg float-right" id="uploadBtn" data-toggle="modal" data-target="#uploadImgs">上傳</button> -->
+                                                                                                    <a style="cursor: pointer;" data-toggle="modal" data-target="#imgPreview" onclick="loadPreviewImgData('${aImg.imagePath}', '${aImg.userImageNo}')">
+                                                                                                        <img src="localimages/<c:out value="${aImg.imagePath}"/>" alt="" class="img-portrait" />
+                                                                                                    </a>
                                                                                                 </li>
                                                                                             </c:forEach>
                                                                                         </ul>
@@ -506,7 +513,7 @@
 
                             <!-- 上傳多張照片的modal -->
                             <div class="modal fade" id="uploadImgs" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
+                                <div class="modal-dialog modal-dialog-centered">
                                   <div class="modal-content">
                                     <form action="userUploadImages" method="post" enctype="multipart/form-data">
                                         <div class="modal-header">
@@ -525,8 +532,35 @@
                                         
                                         </div>
                                         <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                                        <button type="submit" class="btn btn-primary">上傳</button>
+                                            <button type="submit" class="btn btn-primary">上傳</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                                        
+                                        </div>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <!-- 每張照片被點擊時的modal -->
+                            <div class="modal fade" id="imgPreview" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                  <div class="modal-content">
+                                    <form action="/deleteUserImage" method="post" enctype="multipart/form-data">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img id="previewImg" src="" alt="" width="466" style="object-fit: cover;">
+                                            <input type="hidden" name="imgNo" id="imgNo" value="">
+                                            <input type="hidden" name="_method" value="delete">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-danger" id="imgPreviewDelBtn">刪除</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
                                         </div>
                                     </form>
                                   </div>
@@ -561,6 +595,7 @@
 
 
                             <script>
+                                //顯示選到的圖片們
                                 function selectImgFile(files) {
 
                                     if (!files.length) {
@@ -583,7 +618,45 @@
 
                                         reader.readAsDataURL(file);
                                     }
-                                }
+                                };
+
+                                //讀入modal的圖片
+                                function loadPreviewImgData(imgSrc, imgNo){
+                                    document.querySelector("#previewImg").src = "localimages/" + imgSrc;
+                                    document.querySelector("#imgNo").value = imgNo;
+                                };
+
+                                
+
+                                //按刪除圖片的swing alert
+                                const deleteBtn = document.querySelector('#imgPreviewDelBtn');
+                                
+                                deleteBtn.addEventListener('click', (e) => {
+                                    e.preventDefault(); // 阻止表單提交
+
+                                    Swal.fire({
+                                        title: '確定要刪除嗎?',
+                                        text: '刪除後將無法恢復!',
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#d33',
+                                        cancelButtonColor: '#3085d6',
+                                        confirmButtonText: '刪除',
+                                        cancelButtonText: '取消'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            swal.fire({
+                                                icon: "success",
+                                                title: "刪除成功",
+                                                showConfirmButton: false,
+                                                timer: 1500
+                                            }).then(() => {
+                                                e.target.closest('form').submit();
+                                            });
+                                            
+                                        }
+                                    });
+                                });
                             </script>
                         </body>
 
