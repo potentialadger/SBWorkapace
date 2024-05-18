@@ -20,12 +20,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.group.dto.GroupDto;
+import com.group.dto.OrderDto;
 import com.group.model.Group;
 import com.group.model.Item;
 import com.group.model.ItemSpecification;
+import com.group.model.Order;
 import com.group.service.GroupService;
 import com.group.service.ItemService;
 import com.group.service.ItemSpecService;
+import com.group.service.OrderService;
 import com.user.bean.UserBean;
 import com.user.service.UserService;
 
@@ -47,6 +50,9 @@ public class GroupController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private OrderService orderService;
 	
 //	全活躍活動
 	@GetMapping(value = "/groups")
@@ -98,6 +104,9 @@ public class GroupController {
 			groupDtos.add(groupDto);
 		}
 		
+		List<OrderDto> orders = orderService.findOrdersByUserNo(userNo);
+		
+		m.addAttribute("orders", orders);
 		m.addAttribute("groups", groupDtos);
 		
 		return "group/jsp/mygroup.jsp";

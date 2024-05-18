@@ -12,7 +12,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 	@Query("SELECT o FROM Order o WHERE o.group.eventNo= :eventNo")
 	public List<Order> findOrdersByEventNo(Integer eventNo);
 	
-	@Query("SELECT o FROM Order o WHERE o.group.eventNo= :userNo")
+	@Query("SELECT o FROM Order o WHERE o.userNo.userNo= :userNo")
 	public List<Order> findOrdersByUserNo(Integer userNo);
 
 }
