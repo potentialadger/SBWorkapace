@@ -141,7 +141,8 @@ public class SocialPhotosController {
 	}
 
 	
-	// 接收用戶上傳的照片，將其儲存到伺服器中，並在資料庫中新增相應的記錄       //...再看需不需要寫上傳多張
+	// 接收用戶上傳的照片，將其儲存到伺服器中，並在資料庫中新增相應的記錄
+	
 	
 	
 	
@@ -151,49 +152,48 @@ public class SocialPhotosController {
 	@PostMapping(value = "/insertSPhoto")
 	@ResponseBody
 	public List<SocialPhotosBean> insertSPhotos(@RequestParam("userNo") Integer userNo,
-	                                            @RequestParam("sPhoto") MultipartFile[] mfs,
+	                                            @RequestParam("file") MultipartFile mffile,
+	                                            @RequestParam("photoTheme") String photoTheme,
 	                                            HttpServletRequest request) throws IllegalStateException, IOException {
 	    HttpSession session = request.getSession();
 	    List<SocialPhotosBean> insertedPhotos = new ArrayList<>();
 
-	    for (MultipartFile mf : mfs) {
-	        String filename = mf.getOriginalFilename();
-	        String extension = "";
-	        int i = filename.lastIndexOf('.');
-	        if (i >= 0) {
-	            extension = filename.substring(i);
-	        }
-
-	        Random random = new Random();
-	        int raNumber = random.nextInt(10000);
-	        filename = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "_" + raNumber
-	                + extension;
-
-	        String fileDir = "C:/temp/upload/";
-	        File pathexist = new File(fileDir);
-	        if (!pathexist.exists()) {
-	            pathexist.mkdirs();
-	        }
-
-	        File fileDirPath = new File(fileDir, filename);
-	        mf.transferTo(fileDirPath);
-
-	        SocialPhotosBean sPhoto = spService.insertOrUpdate(userNo, filename);
-	        insertedPhotos.add(sPhoto);
+	    String filename = mffile.getOriginalFilename();
+	    String extension = "";
+	    int i = filename.lastIndexOf('.');
+	    if (i >= 0) {
+	        extension = filename.substring(i);
 	    }
 
-	    session.setAttribute("insertedPhotos", insertedPhotos);
+	    Random random = new Random();
+	    int raNumber = random.nextInt(10000);
+	    String photoPath = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "_" + raNumber
+	            + extension;
 
+	    String fileDir = "C:/temp/upload/";
+	    File pathexist = new File(fileDir);
+	    if (!pathexist.exists()) {
+	        pathexist.mkdirs();
+	    }
+
+	    File fileDirPath = new File(fileDir, photoPath);
+	    mffile.transferTo(fileDirPath);
+
+	    SocialPhotosBean sPhoto = spService.insertOrUpdate(userNo, photoPath, photoTheme);
+	    insertedPhotos.add(sPhoto);
+
+	    session.setAttribute("insertedPhotos", insertedPhotos);
 	    return insertedPhotos;
 	}
 	
 	
 	
-	//先這樣
+	// 更新照片方法
 	@PostMapping(value = "/updateSPhotos", consumes = "application/json" ,produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public List<SocialPhotosBean> updateSPhotos(@RequestParam("userNo") Integer userNo,
 	                                            @RequestParam("photoPath") List<MultipartFile> photoPaths,
+	                                            @RequestParam("photoTheme") String photoTheme,
 	                                            HttpServletRequest request) throws IllegalStateException, IOException {
 	    List<SocialPhotosBean> updatedPhotos = new ArrayList<>();
 
@@ -219,7 +219,7 @@ public class SocialPhotosController {
 	        File fileDirPath = new File(fileDir, filename);
 	        mf.transferTo(fileDirPath);
 
-	        SocialPhotosBean sPhoto = spService.insertOrUpdate(userNo, filename/*, photoTheme*/);
+	        SocialPhotosBean sPhoto = spService.insertOrUpdate(userNo, filename , photoTheme);
 	        updatedPhotos.add(sPhoto);
 	    }
 

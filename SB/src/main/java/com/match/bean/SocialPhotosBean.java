@@ -17,10 +17,10 @@ public class SocialPhotosBean {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="photono")
-	private Integer photoNo;  //NOT NULL
+	private Integer photoNo;  //NOT NULL  ""
 	
 	@Column(name="fkuserno")
-	private Integer userNo;   //NOT NULL
+	private Integer userNo;   //NOT NULL  session
 	
 	@Column(name="photopath")
 	private String photoPath;

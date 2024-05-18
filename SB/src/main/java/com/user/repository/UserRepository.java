@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.user.bean.UserBean;
 
@@ -24,6 +25,10 @@ public interface UserRepository extends JpaRepository<UserBean, Integer> {
 
 
 	public UserBean findByUserNo(Integer userNo);
+	
+	
+    @Query("SELECT u FROM UserBean u WHERE u.userNo > :currentUserNo ORDER BY u.userNo ASC")
+    List<UserBean> findNextUsers(@Param("currentUserNo") Integer currentUserNo);
 
 
 

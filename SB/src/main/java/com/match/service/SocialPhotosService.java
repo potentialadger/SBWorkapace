@@ -19,6 +19,8 @@ public class SocialPhotosService {
     @Autowired
     private SocialPhotosRepository spRepos;
 
+    
+    
     // 查詢單張照片
     public SocialPhotosBean getById(Integer photoNo) {
         Optional<SocialPhotosBean> opPhoto = spRepos.findById(photoNo);
@@ -28,44 +30,48 @@ public class SocialPhotosService {
         return null;
     }
 
+    
+    
     // 查詢所有照片
     public List<SocialPhotosBean> findAll() {
         return spRepos.findAll();
     }
 
+    
+    
     // 根據用戶ID查詢照片
     public List<SocialPhotosBean> findByUserNo(Integer userNo) {
         return spRepos.findByUserNo(userNo);
     }
 
+    
+    
  // 新增或更新照片
- // 新增或更新照片
-    public SocialPhotosBean insertOrUpdate(Integer userNo, String photoPath) {
+    public SocialPhotosBean insertOrUpdate(Integer userNo, String photoPath, String photoTheme) {
         SocialPhotosBean photo = new SocialPhotosBean();
         photo.setUserNo(userNo);
         photo.setPhotoPath(photoPath);
+        photo.setPhotoTheme(photoTheme);
 
-        // 如果 photoTheme 为 null,则设置一个随机数作为默认值
-        if (photo.getPhotoTheme() == null) {
-            Random rand = new Random();
-            int randomTheme = rand.nextInt(1000);
-            photo.setPhotoTheme(String.valueOf(randomTheme));
-        }
 
-        // 检查是否存在具有相同 userNo 和 photoPath 的照片记录
-        List<SocialPhotosBean> existingPhotos = spRepos.findByUserNoAndPhotoPath(userNo, photoPath);
+        // 檢查是否存在具有相同 userNo 和 photoPath 的照片紀錄
+        List<SocialPhotosBean> existingPhotos = spRepos.findByUserNoAndPhotoTheme(userNo, photoTheme);
 
         if (!existingPhotos.isEmpty()) {
-            // 如果存在具有相同 userNo 和 photoPath 的照片记录,则更新第一条记录的 photoPath
+            // 如果存在具有相同 userNo 和 photoPath 的照片紀錄,則更新第一條紀錄的 photoPath
+        	
             SocialPhotosBean existingPhoto = existingPhotos.get(0);
             existingPhoto.setPhotoPath(photoPath);
             return spRepos.save(existingPhoto);
-        } else {
-            // 如果不存在具有相同 userNo 和 photoPath 的照片记录,则插入新照片
+            
+        } else {       	
+            // 如果不存在具有相同 userNo 和 photoPath 的照片紀錄,則插入新照片
             return spRepos.save(photo);
         }
     }
 
+    
+    
     // 刪除照片
     public void deleteById(Integer photoNo) {
         spRepos.deleteById(photoNo);

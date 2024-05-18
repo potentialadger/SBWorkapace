@@ -1802,6 +1802,89 @@ border-radius:6px;
   	  nope.on('click', nopeListener);
   	  love.on('click', loveListener);
   	});
+    
+    
+    
+    
+    
+    
+    
+ // 存儲當前顯示的使用者數據
+    let currentUser;
+
+    // 獲取下一位使用者數據
+    function getNextUser() {
+      // 發送 AJAX 請求獲取下一位使用者數據
+      $.ajax({
+        url: '/nextUser', // 替換為您的後端 API 路徑
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+          // 將返回的數據賦值給 currentUser
+          currentUser = data;
+          // 渲染使用者數據
+          renderUser(currentUser);
+        },
+        error: function(xhr, status, error) {
+          console.error('Error getting next user:', error);
+        }
+      });
+    }
+
+    // 渲染使用者數據
+    function renderUser(user) {
+      // 根據使用者數據更新頁面上的元素
+      // 例如,更新照片輪播區塊中的圖片
+      let html = '';
+      user.photos.forEach(function(photo) {
+        html += `<img src="${photo.url}" width="580" height="230" alt="user photo">`;
+      });
+      $('.carousel').html(html);
+    }
+
+    // 處理 nope 按鈕點擊事件
+    $('#nope').click(function() {
+      // 在這裡處理不喜歡的邏輯
+      // 例如,向後端發送 AJAX 請求記錄不喜歡
+      $.ajax({
+        url: `/dislike/${currentUser.userNo}`, // 替換為您的後端 API 路徑
+        type: 'POST',
+        success: function(data) {
+          alert(data.message); // 顯示後端返回的訊息
+          // 獲取下一位使用者數據並渲染
+          getNextUser();
+        },
+        error: function(xhr, status, error) {
+          console.error('Error disliking user:', error);
+        }
+      });
+    });
+
+    // 處理 love 按鈕點擊事件
+    $('#love').click(function() {
+      // 在這裡處理喜歡的邏輯
+      // 例如,向後端發送 AJAX 請求記錄喜歡
+      $.ajax({
+        url: `/like/${currentUser.userNo}`, // 替換為您的後端 API 路徑
+        type: 'POST',
+        success: function(data) {
+          alert(data.message); // 顯示後端返回的訊息
+          // 獲取下一位使用者數據並渲染
+          getNextUser();
+        },
+        error: function(xhr, status, error) {
+          console.error('Error liking user:', error);
+        }
+      });
+    });
+
+    // 初始化時獲取第一位使用者數據並渲染
+    getNextUser();
+    
+    
+    
+ 
+    
   	
   	
   	

@@ -1,20 +1,15 @@
 package com.user.controller;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import org.apache.http.ParseException;
-import org.hibernate.sql.ast.tree.expression.Collation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -639,6 +634,25 @@ public class UserController {
 	    
 	    return "match/jsp/MatchPage.jsp";
 	}
+	
+	
+	
+    // ----- 實作配對 -----
+    
+	
+    //刷新下一位使用者
+		
+	@GetMapping("/next-user")
+	@ResponseBody
+	public UserBean getNextUser(HttpSession session) {
+	    UserBean currentUser = (UserBean) session.getAttribute("userData");
+	    if (currentUser != null) {
+	        UserBean nextUser = uService.getNextUser(currentUser.getUserNo());
+	        return nextUser;
+	    }
+	    return null;
+	}
+	
 	
 	
 

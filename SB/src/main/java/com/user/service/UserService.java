@@ -163,6 +163,7 @@ public class UserService {
     
     
     // ----- 實作Tags------
+    
     @Transactional
     public void updateUserTags(UserBean userBean, List<String> selectedTags) {
 //    	System.err.println(userBean.getTagsBeans());
@@ -170,7 +171,7 @@ public class UserService {
     	userBean.getUserNo();
     	
     	
-        userBean.getTagsBeans().clear();                          ///////////////////////////////////////////
+        userBean.getTagsBeans().clear();                         
         List<String> aaList =  new ArrayList<>();
         // 根據選擇的標籤名稱列表批量查詢標籤實體
         List<TagsBean> tags = tRepository.findByTagNameIn(selectedTags);
@@ -185,6 +186,25 @@ public class UserService {
         
         // 儲存更新後的使用者資料
         uRepository.save(userBean);
+    }
+    
+    
+    
+    
+    
+    // ----- 實作配對 -----
+    
+    
+    //刷新下一位使用者
+    
+    
+
+    public UserBean getNextUser(Integer currentUserNo) {
+        List<UserBean> nextUsers = uRepository.findNextUsers(currentUserNo);
+        if (!nextUsers.isEmpty()) {
+            return nextUsers.get(0); // 返回下一位使用者
+        }
+        return null; // 如果沒有下一位使用者,則返回 null
     }
     
 
