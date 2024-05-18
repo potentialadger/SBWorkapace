@@ -163,11 +163,15 @@ public class UserService {
     
     
     // ----- 實作Tags------
-    
+    @Transactional
     public void updateUserTags(UserBean userBean, List<String> selectedTags) {
+//    	System.err.println(userBean.getTagsBeans());
         // 清空使用者原有的標籤
-        userBean.getTagsBeans().clear();
-        
+    	userBean.getUserNo();
+    	
+    	
+        userBean.getTagsBeans().clear();                          ///////////////////////////////////////////
+        List<String> aaList =  new ArrayList<>();
         // 根據選擇的標籤名稱列表批量查詢標籤實體
         List<TagsBean> tags = tRepository.findByTagNameIn(selectedTags);
         

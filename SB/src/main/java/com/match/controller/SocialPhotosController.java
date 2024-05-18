@@ -142,6 +142,12 @@ public class SocialPhotosController {
 
 	
 	// 接收用戶上傳的照片，將其儲存到伺服器中，並在資料庫中新增相應的記錄       //...再看需不需要寫上傳多張
+	
+	
+	
+	// 從圖片名稱就可以知道主題提名稱
+	// @RequestParam("sPhoto") MultipartFile[] mfs  =>不能這樣寫這樣一個input會上傳多張照片
+	// 我需要一個input只會上傳一張照片
 	@PostMapping(value = "/insertSPhoto")
 	@ResponseBody
 	public List<SocialPhotosBean> insertSPhotos(@RequestParam("userNo") Integer userNo,

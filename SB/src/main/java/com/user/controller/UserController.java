@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.apache.http.ParseException;
+import org.hibernate.sql.ast.tree.expression.Collation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -31,6 +32,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.match.bean.TagsBean;
+import com.match.dto.UpdateTagsDTO;
 import com.user.bean.UserBean;
 import com.user.bean.UserImageBean;
 import com.user.dto.LinePayDto;
@@ -496,17 +498,18 @@ public class UserController {
     
     // 處理標籤更新
     @PostMapping("/updateTags")
-    public ResponseEntity<UserBean> updateTags(@RequestBody List<String> selectedTags, HttpSession session) {
-        System.err.println(selectedTags);
+    public ResponseEntity<UserBean> updateTags(@RequestBody UpdateTagsDTO selectedTags, HttpSession session) {
     	try {
             // 從 session 中獲取當前使用者
             UserBean userBean = (UserBean) session.getAttribute("userData");
-            
+    		Optional<UserBean> dataById = uService.getDataById(userBean.getUserNo());
+    		userBean = dataById.get();
             // 更新使用者的標籤
-            uService.updateUserTags(userBean, selectedTags);
+            uService.updateUserTags(userBean, selectedTags.getSelectedTags());
             
             return ResponseEntity.ok().build();
         } catch (Exception e) {
+        	System.err.println(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
     }

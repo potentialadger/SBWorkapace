@@ -23,5 +23,8 @@ public interface UserRepository extends JpaRepository<UserBean, Integer> {
     List<UserBean> findUserBeansByTagNo(Integer tagNo);
 
 
+	public UserBean findByUserNo(Integer userNo);
+
+
 
 }

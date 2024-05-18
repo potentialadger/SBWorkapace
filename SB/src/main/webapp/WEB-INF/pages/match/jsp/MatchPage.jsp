@@ -1600,12 +1600,10 @@ border-radius:6px;
      <!--按鈕-->
       <div class="tinder">
      	 <div class="tinder--buttons">
-     	 <button id="nope"><i class="fa fa-remove"></i></button>
-     	 <button id="love"><i class="fa fa-heart"></i></button>
+     	 <button id="nope" data-user1-no="${user1No}" data-user2-no="${user2No}"><i class="fa fa-remove"></i></button>
+     	 <button id="love" data-user1-no="${user1No}" data-user2-no="${user2No}"><i class="fa fa-heart"></i></button>
        	 </div>
       </div>
-
-   <!--表示應用程式的主要部分-->  
    </div> 
 
          
@@ -1741,9 +1739,125 @@ border-radius:6px;
   
 
 
+
+
+
+
+
+
+
+
     <script>
+    
+    
+    
+    
+    $(document).ready(function() {
+  	  var cardContainer = $('.card-container');
+  	  var allCards = cardContainer.find('.carousel');
+  	  var nope = $('#nope');
+  	  var love = $('#love');
+
+  	  function initCards() {
+  	    allCards.each(function(index, card) {
+  	      $(card).css({
+  	        'z-index': allCards.length - index,
+  	        'transform': 'scale(1)',
+  	        'opacity': 1,
+  	        'transition': 'transform 0.5s'
+  	      });
+  	    });
+  	  }
+
+  	  initCards();
+
+  	  function createButtonListener(love) {
+  	    return function(event) {
+  	      var cards = cardContainer.find('.carousel:not(.removed)');
+  	      var moveOutWidth = document.body.clientWidth * 1.5;
+
+  	      if (!cards.length) return false;
+
+  	      var card = cards.eq(0);
+  	      card.addClass('removed');
+
+  	      if (love) {
+  	        card.css('transform', 'translate(' + moveOutWidth + 'px, -100px) rotate(-30deg)');
+  	      } else {
+  	        card.css('transform', 'translate(-' + moveOutWidth + 'px, -100px) rotate(30deg)');
+  	      }
+
+  	      setTimeout(function() {
+  	        card.css('display', 'none');
+  	        initCards();
+  	      }, 500);
+
+  	      event.preventDefault();
+  	    };
+  	  }
+
+  	  var nopeListener = createButtonListener(false);
+  	  var loveListener = createButtonListener(true);
+
+  	  nope.on('click', nopeListener);
+  	  love.on('click', loveListener);
+  	});
+  	
+  	
+  	
+  	
+  	
+  //按 X 邏輯
+  $(document).ready(function() {
+    $('#nope').click(function(event) {
+      event.preventDefault();
+      // <button id="nope" data-user1-no="${user1No}" data-user2-no="${user2No}"><i class="fa fa-remove"></i></button>
+      var user1No = $(this).data('user1-no');
+      var user2No = $(this).data('user2-no');
+    
+      console.log('/' + user1No + '/' + user2No + '/dislike');
+      $.ajax({
+        url: '/' + user1No + '/' + user2No + '/dislike',
+        type: 'POST',
+        success: function(response) {
+          alert(response);
+          // 在這裡可以執行其他操作，如刷新頁面或顯示提示訊息
+        },
+        error: function(xhr, status, error) {
+          console.log(error);
+        }
+      });
+    });
+    
+    //按 愛心 邏輯
+    $('#love').click(function(event) {
+      event.preventDefault();
+      var user1No = $(this).data('user1-no');
+      var user2No = $(this).data('user2-no');
+      
+      $.ajax({
+        url: '/' + user1No + '/' + user2No + '/like',
+        type: 'POST',
+        success: function(response) {
+          alert(response);
+          // 在這裡可以執行其他操作，如刷新頁面或顯示提示訊息
+        },
+        error: function(xhr, status, error) {
+          console.log(error);
+        }
+      });
+    });
+  });
 
 
+
+  
+  
+  
+  
+  
+  
+  
 
 // 獲取所有按鈕和內容容器
 const buttons = document.querySelectorAll('.nav-link.icon');
@@ -4834,56 +4948,8 @@ $(document).ready(function(){
 });
          
 
-$(document).ready(function() {
-	  var cardContainer = $('.card-container');
-	  var allCards = cardContainer.find('.carousel');
-	  var nope = $('#nope');
-	  var love = $('#love');
 
-	  function initCards() {
-	    allCards.each(function(index, card) {
-	      $(card).css({
-	        'z-index': allCards.length - index,
-	        'transform': 'scale(1)',
-	        'opacity': 1,
-	        'transition': 'transform 0.5s'
-	      });
-	    });
-	  }
 
-	  initCards();
-
-	  function createButtonListener(love) {
-	    return function(event) {
-	      var cards = cardContainer.find('.carousel:not(.removed)');
-	      var moveOutWidth = document.body.clientWidth * 1.5;
-
-	      if (!cards.length) return false;
-
-	      var card = cards.eq(0);
-	      card.addClass('removed');
-
-	      if (love) {
-	        card.css('transform', 'translate(' + moveOutWidth + 'px, -100px) rotate(-30deg)');
-	      } else {
-	        card.css('transform', 'translate(-' + moveOutWidth + 'px, -100px) rotate(30deg)');
-	      }
-
-	      setTimeout(function() {
-	        card.css('display', 'none');
-	        initCards();
-	      }, 500);
-
-	      event.preventDefault();
-	    };
-	  }
-
-	  var nopeListener = createButtonListener(false);
-	  var loveListener = createButtonListener(true);
-
-	  nope.on('click', nopeListener);
-	  love.on('click', loveListener);
-	});
 
 
                           

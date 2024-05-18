@@ -1304,26 +1304,33 @@ body {
 			
     function updateTags() {
     // 獲取用戶選擇的標籤值
-    var selectedTags = tagify.value.map(function(tag) {
-        return tag.value;
-    });
+//     var selectedTags = tagify.value.map(function(tag) {
+//         return tag.value;
+//     });
     
+   var selectedTags1 = JSON.stringify({
+    	"selectedTags":optionsList
+    });
+   
+   
+
     // 發送 POST 請求到後端
     fetch('/updateTags', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'   // 告訴服務器請求體的格式是 JSON
+        	'Content-Type': 'application/json'   // 告訴服務器請求體的格式是 JSON
         },
-        body: JSON.stringify(optionsList)  // 將 optionsList 物件轉換為 JSON 字符串並作為請求的主體
-    })                                     // selectList  : 包含用戶選擇的一組選項    
+        body: JSON.stringify({
+        	"selectedTags":optionsList
+        })  // 將 optionsList 物件轉換為 JSON 字符串並作為請求的主體
+    })                                     // selectList  :  -包含用戶選擇的一組選項    
                                            // optionsList : 包含所有可供選擇的選項 
-    console.log(optionsList)
     .then(function(response) {
         // 處理後端的回應
         if (response.ok) {
             console.log('標籤更新成功');
         } else {
-            console.error('標籤更新失敗');
+            console.error('標籤更新失敗', response);
         }
     })
     .catch(function(error) {
