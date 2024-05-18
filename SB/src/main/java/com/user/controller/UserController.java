@@ -411,10 +411,17 @@ public class UserController {
 	
 	@GetMapping("setOtherUserNo/{userNo}")
 	public String setOtherUserBean(@PathVariable("userNo") Integer userNo, HttpSession session, Model m) {
-		UserBean otherUserBean = uService.getUserData(userNo);
-		session.setAttribute("otherUserData", otherUserBean);
+		UserBean uBean = (UserBean)session.getAttribute("userData");
+		if(uBean.getUserNo() == userNo) {
+			return "redirect:/aboutMe";
+		}
+		else {
+			UserBean otherUserBean = uService.getUserData(userNo);
+			session.setAttribute("otherUserData", otherUserBean);
+			
+			return "redirect:/otherAboutMe";
+		}
 		
-		return "redirect:/otherAboutMe";
 	}
 	
 	@GetMapping("otherAboutMe")

@@ -455,6 +455,7 @@
                                     padding: 0 7px;
                                 }
                             </style>
+                            <link rel="stylesheet" href="/css/userSearch.css">
                         </head>
 
                         <body id="page-top">
@@ -771,7 +772,7 @@
                             <!-- Page level custom scripts -->
                             <script src="js/demo/datatables-demo.js"></script>
 
-
+                            <script src="/js/user/userSearch.js"></script>
                         </body>
 
                         </html>

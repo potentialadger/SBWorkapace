@@ -792,42 +792,9 @@
                                         margin: 0;
                                         padding: 0;
                                     }
-
-                                    .suggestions {
-                                        position: absolute;
-                                        top: 100%;
-                                        left: 0;
-                                        z-index: 1000;
-                                        border: 1px solid #ddd;
-                                        background-color: #fff;
-                                        max-height: 800px;
-                                        overflow-y: auto;
-                                        width: 100%;
-                                    }
-
-                                    .suggestions div {
-                                        padding: 10px;
-                                        cursor: pointer;
-                                    }
-
-                                    .suggestions div:hover {
-                                        background-color: #f0f0f0;
-                                    }
-
-                                    .suggestion-item {
-                                        margin-bottom: 10px;
-                                    }
-
-                                    .suggestion-title {
-                                        font-size: 16px;
-                                        font-weight: bold;
-                                    }
-
-                                    .suggestion-description {
-                                        font-size: 12px;
-                                        color: gray;
-                                    }
                                 </style>
+
+                                <link rel="stylesheet" href="/css/userSearch.css">
                             </head>
 
                             <body id="page-top">
@@ -1245,61 +1212,9 @@
                                     });
                                 </script>
 
-                                <script>
-                                    $(document).ready(function () {
-                                        $('#search').on('input', function () {
-                                            const search = $(this).val();
-                                            if (search.length > 0) {
-                                                $.ajax({
-                                                    url: 'userSearch',
-                                                    method: 'get',
-                                                    data: { search: search },
-                                                    success: function (response) {
-                                                        displaySuggestions(response);
-                                                    },
-                                                    error: function (err) {
-                                                        console.log("錯了白痴" + err);
-                                                    }
-                                                })
-                                            } else {
-                                                $('#searchSuggestions').empty();
-                                            }
-                                        });
-
-                                        function displaySuggestions(suggestions) {
-                                            const suggestionsContainer = $('#searchSuggestions');
-                                            suggestionsContainer.empty();
-                                            suggestions.forEach(function (suggestion) {
-                                                const container = $('<div>').addClass('container');
-                                                const row = $('<div>').addClass('row');
-
-                                                const imgDiv = $('<div>').addClass('col-4');
-                                                const img = $('<img>')
-                                                    .addClass('img-fluid img-cover')
-                                                    .attr("src", "/localimages/" + suggestion.avatar);
+                                <script src="/js/user/userSearch.js"></script>
 
 
-                                                const suggestionItem = $('<div>').addClass('suggestion-item col-8');
-                                                const title = $('<div>').text(suggestion.userChineseName).addClass('suggestion-title');
-                                                const description = $('<div>').text(suggestion.userEnglishName).addClass('suggestion-description');
-                                                console.log(suggestion.gDescription);
-                                                suggestionItem.append(title).append(description);
-                                                suggestionItem.on('click', function () {
-                                                    const eventno = suggestion.eventNo;
-                                                    console.log(eventno);
-                                                    window.location.href = '/group/eachgroup/' + eventno;
-                                                });
-
-                                                imgDiv.append(img);
-                                                row.append(imgDiv).append(suggestionItem);
-                                                container.append(row);
-
-                                                suggestionsContainer.append(container);
-                                            });
-                                        }
-
-                                    })
-                                </script>
                             </body>
 
                             </html>

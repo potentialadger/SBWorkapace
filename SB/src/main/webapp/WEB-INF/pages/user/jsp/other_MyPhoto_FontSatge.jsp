@@ -403,6 +403,8 @@
                                         max-width: 100%;
                                     }
                                 </style>
+
+                                <link rel="stylesheet" href="/css/userSearch.css">
                             </head>
 
                             <body id="page-top">
@@ -788,6 +790,8 @@
                                         });
                                     });
                                 </script>
+
+                                <script src="/js/user/userSearch.js"></script>
                             </body>
 
                             </html>
