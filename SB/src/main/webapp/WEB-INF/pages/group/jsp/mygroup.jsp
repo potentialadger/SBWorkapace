@@ -21,7 +21,7 @@
 
 					<body>
 						<div style="position: absolute; top: 10px; left: 10px;">
-							<a href="groups.controller"><i class="fa-solid fa-arrow-left"></i></a>
+							<a href="/group/groups"><i class="fa-solid fa-arrow-left"></i></a>
 						</div>
 					<div class="container">
 						<h2>你的團購</h2>

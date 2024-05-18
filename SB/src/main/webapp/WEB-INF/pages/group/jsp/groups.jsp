@@ -449,6 +449,7 @@
 								});
 							</script>
 
+							<!-- 搜尋列 -->
 							<script>
 								$(document).ready(function () {
 									$('#search').on('input', function () {
@@ -488,6 +489,12 @@
 										});
 									}
 
+								})
+							</script>
+
+							<script>
+								$(document).ready(function(){
+									
 								})
 							</script>
 						</body>
