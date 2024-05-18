@@ -892,16 +892,16 @@
                                                                                             class="nav-link_">貼文</a>
                                                                                     </li>
                                                                                     <li class="nav-item"><a
-                                                                                            href="/aboutMe"
+                                                                                            href="/otherAboutMe"
                                                                                             class="nav-link_">關於我</a>
                                                                                     </li>
                                                                                     <li class="nav-item"><a
-                                                                                            href="/userPhotos"
+                                                                                            href="/otherUserPhotos"
                                                                                             class="nav-link_">照片</a>
                                                                                     </li>
 
                                                                                     <li class="nav-item"><a
-                                                                                            href="/userFriends"
+                                                                                            href="/otherUserFriends"
                                                                                             class="nav-link_ show active">好友</a>
                                                                                     </li>
                                                                                 </ul>
@@ -1285,9 +1285,9 @@
                                                 console.log(suggestion.gDescription);
                                                 suggestionItem.append(title).append(description);
                                                 suggestionItem.on('click', function () {
-                                                    const userNo = suggestion.userNo;
-                                                    console.log(userNo);
-                                                    window.location.href = '/setOtherUserNo/' + userNo;
+                                                    const eventno = suggestion.eventNo;
+                                                    console.log(eventno);
+                                                    window.location.href = '/group/eachgroup/' + eventno;
                                                 });
 
                                                 imgDiv.append(img);
