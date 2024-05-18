@@ -18,7 +18,6 @@
 									crossorigin="anonymous">
 								<link rel="stylesheet"
 									href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
-								<link rel="stylesheet" href="/style/mygroup.css">
 							</head>
 
 							<body>
@@ -330,11 +329,8 @@
 											let groupEventNo = $(this).data("groupeventno");
 											if (confirm("確定要刪除這筆資料嗎?")) {
 												$.ajax({
-													url: 'DeleteGroup?groupEventNo=' + groupEventNo,
-													type: 'delete',
-													data: {
-														groupEventNo: groupEventNo
-													},
+													url: '/group/bannedgroup/' + groupEventNo,
+													type: 'post',
 													success: function (response) {
 														console.log(groupEventNo)
 														location.reload();

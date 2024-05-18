@@ -179,7 +179,7 @@ public class GroupController {
 		return "group/jsp/backallgroups.jsp";
 	}
 	
-//	查詢被下架團購
+//	後台下架團購活動
 	@PostMapping(value = "/bannedgroup/{eventno}")
 	public String bannedGroupByEventNo(@PathVariable("eventno") Integer eventno) {
 		gService.deleteGroup(eventno);
