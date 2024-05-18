@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -30,8 +31,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.group.dto.GroupDto;
 import com.match.bean.TagsBean;
 import com.user.bean.UserBean;
+import com.user.bean.UserBean_Vo;
 import com.user.bean.UserImageBean;
 import com.user.dto.LinePayDto;
 import com.user.service.UserImageService;
@@ -237,11 +240,12 @@ public class UserController {
 
 	@GetMapping("getTopBarData")
 	@ResponseBody
-	public UserBean getTopBarData(HttpSession session) {
+	public UserBean_Vo getTopBarData(HttpSession session) {
 		UserBean uBean = (UserBean)session.getAttribute("userData");
 		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
 		UserBean userBean = dataById.get();
-		return userBean;
+		UserBean_Vo userBean_Vo = userBean.getUserBean_Vo();
+		return userBean_Vo;
 	}
 	
 	@GetMapping("aboutMe")
@@ -391,6 +395,20 @@ public class UserController {
 //		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		return "user/jsp/MyFriends_FontSatgeTest.jsp";
 	}
+	
+	@GetMapping("userSearch")
+	@ResponseBody
+	public List<UserBean_Vo> findUserBySearch(@RequestParam("search") String search){
+		List<UserBean> findUserBySearch = uService.findUserBySearch(search);
+		List<UserBean_Vo> userBean_Vos = new ArrayList<UserBean_Vo>();
+		
+		for(UserBean ub : findUserBySearch) {
+			userBean_Vos.add(ub.getUserBean_Vo());
+		}
+		
+		return userBean_Vos;
+	}
+	
 	
 
 	// ---Tags : ManyToMany

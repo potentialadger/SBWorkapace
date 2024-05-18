@@ -83,6 +83,10 @@ public class UserService {
 		UserBean resultBean = uRepository.save(user);
 		return resultBean;
 	}
+	
+	public List<UserBean> findUserBySearch(String searchName){
+		return uRepository.findUserBySearch(searchName);
+	}
 
 	
 

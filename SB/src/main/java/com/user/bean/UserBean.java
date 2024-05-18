@@ -203,6 +203,39 @@ public class UserBean implements Serializable{
 	
 	public void setUserImages(List<UserImageBean> userImages) {this.userImages = userImages;}
 	
+	
+	
+	public UserBean_Vo getUserBean_Vo() {
+		UserBean_Vo userBean_Vo = new UserBean_Vo();
+		userBean_Vo.setUserNo(getUserNo());
+		userBean_Vo.setUserAccount(getUserAccount());
+		userBean_Vo.setUserPassword(getUserPassword());
+		userBean_Vo.setUserChineseName(getUserChineseName());
+		userBean_Vo.setUserEnglishName(getUserEnglishName());
+		
+		userBean_Vo.setNickName(getNickName());
+		userBean_Vo.setAvatar(getAvatar());
+		userBean_Vo.setEmail(getEmail());
+		userBean_Vo.setBirthday(getBirthday());
+		userBean_Vo.setPhone(getPhone());
+		
+		userBean_Vo.setUserAddress(getUserAddress());
+		userBean_Vo.setCreationDatetime(getCreationDatetime());
+		userBean_Vo.setLastLoginDatetime(getLastLoginDatetime());
+		userBean_Vo.setGender(getGender());
+		userBean_Vo.setGoalNo(getGoalNo());
+		
+		userBean_Vo.setBloodType(getBloodType());
+		userBean_Vo.setMBTI(getMBTI());
+		userBean_Vo.setSuspension(getSuspension());
+		userBean_Vo.setVerify(getVerify());
+		userBean_Vo.setIsDelete(getIsDelete());
+		
+		userBean_Vo.setIsManager(getIsManager());
+		userBean_Vo.setPoint(getPoint());
+		
+		return userBean_Vo;
+	}
 	@Override
 	public String toString() {
 		return "UserBean [userNo=" + userNo + ", userAccount=" + userAccount + ", userPassword=" + userPassword
