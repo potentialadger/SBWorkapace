@@ -54,69 +54,13 @@ Topbar = `<!-- Topbar -->
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
                 <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter">3+</span>
+                <span class="badge badge-danger badge-counter" id="friendMesConut"></span>
             </a>
             <!-- Dropdown - Alerts -->
             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                aria-labelledby="alertsDropdown">
+                aria-labelledby="alertsDropdown" id="friendDropdown">
                 <h6 class="dropdown-header">交友通知</h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                        <div class="icon-circle bg-primary">
-                            <i class="fas fa-file-alt text-white"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="small text-gray-500">December 12, 2019</div>
-                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                    </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                        <div class="icon-circle bg-success">
-                            <i class="fas fa-donate text-white"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="small text-gray-500">December 7, 2019</div>
-                        $290.29 has been deposited into your account!
-                    </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                        <div class="icon-circle bg-warning">
-                            <i class="fas fa-exclamation-triangle text-white"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="small text-gray-500">December 2, 2019</div>
-                        Spending Alert: We've noticed unusually high spending for your account.
-                    </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                        <div class="icon-circle bg-warning">
-                            <i class="fas fa-exclamation-triangle text-white"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="small text-gray-500">December 2, 2019</div>
-                        Spending Alert: We've noticed unusually high spending for your account.
-                    </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                        <img src="/localimages/user20240519125331_3545.jfif" class="rounded-circle" width="40" height="40" alt="Profile Picture">
-                    </div>
-                    <div>
-                        <div class="font-weight-bold">向您提出了交友申請</div>
-                        <div class="d-flex justify-content-end mt-2">
-                            <button class="btn btn-sm btn-primary mr-2">同意</button>
-                            <button class="btn btn-sm btn-outline-primary">拒絕</button>
-                        </div>
-                    </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                
             </div>
         </li>
 
@@ -195,9 +139,9 @@ Topbar = `<!-- Topbar -->
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="/aboutMe">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Profile
+                    個人資料
                 </a>
                 <a class="dropdown-item" href="#">
                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -246,7 +190,7 @@ fetch("/getTopBarData").then(function (response) {
     });
 });
 
-fetch("/getTopBarData").then(function (response) {
+fetch("/findWaitAgreeFriend").then(function (response) {
     if (response.status != 200) {
         console.log(response.status + " " + response.statusText);
 
@@ -255,14 +199,40 @@ fetch("/getTopBarData").then(function (response) {
 
     response.json().then(function (data) {
         console.log(data);
-        document.querySelector("#userName").innerHTML = data.userChineseName;
-        document.querySelector("#topBarAvatar").src = "/localimages/" + data.avatar;
+        // document.querySelector("#userName").innerHTML = data.userChineseName;
+        // document.querySelector("#topBarAvatar").src = "/localimages/" + data.avatar;
 
-        // var resultText = "";
-        // for (var i = 0; i < data.length; i++) {
-        //     resultText += data[i].houseid + " " + data[i].housename + "<br/>";
-        // }
+        document.querySelector("#friendMesConut").innerHTML = data.length;
 
-        // document.querySelector("#result").innerHTML = resultText;
+        var resultText = "";
+        for (var i = 0; i < data.length; i++) {
+            resultText += `
+                <div class="dropdown-item d-flex align-items-center">
+                    <div class="mr-3">
+                        <img src="/localimages/${data[i].avatar}" class="rounded-circle" width="40" height="40" alt="Profile Picture" onclick="window.location.href='/setOtherUserNo/${data[i].userNo}'" style="cursor: pointer;">
+                    </div>
+                    <div>
+                        <div class="font-weight-bold">${data[i].userChineseName}向您提出了交友申請</div>
+                        <div class="d-flex justify-content-end mt-2">
+                            <button class="btn btn-sm btn-primary mr-2" onclick="window.location.href='/agreeApplication/${data[i].userNo}'">同意</button>
+                            <button class="btn btn-sm btn-outline-primary" onclick="window.location.href='/cancelApplication/${data[i].userNo}'">拒絕</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if(data.length <= 0){
+            resultText = `
+                <div class="dropdown-item d-flex align-items-center">
+                    暫無交友邀請
+                </div>
+            `;
+        }
+        document.querySelector("#friendDropdown").innerHTML += resultText;
     });
 });
+
+
+
+

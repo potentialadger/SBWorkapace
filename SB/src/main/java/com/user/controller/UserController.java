@@ -34,11 +34,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.group.dto.GroupDto;
 import com.match.bean.TagsBean;
 import com.user.bean.FriendStateBean;
+import com.user.bean.StateBean;
 import com.user.bean.UserBean;
 import com.user.bean.UserBean_Vo;
 import com.user.bean.UserImageBean;
 import com.user.dto.LinePayDto;
 import com.user.service.FriendStateService;
+import com.user.service.StateService;
 import com.user.service.UserImageService;
 import com.user.service.UserService;
 import com.user.util.UserUtil;
@@ -58,6 +60,9 @@ public class UserController {
 	
 	@Autowired
 	private FriendStateService fsService;
+	
+	@Autowired
+	private StateService stateService;
 
 	@PostMapping("/userSignUp")
 	public String processSignUpAction(@RequestParam("account") String account,
@@ -373,7 +378,10 @@ public class UserController {
 		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
 		UserBean userBean = dataById.get();
 		
-		List<FriendStateBean> friendStateBeans = userBean.getFriendStates();
+		
+		StateBean state = stateService.findStateBystateName("好友");
+		
+		List<FriendStateBean> friendStateBeans = fsService.findSomeStateFriendState(userBean, state);
 		
 		List<UserBean> friendBeans = new ArrayList<UserBean>();
 		
@@ -390,22 +398,6 @@ public class UserController {
 		return "user/jsp/MyFriends_FontSatge.jsp";
 	}
 	
-//	@GetMapping("userFriendsTest")
-//	public String userFriendsTestAction(HttpSession session, Model m) {
-//		UserBean uBean = (UserBean)session.getAttribute("userData");
-//		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
-//		UserBean userBean = dataById.get();
-//		
-//		List<UserBean> allUserData = uService.getAllUserData();
-//		
-//		m.addAttribute("userBean", userBean);
-//		
-//		m.addAttribute("userFriendsCount", allUserData.size());
-//		m.addAttribute("userFriends", allUserData);
-//		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-////		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-//		return "user/jsp/MyFriends_FontSatgeTest.jsp";
-//	}
 	
 	@GetMapping("userSearch")
 	@ResponseBody
@@ -489,6 +481,77 @@ public class UserController {
 		return "user/jsp/other_MyFriends_FontSatge.jsp";
 	}
 	
+	
+	@GetMapping("otherAboutMe/{userNo}")
+	public String otherAbountIDAction(@PathVariable("userNo") Integer userNo, HttpSession session, Model m) {
+		UserBean userBean = uService.getUserData(userNo);
+		session.setAttribute("otherUserData", userBean);
+		
+		
+		
+		UserBean loginUserBean = (UserBean)session.getAttribute("userData");
+		Optional<UserBean> loginUserById = uService.getDataById(loginUserBean.getUserNo());
+		loginUserBean = loginUserById.get();
+		
+		FriendStateBean findFriendState = fsService.findFriendState(loginUserBean, userBean);
+		
+		m.addAttribute("findFriendState", findFriendState);
+		m.addAttribute("userBean", userBean);
+		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		
+		if(loginUserBean.getUserNo() == userNo) {
+			return "redirect:/aboutMe";
+		}
+		
+		return "user/jsp/other_AboutMe_FontSatge.jsp";
+	}
+	
+	@GetMapping("otherUserPhotos/{userNo}")
+	public String otherUserPhotosIDAction(@PathVariable("userNo") Integer userNo, HttpSession session, Model m) {
+		UserBean userBean = uService.getUserData(userNo);
+		session.setAttribute("otherUserData", userBean);
+		
+		m.addAttribute("userBean", userBean);
+		m.addAttribute("userImagesCount", userBean.getUserImages().size());
+		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		
+		UserBean loginUserBean = (UserBean)session.getAttribute("userData");
+		if(loginUserBean.getUserNo() == userNo) {
+			return "redirect:/userPhotos";
+		}
+		return "user/jsp/other_MyPhoto_FontSatge.jsp";
+	}
+	
+	@GetMapping("otherUserFriends/{userNo}")
+	public String otherUserFriendsIDAction(@PathVariable("userNo") Integer userNo, HttpSession session, Model m) {
+		UserBean userBean = uService.getUserData(userNo);
+		session.setAttribute("otherUserData", userBean);
+		
+		List<FriendStateBean> friendStateBeans = userBean.getFriendStates();
+		
+		List<UserBean> friendBeans = new ArrayList<UserBean>();
+		
+		for(FriendStateBean fsBean : friendStateBeans) {
+			friendBeans.add(fsBean.getFriendBean());
+		}
+		
+		m.addAttribute("userBean", userBean);
+		
+		m.addAttribute("userFriendsCount", friendBeans.size());
+		m.addAttribute("userFriends", friendBeans);
+		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		
+		
+		UserBean loginUserBean = (UserBean)session.getAttribute("userData");
+		if(loginUserBean.getUserNo() == userNo) {
+			return "redirect:/userFriends";
+		}
+		
+		return "user/jsp/other_MyFriends_FontSatge.jsp";
+	}
 	
 	
 	

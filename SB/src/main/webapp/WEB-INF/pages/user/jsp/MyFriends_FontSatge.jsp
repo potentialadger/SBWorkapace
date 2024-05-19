@@ -955,23 +955,23 @@
                                                                                                                     class="team-social icons-1">
                                                                                                                     <li><a href="#"
                                                                                                                             class="social-icon"><i
-                                                                                                                                class="fa fa-facebook"></i></a>
+                                                                                                                                class="fa fa-newspaper-o"></i></a>
                                                                                                                     </li>
-                                                                                                                    <li><a href="#"
+                                                                                                                    <li><a href="/otherAboutMe/${friend.userNo}"
                                                                                                                             class="social-icon"><i
-                                                                                                                                class="fa fa-twitter"></i></a>
+                                                                                                                                class="fa fa-info"></i></a>
                                                                                                                     </li>
                                                                                                                 </ul>
 
                                                                                                                 <ul
                                                                                                                     class="team-social icons-2">
-                                                                                                                    <li><a href="#"
+                                                                                                                    <li><a href="/otherUserPhotos/${friend.userNo}"
                                                                                                                             class="social-icon"><i
-                                                                                                                                class="fa fa-skype"></i></a>
+                                                                                                                                class="fa fa-picture-o"></i></a>
                                                                                                                     </li>
-                                                                                                                    <li><a href="#"
+                                                                                                                    <li><a href="/otherUserFriends/${friend.userNo}"
                                                                                                                             class="social-icon"><i
-                                                                                                                                class="fa fa-linkedin"></i></a>
+                                                                                                                                class="fa fa-handshake-o"></i></a>
                                                                                                                     </li>
                                                                                                                 </ul>
                                                                                                             </div>
@@ -980,8 +980,7 @@
                                                                                                                 <h4
                                                                                                                     class="team-name">
                                                                                                                     <a
-                                                                                                                        href="speakers-single.html">Seroun
-                                                                                                                        Pawor</a>
+                                                                                                                        href="/deleteFriend/${friend.userNo}">刪除好友</a>
                                                                                                                 </h4>
 
                                                                                                             </div>
