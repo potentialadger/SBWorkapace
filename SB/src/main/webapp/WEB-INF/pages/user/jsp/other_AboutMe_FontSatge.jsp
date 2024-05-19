@@ -500,13 +500,31 @@
                                                                                 </div>
                                                                                 <!-- END profile-header-img -->
                                                                                 <!-- BEGIN profile-header-info -->
-                                                                                <div class="profile-header-info">
-                                                                                    <h4 class="m-t-10 m-b-5">
-                                                                                        ${userBean.userChineseName}</h4>
-                                                                                    <p class="mb-5">
-                                                                                        ${userBean.userEnglishName}</p>
-                                                                                    <!-- <a href="/aboutMeForUpdate"
-                                                                                        class="btn btn-xs btn-success">編輯</a> -->
+                                                                                <div class="profile-header-info d-flex justify-content-between align-items-center">
+                                                                                    <div>
+                                                                                        <h4 class="m-t-10 m-b-5">
+                                                                                            ${userBean.userChineseName}</h4>
+                                                                                        <p class="mb-t-10">
+                                                                                            ${userBean.userEnglishName}</p>
+                                                                                    </div>
+                                                                                    
+                                                                                    <a href="/addFriend/${userBean.userNo}"
+                                                                                        class="btn btn-xs btn-primary mb-5" ${findFriendState == null ? "" : "hidden"}>加好友</a>
+                                                                                    
+                                                                                        <a href="#"
+                                                                                        class="btn btn-xs btn-primary mb-5" ${findFriendState != null && findFriendState.stateBean.stateName == "好友" ? "" : "hidden"}>好友</a>
+
+                                                                                    <a href="/cancelApplication/${userBean.userNo}"
+                                                                                        class="btn btn-xs btn-primary mb-5" ${findFriendState != null && findFriendState.stateBean.stateName == "申請中" ? "" : "hidden"}>取消申請</a>
+                                                                                    
+                                                                                    
+                                                                                    <a href="#" id="replyBtn"
+                                                                                        class="btn btn-xs btn-primary mb-5" ${findFriendState != null && findFriendState.stateBean.stateName == "待回覆" ? "" : "hidden"}>回覆</a>
+                                                                                        
+                                                                                    <div id="replyMenu" class="dropdown-menu" aria-labelledby="replyBtn" style="display: none; position: absolute; width: 50px;">
+                                                                                        <a class="dropdown-item" href="/agreeApplication/${userBean.userNo}?action=accept">同意</a>
+                                                                                        <a class="dropdown-item" href="/cancelApplication/${userBean.userNo}?action=reject">取消</a>
+                                                                                    </div>
                                                                                 </div>
                                                                                 <!-- END profile-header-info -->
                                                                             </div>
@@ -773,6 +791,20 @@
                             <script src="js/demo/datatables-demo.js"></script>
 
                             <script src="/js/user/userSearch.js"></script>
+
+                            <!-- 按回覆時跳出的視窗 -->
+                            <script>
+                                const replyBtn = document.getElementById('replyBtn');
+                                const replyMenu = document.getElementById('replyMenu');
+
+                                replyBtn.addEventListener('click', (event) => {
+                                    event.preventDefault(); // 阻止默認的href跳轉行為
+                                    replyMenu.style.display = replyMenu.style.display === 'none' ? 'block' : 'none';
+                                    // replyMenu.style.left = replyBtn.offsetLeft + 'px'; // 設置下拉選單的左側位置
+                                    replyMenu.style.left = (replyBtn.offsetLeft + replyBtn.offsetWidth - replyMenu.offsetWidth) + 'px';
+                                    replyMenu.style.top = replyBtn.offsetTop + replyBtn.offsetHeight + 'px'; // 設置下拉選單的上側位置
+                                });
+                            </script>
                         </body>
 
                         </html>

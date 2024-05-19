@@ -37,6 +37,20 @@ public class FriendStateBean {
 	public FriendStateBean() {
 	}
 
+	public FriendStateBean(UserBean userBean, UserBean friendBean, StateBean stateBean) {
+		this.userBean = userBean;
+		this.friendBean = friendBean;
+		this.stateBean = stateBean;
+	}
+	
+	public FriendStateBean(Integer friendStateNo, UserBean userBean, UserBean friendBean, StateBean stateBean) {
+		super();
+		FriendStateNo = friendStateNo;
+		this.userBean = userBean;
+		this.friendBean = friendBean;
+		this.stateBean = stateBean;
+	}
+
 	public Integer getFriendStateNo() {
 		return FriendStateNo;
 	}

@@ -44,8 +44,8 @@ public class UserImagesController {
 	private UserImageService uImgService;
 
 	@DeleteMapping("/deleteUserImage")
-	public String processDeleteAction(@RequestParam("imgNo") Integer userNo, Model m) {
-		UserImageBean seleteUserImageBean = uImgService.seleteUserImageBean(userNo);
+	public String processDeleteAction(@RequestParam("imgNo") Integer imgNo, Model m) {
+		UserImageBean seleteUserImageBean = uImgService.seleteUserImageBean(imgNo);
 		if(seleteUserImageBean != null) {
 			uImgService.deleteUserImage(seleteUserImageBean);
 		}

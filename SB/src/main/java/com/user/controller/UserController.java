@@ -33,10 +33,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.group.dto.GroupDto;
 import com.match.bean.TagsBean;
+import com.user.bean.FriendStateBean;
 import com.user.bean.UserBean;
 import com.user.bean.UserBean_Vo;
 import com.user.bean.UserImageBean;
 import com.user.dto.LinePayDto;
+import com.user.service.FriendStateService;
 import com.user.service.UserImageService;
 import com.user.service.UserService;
 import com.user.util.UserUtil;
@@ -53,6 +55,9 @@ public class UserController {
 	
 	@Autowired
 	private UserImageService uImgService;
+	
+	@Autowired
+	private FriendStateService fsService;
 
 	@PostMapping("/userSignUp")
 	public String processSignUpAction(@RequestParam("account") String account,
@@ -368,12 +373,18 @@ public class UserController {
 		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
 		UserBean userBean = dataById.get();
 		
-		List<UserBean> allUserData = uService.getAllUserData();
+		List<FriendStateBean> friendStateBeans = userBean.getFriendStates();
+		
+		List<UserBean> friendBeans = new ArrayList<UserBean>();
+		
+		for(FriendStateBean fsBean : friendStateBeans) {
+			friendBeans.add(fsBean.getFriendBean());
+		}
 		
 		m.addAttribute("userBean", userBean);
 		
-		m.addAttribute("userFriendsCount", allUserData.size());
-		m.addAttribute("userFriends", allUserData);
+		m.addAttribute("userFriendsCount", friendBeans.size());
+		m.addAttribute("userFriends", friendBeans);
 		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 //		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		return "user/jsp/MyFriends_FontSatge.jsp";
@@ -421,7 +432,6 @@ public class UserController {
 			
 			return "redirect:/otherAboutMe";
 		}
-		
 	}
 	
 	@GetMapping("otherAboutMe")
@@ -429,6 +439,14 @@ public class UserController {
 		UserBean uBean = (UserBean)session.getAttribute("otherUserData");
 		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
 		UserBean userBean = dataById.get();
+		
+		UserBean loginUserBean = (UserBean)session.getAttribute("userData");
+		Optional<UserBean> loginUserById = uService.getDataById(loginUserBean.getUserNo());
+		loginUserBean = loginUserById.get();
+		
+		FriendStateBean findFriendState = fsService.findFriendState(loginUserBean, uBean);
+		
+		m.addAttribute("findFriendState", findFriendState);
 		m.addAttribute("userBean", userBean);
 		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
@@ -454,16 +472,24 @@ public class UserController {
 		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
 		UserBean userBean = dataById.get();
 		
-		List<UserBean> allUserData = uService.getAllUserData();
+		List<FriendStateBean> friendStateBeans = userBean.getFriendStates();
+		
+		List<UserBean> friendBeans = new ArrayList<UserBean>();
+		
+		for(FriendStateBean fsBean : friendStateBeans) {
+			friendBeans.add(fsBean.getFriendBean());
+		}
 		
 		m.addAttribute("userBean", userBean);
 		
-		m.addAttribute("userFriendsCount", allUserData.size());
-		m.addAttribute("userFriends", allUserData);
+		m.addAttribute("userFriendsCount", friendBeans.size());
+		m.addAttribute("userFriends", friendBeans);
 		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 //		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		return "user/jsp/other_MyFriends_FontSatge.jsp";
 	}
+	
+	
 	
 	
 

@@ -105,6 +105,9 @@ public class UserBean implements Serializable{
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userBean", cascade = CascadeType.ALL)
 	private List<UserImageBean> userImages ;
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userBean", cascade = CascadeType.ALL)
+	private List<FriendStateBean> FriendStates;
+	
 	
 	public UserBean() {
 	}
@@ -169,6 +172,7 @@ public class UserBean implements Serializable{
 	public Set<ReportsBean> getReportsBean() {return reportsBean;}
 	public Set<LikesBean> getLikesBean() {return likesBean;}
 	public List<UserImageBean> getUserImages() {return userImages;}
+	public List<FriendStateBean> getFriendStates() {return FriendStates;}
 	
 	
 	
@@ -202,6 +206,7 @@ public class UserBean implements Serializable{
 	public void setLikesBean(Set<LikesBean> likesBean) {this.likesBean = likesBean;}
 	
 	public void setUserImages(List<UserImageBean> userImages) {this.userImages = userImages;}
+	public void setFriendStates(List<FriendStateBean> friendStates) {FriendStates = friendStates;}
 	
 	
 	

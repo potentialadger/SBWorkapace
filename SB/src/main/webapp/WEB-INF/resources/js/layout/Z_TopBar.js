@@ -59,9 +59,7 @@ Topbar = `<!-- Topbar -->
             <!-- Dropdown - Alerts -->
             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="alertsDropdown">
-                <h6 class="dropdown-header">
-                    Alerts Center
-                </h6>
+                <h6 class="dropdown-header">交友通知</h6>
                 <a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="mr-3">
                         <div class="icon-circle bg-primary">
@@ -93,6 +91,29 @@ Topbar = `<!-- Topbar -->
                     <div>
                         <div class="small text-gray-500">December 2, 2019</div>
                         Spending Alert: We've noticed unusually high spending for your account.
+                    </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                    <div class="mr-3">
+                        <div class="icon-circle bg-warning">
+                            <i class="fas fa-exclamation-triangle text-white"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="small text-gray-500">December 2, 2019</div>
+                        Spending Alert: We've noticed unusually high spending for your account.
+                    </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                    <div class="mr-3">
+                        <img src="/localimages/user20240519125331_3545.jfif" class="rounded-circle" width="40" height="40" alt="Profile Picture">
+                    </div>
+                    <div>
+                        <div class="font-weight-bold">向您提出了交友申請</div>
+                        <div class="d-flex justify-content-end mt-2">
+                            <button class="btn btn-sm btn-primary mr-2">同意</button>
+                            <button class="btn btn-sm btn-outline-primary">拒絕</button>
+                        </div>
                     </div>
                 </a>
                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
@@ -203,6 +224,27 @@ Topbar = `<!-- Topbar -->
 </nav>
 <!-- End of Topbar -->`;
 document.write(Topbar);
+
+fetch("/getTopBarData").then(function (response) {
+    if (response.status != 200) {
+        console.log(response.status + " " + response.statusText);
+
+        return;
+    }
+
+    response.json().then(function (data) {
+        console.log(data);
+        document.querySelector("#userName").innerHTML = data.userChineseName;
+        document.querySelector("#topBarAvatar").src = "/localimages/" + data.avatar;
+
+        // var resultText = "";
+        // for (var i = 0; i < data.length; i++) {
+        //     resultText += data[i].houseid + " " + data[i].housename + "<br/>";
+        // }
+
+        // document.querySelector("#result").innerHTML = resultText;
+    });
+});
 
 fetch("/getTopBarData").then(function (response) {
     if (response.status != 200) {
