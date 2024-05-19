@@ -45,6 +45,10 @@ public class WebAppConfig implements WebMvcConfigurer {
 
 		
 		registry.addViewController("/adger.test").setViewName("user/html/AboutMeTest.html");
+		registry.addViewController("/forgotPassword").setViewName("user/html/forgot-password.html");
+		registry.addViewController("/resetPassword").setViewName("user/html/reset-password.html");
+		registry.addViewController("/resetPasswordSuccess").setViewName("user/html/resetPasswordSuccess.html");
+		registry.addViewController("/sendMailSuccess").setViewName("user/html/sendMailSuccess.html");
 	}
 	
 

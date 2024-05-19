@@ -15,6 +15,11 @@ public interface UserRepository extends JpaRepository<UserBean, Integer> {
 	@Query(value = "from UserBean where (userChineseName like concat('%',?1,'%') OR userEnglishName like concat('%',?1,'%')) AND isManager = 0 AND suspension = 0")
 	public List<UserBean> findUserBySearch(String searchName);
 	
+	@Query(value = "from UserBean where email = ?1 and userAccount = ?2")
+	public UserBean findForgetUserBean(String email, String account);
+	
+	@Query(value = "from UserBean where userPassword = ?1")
+	public UserBean checkVerificationCode(String verificationCode);
 	
 	//查詢指定欄位的資料，查詢將會返回一個List<Object[]>，其中每個Object[]都包含了查詢結果的各個欄位值
 	@Query("SELECT u.nickName, u.goalNo, u.MBTI, u.bloodType, u.userNo FROM UserBean u")

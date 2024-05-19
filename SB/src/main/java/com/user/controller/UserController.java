@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 
 import org.apache.http.ParseException;
@@ -42,9 +43,11 @@ import com.user.dto.LinePayDto;
 import com.user.service.FriendStateService;
 import com.user.service.StateService;
 import com.user.service.UserImageService;
+import com.user.service.UserMailService;
 import com.user.service.UserService;
 import com.user.util.UserUtil;
 
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -63,6 +66,9 @@ public class UserController {
 	
 	@Autowired
 	private StateService stateService;
+	
+	@Autowired
+	private UserMailService userMailService;
 
 	@PostMapping("/userSignUp")
 	public String processSignUpAction(@RequestParam("account") String account,
@@ -553,7 +559,54 @@ public class UserController {
 		return "user/jsp/other_MyFriends_FontSatge.jsp";
 	}
 	
-	
+	@GetMapping("forgetPasswordToSendMail")
+	public String forgetPasswordAction(@RequestParam("email")String email, @RequestParam("account")String account, Model m) throws MessagingException {
+		
+		UserBean findForgetUserBean = uService.findForgetUserBean(email, account);
+		if(findForgetUserBean == null)
+		{
+			m.addAttribute("err", "並未找到此帳號");
+			return "user/jsp/forgot-passwordErr.jsp";
+		}
+		
+		String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+
+        for (int i = 0; i < 12; i++) {
+            int index = random.nextInt(characters.length());
+            sb.append(characters.charAt(index));
+        }
+
+        String randomPassword = sb.toString();
+		
+        findForgetUserBean.setUserPassword(randomPassword);
+        uService.updateUser(findForgetUserBean);
+        
+		
+		List<String> receivers = new ArrayList<String>();
+		receivers.add(findForgetUserBean.getEmail());
+		
+		String mailContent = "<h1>密碼重設</h1>";
+		mailContent += "<p>驗證碼："+ randomPassword + "</p>";
+		mailContent += "<a href=\"http://localhost:8080/resetPassword\">點此重新設定密碼</a>";
+		
+		userMailService.sendPlainText(receivers, "SocialBook 忘記密碼", mailContent);
+		return "redirect:/sendMailSuccess";
+	}
+	@GetMapping("checkAndResetPassword")
+	public String checkAndResetPasswordAction(@RequestParam("verificationCode")String verificationCode, @RequestParam("newPassword")String newPassword, Model m) {
+		UserBean uBean = uService.checkVerificationCode(verificationCode);
+		
+		if(uBean == null) {
+			return "user/jsp/reset-passwordErr.jsp";
+		}
+		
+		uBean.setUserPassword(newPassword);
+		uService.updateUser(uBean);
+		
+		return "redirect:/resetPasswordSuccess";
+	}
 	
 
 	// ---Tags : ManyToMany
