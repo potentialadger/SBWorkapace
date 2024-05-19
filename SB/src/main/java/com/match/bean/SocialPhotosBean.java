@@ -25,7 +25,7 @@ public class SocialPhotosBean {
 	@Column(name="photopath")
 	private String photoPath;
 	
-    @Column(name="phototheme", columnDefinition = "VARCHAR(255) DEFAULT '我的照片'")
+    @Column(name="phototheme")
 	private String photoTheme; //NOT NULL
 
 	

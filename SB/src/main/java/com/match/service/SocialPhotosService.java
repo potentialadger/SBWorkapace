@@ -45,30 +45,51 @@ public class SocialPhotosService {
     }
 
     
-    
- // 新增或更新照片
-    public SocialPhotosBean insertOrUpdate(Integer userNo, String photoPath, String photoTheme) {
-        SocialPhotosBean photo = new SocialPhotosBean();
-        photo.setUserNo(userNo);
-        photo.setPhotoPath(photoPath);
-        photo.setPhotoTheme(photoTheme);
-
-
-        // 檢查是否存在具有相同 userNo 和 photoPath 的照片紀錄
-        List<SocialPhotosBean> existingPhotos = spRepos.findByUserNoAndPhotoTheme(userNo, photoTheme);
-
+    // 新增或更新照片
+    public SocialPhotosBean insertOrUpdate(Integer userNo, String photoPath, String theme) {
+    	
+        // 檢查是否存在具有相同 userNo 和 theme 的照片記錄
+        List<SocialPhotosBean> existingPhotos = spRepos.findByUserNoAndPhotoTheme(userNo, theme);
+        
         if (!existingPhotos.isEmpty()) {
-            // 如果存在具有相同 userNo 和 photoPath 的照片紀錄,則更新第一條紀錄的 photoPath
-        	
+            // 如果存在具有相同 userNo 和 theme 的照片記錄，則更新第一條記錄的 photoPath
             SocialPhotosBean existingPhoto = existingPhotos.get(0);
             existingPhoto.setPhotoPath(photoPath);
             return spRepos.save(existingPhoto);
             
-        } else {       	
-            // 如果不存在具有相同 userNo 和 photoPath 的照片紀錄,則插入新照片
+        } else {
+            // 如果不存在具有相同 userNo 和 theme 的照片記錄，則插入新照片
+            SocialPhotosBean photo = new SocialPhotosBean();
+            photo.setUserNo(userNo);
+            photo.setPhotoPath(photoPath);
+            photo.setPhotoTheme(theme);
             return spRepos.save(photo);
         }
     }
+    
+    
+    
+ // 新增或更新照片
+ /* public SocialPhotosBean insertOrUpdate(Integer userNo, String photoPath) {
+    SocialPhotosBean photo = new SocialPhotosBean();
+    photo.setUserNo(userNo);
+    photo.setPhotoPath(photoPath);
+
+    
+    // 檢查是否存在具有相同 userNo 和 photoPath 的照片紀錄
+    List<SocialPhotosBean> existingPhotos = spRepos.findByUserNoAndPhotoPath(userNo, photoPath);
+    if (!existingPhotos.isEmpty()) {
+    	
+    // 如果存在具有相同 userNo 和 photoPath 的照片紀錄,則更新第一條紀錄的 photoPath
+    SocialPhotosBean existingPhoto = existingPhotos.get(0);
+    existingPhoto.setPhotoPath(photoPath);
+    return spRepos.save(existingPhoto);
+    } else {
+    	
+    // 如果不存在具有相同 userNo 和 photoPath 的照片紀錄,則插入新照片
+    return spRepos.save(photo);
+    }
+    }*/
 
     
     

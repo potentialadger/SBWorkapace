@@ -692,7 +692,6 @@ body {
 				</div>
 
 				<!--主題照片- 輪播-->
-				<!-- 				<form id="photoForm" method="post" enctype="multipart/form-data" action="/insertSPhoto"> -->
 				<div class="tab-pane fade my-5" id="photosTabPane" role="tabpanel"
 					aria-labelledby="photosTab" tabindex="0">
 					<div class="mb-3">
@@ -1017,13 +1016,12 @@ body {
 
 						<div
 							class="gap-3 d-md-flex justify-content-md-end text-center my-5">
-							<input type="hidden" name="userNo" value="${userBean.userNo}">
+							<input type="hidden" name="userNo" value="${userNo}">
 							<button type="submit" class="btn btn-primary btn-lg">確定修改</button>
 							<button type="submit" class="btn btn-danger btn-lg">確定刪除</button>
 						</div>
 					</div>
 				</div>
-				<!-- </form>  -->
 
 
 				<!-- 個性標籤 -->
@@ -1064,7 +1062,7 @@ body {
 					</div>
 
 					<div class="gap-3 d-md-flex justify-content-md-end text-center my-5">
-						<button type="button" class="btn btn-primary btn-lg" onclick="updateTags()">確定修改</button>
+						<button type="button" class="btn btn-primary btn-lg" id="updateButton" onclick="updateTags()">確定修改</button>
 						<button type="button" class="btn btn-danger btn-lg">確定刪除</button>
 					</div>
 				</div>
@@ -1151,41 +1149,99 @@ body {
                 });
             });
         </script>
+        
+        
 
 
 		<!--輪播 - 上傳圖片-->
-		<script>
-            // 獲取所有的文件輸入框
-            const fileInputs = document.querySelectorAll('input[type="file"]');
+		
+	    <!-- 請注意,您需要根據實際的後端接口地址來修改 xhr.open() 中的 URL。同時,您可能還需要設置一些額外的請求頭,例如 Content-Type,以確保後端能夠正確處理請求。 -->
 
-            // 遍歷每個文件輸入框,並綁定事件監聽器
-            fileInputs.forEach((input, index) => {
-                input.addEventListener('change', (event) => {
-                    const file = event.target.files[0];
-                    const reader = new FileReader();
+		<!-- 如果您在後端使用了不同的接口名稱或參數名稱,也需要對代碼進行相應的調整。 -->
+		
+		
+<script>
 
-                    reader.onload = (e) => {
-                        // 獲取對應的圖片框
-                        const imageFrame = event.target.parentNode.querySelector('.image-frame');
+$(document).ready(function() {
+  // 獲取所有的文件輸入框
+  const fileInputs = document.querySelectorAll('input[type="file"]');
 
-                        // 清空圖片框
-                        imageFrame.innerHTML = '';
+  // 遍歷每個文件輸入框,並綁定事件監聽器
+fileInputs.forEach((input, index) => {
+  input.addEventListener('change', (event) => {
+    console.log('File input changed:', event.target);
+    const file = event.target.files[0];
+    
+    // 獲取對應的主題輸入框,並獲取其值
+    const themeInput = event.target.parentNode.querySelector('input[name="photoTheme"]');
+    const theme = themeInput.value;
+    
+    console.log('Selected file:', file);
+    console.log('Theme:', theme);
+      
+      const reader = new FileReader();
+      
+      reader.onload = (e) => {
+        // 獲取對應的圖片框
+        const imageFrame = event.target.parentNode.querySelector('.image-frame');
+        imageFrame.innerHTML = ''; // 清空圖片框
+        
+        // 創建一個新的 <img> 元素,並設置其 src 屬性為文件的數據 URL
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.objectFit = 'cover';
+        
+        // 將新的圖片元素添加到圖片框中
+        imageFrame.appendChild(img);
+      };
+      
+      reader.readAsDataURL(file);
+    });
+  });
 
-                        // 創建一個新的 <img> 元素,並設置其 src 屬性為文件的數據 URL
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        img.style.width = '100%';
-                        img.style.height = '100%';
-                        img.style.objectFit = 'cover';
+  // 點擊"確定修改"按鈕時觸發的函數
+function updatePhotos(userNo) {
+  const formData = new FormData();
 
-                        // 將新的圖片元素添加到圖片框中
-                        imageFrame.appendChild(img);
-                    }
+  // 遍歷每個文件輸入框
+  fileInputs.forEach((input) => {
+    const file = input.files[0];
+    const themeInput = input.parentNode.querySelector('input[name="photoTheme"]');
+    const theme = themeInput.value;
 
-                    reader.readAsDataURL(file);
-                });
-            });
-        </script>
+    if (file) {
+      formData.append('formData', file, theme);
+    }
+  });
+
+  formData.append('userNo', userNo);
+
+  // 發送 POST 請求到後端
+  fetch('/updatePhotos', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('修改成功:', data);
+    // 在這裡可以根據需要執行其他操作,例如顯示成功提示等
+  })
+  .catch(error => {
+    console.error('修改失敗:', error);
+    // 在這裡可以根據需要執行其他操作,例如顯示錯誤提示等
+  });
+}
+
+  // 為 "確定修改" 按鈕添加點擊事件監聽器
+  document.getElementById('updateButton').addEventListener('click', function() {
+    console.log('Update button clicked');
+    var userNo = document.getElementById('userNo').value; // 從頁面中獲取 userNo 的值
+    updatePhotos(userNo);
+  });
+});
+</script>
 
 
 		<script>
