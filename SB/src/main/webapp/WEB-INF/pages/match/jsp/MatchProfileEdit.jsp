@@ -9,7 +9,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>MatchProfileEdit</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous"/>
 <link rel="stylesheet" href="/mycss/custom.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.carousel.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css">
@@ -368,10 +368,6 @@ body {
 </head>
 
 <body>
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
-		integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA="
-		crossorigin="anonymous" />
 	<div class="container">
 
 		<div class="row g-3">
@@ -390,16 +386,16 @@ body {
 						aria-selected="true">基本資料</button>
 				</li>
 				<li class="nav-item" role="presentation">
-					<button class="nav-link" id="photosTab" data-bs-toggle="tab"
-						data-bs-target="#photosTabPane" type="button" role="tab"
-						aria-controls="photosTabPane" aria-selected="false">主題照片
-					</button>
-				</li>
-				<li class="nav-item" role="presentation">
 					<button class="nav-link" id="accordionTab" data-bs-toggle="tab"
 						data-bs-target="#tagsTabPane" type="button" role="tab"
 						aria-controls="accordionTabPane" aria-selected="false">
 						自訂標籤</button>
+				</li>
+				<li class="nav-item" role="presentation">
+					<button class="nav-link" id="photosTab" data-bs-toggle="tab"
+						data-bs-target="#photosTabPane" type="button" role="tab"
+						aria-controls="photosTabPane" aria-selected="false">主題照片
+					</button>
 				</li>
 				<li class="nav-item" role="presentation">
 					<button class="nav-link" id="accordionTab" data-bs-toggle="tab"
@@ -690,341 +686,16 @@ body {
 						</div>
 					</div>
 				</div>
+				
+				
 
-				<!--主題照片- 輪播-->
-				<div class="tab-pane fade my-5" id="photosTabPane" role="tabpanel"
-					aria-labelledby="photosTab" tabindex="0">
-					<div class="mb-3">
-						<div class="owl-carousel owl-theme">
-
-							<!-- 第一個主題 -->
-							<div class="item">
-								<div class="photo-container position-relative">
-									<div class="image-frame"></div>
-									<!-- 刪除按鈕 -->
-									<button type="button"
-										class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
-										<i class="fas fa-times"></i>
-									</button>
-									<label for="customFile1"
-										class="square position-absolute top-50 start-50 translate-middle display-2">
-										<i class="fas fa-fw fa-plus text-secondary add-photo"></i>
-									</label>
-									<!-- 使用 name 屬性定義文件輸入字段的名稱 -->
-									<input type="file" id="customFile1" name="sPhoto" hidden>
-									<!-- 主題文字 -->
-									<div class="theme-name text-center p-2">
-										<!-- 使用 name 屬性定義主題輸入字段的名稱 -->
-										<input type="text" name="photoTheme" value="我的照片" hidden>
-										我的照片
-									</div>
-								</div>
-							</div>
-
-							<!-- 第二個主題 -->
-							<div class="item">
-								<div class="photo-container position-relative">
-									<div class="image-frame"></div>
-									<!--刪除按鈕-->
-									<button type="button"
-										class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
-										<i class="fas fa-times"></i>
-									</button>
-									<label for="customFile2"
-										class="square position-absolute top-50 start-50 translate-middle display-2">
-										<i class="fas fa-fw fa-plus text-secondary add-photo"></i>
-									</label>
-									<!-- 使用 name 屬性定義文件輸入字段的名稱 -->
-									<input type="file" id="customFile2" name="sPhoto" hidden>
-									<!-- 新增的空白區塊用來放置主題文字 -->
-									<div class="theme-name text-center p-2">
-										<!-- 使用 name 屬性定義主題輸入字段的名稱 -->
-										<input type="text" name="photoTheme" value="旅行壯遊" hidden>
-										旅行壯遊
-									</div>
-								</div>
-							</div>
-
-							<div class="item">
-								<div class="photo-container position-relative">
-									<div class="image-frame"></div>
-									<!--刪除按鈕-->
-									<button type="button"
-										class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
-										<i class="fas fa-times"></i>
-									</button>
-									<label for="customFile3"
-										class="square position-absolute top-50 start-50 translate-middle display-2">
-										<i class="fas fa-fw fa-plus text-secondary add-photo"></i>
-									</label>
-									<!-- 使用 name 屬性定義文件輸入字段的名稱 -->
-									<input type="file" id="customFile3" name="sPhoto" hidden>
-									<!-- 新增的空白區塊用來放置主題文字 -->
-									<div class="theme-name text-center p-2">
-										<!-- 使用 name 屬性定義主題輸入字段的名稱 -->
-										<input type="text" name="photoTheme" value="我的寵物" hidden>
-										我的寵物
-									</div>
-								</div>
-							</div>
-
-
-							<div class="item">
-								<div class="photo-container position-relative">
-									<div class="image-frame"></div>
-									<!--刪除按鈕-->
-									<button type="button"
-										class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
-										<i class="fas fa-times"></i>
-									</button>
-									<label for="customFile4"
-										class="square position-absolute top-50 start-50 translate-middle display-2">
-										<i class="fas fa-fw fa-plus text-secondary add-photo"></i>
-									</label>
-									<!-- 使用 name 屬性定義文件輸入字段的名稱 -->
-									<input type="file" id="customFile4" name="sPhoto" hidden>
-									<!-- 新增的空白區塊用來放置主題文字 -->
-									<div class="theme-name text-center p-2">
-										<!-- 使用 name 屬性定義主題輸入字段的名稱 -->
-										<input type="text" name="photoTheme" value="偉大紀錄" hidden>
-										偉大紀錄
-									</div>
-								</div>
-							</div>
-
-							<div class="item">
-								<div class="photo-container position-relative">
-									<div class="image-frame"></div>
-									<!--刪除按鈕-->
-									<button type="button"
-										class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
-										<i class="fas fa-times"></i>
-									</button>
-									<label for="customFile5"
-										class="square position-absolute top-50 start-50 translate-middle display-2">
-										<i class="fas fa-fw fa-plus text-secondary add-photo"></i>
-									</label>
-									<!-- 使用 name 屬性定義文件輸入字段的名稱 -->
-									<input type="file" id="customFile5" name="sPhoto" hidden>
-									<!-- 新增的空白區塊用來放置主題文字 -->
-									<div class="theme-name text-center p-2">
-										<!-- 使用 name 屬性定義主題輸入字段的名稱 -->
-										<input type="text" name="photoTheme" value="展露身材" hidden>
-										展露身材
-									</div>
-								</div>
-							</div>
-
-							<div class="item">
-								<div class="photo-container position-relative">
-									<div class="image-frame"></div>
-									<!--刪除按鈕-->
-									<button type="button"
-										class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
-										<i class="fas fa-times"></i>
-									</button>
-									<label for="customFile6"
-										class="square position-absolute top-50 start-50 translate-middle display-2">
-										<i class="fas fa-fw fa-plus text-secondary add-photo"></i>
-									</label>
-									<!-- 使用 name 屬性定義文件輸入字段的名稱 -->
-									<input type="file" id="customFile6" name="sPhoto" hidden>
-									<!-- 新增的空白區塊用來放置主題文字 -->
-									<div class="theme-name text-center p-2">
-										<!-- 使用 name 屬性定義主題輸入字段的名稱 -->
-										<input type="text" name="photoTheme" value="性感的我" hidden>
-										性感的我
-									</div>
-								</div>
-							</div>
-
-							<div class="item">
-								<div class="photo-container position-relative">
-									<div class="image-frame"></div>
-									<!--刪除按鈕-->
-									<button type="button"
-										class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
-										<i class="fas fa-times"></i>
-									</button>
-									<label for="customFile7"
-										class="square position-absolute top-50 start-50 translate-middle display-2">
-										<i class="fas fa-fw fa-plus text-secondary add-photo"></i>
-									</label>
-									<!-- 使用 name 屬性定義文件輸入字段的名稱 -->
-									<input type="file" id="customFile7" name="sPhoto" hidden>
-									<!-- 新增的空白區塊用來放置主題文字 -->
-									<div class="theme-name text-center p-2">
-										<!-- 使用 name 屬性定義主題輸入字段的名稱 -->
-										<input type="text" name="photoTheme" value="玩樂的我" hidden>
-										玩樂的我
-									</div>
-								</div>
-							</div>
-
-							<div class="item">
-								<div class="photo-container position-relative">
-									<div class="image-frame"></div>
-									<!--刪除按鈕-->
-									<button type="button"
-										class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
-										<i class="fas fa-times"></i>
-									</button>
-									<label for="customFile8"
-										class="square position-absolute top-50 start-50 translate-middle display-2">
-										<i class="fas fa-fw fa-plus text-secondary add-photo"></i>
-									</label>
-									<!-- 使用 name 屬性定義文件輸入字段的名稱 -->
-									<input type="file" id="customFile8" name="sPhoto" hidden>
-									<!-- 新增的空白區塊用來放置主題文字 -->
-									<div class="theme-name text-center p-2">
-										<!-- 使用 name 屬性定義主題輸入字段的名稱 -->
-										<input type="text" name="photoTheme" value="時尚的我" hidden>
-										時尚的我
-									</div>
-								</div>
-							</div>
-
-							<div class="item">
-								<div class="photo-container position-relative">
-									<div class="image-frame"></div>
-									<!--刪除按鈕-->
-									<button type="button"
-										class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
-										<i class="fas fa-times"></i>
-									</button>
-									<label for="customFile9"
-										class="square position-absolute top-50 start-50 translate-middle display-2">
-										<i class="fas fa-fw fa-plus text-secondary add-photo"></i>
-									</label>
-									<!-- 使用 name 屬性定義文件輸入字段的名稱 -->
-									<input type="file" id="customFile9" name="sPhoto" hidden>
-									<!-- 新增的空白區塊用來放置主題文字 -->
-									<div class="theme-name text-center p-2">
-										<!-- 使用 name 屬性定義主題輸入字段的名稱 -->
-										<input type="text" name="photoTheme" value="我的作品" hidden>
-										我的作品
-									</div>
-								</div>
-							</div>
-
-							<div class="item">
-								<div class="photo-container position-relative">
-									<div class="image-frame"></div>
-									<!--刪除按鈕-->
-									<button type="button"
-										class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
-										<i class="fas fa-times"></i>
-									</button>
-									<label for="customFile10"
-										class="square position-absolute top-50 start-50 translate-middle display-2">
-										<i class="fas fa-fw fa-plus text-secondary add-photo"></i>
-									</label> <input type="file" id="customFile10" name="sPhoto" hidden>
-									<!-- 新增的空白區塊用來放置主題文字 -->
-									<div class="theme-name text-center p-2">
-										<!-- 使用 name 屬性定義主題輸入字段的名稱 -->
-										<input type="text" name="photoTheme" value="我的收藏" hidden>
-										我的收藏
-									</div>
-								</div>
-							</div>
-
-							<div class="item">
-								<div class="photo-container position-relative">
-									<div class="image-frame"></div>
-									<!--刪除按鈕-->
-									<button type="button"
-										class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
-										<i class="fas fa-times"></i>
-									</button>
-									<label for="customFile11"
-										class="square position-absolute top-50 start-50 translate-middle display-2">
-										<i class="fas fa-fw fa-plus text-secondary add-photo"></i>
-									</label> <input type="file" id="customFile11" name="sPhoto" hidden>
-									<!-- 新增的空白區塊用來放置主題文字 -->
-									<div class="theme-name text-center p-2">
-										<!-- 使用 name 屬性定義主題輸入字段的名稱 -->
-										<input type="text" name="photoTheme" value="最愛的美食" hidden>
-										最愛的美食
-									</div>
-								</div>
-							</div>
-
-							<div class="item">
-								<div class="photo-container position-relative">
-									<div class="image-frame"></div>
-									<!--刪除按鈕-->
-									<button type="button"
-										class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
-										<i class="fas fa-times"></i>
-									</button>
-									<label for="customFile12"
-										class="square position-absolute top-50 start-50 translate-middle display-2">
-										<i class="fas fa-fw fa-plus text-secondary add-photo"></i>
-									</label> <input type="file" id="customFile12" name="sPhoto" hidden>
-									<!-- 新增的空白區塊用來放置主題文字 -->
-									<div class="theme-name text-center p-2">
-										<!-- 使用 name 屬性定義主題輸入字段的名稱 -->
-										<input type="text" name="photoTheme" value="最愛的電影" hidden>
-										最愛的電影
-									</div>
-								</div>
-							</div>
-
-							<div class="item">
-								<div class="photo-container position-relative">
-									<div class="image-frame"></div>
-									<!--刪除按鈕-->
-									<button type="button"
-										class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
-										<i class="fas fa-times"></i>
-									</button>
-									<label for="customFile13"
-										class="square position-absolute top-50 start-50 translate-middle display-2">
-										<i class="fas fa-fw fa-plus text-secondary add-photo"></i>
-									</label> <input type="file" id="customFile13" name="sPhoto" hidden>
-									<!-- 新增的空白區塊用來放置主題文字 -->
-									<div class="theme-name text-center p-2">
-										<!-- 使用 name 屬性定義主題輸入字段的名稱 -->
-										<input type="text" name="photoTheme" value="最愛的書本" hidden>
-										最愛的書本
-									</div>
-								</div>
-							</div>
-
-							<div class="item">
-								<div class="photo-container position-relative">
-									<div class="image-frame"></div>
-									<!--刪除按鈕-->
-									<button type="button"
-										class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
-										<i class="fas fa-times"></i>
-									</button>
-									<label for="customFile14"
-										class="square position-absolute top-50 start-50 translate-middle display-2">
-										<i class="fas fa-fw fa-plus text-secondary add-photo"></i>
-									</label> <input type="file" id="customFile14" name="sPhoto" hidden>
-									<!-- 新增的空白區塊用來放置主題文字 -->
-									<div class="theme-name text-center p-2">
-										<!-- 使用 name 屬性定義主題輸入字段的名稱 -->
-										<input type="text" name="photoTheme" value="最愛的遊戲" hidden>
-										最愛的遊戲
-									</div>
-								</div>
-							</div>
-						</div>
-
-
-						<div
-							class="gap-3 d-md-flex justify-content-md-end text-center my-5">
-							<input type="hidden" name="userNo" value="${userNo}">
-							<button type="submit" class="btn btn-primary btn-lg">確定修改</button>
-							<button type="submit" class="btn btn-danger btn-lg">確定刪除</button>
-						</div>
-					</div>
-				</div>
-
-
-				<!-- 個性標籤 -->
+				
+				
+				
+				
+				
+				
+								<!-- 個性標籤 -->
 				<div class="tab-pane fade" id="tagsTabPane" role="tabpanel"
 					aria-labelledby="tagsTab" tabindex="0">
 
@@ -1067,8 +738,165 @@ body {
 					</div>
 				</div>
 			</div>
-		</div>
+			
+			
+			
+			<form id="upload-form" method="post" enctype="multipart/form-data">
+				<!--主題照片- 輪播-->
+                <div class="tab-pane fade my-5" id="photosTabPane" role="tabpanel" aria-labelledby="photosTab" tabindex="0">
+                    <div class="mb-3">
+                        <div class="owl-carousel owl-theme">
 
+                            <!--第一個主題-->
+                            <div class="item">
+                                <div class="photo-container position-relative">
+                                    <div class="image-frame"></div>
+                                    <!--刪除按鈕-->
+                                    <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                    <label for="customFile1" class="square position-absolute top-50 start-50 translate-middle display-2 ">
+                                        <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
+                                    </label>
+                                    <input type="file" id="customFile1" name="file1" data-theme="我的照片" hidden>
+                                    <div class="theme-name text-center p-2">
+                                        我的照片
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <div class="photo-container position-relative">
+                                    <div class="image-frame"></div>
+                                    <!--刪除按鈕-->
+                                    <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                    <label for="customFile2" class="square position-absolute top-50 start-50 translate-middle display-2">
+                                        <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
+                                    </label>
+                                    <input type="file" id="customFile2" name="file2" data-theme="旅行壯遊" hidden>
+                                    <div class="theme-name text-center p-2">
+                                        旅行壯遊
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <div class="photo-container position-relative">
+                                    <div class="image-frame"></div>
+                                    <!--刪除按鈕-->
+                                    <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                    <label for="customFile3" class="square position-absolute top-50 start-50 translate-middle display-2">
+                                        <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
+                                    </label>
+                                    <input type="file" id="customFile3" name="file3" data-theme="我的寵物" hidden>
+                                    <div class="theme-name text-center p-2">
+                                        我的寵物
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="item">
+                                <div class="photo-container position-relative">
+                                    <div class="image-frame"></div>
+                                    <!--刪除按鈕-->
+                                    <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                    <label for="customFile4" class="square position-absolute top-50 start-50 translate-middle display-2">
+                                        <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
+                                    </label>
+                                    <input type="file" id="customFile4" name="file4" data-theme="偉大紀錄" hidden>
+                                    <div class="theme-name text-center p-2">
+                                        偉大紀錄
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <div class="photo-container position-relative">
+                                    <div class="image-frame"></div>
+                                    <!--刪除按鈕-->
+                                    <button type="button"
+                                        class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                    <label for="customFile5" class="square position-absolute top-50 start-50 translate-middle display-2">
+                                        <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
+                                    </label>
+                                    <input type="file" id="customFile5" name="file5" data-theme="展露身材" hidden>
+                                    <div class="theme-name text-center p-2">
+                                        展露身材
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <div class="photo-container position-relative">
+                                    <div class="image-frame"></div>
+                                    <!--刪除按鈕-->
+                                    <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                    <label for="customFile10" class="square position-absolute top-50 start-50 translate-middle display-2">
+                                        <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
+                                    </label>
+                                    <input type="file" id="customFile10" name="file6" data-theme="我的收藏" hidden>
+                                    <div class="theme-name text-center p-2">
+                                        我的收藏
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <div class="photo-container position-relative">
+                                    <div class="image-frame"></div>
+                                    <!--刪除按鈕-->
+                                    <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                    <label for="customFile12" class="square position-absolute top-50 start-50 translate-middle display-2">
+                                        <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
+                                    </label>
+                                    <input type="file" id="customFile12" name="file7" data-theme="最愛的電影" hidden>
+                                    <div class="theme-name text-center p-2">
+                                        最愛的電影
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <div class="photo-container position-relative">
+                                    <div class="image-frame"></div>
+                                    <!--刪除按鈕-->
+                                    <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                    <label for="customFile14" class="square position-absolute top-50 start-50 translate-middle display-2">
+                                        <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
+                                    </label>
+                                    <input type="file" id="customFile14" name="file8" data-theme="最愛的遊戲" hidden>
+                                    <div class="theme-name text-center p-2">
+                                        最愛的遊戲
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+						<div class="gap-3 d-md-flex justify-content-md-end text-center my-5">
+					    	<button type="button" class="btn btn-primary btn-lg" id="submit-btn">確定修改</button>
+					    	<button type="button" class="btn btn-danger btn-lg" id="delete-btn">確定刪除</button>
+						</div>
+                    </div>
+                </div>	
+             </form>		
+		  </div>
+	   </div>
 
 
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -1162,109 +990,96 @@ body {
 		
 <script>
 
-$(document).ready(function() {
-  // 獲取所有的文件輸入框
-  const fileInputs = document.querySelectorAll('input[type="file"]');
+// 獲取表單元素和按鈕元素
+const uploadForm = document.getElementById('upload-form');
+const submitBtn = document.getElementById('submit-btn');
+const deleteBtn = document.getElementById('delete-btn');
 
-  // 遍歷每個文件輸入框,並綁定事件監聽器
-fileInputs.forEach((input, index) => {
-  input.addEventListener('change', (event) => {
-    console.log('File input changed:', event.target);
-    const file = event.target.files[0];
-    
-    // 獲取對應的主題輸入框,並獲取其值
-    const themeInput = event.target.parentNode.querySelector('input[name="photoTheme"]');
-    const theme = themeInput.value;
-    
-    console.log('Selected file:', file);
-    console.log('Theme:', theme);
-      
-      const reader = new FileReader();
-      
-      reader.onload = (e) => {
-        // 獲取對應的圖片框
-        const imageFrame = event.target.parentNode.querySelector('.image-frame');
-        imageFrame.innerHTML = ''; // 清空圖片框
-        
-        // 創建一個新的 <img> 元素,並設置其 src 屬性為文件的數據 URL
-        const img = document.createElement('img');
-        img.src = e.target.result;
-        img.style.width = '100%';
-        img.style.height = '100%';
-        img.style.objectFit = 'cover';
-        
-        // 將新的圖片元素添加到圖片框中
-        imageFrame.appendChild(img);
-      };
-      
-      reader.readAsDataURL(file);
+// 獲取所有文件輸入框
+const fileInputs = uploadForm.querySelectorAll('input[type="file"]');
+
+// 遍歷每個文件輸入框,並綁定事件監聽器
+fileInputs.forEach((input) => {
+    input.addEventListener('change', (event) => {
+        const file = event.target.files[0]; // 獲取選擇的文件
+        const imageFrame = event.target.parentNode.querySelector('.image-frame'); // 獲取對應的圖片框
+
+        if (file) {
+            const reader = new FileReader(); // 創建一個新的 FileReader 對象
+
+            reader.onload = (e) => {
+                // 清空圖片框
+                imageFrame.innerHTML = '';
+
+                // 創建一個新的 <img> 元素,並設置其 src 屬性為文件的數據 URL
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'cover';
+
+                // 將新的圖片元素添加到圖片框中
+                imageFrame.appendChild(img);
+            };
+
+            reader.readAsDataURL(file); // 讀取文件並將其轉換為數據 URL
+        }
     });
-  });
-
-  // 點擊"確定修改"按鈕時觸發的函數
-function updatePhotos(userNo) {
-  const formData = new FormData();
-
-  // 遍歷每個文件輸入框
-  fileInputs.forEach((input) => {
-    const file = input.files[0];
-    const themeInput = input.parentNode.querySelector('input[name="photoTheme"]');
-    const theme = themeInput.value;
-
-    if (file) {
-      formData.append('formData', file, theme);
-    }
-  });
-
-  formData.append('userNo', userNo);
-
-  // 發送 POST 請求到後端
-  fetch('/updatePhotos', {
-    method: 'POST',
-    body: formData
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('修改成功:', data);
-    // 在這裡可以根據需要執行其他操作,例如顯示成功提示等
-  })
-  .catch(error => {
-    console.error('修改失敗:', error);
-    // 在這裡可以根據需要執行其他操作,例如顯示錯誤提示等
-  });
-}
-
-  // 為 "確定修改" 按鈕添加點擊事件監聽器
-  document.getElementById('updateButton').addEventListener('click', function() {
-    console.log('Update button clicked');
-    var userNo = document.getElementById('userNo').value; // 從頁面中獲取 userNo 的值
-    updatePhotos(userNo);
-  });
 });
+
+// 綁定確定修改按鈕點擊事件
+submitBtn.addEventListener('click', () => {
+    // 創建請求參數對象
+    const requestParams = new URLSearchParams();
+
+    // 遍歷每個文件輸入框
+    fileInputs.forEach((input) => {
+        const file = input.files[0]; // 獲取選擇的文件
+        const photoTheme = input.getAttribute('data-theme'); // 獲取主題名稱
+
+        if (file) {
+            requestParams.append(input.name, file); // 將文件添加到請求參數中
+            requestParams.append(`${input.name}Theme`, photoTheme); // 將主題名稱添加到請求參數中
+        }
+    });
+
+    // 發送 AJAX 請求
+    fetch('/updatePhotos', {
+        method: 'POST',
+        body: requestParams
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data); // 處理服務器返回的數據
+        // 在這裡可以根據需要更新頁面或顯示提示信息
+
+        // 跳轉到編輯個人資料頁面
+        window.location.href = '/matchPage';
+    })
+    .catch(error => {
+        console.error('上傳照片時發生錯誤', error);
+    });
+});
+
 </script>
 
 
-		<script>
-            //按下"x"刪除圖片
+<script>
 
-            // 獲取所有的刪除按鈕
-            const deleteButtons = document.querySelectorAll('.delete-photo');
+// 按下"x"刪除圖片
+const deleteButtons = document.querySelectorAll('.delete-photo');
 
-            // 遍歷每個刪除按鈕,並綁定事件監聽器
-            deleteButtons.forEach((button) => {
-                button.addEventListener('click', () => {
-                    // 獲取對應的圖片框
-                    const imageFrame = button.parentNode.querySelector('.image-frame');
-
-                    // 清空圖片框
-                    imageFrame.innerHTML = '';
-
-                    // 還原默認的加號圖標
-                    const addPhotoIcon = button.parentNode.querySelector('.add-photo');
-                    addPhotoIcon.style.display = 'block';
-                });
-            });
+deleteButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+        const imageFrame = button.parentNode.querySelector('.image-frame');
+        imageFrame.innerHTML = '';
+        const addPhotoIcon = button.parentNode.querySelector('.add-photo');
+        addPhotoIcon.style.display = 'block';
+        console.log('確定刪除照片');
+    });
+});
         </script>
+
 
 		<script>
             //可選標籤 : 下拉式選單

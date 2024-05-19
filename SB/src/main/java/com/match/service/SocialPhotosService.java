@@ -1,5 +1,6 @@
 package com.match.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -40,8 +41,21 @@ public class SocialPhotosService {
     
     
     // 根據用戶ID查詢照片
-    public List<SocialPhotosBean> findByUserNo(Integer userNo) {
+    /*public List<SocialPhotosBean> findByUserNo(Integer userNo) {
         return spRepos.findByUserNo(userNo);
+    }*/
+    
+    
+    
+    
+    // Match 實作 - 根據用戶編號查詢照片路徑
+    public List<String> findByUserNo(Integer userNo) {
+        List<SocialPhotosBean> photosBeans = spRepos.findByUserNo(userNo);
+        List<String> photoPaths = new ArrayList<>();
+        for (SocialPhotosBean photoBean : photosBeans) {
+            photoPaths.add(photoBean.getPhotoPath());
+        }
+        return photoPaths;
     }
 
     

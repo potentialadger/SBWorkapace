@@ -3,8 +3,12 @@ package com.user.controller;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 
 import org.apache.http.ParseException;
@@ -28,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.match.bean.TagsBean;
 import com.match.dto.UpdateTagsDTO;
+import com.match.service.SocialPhotosService;
 import com.user.bean.UserBean;
 import com.user.bean.UserImageBean;
 import com.user.dto.LinePayDto;
@@ -47,6 +52,9 @@ public class UserController {
 	
 	@Autowired
 	private UserImageService uImgService;
+	
+	@Autowired
+	private SocialPhotosService spService;
 
 	@PostMapping("/userSignUp")
 	public String processSignUpAction(@RequestParam("account") String account,
@@ -389,8 +397,14 @@ public class UserController {
 		return "user/jsp/MyFriends_FontSatgeTest.jsp";
 	}
 	
+	
+	
+	
+	
+	
 
 	// ---Tags : ManyToMany
+	
 
 	// 獲取單個使用者及其關聯的標籤
 	@GetMapping(path = "/getUserTags/{userNo}")
@@ -475,6 +489,8 @@ public class UserController {
 	
 	
 	
+	
+	
 // -----------前端實作Tags------
 	
 	
@@ -511,14 +527,9 @@ public class UserController {
         
 	
 	
-	
-	
-	
-
 
 	
-	
-// -----------前端創建資料-------
+// ----------前端創建資料-------
 	
 	
 	
@@ -638,23 +649,63 @@ public class UserController {
 	
 	
 	
-    // ----- 實作配對 -----
+    // ----- Match 實作 -----
     
-	
-    //刷新下一位使用者
-		
-	@GetMapping("/next-user")
-	@ResponseBody
-	public UserBean getNextUser(HttpSession session) {
-	    UserBean currentUser = (UserBean) session.getAttribute("userData");
-	    if (currentUser != null) {
-	        UserBean nextUser = uService.getNextUser(currentUser.getUserNo());
-	        return nextUser;
+
+	// 在控制器中實現獲取下一個隨機用戶及其照片的端點
+
+
+	@GetMapping("/nextUser")
+	public ResponseEntity<Map<String, Object>> getNextUser(@RequestParam("currentUserNo") Integer currentUserNo) {
+			   
+	    List<UserBean> allUsers = uService.getAllUserData();                            // 獲取所有用戶	  	    
+	    UserBean randomUser = getRandomUser(allUsers, currentUserNo);                   // 獲取下一個隨機用戶
+	    	    
+	    if (randomUser == null) {                                                       // 如果沒有其他用戶,返回404
+	        return ResponseEntity.notFound().build();
 	    }
-	    return null;
+	    	    
+	    List<String> photos = spService.findByUserNo(randomUser.getUserNo());            // 根據用戶編號查詢照片路徑	  	    
+	    Map<String, Object> response = new HashMap<>();                                  // 建立響應數據
+	    response.put("userNo", randomUser.getUserNo());
+	    response.put("photos", photos);		    
+	    return ResponseEntity.ok(response);                                              // 返回響應
+	}
+	
+	private UserBean getRandomUser(List<UserBean> users, int currentUserNo) {            // 從用戶列表中獲取下一個隨機用戶	    
+	    List<UserBean> otherUsers = new ArrayList<>();                                   // 過濾掉與當前用戶相同的用戶
+	    for (UserBean user : users) {
+	        if (user.getUserNo() != currentUserNo) {
+	            otherUsers.add(user);
+	        }
+	    }
+	    	    
+	    if (otherUsers.isEmpty()) {                                                      // 如果沒有其他用戶,返回null
+	        return null;
+	    }
+	    	    
+	    Random random = new Random();                                                    // 從其他用戶中隨機選擇一個
+	    int randomIndex = random.nextInt(otherUsers.size());
+	    return otherUsers.get(randomIndex);
 	}
 	
 	
+	
+	// 從HttpSession中獲取當前用戶的資料,並返回用戶的ID
+	
+	@GetMapping("/getCurrentUserNo")
+	@ResponseBody
+	public Integer getCurrentUserNo(HttpSession session) {
+	    UserBean userBean = (UserBean) session.getAttribute("userData");
+	    if (userBean != null) {
+	        return userBean.getUserNo();
+	    }
+	    return null;                                                                      // 用戶未登錄
+	}
+	
+	
+	
+
 	
 
 //	-----------LinePay------------

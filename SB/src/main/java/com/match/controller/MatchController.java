@@ -19,7 +19,8 @@ public class MatchController {
 
     @Autowired
     private MatchService mService;
-
+    
+    
     @PostMapping("/{user1No}/{user2No}/like")
     public ResponseEntity<String> likeUser(@PathVariable int user1No, @PathVariable int user2No) {
         int matchStatus = mService.likeUser(user1No, user2No);

@@ -1600,8 +1600,8 @@ border-radius:6px;
      <!--按鈕-->
       <div class="tinder">
      	 <div class="tinder--buttons">
-     	 <button id="nope" data-user1-no="${user1No}" data-user2-no="${user2No}"><i class="fa fa-remove"></i></button>
-     	 <button id="love" data-user1-no="${user1No}" data-user2-no="${user2No}"><i class="fa fa-heart"></i></button>
+     	 <button id="nope"><i class="fa fa-remove"></i></button>
+     	 <button id="love"><i class="fa fa-heart"></i></button>
        	 </div>
       </div>
    </div> 
@@ -1734,212 +1734,113 @@ border-radius:6px;
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
     </button>-->
         
-       
-      
-  
 
 
 
 
-
-
-
-
-
-
-    <script>
+<script>
     
     
     
-    
-    $(document).ready(function() {
-  	  var cardContainer = $('.card-container');
-  	  var allCards = cardContainer.find('.carousel');
-  	  var nope = $('#nope');
-  	  var love = $('#love');
+'use strict';
 
-  	  function initCards() {
-  	    allCards.each(function(index, card) {
-  	      $(card).css({
-  	        'z-index': allCards.length - index,
-  	        'transform': 'scale(1)',
-  	        'opacity': 1,
-  	        'transition': 'transform 0.5s'
-  	      });
-  	    });
-  	  }
+$(document).ready(function() {
+  var cardContainer = $('.card-container');
+  var allCards = cardContainer.find('.carousel');
+  var currentUserNo;
+  var nope = $('#nope');
+  var love = $('#love');
 
-  	  initCards();
-
-  	  function createButtonListener(love) {
-  	    return function(event) {
-  	      var cards = cardContainer.find('.carousel:not(.removed)');
-  	      var moveOutWidth = document.body.clientWidth * 1.5;
-
-  	      if (!cards.length) return false;
-
-  	      var card = cards.eq(0);
-  	      card.addClass('removed');
-
-  	      if (love) {
-  	        card.css('transform', 'translate(' + moveOutWidth + 'px, -100px) rotate(-30deg)');
-  	      } else {
-  	        card.css('transform', 'translate(-' + moveOutWidth + 'px, -100px) rotate(30deg)');
-  	      }
-
-  	      setTimeout(function() {
-  	        card.css('display', 'none');
-  	        initCards();
-  	      }, 500);
-
-  	      event.preventDefault();
-  	    };
-  	  }
-
-  	  var nopeListener = createButtonListener(false);
-  	  var loveListener = createButtonListener(true);
-
-  	  nope.on('click', nopeListener);
-  	  love.on('click', loveListener);
-  	});
-    
-    
-    
-    
-    
-    
-    
- // 存儲當前顯示的使用者數據
-    let currentUser;
-
-    // 獲取下一位使用者數據
-    function getNextUser() {
-      // 發送 AJAX 請求獲取下一位使用者數據
-      $.ajax({
-        url: '/nextUser', // 替換為您的後端 API 路徑
-        type: 'GET',
-        dataType: 'json',
-        success: function(data) {
-          // 將返回的數據賦值給 currentUser
-          currentUser = data;
-          // 渲染使用者數據
-          renderUser(currentUser);
-        },
-        error: function(xhr, status, error) {
-          console.error('Error getting next user:', error);
+  // 獲取當前用戶ID
+  function getCurrentUserNo() {                                                       
+    $.ajax({
+      url: '/getCurrentUserNo',                                                                           // 使用AJAX調用後端的/getCurrentUserNo接口獲取當前用戶的ID
+      type: 'GET',
+      async: false,                                                                                       // 將AJAX請求設置為同步請求(async: false),以確保在獲取用戶ID之前不會執行其他代碼
+      success: function(userNo) {
+        if (userNo !== null) {
+          currentUserNo = userNo;                                                                         // 調用getCurrentUserNo()函數來獲取當前用戶的ID,並將其存儲在currentUserNo變數中
+        } else {
+          console.log('User not logged in');
         }
-      });
-    }
+      },
+      error: function(xhr, status, error) {
+        console.error('Error getting current user ID:', error);
+      }
+    });
+  }
 
-    // 渲染使用者數據
-    function renderUser(user) {
-      // 根據使用者數據更新頁面上的元素
-      // 例如,更新照片輪播區塊中的圖片
-      let html = '';
-      user.photos.forEach(function(photo) {
-        html += `<img src="${photo.url}" width="580" height="230" alt="user photo">`;
-      });
-      $('.carousel').html(html);
-    }
+  getCurrentUserNo();
 
-    // 處理 nope 按鈕點擊事件
-    $('#nope').click(function() {
-      // 在這裡處理不喜歡的邏輯
-      // 例如,向後端發送 AJAX 請求記錄不喜歡
-      $.ajax({
-        url: `/dislike/${currentUser.userNo}`, // 替換為您的後端 API 路徑
-        type: 'POST',
-        success: function(data) {
-          alert(data.message); // 顯示後端返回的訊息
-          // 獲取下一位使用者數據並渲染
-          getNextUser();
-        },
-        error: function(xhr, status, error) {
-          console.error('Error disliking user:', error);
-        }
+  function initCards() {
+    allCards.each(function(index, card) {
+      $(card).css({
+        'z-index': allCards.length - index,
+        'transform': 'scale(1)',
+        'opacity': 1,
+        'transition': 'transform 0.5s'
       });
     });
+  }
 
-    // 處理 love 按鈕點擊事件
-    $('#love').click(function() {
-      // 在這裡處理喜歡的邏輯
-      // 例如,向後端發送 AJAX 請求記錄喜歡
-      $.ajax({
-        url: `/like/${currentUser.userNo}`, // 替換為您的後端 API 路徑
-        type: 'POST',
-        success: function(data) {
-          alert(data.message); // 顯示後端返回的訊息
-          // 獲取下一位使用者數據並渲染
-          getNextUser();
-        },
-        error: function(xhr, status, error) {
-          console.error('Error liking user:', error);
-        }
-      });
-    });
+  initCards();
 
-    // 初始化時獲取第一位使用者數據並渲染
-    getNextUser();
-    
-    
-    
- 
-    
-  	
-  	
-  	
-  	
-  	
-  //按 X 邏輯
-  $(document).ready(function() {
-    $('#nope').click(function(event) {
+  function createButtonListener(love) {
+    return function(event) {
+      var cards = cardContainer.find('.carousel:not(.removed)');
+      var moveOutWidth = document.body.clientWidth * 1.5;
+
+      if (!cards.length) return false;
+
+      var card = cards.eq(0);
+      card.addClass('removed');
+
+      if (love) {
+        card.css('transform', 'translate(' + moveOutWidth + 'px, -100px) rotate(-30deg)');
+      } else {
+        card.css('transform', 'translate(-' + moveOutWidth + 'px, -100px) rotate(30deg)');
+      }
+
+      setTimeout(function() {
+        card.css('display', 'none');
+        initCards();
+        getNextUser(); // 在卡片移除後獲取下一個用戶
+      }, 500);
+
       event.preventDefault();
-      // <button id="nope" data-user1-no="${user1No}" data-user2-no="${user2No}"><i class="fa fa-remove"></i></button>
-      var user1No = $(this).data('user1-no');
-      var user2No = $(this).data('user2-no');
-    
-      console.log('/' + user1No + '/' + user2No + '/dislike');
-      $.ajax({
-        url: '/' + user1No + '/' + user2No + '/dislike',
-        type: 'POST',
-        success: function(response) {
-          alert(response);
-          // 在這裡可以執行其他操作，如刷新頁面或顯示提示訊息
-        },
-        error: function(xhr, status, error) {
-          console.log(error);
-        }
-      });
+    };
+  }
+
+  var nopeListener = createButtonListener(false);
+  var loveListener = createButtonListener(true);
+
+  nope.on('click', nopeListener);
+  love.on('click', loveListener);
+
+  function getNextUser() {
+    $.ajax({
+      url: '/nextUser',
+      type: 'GET',
+      data: { currentUserNo: currentUserNo },
+      success: function(data) {
+        var photos = data.photos;
+        var html = '';
+        photos.forEach(function(photo) {
+          html += `<img src="${photo}" width="580" height="230" alt="user photo">`;
+        });
+        $('.carousel').html(html);
+      },
+      error: function(xhr, status, error) {
+        console.error('Error getting next user:', error);
+      }
     });
+  }
+});
     
-    //按 愛心 邏輯
-    $('#love').click(function(event) {
-      event.preventDefault();
-      var user1No = $(this).data('user1-no');
-      var user2No = $(this).data('user2-no');
-      
-      $.ajax({
-        url: '/' + user1No + '/' + user2No + '/like',
-        type: 'POST',
-        success: function(response) {
-          alert(response);
-          // 在這裡可以執行其他操作，如刷新頁面或顯示提示訊息
-        },
-        error: function(xhr, status, error) {
-          console.log(error);
-        }
-      });
-    });
-  });
+  	
+  	
+  	
 
-
-
-  
-  
-  
-  
-  
-  
   
 
 // 獲取所有按鈕和內容容器
@@ -5062,15 +4963,6 @@ function handleLove() {
 nopeButton.addEventListener('click', handleNope);
 loveButton.addEventListener('click', handleLove);*/
                           
-          
-
-
-
-
-// ---從資料庫取資料
-
-
-
 
                    
 

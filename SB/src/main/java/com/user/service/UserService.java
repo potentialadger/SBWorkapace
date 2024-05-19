@@ -87,7 +87,7 @@ public class UserService {
 	
 
 	
-//---Tags : ManyToMany
+// ----- Tags : ManyToMany -------
 	
 	
 	// 取得使用者資料
@@ -192,12 +192,35 @@ public class UserService {
     
     
     
-    // ----- 實作配對 -----
+    // ----- Match 實作 -----
     
     
-    //刷新下一位使用者
+    // 從findAll() 裡隨機選擇用戶
+    
+    public UserBean getRandomUser(List<UserBean> users, int currentUserNo) {
+        // 過濾掉與當前使用者不同的使用者
+        List<UserBean> otherUsers = new ArrayList<>();
+        for (UserBean user : users) {
+            if (user.getUserNo() != currentUserNo) {
+                otherUsers.add(user);
+            }
+        }
+
+        // 如果其他使用者為空，返回null
+        if (otherUsers.isEmpty()) {
+            return null;
+        }
+
+        // 從其他使用者中隨機選擇一個使用者
+        Random random = new Random();
+        int randomIndex = random.nextInt(otherUsers.size());
+        return otherUsers.get(randomIndex);
+    }
     
     
+    
+    
+    //刷新下一位使用者    
 
     public UserBean getNextUser(Integer currentUserNo) {
         List<UserBean> nextUsers = uRepository.findNextUsers(currentUserNo);
@@ -206,6 +229,8 @@ public class UserService {
         }
         return null; // 如果沒有下一位使用者,則返回 null
     }
+    
+    
     
 
     

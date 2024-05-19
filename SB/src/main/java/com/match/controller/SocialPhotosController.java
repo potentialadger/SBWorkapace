@@ -13,9 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,7 +28,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.match.bean.SocialPhotosBean;
 import com.match.service.SocialPhotosService;
-import com.user.bean.UserBean;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -151,6 +148,23 @@ public class SocialPhotosController {
         response.put("message", "照片刪除成功");
         return response;
     }
+    
+    
+    
+    
+    
+    // ----- Match 實作 -----
+
+    
+    
+    
+    // 通過調用 /MatchPhotos 路徑並傳遞 userNo 參數來獲取指定用戶的交友照片路徑列表
+    @GetMapping("/MatchPhotos")
+    @ResponseBody
+    public List<String> getSocialPhotos(@RequestParam("userNo") Integer userNo) {
+        List<String> socialPhotos = spService.findByUserNo(userNo);
+        return socialPhotos;
+    }
 
     
 
@@ -158,62 +172,13 @@ public class SocialPhotosController {
 	
 	// 接收用戶上傳的照片，將其儲存到伺服器中，並在資料庫中新增相應的記錄
     
-    
-    
-	// 從圖片名稱就可以知道主題提名稱
-	// @RequestParam("sPhoto") MultipartFile[] mfs  =>不能這樣寫這樣一個input會上傳多張照片
-	// 我需要一個input只會上傳一張照片
-	@PostMapping(value = "/insertSPhoto")
-	@ResponseBody
-	public List<SocialPhotosBean> insertSPhotos(@RequestParam("userNo") Integer userNo,
-	                                            @RequestParam("sPhoto") MultipartFile[] mfs,
-	                                            HttpServletRequest request) throws IllegalStateException, IOException {
-	    HttpSession session = request.getSession();
-	    List<SocialPhotosBean> insertedPhotos = new ArrayList<>();
 
-	    for (MultipartFile mf : mfs) {
-	        String filename = mf.getOriginalFilename();
-	        String extension = "";
-	        int i = filename.lastIndexOf('.');
-	        if (i >= 0) {
-	            extension = filename.substring(i);
-	        }
-
-	        Random random = new Random();
-	        int raNumber = random.nextInt(10000);
-	        filename = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "_" + raNumber
-	                + extension;
-
-	        String fileDir = "C:/temp/upload/";
-	        File pathexist = new File(fileDir);
-	        if (!pathexist.exists()) {
-	            pathexist.mkdirs();
-	        }
-
-	        File fileDirPath = new File(fileDir, filename);
-	        mf.transferTo(fileDirPath);
-
-	        /*SocialPhotosBean sPhoto = spService.insertOrUpdate(userNo, filename, theme);
-	        insertedPhotos.add(sPhoto);*/
-	    }
-
-	    session.setAttribute("insertedPhotos", insertedPhotos);
-
-	    return insertedPhotos;
-	}
-	
-
-    
-    
-    
 	
 	// -----多個input只能上傳一張圖片的方法
     
     
-    
-    
 	// 更新照片方法
-/*    @PostMapping(value = "/updatePhotos", consumes = "multipart/form-data", produces = "application/json;charset=UTF-8")     //POSTMAN測試 : consumes = "multipart/form-data"
+    @PostMapping(value = "/updatePhotos", consumes = "multipart/form-data", produces = "application/json;charset=UTF-8")     //POSTMAN測試 : consumes = "multipart/form-data"
     @ResponseBody
     public List<SocialPhotosBean> updateSPhotos(
         @RequestParam("userNo") Integer userNo,
@@ -233,18 +198,6 @@ public class SocialPhotosController {
         @RequestParam(value = "file7Theme", required = false) String file7Theme,
         @RequestParam(value = "file8", required = false) MultipartFile file8,
         @RequestParam(value = "file8Theme", required = false) String file8Theme,
-        @RequestParam(value = "file9", required = false) MultipartFile file9,
-        @RequestParam(value = "file9Theme", required = false) String file9Theme,
-        @RequestParam(value = "file10", required = false) MultipartFile file10,
-        @RequestParam(value = "file10Theme", required = false) String file10Theme,
-        @RequestParam(value = "file11", required = false) MultipartFile file11,
-        @RequestParam(value = "file11Theme", required = false) String file11Theme,
-        @RequestParam(value = "file12", required = false) MultipartFile file12,
-        @RequestParam(value = "file12Theme", required = false) String file12Theme,
-        @RequestParam(value = "file13", required = false) MultipartFile file13,
-        @RequestParam(value = "file13Theme", required = false) String file13Theme,
-        @RequestParam(value = "file14", required = false) MultipartFile file14,
-        @RequestParam(value = "file14Theme", required = false) String file14Theme,
         HttpServletRequest request) throws IllegalStateException, IOException {
 
         List<SocialPhotosBean> updatedPhotos = new ArrayList<>();
@@ -275,51 +228,7 @@ public class SocialPhotosController {
             if (file8 != null && !file8.isEmpty()) {
                 updatedPhotos.add(processPhoto(file8, file8Theme, userNo));
             }
-            if (file9 != null && !file9.isEmpty()) {
-                updatedPhotos.add(processPhoto(file9, file9Theme, userNo));
-            }
-            if (file10 != null && !file10.isEmpty()) {
-                updatedPhotos.add(processPhoto(file10, file10Theme, userNo));
-            }
-            if (file11 != null && !file11.isEmpty()) {
-                updatedPhotos.add(processPhoto(file11, file11Theme, userNo));
-            }
-            if (file12 != null && !file12.isEmpty()) {
-                updatedPhotos.add(processPhoto(file12, file12Theme, userNo));
-            }
-            if (file13 != null && !file13.isEmpty()) {
-                updatedPhotos.add(processPhoto(file13, file13Theme, userNo));
-            }
-            if (file14 != null && !file14.isEmpty()) {
-                updatedPhotos.add(processPhoto(file14, file14Theme, userNo));
-            }
             
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            throw new RuntimeException("Photo update failed", e);
-        }
-
-        return updatedPhotos;
-    }*/
-    
-
-   @PostMapping(value = "/updatePhotos", consumes = "multipart/form-data", produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public List<SocialPhotosBean> updateSPhotos(
-        @RequestParam("userNo") Integer userNo,
-        @RequestPart("formData") List<MultipartFile> files,
-        HttpServletRequest request) throws IllegalStateException, IOException {
-
-        List<SocialPhotosBean> updatedPhotos = new ArrayList<>();
-
-        try {
-            for (int i = 0; i < files.size(); i++) {
-                MultipartFile file = files.get(i);
-                String theme = request.getParameter("file" + (i + 1) + "Theme");
-                if (!file.isEmpty()) {
-                    updatedPhotos.add(processPhoto(file, theme, userNo));
-                }
-            }
         } catch (Exception e) {
             System.err.println(e.getMessage());
             throw new RuntimeException("Photo update failed", e);
@@ -363,6 +272,52 @@ public class SocialPhotosController {
 	    // return System.currentTimeMillis() + "-" + new Random().nextInt(1000) + extension;
 
 	}
+	
+	
+	
+	
+	
+	
+	@PostMapping(value = "/insertSPhoto")
+	@ResponseBody
+	public List<SocialPhotosBean> insertSPhotos(@RequestParam("userNo") Integer userNo,
+	                                            @RequestParam("sPhoto") MultipartFile[] mfs,
+	                                            HttpServletRequest request) throws IllegalStateException, IOException {
+	    HttpSession session = request.getSession();
+	    List<SocialPhotosBean> insertedPhotos = new ArrayList<>();
+
+	    for (MultipartFile mf : mfs) {
+	        String filename = mf.getOriginalFilename();
+	        String extension = "";
+	        int i = filename.lastIndexOf('.');
+	        if (i >= 0) {
+	            extension = filename.substring(i);
+	        }
+
+	        Random random = new Random();
+	        int raNumber = random.nextInt(10000);
+	        filename = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "_" + raNumber
+	                + extension;
+
+	        String fileDir = "C:/temp/upload/";
+	        File pathexist = new File(fileDir);
+	        if (!pathexist.exists()) {
+	            pathexist.mkdirs();
+	        }
+
+	        File fileDirPath = new File(fileDir, filename);
+	        mf.transferTo(fileDirPath);
+
+	        /*SocialPhotosBean sPhoto = spService.insertOrUpdate(userNo, filename, theme);
+	        insertedPhotos.add(sPhoto);*/
+	    }
+
+	    session.setAttribute("insertedPhotos", insertedPhotos);
+
+	    return insertedPhotos;
+	}
+	
+	
 	
 	
 	
