@@ -103,7 +103,7 @@ public class FrontDeskPostsController {
 			@RequestParam("content") String content,
 			@RequestParam("image_url") MultipartFile image_url,
 			Model m,
-			HttpSession session) {
+			HttpSession session) throws IOException {
 		
 		UserBean userData = (UserBean) session.getAttribute("userData");
 
@@ -115,9 +115,8 @@ public class FrontDeskPostsController {
 		posts.setTitle(title);
 		posts.setContent(content);
 		posts.setUpdate_date(new Date());
-
+		
 		try {
-			if(!image_url.isEmpty()) {
 				// 從上傳的文件 image_url 中獲取原始文件名。
 				String fileName = image_url.getOriginalFilename();
 				// 以下判斷是為了過濾掉非圖檔的 檔案 只要.jpg, .png, .pdf 等
@@ -144,13 +143,13 @@ public class FrontDeskPostsController {
 				// 指定文件上傳的目錄路徑
 				String fileDir = "C:/temp/upload/";
 				// 創建一個文件，把路徑跟新的檔案辨別名稱加上去。
-				File fileDirPath = new File(fileDir, fileName);
-				
-				image_url.transferTo(fileDirPath);
-				
-				posts.setImage_url(fileName);
-				
-			}
+				if(image_url.getSize()!=0) {
+					File fileDirPath = new File(fileDir, fileName);
+					image_url.transferTo(fileDirPath);
+					posts.setImage_url(fileName);
+				}else {
+					posts.setImage_url(null);
+				}
 
 			postsService.insertPosts(posts);
 			
@@ -168,9 +167,7 @@ public class FrontDeskPostsController {
 			
 			return "/forum/frontdesk/posts/jsp/OnePosts.jsp";
 
-		} catch (
-
-		IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 			// 如果發生 IO 錯誤，提示用戶文件上傳失敗 前台還要再做一個頁面
 			return "redirect:/posts/error?message=文件上傳失敗";
@@ -213,8 +210,6 @@ public class FrontDeskPostsController {
 			@RequestParam("image_url") MultipartFile image_url,
 			@RequestParam("update_date") String update_date, HttpSession session) {
 
-		try {
-
 			UserBean userData = (UserBean) session.getAttribute("userData");
 
 			CategoriesBean category = categoriesService.getCategoryNo(category_no);
@@ -227,7 +222,8 @@ public class FrontDeskPostsController {
 			postsToUpdate.setContent(content);
 			postsToUpdate.setUpdate_date(new Date());
 			
-			if(image_url != null && !image_url.getName().equals("image_url")) {
+			try {
+			
 			// 從上傳的文件 image_url 中獲取原始文件名。
 			String fileName = image_url.getOriginalFilename();
 			// 以下判斷是為了過濾掉非圖檔的 檔案 只要.jpg, .png, .pdf 等
@@ -254,12 +250,12 @@ public class FrontDeskPostsController {
 			// 指定文件上傳的目錄路徑
 			String fileDir = "C:/temp/upload/";
 			// 創建一個文件，把路徑跟新的檔案辨別名稱加上去。
-			File fileDirPath = new File(fileDir, fileName);
-
-			image_url.transferTo(fileDirPath);
-			
-			postsToUpdate.setImage_url(fileName);
-			
+			if(image_url.getSize()!=0) {
+				File fileDirPath = new File(fileDir, fileName);
+				image_url.transferTo(fileDirPath);
+				postsToUpdate.setImage_url(fileName);
+			}else {
+				postsToUpdate.setImage_url(null);
 			}
 
 			postsService.updatePosts(postsToUpdate);
