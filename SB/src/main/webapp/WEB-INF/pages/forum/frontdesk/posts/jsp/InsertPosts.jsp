@@ -32,15 +32,16 @@
 }
 
 .container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 40px;
-    color: black !important;
-}   
-    .forum-form-container {
-    display: flex;
-    flex-direction: column;
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	margin-bottom: 40px;
+	color: black !important;
+}
+
+.forum-form-container {
+	display: flex;
+	flex-direction: column;
 }
 
 </style>
@@ -137,6 +138,7 @@
 	<script src="/js/demo/chart-pie-demo.js"></script>
 
 	<script>
+	
         function confirmPublish() {
             return confirm("確定要發佈這篇文章嗎？");
         }

@@ -29,16 +29,17 @@
 	display: none;
 }
 
-.forum-container {
+.replies-container {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 40px;
-    width:800px;
+    width: 800px;
     margin-left: auto;
     margin-right: auto;
     color: black !important;
+    height: 500px;
 }
 
 </style>
@@ -64,30 +65,33 @@
                 <!-- 主要內容 -->
 				
 				<div class="replies-container">
+					<div class="forum-form-container">
 				
-				<h1>編輯回覆</h1>
-				<form method="post" action="/repliesFrontDesk/UpdateReplies">
-				<input type="hidden" name="_method" value="PUT">
+				<form  method="post" action="/repliesFrontDesk/UpdateReplies" onsubmit="return confirmPublish()">
+					
+					<input type="hidden" name="_method" value="PUT">
 				    
-				   	<input type="hidden" name="reply_no" value="${updateSelect.reply_no}"/><br>
+				   	<input type="hidden" name="reply_no" value="${updateSelect.reply_no}"/>
 				   	
-				   	<input type="hidden" name="post_no" value="${updateSelect.postsBean.post_no}"/><br>
+				   	<input type="hidden" name="post_no" value="${updateSelect.postsBean.post_no}"/>
 				    
-				    <input type="hidden" name="user_no" value="${updateSelect.userBean.userNo}"/><br>
+				    <input type="hidden" name="user_no" value="${updateSelect.userBean.userNo}"/>
 				    
-				    <label for="content">內文 :</label><br>
-				    <input type="text" name="content" value="${updateSelect.content}"/><br>
+				    <label for="content">內文 :</label>
+					<textarea name="content" required style="width: 100%; height: 300px; resize: none;">${updateSelect.content}</textarea><br>
 				
-				    <label for="update_date">日期 :</label><br>
-				    <input type="text" name="update_date" value="${updateSelect.update_date}" readonly/><br>
+				    <label for="update_date">日期 :</label>
+				    <input type="text" name="update_date" value="${updateSelect.update_date}" readonly/>
 				    
-				    <input type="submit" value="送出" />
-				</form>
-				
-				<button onclick="goBack()">返回</button>
-				
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary">送出</button>
+					<button type="button" class="btn btn-secondary" onclick="goBack()">返回</button>
 				</div>
 				
+				</form>
+				
+				</div>
+			</div>
                 <!-- 主要內容結尾 -->
 
             </div>
@@ -126,11 +130,17 @@
     <!-- Page level custom scripts -->
     <script src="/js/demo/chart-area-demo.js"></script>
     <script src="/js/demo/chart-pie-demo.js"></script>
-	
+
 	<script>
-			function goBack() {
-				window.history.back();
-			}
+	
+		function confirmPublish() {
+			return confirm("確定要修改嗎？");
+		}
+
+		function goBack() {
+			window.history.back();
+		}
+		
 	</script>
 
 

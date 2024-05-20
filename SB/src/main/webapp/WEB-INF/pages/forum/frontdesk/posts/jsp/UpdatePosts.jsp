@@ -79,7 +79,7 @@
 				
 				<div class="forum-container">
                     <div class="forum-form-container">
-                        <form method="post" action="/postsFrontDesk/UpdatePosts" enctype="multipart/form-data" onsubmit="return confirm('您確定要修改資料嗎？');">
+                        <form method="post" action="/postsFrontDesk/UpdatePosts" enctype="multipart/form-data" onsubmit="return confirmPublish()">
                             <input type="hidden" name="_method" value="PUT">
                             
                             <input type="hidden" name="post_no" value="${updateSelect.post_no}">
@@ -113,12 +113,15 @@
 
 							<div class="form-group">
     							<input type="hidden" name="view_count" value="${updateSelect.view_count}" readonly class="form-control">
+							
 							</div>
-
+							
 							<div class="form-group">
-    							<input type="submit" value="修改" class="btn btn-primary">
+    							<button type="submit" class="btn btn-primary">修改</button>
     							<button type="button" class="btn btn-secondary" onclick="goBack()">返回</button>
 							</div>
+							
+						</form>
                     </div>
                 </div>
 				
@@ -162,9 +165,14 @@
 	<script src="/js/demo/chart-pie-demo.js"></script>
 
 	<script>
-			function goBack() {
-				window.history.back();
-			}
+	
+		function confirmPublish() {
+			return confirm("確定要修改嗎？");
+		}
+		
+		function goBack() {
+			window.history.back();
+		}
 	</script>
 
 

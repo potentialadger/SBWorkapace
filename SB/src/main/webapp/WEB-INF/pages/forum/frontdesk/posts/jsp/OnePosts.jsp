@@ -387,7 +387,7 @@
                         //確定是否刪除回覆
                         function confirmDelete(button) {
                             var replyNo = $(button).data('reply-id');
-                            var confirmation = confirm('您確定要刪除此回覆嗎？');
+                            var confirmation = confirm('確定要刪除此回覆嗎？');
                             if (confirmation) {
                                 deleteReply(button); // 如果用戶確定刪除，則調用刪除回覆的函數
                             }
