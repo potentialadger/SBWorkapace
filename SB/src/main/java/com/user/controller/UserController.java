@@ -649,6 +649,24 @@ public class UserController {
 	
 	
 	
+	
+	@RequestMapping(value = "/newMatchPage", method = {RequestMethod.GET, RequestMethod.POST})
+	public String newMatchPage(HttpSession session, Model m) {
+		UserBean uBean = (UserBean)session.getAttribute("userData");
+		List<UserBean> allUsers = uService.getAllUserData();                            // 獲取所有用戶	  	    
+	    UserBean randomUser = getRandomUser(allUsers, uBean.getUserNo());     
+	    
+	    List<String> photos = spService.findByUserNo(randomUser.getUserNo());
+	    
+	    // 載入已經儲存的資料到輸入框
+	    m.addAttribute("userBean", randomUser);
+	    m.addAttribute("photos", photos);
+	    m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	    m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+	    
+	    return "match/jsp/NewMatchPage.jsp";
+	}
+	
     // ----- Match 實作 -----
     
 

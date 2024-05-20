@@ -890,7 +890,7 @@ body {
 
 						<div class="gap-3 d-md-flex justify-content-md-end text-center my-5">
 					    	<button type="button" class="btn btn-primary btn-lg" id="submit-btn">確定修改</button>
-					    	<button type="button" class="btn btn-danger btn-lg" id="delete-btn">確定刪除</button>
+					    	<button type="button" class="btn btn-danger btn-lg" id="delete-btn">確定刪除</button>					    						 					    	
 						</div>
                     </div>
                 </div>	
@@ -1027,39 +1027,55 @@ fileInputs.forEach((input) => {
     });
 });
 
-// 綁定確定修改按鈕點擊事件
-submitBtn.addEventListener('click', () => {
-    // 創建請求參數對象
-    const requestParams = new URLSearchParams();
+//綁定確定修改按鈕點擊事件
+submitBtn.addEventListener('click', async () => {
+  // 創建請求參數對象
+  const requestData = {
+    userNo: 123 // 替換為實際的 userNo 值
+  };
 
-    // 遍歷每個文件輸入框
-    fileInputs.forEach((input) => {
-        const file = input.files[0]; // 獲取選擇的文件
-        const photoTheme = input.getAttribute('data-theme'); // 獲取主題名稱
+  // 遍歷每個文件輸入框
+  for (const input of fileInputs) {
+    const file = input.files[0]; // 獲取選擇的文件
+    const photoTheme = input.getAttribute('data-theme'); // 獲取主題名稱
 
-        if (file) {
-            requestParams.append(input.name, file); // 將文件添加到請求參數中
-            requestParams.append(`${input.name}Theme`, photoTheme); // 將主題名稱添加到請求參數中
-        }
-    });
+    if (file) {
+      // 將文件轉換為 Base64 編碼
+      const base64File = await convertToBase64(file);
+      requestData[input.name] = base64File;
+      requestData[`${input.name}Theme`] = photoTheme;
+    }
+  }
 
-    // 發送 AJAX 請求
-    fetch('/updatePhotos', {
-        method: 'POST',
-        body: requestParams
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data); // 處理服務器返回的數據
-        // 在這裡可以根據需要更新頁面或顯示提示信息
-
-        // 跳轉到編輯個人資料頁面
-        window.location.href = '/matchPage';
-    })
-    .catch(error => {
-        console.error('上傳照片時發生錯誤', error);
-    });
+  // 發送 AJAX 請求
+  fetch('/updatePhotos', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(requestData)
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data); // 處理服務器返回的數據
+    // 在這裡可以根據需要更新頁面或顯示提示信息
+    // 跳轉到編輯個人資料頁面
+    // window.location.href = '/matchPage';
+  })
+  .catch(error => {
+    console.error('上傳照片時發生錯誤', error);
+  });
 });
+
+// 將文件轉換為 Base64 編碼的函數
+function convertToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result.split(',')[1]);
+    reader.onerror = error => reject(error);
+  });
+}
 
 </script>
 

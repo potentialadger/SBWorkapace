@@ -178,7 +178,7 @@ public class SocialPhotosController {
     
     
 	// 更新照片方法
-    @PostMapping(value = "/updatePhotos", consumes = "multipart/form-data", produces = "application/json;charset=UTF-8")     //POSTMAN測試 : consumes = "multipart/form-data"
+    @PostMapping(value = "/updatePhotos", consumes = "application/json", produces = "application/json;charset=UTF-8")     //POSTMAN測試 : consumes = "multipart/form-data"
     @ResponseBody
     public List<SocialPhotosBean> updateSPhotos(
         @RequestParam("userNo") Integer userNo,
