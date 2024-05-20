@@ -27,18 +27,22 @@
             width: 50%;
             padding: 10px;
         }
+
         .center-table table {
             width: 100%;
             border-collapse: collapse;
         }
+
         .center-table th, .center-table td {
             border: 1px solid #ddd;
             padding: 8px;
         }
+
         .center-table th {
             background-color: #f2f2f2;
             text-align: center;
         }
+
         .btn-custom {
             background-color: #4e73df;
             color: white;
@@ -53,9 +57,30 @@
             cursor: pointer;
             border-radius: 4px;
         }
+
         .btn-custom:hover {
             background-color: #2e59d9;
             color: white;
+        }
+
+        .header {
+            text-align: center;
+            margin: 40px 0;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #4e73df;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: #858796;
         }
     </style>
 </head>
@@ -75,10 +100,14 @@
                 <script src="/js/layout/Z_TopBar.js"></script>
 
                 <!-- 主要內容 -->
-                <h1 align="center">活動報名</h1>
+                <div class="header">
+                    <h1>活動報名</h1>
+                </div>
+
                 <c:if test="${not empty errorMessage}">
-                    <p style="color:red;" align="center">${errorMessage}</p>
+                    <p style="color:red; text-align:center;">${errorMessage}</p>
                 </c:if>
+
                 <div class="center-table">
                     <form action="/InsertRegistrations" method="post">
                         <table>
