@@ -74,7 +74,10 @@
 																		<%=group.getEventNo()%>
 																	</td>
 																	<td>
-																		<%=group.getgTitle()%>
+																		<a href="#" data-bs-toggle="modal"
+																			data-bs-target="#groupOrderModal">
+																			<%=group.getgTitle()%>
+																		</a>
 																	</td>
 																	<td>
 																		<%=group.getgDescription()%>
@@ -264,6 +267,39 @@
 																<th>商品規格</th>
 																<th>訂購數量</th>
 																<th>商品單價</th>
+															</tr>
+														</thead>
+														<tbody id="orderDetailsBody">
+															<!-- Order details will be populated here dynamically -->
+														</tbody>
+													</table>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-bs-dismiss="modal">關閉</button>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<!-- 團購訂單modal -->
+									<div class="modal fade" id="groupOrderModal" tabindex="-1"
+										aria-labelledby="groupOrderModalLabel" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="orderModalLabel">團購訂單</h5>
+													<button type="button" class="btn-close" data-bs-dismiss="modal"
+														aria-label="Close"></button>
+												</div>
+												<div class="modal-body" style="text-align: left">
+													<table class="table">
+														<thead>
+															<tr>
+																<th>aaa</th>
+																<th>bbb</th>
+																<th>ccc</th>
+																<th>ddd</th>
 															</tr>
 														</thead>
 														<tbody id="orderDetailsBody">
