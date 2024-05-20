@@ -42,7 +42,7 @@ public class FrontDeskRepliesController {
 		return "/forum/frontdesk/replies/jsp/OnePosts.jsp";
 	}
 	
-	//前台 單筆查詢 查詢該篇文章的回覆用
+	// 前台 單筆查詢 查詢該篇文章的回覆用
 	@GetMapping("/PostsReplies")
 	public String getPostsReplies(@RequestParam("postsNo") int postsNo, Model m, HttpSession session) {
 	   
@@ -81,7 +81,7 @@ public class FrontDeskRepliesController {
 		return "OK";
 	}
 	
-	//前台刪除
+	// 前台刪除
 	@PostMapping("/DeleteReplies")
 	@ResponseBody
 	public String deleteReplies(@RequestParam("repliesNo") String repliesNo) {
