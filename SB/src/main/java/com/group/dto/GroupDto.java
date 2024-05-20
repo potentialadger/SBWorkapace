@@ -1,6 +1,7 @@
 package com.group.dto;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -19,6 +20,7 @@ public class GroupDto {
 	private Integer userNo;
 	private Integer eventNo;
 	private Integer paymentMethod;
+	private List<OrderDto> groupOrders;
 	
 	public String getgTitle() {
 		return gTitle;
@@ -92,6 +94,12 @@ public class GroupDto {
 	}
 	public void setPaymentMethod(Integer paymentMethod) {
 		this.paymentMethod = paymentMethod;
+	}
+	public List<OrderDto> getGroupOrders() {
+		return groupOrders;
+	}
+	public void setGroupOrders(List<OrderDto> groupOrders) {
+		this.groupOrders = groupOrders;
 	}
 
 	

@@ -20,11 +20,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.group.dto.GroupDto;
+import com.group.dto.OrderDetailsDto;
 import com.group.dto.OrderDto;
 import com.group.model.Group;
 import com.group.model.Item;
 import com.group.model.ItemSpecification;
 import com.group.model.Order;
+import com.group.model.OrderDetail;
 import com.group.service.GroupService;
 import com.group.service.ItemService;
 import com.group.service.ItemSpecService;
@@ -77,20 +79,57 @@ public class GroupController {
 //		int userNo = userbean.getUserNo();
 		Integer userNo = 1;
 		
-		List<Group> groups = gService.findGroupByUser(userNo);
+//		查詢我的團購
+		List<Group> userGroups = gService.findGroupByUser(userNo);
 		ArrayList<GroupDto> groupDtos = new ArrayList<GroupDto>();
-		for (Group group : groups) {
-			String title = group.getTitle();
-			Integer paymentMethod = group.getPaymentMethod();
-			String description = group.getDescription();
-			Date endTime = group.getEndTime();
-			String account = group.getAccount();
-			String address = group.getAddress();
-			Integer eventNo = group.getEventNo();
-			Integer minAmount = group.getMinTotalAmount();
-			Integer minQuantity = group.getMinTotalQuantity();
+		for (Group userGroup : userGroups) {
+			String title = userGroup.getTitle();
+			Integer paymentMethod = userGroup.getPaymentMethod();
+			String description = userGroup.getDescription();
+			Date endTime = userGroup.getEndTime();
+			String account = userGroup.getAccount();
+			String address = userGroup.getAddress();
+			Integer eventNo = userGroup.getEventNo();
+			Integer minAmount = userGroup.getMinTotalAmount();
+			Integer minQuantity = userGroup.getMinTotalQuantity();
+			
+//			查詢我的團購裡的訂單
+			List<Order> groupOrders = userGroup.getOrders();
+			ArrayList<OrderDto> groupOrderDtos = new ArrayList<OrderDto>();
+			for (Order groupOrder : groupOrders) {
+				int groupOrderUserNo = groupOrder.getUserNo().getUserNo();
+				String groupOrderUserName = groupOrder.getUserNo().getUserChineseName();
+				Integer groupOrderPayment = groupOrder.getPaymentMethod();
+				
+//				查詢我的團購裡訂單的訂單細節
+				List<OrderDetail> groupOrderDetails = groupOrder.getOrderDetails();
+				ArrayList<OrderDetailsDto> groupOrderDetailDtos = new ArrayList<OrderDetailsDto>();
+				for (OrderDetail groupOrderDetail : groupOrderDetails) {
+					Integer itemNo = groupOrderDetail.getItem().getItemNo();
+					String itemName = groupOrderDetail.getItem().getName();
+					Integer itemQuantity = groupOrderDetail.getItemQuantity();
+					String specValue = groupOrderDetail.getItemSpec().getSpecValue();
+					
+					OrderDetailsDto orderDetailsDto = new OrderDetailsDto();
+					orderDetailsDto.setItemNo(itemNo);
+					orderDetailsDto.setItemName(itemName);
+					orderDetailsDto.setItemQuantity(itemQuantity);
+					orderDetailsDto.setSpecValue(specValue);
+					
+					groupOrderDetailDtos.add(orderDetailsDto);
+				}
+				
+				OrderDto orderDto = new OrderDto();
+				orderDto.setUserNo(groupOrderUserNo);
+				orderDto.setUserName(groupOrderUserName);
+				orderDto.setPaymentMethod(groupOrderPayment);
+				orderDto.setOrderDetail(groupOrderDetailDtos);
+				
+				groupOrderDtos.add(orderDto);
+			}
 			
 			GroupDto groupDto = new GroupDto();
+			
 			groupDto.setAccount(account);
 			groupDto.setAddress(address);
 			groupDto.setgDescription(description);
@@ -100,10 +139,12 @@ public class GroupController {
 			groupDto.setEventNo(eventNo);
 			groupDto.setgMinTotalAmount(minAmount.toString());
 			groupDto.setgMinTotalQuantity(minQuantity.toString());
+			groupDto.setGroupOrders(groupOrderDtos);
 			
 			groupDtos.add(groupDto);
 		}
 		
+//		查詢我的訂單
 		List<OrderDto> orders = orderService.findOrdersByUserNo(userNo);
 		
 		m.addAttribute("orders", orders);
