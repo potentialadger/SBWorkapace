@@ -11,7 +11,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -39,6 +38,24 @@
         }
         .btn-info { background-color: #36b9cc; }
         .btn-danger { background-color: #e74a3b; }
+        .btn-custom {
+            background-color: #4e73df;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .btn-custom:hover {
+            background-color: #2e59d9;
+            color: white;
+        }
     </style>
 </head>
 
@@ -54,7 +71,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <script src="js/layout/Z_TopBar.js"></script>
+                <script src="/js/layout/Z_TopBar.js"></script>
 
                 <!-- 主要內容 -->
                 <div align="center">
@@ -63,7 +80,7 @@
                         List<EventRegistrationsBean> registrations = (List<EventRegistrationsBean>) request.getAttribute("registrations");
                         if (registrations != null && !registrations.isEmpty()) {
                     %>
-                    <table>
+                    <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>活動編號</th>
@@ -71,7 +88,8 @@
                                 <th>報名者姓名</th>
                                 <th>連絡電話</th>
                                 <th>報名時間</th>
-                                <th>操作</th>
+                                <th>修改</th>
+                                <th>刪除</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -87,14 +105,16 @@
                                             <a href="getRegistrationsDataForUpdate?registrationID=<%= registration.getRegistrationID() %>" class="btn btn-info btn-circle">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <form method="post" action="/DeleteRegistrations" style="display:inline;">
-                                                <input type="hidden" name="_method" value="delete">
-                                                <input type="hidden" name="registrationID" value="<%= registration.getRegistrationID() %>">
-                                                <button type="submit" class="btn btn-danger btn-circle">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </form>
                                         </div>
+                                    </td>
+                                    <td>
+                                        <form method="post" action="/DeleteRegistrations" style="display:inline;">
+                                            <input type="hidden" name="_method" value="delete">
+                                            <input type="hidden" name="registrationID" value="<%= registration.getRegistrationID() %>">
+                                            <button type="submit" class="btn btn-danger btn-circle">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             <% } %>
@@ -103,6 +123,7 @@
                     <% } else { %>
                         <h3>目前沒有可顯示的活動。</h3>
                     <% } %>
+                    <a href="/activityList" class="btn-custom">回到活動列表</a>
                 </div>
                 <!-- 主要內容結尾 -->
 
@@ -110,7 +131,7 @@
             <!-- End of Main Content -->
 
             <!-- footer -->
-            <script src="js/layout/Z_footer.js"></script>
+            <script src="/js/layout/Z_footer.js"></script>
 
         </div>
         <!-- End of Content Wrapper -->
@@ -124,7 +145,7 @@
     </a>
 
     <!-- Logout Modal-->
-    <script src="js/layout/Z_Logout Modal.js"></script>
+    <script src="/js/layout/Z_Logout Modal.js"></script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
@@ -135,6 +156,13 @@
 
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="/vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="/js/demo/chart-area-demo.js"></script>
+    <script src="/js/demo/chart-pie-demo.js"></script>
 
 </body>
 
