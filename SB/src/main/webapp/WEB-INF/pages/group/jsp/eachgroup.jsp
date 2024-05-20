@@ -24,6 +24,9 @@
                                         -moz-appearance: textfield;
                                     }
                                 </style>
+                                <script async
+                                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAgqI1p1boHUwEIE395YECgaaYngF9FIE&libraries=places&callback=initMap&region=TW&language=zh-TW">
+                                    </script>
                             </head>
 
                             <body>
@@ -62,15 +65,26 @@
                                                                 </p>
                                                         </div>
                                                         <% String paymentMethodDisplay="" ; switch
-                                                            (group.getPaymentMethod()) { case 1 :
-                                                            paymentMethodDisplay="匯款" ; break; case 2 :
-                                                            paymentMethodDisplay="面交" ; break; case 3 :
-                                                            paymentMethodDisplay="SB點數" ; break; case 12 :
-                                                            paymentMethodDisplay="匯款, 面交" ; break; case 13 :
-                                                            paymentMethodDisplay="匯款, SB點數" ; break; case 23 :
-                                                            paymentMethodDisplay="面交, SB點數" ; break; case 123 :
-                                                            paymentMethodDisplay="匯款, 面交, SB點數" ; break; default :
-                                                            paymentMethodDisplay="未知支付方式" ; break; } %>
+                                                            (group.getPaymentMethod()) { case 1:
+                                                            paymentMethodDisplay="<button class='btn btn-outline-primary btn-sm' data-bs-toggle='modal' data-bs-target='#accountModal'>匯款</button>"
+                                                            ; break; case 2:
+                                                            paymentMethodDisplay="<button class='btn btn-outline-secondary btn-sm' data-bs-toggle='modal' data-bs-target='#addressModal'>面交</button>"
+                                                            ; break; case 3:
+                                                            paymentMethodDisplay="<button class='btn btn-outline-success btn-sm'>SB點數</button>"
+                                                            ; break; case 12:
+                                                            paymentMethodDisplay="<button class='btn btn-outline-primary btn-sm' data-bs-toggle='modal' data-bs-target='#accountModal'>匯款</button> "
+                                                            + "<button class='btn btn-outline-secondary btn-sm' data-bs-toggle='modal' data-bs-target='#addressModal'>面交</button>"
+                                                            ; break; case 13:
+                                                            paymentMethodDisplay="<button class='btn btn-outline-primary btn-sm' data-bs-toggle='modal' data-bs-target='#accountModal'>匯款</button> "
+                                                            + "<button class='btn btn-outline-success btn-sm'>SB點數</button>"
+                                                            ; break; case 23:
+                                                            paymentMethodDisplay="<button class='btn btn-outline-secondary btn-sm' data-bs-toggle='modal' data-bs-target='#addressModal'>面交</button> "
+                                                            + "<button class='btn btn-outline-success btn-sm'>SB點數</button>"
+                                                            ; break; case 123:
+                                                            paymentMethodDisplay="<button class='btn btn-outline-primary btn-sm' data-bs-toggle='modal' data-bs-target='#accountModal'>匯款</button> "
+                                                            + "<button class='btn btn-outline-secondary btn-sm' data-bs-toggle='modal' data-bs-target='#addressModal'>面交</button> "
+                                                            + "<button class='btn btn-outline-success btn-sm'>SB點數</button>"
+                                                            ; break;} %>
                                                             <div class="col-6">
                                                                 <p class="lead" style="margin-bottom: 0px">支付方式:
                                                                     <%=paymentMethodDisplay %>
@@ -86,6 +100,11 @@
                                                 <p>
                                                     <%= group.getDescription() %>
                                                 </p>
+                                            </section>
+                                        </div>
+                                        <div class="row">
+                                            <section class="border border-info p-3 mb-3 rounded-pill">
+
                                             </section>
                                         </div>
                                     </div>
@@ -202,16 +221,61 @@
                                         type="submit" id="submitorder" data-eventno="<%=group.getEventNo() %>"
                                         style="width: 100%;">購物車</button>
                                 </div>
+
+                                <!-- 匯款帳戶Modal -->
+                                <div class="modal fade" id="accountModal" tabindex="-1"
+                                    aria-labelledby="accountModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content" style="border-radius: 20px;">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="accountlabel">匯款帳戶</h5>
+                                            </div>
+                                            <div class="modal-body text-center">
+                                                <% if (group.getAccount() !=null && !group.getAccount().isEmpty()) { %>
+                                                    <h5>
+                                                        <%= group.getAccount() %>
+                                                    </h5>
+                                                    <% } %>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 面交地址Modal -->
+                                <div class="modal fade" id="addressModal" tabindex="-1"
+                                    aria-labelledby="addressModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content" style="border-radius: 20px;">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="addresslabel">面交地址</h5>
+                                            </div>
+                                            <div class="modal-body text-center">
+                                                <% if (group.getAddress() !=null && !group.getAddress().isEmpty()) { %>
+                                                    <p id="address">
+                                                        <%= group.getAddress() %>
+                                                    </p>
+                                                    <div id="map" class="text-center"
+                                                        style="height: 400px; width: 470px;"></div>
+                                                    <% } %>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <!-- 商品Modal -->
                                 <div class="modal fade" id="productModal" tabindex="-1"
                                     aria-labelledby="productModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content" style="border-radius: 20px;">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="productModalLabel">商品圖片</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
+
                                             <div class="modal-body text-center">
                                                 <img id="productImage" src="" alt="商品圖片" class="img-fluid"
                                                     style="width: 200px;height: 200px;">
@@ -399,6 +463,82 @@
                                             var modal = $(this);
                                             modal.find('#productImage').attr('src', itemImageUrl);
                                         });
+                                    });
+                                </script>
+
+                                <!-- googlemap -->
+                                <script>
+                                    $(document).ready(function () {
+                                        $('#addressModal').on('show.bs.modal', function (event) {
+                                            var button = $(event.relatedTarget);
+                                            var address = "<%= group.getAddress() %>";
+
+                                            if (address) {
+                                                getLatLngFromAddress(address)
+                                                    .then(latLng => {
+                                                        var mapOptions = {
+                                                            center: { lat: latLng.lat, lng: latLng.lng },
+                                                            zoom: 17
+                                                        };
+
+                                                        var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+                                                        var marker = new google.maps.Marker({
+                                                            position: { lat: latLng.lat, lng: latLng.lng },
+                                                            map: map,
+                                                            title: '面交地址'
+                                                        });
+
+                                                        var pano = new google.maps.StreetViewPanorama(
+                                                            document.getElementById('streetMap'), {
+                                                            position: { lat: latLng.lat, lng: latLng.lng },
+                                                            pov: {
+                                                                heading: 270,
+                                                                pitch: 0
+                                                            },
+                                                            zoom: 1
+                                                        });
+
+                                                        var streetViewService = new google.maps.StreetViewService();
+                                                        streetViewService.getPanorama({
+                                                            location: { lat: latLng.lat, lng: latLng.lng },
+                                                            radius: 50
+                                                        }, function (result, status) {
+                                                            if (status === google.maps.StreetViewStatus.OK) {
+                                                                pano.setPosition(result.location.latLng);
+                                                                pano.setPov({
+                                                                    heading: 270,
+                                                                    pitch: 0
+                                                                });
+                                                            } else {
+                                                                console.log('Street View data not found for this location.');
+                                                            }
+                                                        });
+                                                    })
+                                                    .catch(error => {
+                                                        console.error('Error:', error.message);
+                                                    });
+                                            }
+                                        });
+
+                                        function getLatLngFromAddress(address) {
+                                            return new Promise((resolve, reject) => {
+                                                var geocoder = new google.maps.Geocoder();
+                                                geocoder.geocode({ 'address': address }, function (results, status) {
+                                                    if (status == google.maps.GeocoderStatus.OK) {
+                                                        var latitude = results[0].geometry.location.lat();
+                                                        var longitude = results[0].geometry.location.lng();
+                                                        resolve({ lat: latitude, lng: longitude });
+                                                    } else {
+                                                        reject(new Error('Geocoding failed: ' + status));
+                                                    }
+                                                });
+                                            });
+                                        }
+
+                                        function initMap() {
+                                            console.log("Initializing Map");
+                                        }
                                     });
                                 </script>
                             </body>

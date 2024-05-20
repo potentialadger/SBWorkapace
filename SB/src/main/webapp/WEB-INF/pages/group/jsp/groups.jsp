@@ -9,7 +9,12 @@
 						< MINUTE) { return (timeDiff / SECOND) + " 秒前開團" ; } else if (timeDiff < HOUR) { return
 						(timeDiff / MINUTE) + " 分鐘前開團" ; } else if (timeDiff < DAY) { return (timeDiff / HOUR)
 						+ " 小時前開團" ; } else if (timeDiff < MONTH) { return (timeDiff / DAY) + " 天前開團" ; } else { return
-						new SimpleDateFormat("yyyy-MM-dd").format(date); } } %>
+						new SimpleDateFormat("yyyy-MM-dd").format(date); } } public String formatTimeLeft(Date date) {
+						final long SECOND=1000; final long MINUTE=60 * SECOND; final long HOUR=60 * MINUTE; final long
+						DAY=24 * HOUR; long currentTime=System.currentTimeMillis(); long timeDiff=date.getTime() -
+						currentTime; if (timeDiff < MINUTE) { return (timeDiff / SECOND) + " 秒後截止" ; } else if (timeDiff
+						< HOUR) { return (timeDiff / MINUTE) + " 分鐘後截止" ; } else if (timeDiff < DAY) { return (timeDiff
+						/ HOUR) + " 小時後截止" ; } else { return (timeDiff / DAY) + " 天後截止" ; } } %>
 						<!DOCTYPE html>
 						<html>
 
@@ -69,7 +74,6 @@
 									font-size: 12px;
 									color: gray;
 								}
-
 							</style>
 						</head>
 
@@ -92,25 +96,34 @@
 
 										<!-- 主要內容 -->
 										<div class="container" style="width: 68%;position: relative;">
-											<div
-												style="display: flex; justify-content: space-between; align-items: center;">
-												<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-													data-bs-target="#newgroup" style="height: 40px;margin-top: 20px">
-													我要開團
-												</button>
-
-												<div style="display: flex; align-items: center; gap: 10px;">
-													<div style="margin-top: 20px;">
+											<div class="row">
+												<div class="col-4">
+													<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+														data-bs-target="#newgroup"
+														style="height: 40px;margin-top: 20px">
+														我要開團
+													</button>
+												</div>
+												<div class="col-4">
+													排序:
+													<select id="sortOptions">
+														<option value="origin"></option>
+														<option value="startTime">發起時間</option>
+														<option value="endTime">截止時間</option>
+													</select>
+												</div>
+												<div class="col-4">
+													<div class="text-end" style="margin-top: 20px;">
 														<a href="/getLinePayPay">購買點數</a>
 														<p>點數: <%=userData.getPoint() %>
 														</p>
 													</div>
-													<button
-														style="border: none; background: none; padding: 0; width: 70px;">
-														<img src="/images/pigbigbro.jpg"
-															style="border-radius: 50%; object-fit: cover; width: 70px; height: 70px;">
-													</button>
 												</div>
+												<!-- <button
+															style="border: none; background: none; padding: 0; width: 70px;">
+															<img src="/images/pigbigbro.jpg"
+																style="border-radius: 50%; object-fit: cover; width: 70px; height: 70px;">
+														</button> -->
 											</div>
 
 											<div class="row" style="padding-top: 0px;margin-top: 0px">
@@ -130,18 +143,19 @@
 																	</p>
 																	<% Date startDate=group.getStartTime(); String
 																		timeAgo=formatTimeAgo(startDate); %>
-
-																		<p class="link-wrapper"
-																			style="position: absolute; bottom: 5px; left: 10px; color: gray">
-																			<%=timeAgo %>
-																		</p>
-																		<div class="link-wrapper"
-																			style="position: absolute; bottom: 10px; right: 10px;">
-																			<a href="<%= " /group/eachgroup/" +
-																				group.getEventNo() %>"
-																				class="text-custom">前往團購 <i
-																					class="mdi mdi-chevron-right"></i></a>
-																		</div>
+																		<% Date endDate=group.getEndTime(); String
+																			timeLeft=formatTimeLeft(endDate); %>
+																			<p class="link-wrapper"
+																				style="position: absolute; bottom: 5px; left: 10px; color: gray">
+																				<%=timeAgo %>/<%=timeLeft %>
+																			</p>
+																			<div class="link-wrapper"
+																				style="position: absolute; bottom: 10px; right: 10px;">
+																				<a href="<%= " /group/eachgroup/" +
+																					group.getEventNo() %>"
+																					class="text-custom">前往團購 <i
+																						class="mdi mdi-chevron-right"></i></a>
+																			</div>
 																</div>
 															</div>
 														</div>
@@ -492,10 +506,39 @@
 								})
 							</script>
 
+							<!-- 排序 -->
 							<script>
-								$(document).ready(function(){
-									
-								})
+								$(document).ready(function () {
+									$('#sortOptions').change(function () {
+										const sortBy = $(this).val();
+										if (sortBy == 'startTime') {
+											$.ajax({
+												url: '/group/groupsbystimeasc',
+												method: 'get',
+												success: function () {
+													window.location.href = "/group/groupsbystimeasc";
+												}
+											})
+										} else if (sortBy == 'endTime') {
+											$.ajax({
+												url: '/group/groupsbyetimeasc',
+												method: 'get',
+												success: function () {
+													window.location.href = "/group/groupsbyetimeasc";
+												}
+											})
+										} else if (sortBy == 'origin') {
+											$.ajax({
+												url: '/group/groups',
+												method: 'get',
+												success: function () {
+													window.location.href = "/group/groups";
+												}
+
+											})
+										}
+									});
+								});
 							</script>
 						</body>
 
