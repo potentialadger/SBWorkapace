@@ -9,16 +9,16 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+	<title>編輯回覆:${updateSelect.postsBean.title}</title>
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="css/forum-sb-admin-2.min2.css" rel="stylesheet">
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 
@@ -36,17 +36,38 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <script src="js/layout/Z_TopBar.js"></script>
+                <script src="/js/layout/Z_TopBar.js"></script>
 
                 <!-- 主要內容 -->
-
+				
+				<h1>編輯回覆</h1>
+				<form method="post" action="/repliesFrontDesk/UpdateReplies">
+				<input type="hidden" name="_method" value="PUT">
+				    
+				   	<input type="hidden" name="reply_no" value="${updateSelect.reply_no}"/><br>
+				   	
+				   	<input type="hidden" name="post_no" value="${updateSelect.postsBean.post_no}"/><br>
+				    
+				    <input type="hidden" name="user_no" value="${updateSelect.userBean.userNo}"/><br>
+				    
+				    <label for="content">內文 :</label><br>
+				    <input type="text" name="content" value="${updateSelect.content}"/><br>
+				
+				    <label for="update_date">日期 :</label><br>
+				    <input type="text" name="update_date" value="${updateSelect.update_date}" readonly/><br>
+				    
+				    <input type="submit" value="送出" />
+				</form>
+				
+				<button onclick="goBack()">返回</button>
+				
                 <!-- 主要內容結尾 -->
 
             </div>
             <!-- End of Main Content -->
 
             <!-- footer -->
-            <script src="js/layout/Z_footer.js"></script>
+            <script src="/js/layout/Z_footer.js"></script>
 
         </div>
         <!-- End of Content Wrapper -->
@@ -60,24 +81,30 @@
     </a>
 
     <!-- Logout Modal-->
-    <script src="js/layout/Z_Logout Modal.js"></script>
+    <script src="/js/layout/Z_Logout Modal.js"></script>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="/js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="/vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="/js/demo/chart-area-demo.js"></script>
+    <script src="/js/demo/chart-pie-demo.js"></script>
+	
+	<script>
+			function goBack() {
+				window.history.back();
+			}
+		</script>
 
 
 </body>
