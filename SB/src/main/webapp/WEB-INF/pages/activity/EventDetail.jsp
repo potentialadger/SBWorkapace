@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>活動詳情</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -28,27 +28,34 @@
             min-width: 400px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
         }
+
         .content-table th,
         .content-table td {
             padding: 12px 15px;
             text-align: center;
         }
+
         .content-table th {
             background-color: #009879;
             color: #ffffff;
         }
+
         .content-table tbody tr {
             border-bottom: 1px solid #dddddd;
         }
+
         .content-table tbody tr:nth-of-type(even) {
             background-color: #f3f3f3;
         }
+
         .content-table tbody tr:last-of-type {
             border-bottom: 2px solid #009879;
         }
+
         .content-table tbody tr:hover {
             background-color: #f1f1f1;
         }
+
         .details-button, .register-button {
             display: block;
             padding: 10px;
@@ -62,8 +69,29 @@
             cursor: pointer;
             width: 200px;
         }
+
         .details-button:hover, .register-button:hover {
             background-color: #555;
+        }
+
+        .header {
+            text-align: center;
+            margin: 40px 0;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #4e73df;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: #858796;
         }
     </style>
 
@@ -84,7 +112,9 @@
                 <script src="/js/layout/Z_TopBar.js"></script>
                 
                 <!-- 主要內容 -->
-                <h1 style="text-align:center;">活動詳情</h1>
+                <div class="header">
+                    <h1>活動詳情</h1>
+                </div>
 
                 <div id="main-content" style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
                     <%
