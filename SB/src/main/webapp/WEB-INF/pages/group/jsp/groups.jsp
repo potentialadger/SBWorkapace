@@ -105,12 +105,14 @@
 													</button>
 												</div>
 												<div class="col-4">
-													排序:
-													<select id="sortOptions">
-														<option value="origin"></option>
-														<option value="startTime">發起時間</option>
-														<option value="endTime">截止時間</option>
-													</select>
+													<div class="text-center">
+														排序:
+														<select id="sortOptions">
+															<option value="origin"></option>
+															<option value="startTime">發起時間</option>
+															<option value="endTime">截止時間</option>
+														</select>
+													</div>
 												</div>
 												<div class="col-4">
 													<div class="text-end" style="margin-top: 20px;">

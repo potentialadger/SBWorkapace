@@ -127,6 +127,7 @@ public class OrderService {
 				String itemName = orderDetail.getItem().getName();
 				Integer itemQuantity = orderDetail.getItemQuantity();
 				String specValue = orderDetail.getItemSpec().getSpecValue();
+				Integer price = orderDetail.getItem().getPrice();
 				
 				OrderDetailsDto orderDetailDto = new OrderDetailsDto();
 				
@@ -135,6 +136,7 @@ public class OrderService {
 				orderDetailDto.setItemNo(itemQuantity);
 				orderDetailDto.setItemName(itemName);
 				orderDetailDto.setItemNo(itemNo);
+				orderDetailDto.setItemPrice(price);
 				
 				orderDetailsDto.add(orderDetailDto);
 			}
