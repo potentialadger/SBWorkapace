@@ -1,9 +1,11 @@
 package com.user.controller;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +33,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.gson.GsonFactory;
 import com.group.dto.GroupDto;
 import com.match.bean.TagsBean;
 import com.user.bean.FriendStateBean;
@@ -611,7 +618,38 @@ public class UserController {
 	}
 	
 	
-	
+	@PostMapping("/googleLogin")
+	public void googleLogin(@RequestParam("credential")String credential) throws GeneralSecurityException, IOException {
+		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
+				.setAudience(Collections.singletonList("443989407598-j91o8of7q5mra4h5br1ujtputrf05pvv.apps.googleusercontent.com"))
+				.build();
+		
+		GoogleIdToken idToken = verifier.verify(credential);
+		
+		if(idToken != null) {
+			Payload payload = idToken.getPayload();
+			
+			String userId = payload.getSubject();
+			System.out.println("User ID : " + userId);
+			
+			String email = payload.getEmail();
+			String name = (String)payload.get("name");
+			String pictureUrl = (String)payload.get("picture");
+			String locale = (String)payload.get("locale");
+			String familyName = (String)payload.get("family_Name");
+			String givenName = (String)payload.get("given_name");
+			
+			System.out.println("email : " + email);
+			System.out.println("name : " + name);
+			System.out.println("pictureUrl : " + pictureUrl);
+			System.out.println("locale : " + locale);
+			System.out.println("familyName : " + familyName);
+			System.out.println("givenName : " + givenName);
+		}
+		else {
+			System.out.println("Invalid ID token.");
+		}
+	}
 	
 	
 	
