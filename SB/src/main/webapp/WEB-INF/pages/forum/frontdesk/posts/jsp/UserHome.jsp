@@ -16,6 +16,7 @@
 <meta name="author" content="">
 
 <title>首頁</title>
+
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"
 	integrity="sha256-46r060N2LrChLLb5zowXQ72/iKKNiw/lAmygmHExk/o="
@@ -113,10 +114,6 @@
 
 .custom-form-allposts {
     margin-left: auto;
-}
-
-body #content-wrapper {
-    background-color: #d7e3f5 !important;
 }
 
 body {

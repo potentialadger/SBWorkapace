@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>重複檢舉警告</title>
+<title>重複檢舉警告:${postNo.title}</title>
 </head>
 <body>
 <h1>重複檢舉</h1>

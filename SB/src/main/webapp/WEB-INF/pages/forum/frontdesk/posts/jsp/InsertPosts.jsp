@@ -13,7 +13,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>發文</title>
+<title>新增文章</title>
 
 <!-- Custom fonts for this template-->
 <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
@@ -31,17 +31,13 @@
 	display: none;
 }
 
-body #content-wrapper {
-    background-color: #d7e3f5 !important;
-}
-
 .container {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 40px;
-    
+    color: black !important;
+}   
     .forum-form-container {
     display: flex;
     flex-direction: column;

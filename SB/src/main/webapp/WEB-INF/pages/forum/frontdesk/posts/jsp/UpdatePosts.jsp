@@ -14,7 +14,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>修改資料</title>
+<title>編輯文章:${updateSelect.title}</title>
 
 <!-- Custom fonts for this template-->
 <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
@@ -27,25 +27,34 @@
 <link href="/css/sb-admin-2.min.css" rel="stylesheet">
 
 <style>
+
 .input-group.position-relative {
 	display: none;
 }
 
-body #content-wrapper {
-	background-color: #d7e3f5 !important;
-}
-
-.form-group {
-    margin-bottom: 10px;
-}
-
-.container {
+.forum-container {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 40px;
+    width:800px;
+    margin-left: auto;
+    margin-right: auto;
+    color: black !important;
 }
+.forum-form-container label {
+    margin-bottom: 10px;
+    display: block;
+}
+
+.forum-form-container input[type="text"],
+.forum-form-container input[type="file"],
+.forum-form-container textarea,
+.forum-form-container select {
+    margin-bottom: 20px;
+}
+
 </style>
 
 </head>
@@ -67,7 +76,8 @@ body #content-wrapper {
 				<script src="/js/layout/Z_TopBar.js"></script>
 
 				<!-- 主要內容 -->
-				<div class="container">
+				
+				<div class="forum-container">
                     <div class="forum-form-container">
                         <form method="post" action="/postsFrontDesk/UpdatePosts" enctype="multipart/form-data" onsubmit="return confirm('您確定要修改資料嗎？');">
                             <input type="hidden" name="_method" value="PUT">
@@ -111,6 +121,7 @@ body #content-wrapper {
 							</div>
                     </div>
                 </div>
+				
 				<!-- 主要內容結尾 -->
 
 			</div>

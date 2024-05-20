@@ -5,7 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>修改資料</title>
+
+<title>編輯回覆:${updateSelect.postsBean.title}</title>
+
 </head>
 <body>
 <h1>修改資料</h1>
@@ -24,13 +26,17 @@
     <label for="update_date">日期 :</label><br>
     <input type="text" name="update_date" value="${updateSelect.update_date}" readonly/><br>
     
-    <input type="submit" value="送出" />
+    <input type="submit" value="送出" onclick="return confirmSubmission();"/>
 </form>
 
 <button onclick="goBack()">返回</button>
 	<script>
 		function goBack() {
 			window.history.back();
+		}
+		
+		function confirmSubmission() {
+		    return confirm("您確定要更改嗎？");
 		}
 	</script>
 </body>
