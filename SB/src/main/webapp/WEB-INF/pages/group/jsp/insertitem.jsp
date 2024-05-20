@@ -12,7 +12,7 @@
             integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     </head>
 
-    <body>
+    <body style="background-color: #FFFFF4;">
         <jsp:useBean id="group" scope="request" class="com.group.model.Group">
         </jsp:useBean>
 
@@ -32,10 +32,10 @@
         </section>
         <div></div>
         <br>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#staticBackdrop" style="width: 100%">
-                            新增商品
-                        </button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+            style="width: 100%">
+            新增商品
+        </button>
         <section class="section-primary t-bordered">
             <div class="container">
                 <div class="row testimonial-three testimonial-three--col-three">

@@ -38,7 +38,6 @@ slider = `<!-- Sidebar -->
             <div class="bg-white py-2 collapse-inner rounded">
                 
                 <a class="collapse-item" href="/group/backgroups">團購活動</a>
-                <a class="collapse-item" href="cards.html">團購訂單</a>
             </div>
         </div>
     </li>

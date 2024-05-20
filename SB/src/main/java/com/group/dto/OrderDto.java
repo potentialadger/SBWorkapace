@@ -1,5 +1,6 @@
 package com.group.dto;
 
+import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
@@ -10,8 +11,10 @@ public class OrderDto {
 	private Integer userNo;
 	private String userName;
 	private Integer eventNo;
+	private String eventTitle;
 	private Integer paymentMethod;
 	private List<OrderDetailsDto> orderDetail;
+	private Date setTime;
 	
 	public Integer getEventNo() {
 		return eventNo;
@@ -43,6 +46,19 @@ public class OrderDto {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	public String getEventTitle() {
+		return eventTitle;
+	}
+	public void setEventTitle(String eventTitle) {
+		this.eventTitle = eventTitle;
+	}
+	public Date getSetTime() {
+		return setTime;
+	}
+	public void setSetTime(Date setTime) {
+		this.setTime = setTime;
+	}
+
 
 	
 

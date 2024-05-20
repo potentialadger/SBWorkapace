@@ -10,6 +10,7 @@ public class OrderDetailsDto {
 	private Integer itemQuantity;
 	private Integer ItemSpec;
 	private String specValue;
+	private Integer itemPrice;
 	
 	public Integer getItemNo() {
 		return itemNo;
@@ -40,6 +41,12 @@ public class OrderDetailsDto {
 	}
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
+	}
+	public Integer getItemPrice() {
+		return itemPrice;
+	}
+	public void setItemPrice(Integer itemPrice) {
+		this.itemPrice = itemPrice;
 	}
 	
 	

@@ -20,12 +20,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.group.dto.GroupDto;
+import com.group.dto.OrderDto;
 import com.group.model.Group;
 import com.group.model.Item;
 import com.group.model.ItemSpecification;
+import com.group.model.Order;
 import com.group.service.GroupService;
 import com.group.service.ItemService;
 import com.group.service.ItemSpecService;
+import com.group.service.OrderService;
 import com.user.bean.UserBean;
 import com.user.service.UserService;
 
@@ -47,6 +50,9 @@ public class GroupController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private OrderService orderService;
 	
 //	全活躍活動
 	@GetMapping(value = "/groups")
@@ -98,6 +104,9 @@ public class GroupController {
 			groupDtos.add(groupDto);
 		}
 		
+		List<OrderDto> orders = orderService.findOrdersByUserNo(userNo);
+		
+		m.addAttribute("orders", orders);
 		m.addAttribute("groups", groupDtos);
 		
 		return "group/jsp/mygroup.jsp";
@@ -105,10 +114,17 @@ public class GroupController {
 	
 //	全活躍活動依開團時間升序
 	@GetMapping(value = "/groupsbystimeasc")
-	@ResponseBody
-	public List<Group> findAllGroupByStartTimeAsc() {
+	public String findAllGroupByStartTimeAsc(HttpServletRequest request, Model m) {
 		List<Group> groups = gService.findAllGroupsByStartTimeAsc();
-		return groups;
+		HttpSession session = request.getSession();
+//		UserBean user = (UserBean)session.getAttribute("userData");
+		UserBean user = userService.getUserData(1);
+		
+		m.addAttribute("groups", groups);
+		m.addAttribute("userData", user);
+		
+		return "group/jsp/groups.jsp";
+		
 	}
 	
 //	全活躍活動依開團時間降序
@@ -121,18 +137,30 @@ public class GroupController {
 	
 //	全活躍活動依結團時間升序
 	@GetMapping(value = "/groupsbyetimeasc")
-	@ResponseBody
-	public List<Group> findAllGroupByEndTimeAsc(){
+	public String findAllGroupByEndTimeAsc(HttpServletRequest request, Model m){
 		List<Group> groups = gService.findALLGroupsByEndTimeAsc();
-		return groups;
+		HttpSession session = request.getSession();
+//		UserBean user = (UserBean)session.getAttribute("userData");
+		UserBean user = userService.getUserData(1);
+		
+		m.addAttribute("groups", groups);
+		m.addAttribute("userData", user);
+		
+		return "group/jsp/groups.jsp";
 	}
 	
 //	全活躍活動依結團時間降序
 	@GetMapping(value = "/groupsbyetimedesc")
-	@ResponseBody
-	public List<Group> findAllGroupByEndTimeDesc(){
+	public String findAllGroupByEndTimeDesc(HttpServletRequest request, Model m){
 		List<Group> groups = gService.findALLGroupsByEndTimeDesc();
-		return groups;
+		HttpSession session = request.getSession();
+//		UserBean user = (UserBean)session.getAttribute("userData");
+		UserBean user = userService.getUserData(1);
+		
+		m.addAttribute("groups", groups);
+		m.addAttribute("userData", user);
+		
+		return "group/jsp/groups.jsp";
 	}
 	
 //	依搜尋找活躍活動
@@ -170,7 +198,7 @@ public class GroupController {
 		return "group/jsp/backallgroups.jsp";
 	}
 	
-//	查詢被下架團購
+//	後台下架團購活動
 	@PostMapping(value = "/bannedgroup/{eventno}")
 	public String bannedGroupByEventNo(@PathVariable("eventno") Integer eventno) {
 		gService.deleteGroup(eventno);
@@ -219,10 +247,15 @@ public class GroupController {
 	
 //	修改團購資訊
 	@PostMapping(value = "/updategroup")
-	public String updateGroup(@RequestParam("eventno") int eventno, @RequestParam("gtitle") String title, @RequestParam("gdescription") String description, @RequestParam("gendtime") @DateTimeFormat(pattern = "yyyy-MM-dd") Date gEndTime,
-			 @RequestParam("payment") String[] pay, @RequestParam("mintotalquantity") String mintotalquantity, @RequestParam("mintotalamount") String mintotalamount, @RequestParam("account") String account, 
-			 @RequestParam("address") String address) {
-		gService.updateGroup(eventno, title, description, gEndTime, pay, Integer.parseInt(mintotalquantity), Integer.parseInt(mintotalamount), account, address);
+	public String updateGroup(@RequestBody GroupDto updateGroupDto) {
+		Integer eventNo = updateGroupDto.getEventNo();
+		String getgTitle = updateGroupDto.getgTitle();
+		String getgDescription = updateGroupDto.getgDescription();
+		Date getgEndTime = updateGroupDto.getgEndTime();
+		String getgMinTotalAmount = updateGroupDto.getgMinTotalAmount();
+		String getgMinTotalQuantity = updateGroupDto.getgMinTotalQuantity();
+		
+		gService.updateGroup(eventNo, getgTitle, getgDescription, getgEndTime, Integer.parseInt(getgMinTotalQuantity), Integer.parseInt(getgMinTotalAmount));
 		return "redirect:/group/mygroups";
 	}
 //	查詢單筆團購

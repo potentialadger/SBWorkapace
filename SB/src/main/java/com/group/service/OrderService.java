@@ -108,8 +108,48 @@ public class OrderService {
 	}
 	
 //	查詢訂單依訂購人
-	public List<Order> findOrdersByUserNo(Integer userNo){
-		List<Order> orders = orderRepository.findOrdersByUserNo(userNo);
+	public List<OrderDto> findOrdersByUserNo(Integer userNo){
+		List<Order> getOrders = orderRepository.findOrdersByUserNo(userNo);
+		ArrayList<OrderDto> orders = new ArrayList<OrderDto>();
+		
+		for (Order getOrder : getOrders) {
+			OrderDto orderDto = new OrderDto();
+
+			String groupTitle = getOrder.getGroup().getTitle();
+			Integer eventNo = getOrder.getGroup().getEventNo();
+			Date setTime = getOrder.getSetTime();
+			Integer paymentMethod = getOrder.getPaymentMethod();
+			List<OrderDetail> orderDetails = getOrder.getOrderDetails();
+			
+			List<OrderDetailsDto> orderDetailsDto = new ArrayList<OrderDetailsDto>();
+			for (OrderDetail orderDetail : orderDetails) {
+				Integer itemNo = orderDetail.getItem().getItemNo();
+				String itemName = orderDetail.getItem().getName();
+				Integer itemQuantity = orderDetail.getItemQuantity();
+				String specValue = orderDetail.getItemSpec().getSpecValue();
+				Integer price = orderDetail.getItem().getPrice();
+				
+				OrderDetailsDto orderDetailDto = new OrderDetailsDto();
+				
+				orderDetailDto.setItemQuantity(itemQuantity);
+				orderDetailDto.setSpecValue(specValue);
+				orderDetailDto.setItemNo(itemQuantity);
+				orderDetailDto.setItemName(itemName);
+				orderDetailDto.setItemNo(itemNo);
+				orderDetailDto.setItemPrice(price);
+				
+				orderDetailsDto.add(orderDetailDto);
+			}
+			orderDto.setEventNo(eventNo);
+			orderDto.setOrderDetail(orderDetailsDto);
+			orderDto.setPaymentMethod(paymentMethod);
+			orderDto.setEventNo(eventNo);
+			orderDto.setEventTitle(groupTitle);
+			orderDto.setSetTime(setTime);
+			
+			orders.add(orderDto);
+		}
+		
 		return orders;
 	}
 	
