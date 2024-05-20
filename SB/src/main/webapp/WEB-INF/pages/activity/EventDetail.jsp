@@ -147,7 +147,10 @@
                                 </tr>
                                 <tr>
                                     <th>活動地點</th>
-                                    <td><%= event.getLocation() %></td>
+                                    <td>
+                                        <%= event.getLocation() %><br>
+                                        <a href="https://www.google.com/maps/search/?api=1&query=<%= java.net.URLEncoder.encode(event.getLocation(), "UTF-8") %>" target="_blank">查看地圖</a>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>活動狀態</th>
