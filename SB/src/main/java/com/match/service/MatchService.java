@@ -8,7 +8,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.match.bean.MatchBean;
-import com.match.bean.SocialPhotosBean;
 import com.match.repository.MatchRepository;
 import jakarta.transaction.Transactional;
 
@@ -164,6 +163,7 @@ public class MatchService {
     public List<MatchBean> findByMatchStatus(Integer matchStatus) {
         return matchRepos.findByMatchStatus(matchStatus);
     }
+    
 	
 	
 }

@@ -99,7 +99,7 @@ public class UserService {
 	
 
 	
-//---Tags : ManyToMany
+// ----- Tags : ManyToMany -------
 	
 	
 	// 取得使用者資料
@@ -176,10 +176,15 @@ public class UserService {
     
     // ----- 實作Tags------
     
+    @Transactional
     public void updateUserTags(UserBean userBean, List<String> selectedTags) {
+//    	System.err.println(userBean.getTagsBeans());
         // 清空使用者原有的標籤
-        userBean.getTagsBeans().clear();
-        
+    	userBean.getUserNo();
+    	
+    	
+        userBean.getTagsBeans().clear();                         
+        List<String> aaList =  new ArrayList<>();
         // 根據選擇的標籤名稱列表批量查詢標籤實體
         List<TagsBean> tags = tRepository.findByTagNameIn(selectedTags);
         
@@ -194,6 +199,50 @@ public class UserService {
         // 儲存更新後的使用者資料
         uRepository.save(userBean);
     }
+    
+    
+    
+    
+    
+    // ----- Match 實作 -----
+    
+    
+    // 從findAll() 裡隨機選擇用戶
+    
+    public UserBean getRandomUser(List<UserBean> users, int currentUserNo) {
+        // 過濾掉與當前使用者不同的使用者
+        List<UserBean> otherUsers = new ArrayList<>();
+        for (UserBean user : users) {
+            if (user.getUserNo() != currentUserNo) {
+                otherUsers.add(user);
+            }
+        }
+
+        // 如果其他使用者為空，返回null
+        if (otherUsers.isEmpty()) {
+            return null;
+        }
+
+        // 從其他使用者中隨機選擇一個使用者
+        Random random = new Random();
+        int randomIndex = random.nextInt(otherUsers.size());
+        return otherUsers.get(randomIndex);
+    }
+    
+    
+    
+    
+    //刷新下一位使用者    
+
+    public UserBean getNextUser(Integer currentUserNo) {
+        List<UserBean> nextUsers = uRepository.findNextUsers(currentUserNo);
+        if (!nextUsers.isEmpty()) {
+            return nextUsers.get(0); // 返回下一位使用者
+        }
+        return null; // 如果沒有下一位使用者,則返回 null
+    }
+    
+    
     
 
     

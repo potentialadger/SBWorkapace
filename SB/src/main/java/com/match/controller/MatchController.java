@@ -2,6 +2,8 @@ package com.match.controller;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,22 +15,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.match.bean.MatchBean;
 import com.match.service.MatchService;
+import com.user.bean.UserBean;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class MatchController {
 
     @Autowired
     private MatchService mService;
+    
+    
+    @PostMapping("/like/{user2No}")
+    public String likeUser(@PathVariable int user2No, HttpSession session) {
+    	UserBean uBean = (UserBean)session.getAttribute("userData");
 
-    @PostMapping("/{user1No}/{user2No}/like")
-    public ResponseEntity<String> likeUser(@PathVariable int user1No, @PathVariable int user2No) {
-        int matchStatus = mService.likeUser(user1No, user2No);
+        int matchStatus = mService.likeUser(uBean.getUserNo(), user2No);
+        
         if (matchStatus == 2) {
-            return ResponseEntity.ok("Match successful!");
-        } else if (matchStatus == 3) {
-            return ResponseEntity.ok("Match failed.");
-        } else {
-            return ResponseEntity.badRequest().body("Invalid user numbers.");
+        	//user1 user2
+        	//m.addaturrbu
+            return "成功的jsp";
+        }else {
+            return "/newMatchPage";
         }
     }
 

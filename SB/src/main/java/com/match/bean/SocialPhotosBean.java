@@ -2,6 +2,8 @@ package com.match.bean;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,15 +19,15 @@ public class SocialPhotosBean {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="photono")
-	private Integer photoNo;  //NOT NULL
+	private Integer photoNo;  //NOT NULL  ""
 	
 	@Column(name="fkuserno")
-	private Integer userNo;   //NOT NULL
+	private Integer userNo;   //NOT NULL  session
 	
 	@Column(name="photopath")
 	private String photoPath;
 	
-    @Column(name="phototheme", columnDefinition = "VARCHAR(255) DEFAULT '我的照片'")
+    @Column(name="phototheme")
 	private String photoTheme; //NOT NULL
 
 	

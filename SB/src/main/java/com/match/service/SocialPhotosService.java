@@ -1,10 +1,12 @@
 package com.match.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.match.bean.SocialPhotosBean;
@@ -16,66 +18,89 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class SocialPhotosService {
 
-    @Autowired
-    private SocialPhotosRepository spRepos;
+	@Autowired
+	private SocialPhotosRepository spRepos;
 
-    // 查詢單張照片
-    public SocialPhotosBean getById(Integer photoNo) {
-        Optional<SocialPhotosBean> opPhoto = spRepos.findById(photoNo);
-        if (opPhoto.isPresent()) {
-            return opPhoto.get();
-        }
-        return null;
-    }
+	// 查詢單張照片
+	public SocialPhotosBean getById(Integer photoNo) {
+		Optional<SocialPhotosBean> opPhoto = spRepos.findById(photoNo);
+		if (opPhoto.isPresent()) {
+			return opPhoto.get();
+		}
+		return null;
+	}
 
-    // 查詢所有照片
-    public List<SocialPhotosBean> findAll() {
-        return spRepos.findAll();
-    }
+	// 查詢所有照片
+	public List<SocialPhotosBean> findAll() {
+		return spRepos.findAll();
+	}
 
-    // 根據用戶ID查詢照片
-    public List<SocialPhotosBean> findByUserNo(Integer userNo) {
-        return spRepos.findByUserNo(userNo);
-    }
+	// 根據用戶ID查詢照片
+	/*
+	 * public List<SocialPhotosBean> findByUserNo(Integer userNo) { return
+	 * spRepos.findByUserNo(userNo); }
+	 */
 
- // 新增或更新照片
- // 新增或更新照片
-    public SocialPhotosBean insertOrUpdate(Integer userNo, String photoPath) {
-        SocialPhotosBean photo = new SocialPhotosBean();
-        photo.setUserNo(userNo);
-        photo.setPhotoPath(photoPath);
+	// Match 實作 - 根據用戶編號查詢照片路徑
+	public List<String> findByUserNo(Integer userNo) {
+		List<SocialPhotosBean> photosBeans = spRepos.findByUserNo(userNo);
+		List<String> photoPaths = new ArrayList<>();
+		for (SocialPhotosBean photoBean : photosBeans) {
+			photoPaths.add(photoBean.getPhotoPath());
+		}
+		return photoPaths;
+	}
 
-        // 如果 photoTheme 为 null,则设置一个随机数作为默认值
-        if (photo.getPhotoTheme() == null) {
-            Random rand = new Random();
-            int randomTheme = rand.nextInt(1000);
-            photo.setPhotoTheme(String.valueOf(randomTheme));
-        }
+	// 新增或更新照片
+	public SocialPhotosBean insertOrUpdate(Integer userNo, String photoPath, String theme) {
 
-        // 检查是否存在具有相同 userNo 和 photoPath 的照片记录
-        List<SocialPhotosBean> existingPhotos = spRepos.findByUserNoAndPhotoPath(userNo, photoPath);
+		// 檢查是否存在具有相同 userNo 和 theme 的照片記錄
+		List<SocialPhotosBean> existingPhotos = spRepos.findByUserNoAndPhotoTheme(userNo, theme);
 
-        if (!existingPhotos.isEmpty()) {
-            // 如果存在具有相同 userNo 和 photoPath 的照片记录,则更新第一条记录的 photoPath
-            SocialPhotosBean existingPhoto = existingPhotos.get(0);
-            existingPhoto.setPhotoPath(photoPath);
-            return spRepos.save(existingPhoto);
-        } else {
-            // 如果不存在具有相同 userNo 和 photoPath 的照片记录,则插入新照片
-            return spRepos.save(photo);
-        }
-    }
+		if (!existingPhotos.isEmpty()) {
+			// 如果存在具有相同 userNo 和 theme 的照片記錄，則更新第一條記錄的 photoPath
+			SocialPhotosBean existingPhoto = existingPhotos.get(0);
+			existingPhoto.setPhotoPath(photoPath);
+			return spRepos.save(existingPhoto);
 
-    // 刪除照片
-    public void deleteById(Integer photoNo) {
-        spRepos.deleteById(photoNo);
-    }
+		} else {
+			// 如果不存在具有相同 userNo 和 theme 的照片記錄，則插入新照片
+			SocialPhotosBean photo = new SocialPhotosBean();
+			photo.setUserNo(userNo);
+			photo.setPhotoPath(photoPath);
+			photo.setPhotoTheme(theme);
+			return spRepos.save(photo);
+		}
+	}
+
+	// 新增或更新照片
+	/*
+	 * public SocialPhotosBean insertOrUpdate(Integer userNo, String photoPath) {
+	 * SocialPhotosBean photo = new SocialPhotosBean(); photo.setUserNo(userNo);
+	 * photo.setPhotoPath(photoPath);
+	 * 
+	 * 
+	 * // 檢查是否存在具有相同 userNo 和 photoPath 的照片紀錄 List<SocialPhotosBean> existingPhotos
+	 * = spRepos.findByUserNoAndPhotoPath(userNo, photoPath); if
+	 * (!existingPhotos.isEmpty()) {
+	 * 
+	 * // 如果存在具有相同 userNo 和 photoPath 的照片紀錄,則更新第一條紀錄的 photoPath SocialPhotosBean
+	 * existingPhoto = existingPhotos.get(0); existingPhoto.setPhotoPath(photoPath);
+	 * return spRepos.save(existingPhoto); } else {
+	 * 
+	 * // 如果不存在具有相同 userNo 和 photoPath 的照片紀錄,則插入新照片 return spRepos.save(photo); } }
+	 */
+
+	// 刪除照片
+	public void deleteById(Integer photoNo) {
+		spRepos.deleteById(photoNo);
+	}
+	
+	
+	
+
 }
-	
-	
-	
-	
-	
+
 //	//新增照片
 //	public SocialPhotosBean insert(SocialPhotosBean spBean) {  // 為什麼參數接收的是整個bean? 因為要用save()?
 //		return spRepos.save(spBean);                           // 實際新增
@@ -85,8 +110,3 @@ public class SocialPhotosService {
 //	public SocialPhotosBean update(SocialPhotosBean spBean) {
 //		return spRepos.save(spBean);
 //	}
-
-	
-	
-
-	
