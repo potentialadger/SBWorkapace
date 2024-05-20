@@ -26,7 +26,7 @@
                         rel="stylesheet">
                 </head>
 
-                <body id="page-top">
+                <body id="page-top" style="background-color: #FFFFF4;">
                     <!-- Page Wrapper -->
                     <div id="wrapper">
                         <script src="/js/layout/Z_slider.js"></script>

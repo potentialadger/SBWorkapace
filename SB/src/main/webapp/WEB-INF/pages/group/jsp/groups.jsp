@@ -77,7 +77,7 @@
 							</style>
 						</head>
 
-						<body id="page-top">
+						<body id="page-top" style="background-color: #FFFFF4;">
 							<jsp:useBean id="userData" scope="request" class="com.user.bean.UserBean">
 							</jsp:useBean>
 
@@ -149,7 +149,7 @@
 																			timeLeft=formatTimeLeft(endDate); %>
 																			<p class="link-wrapper"
 																				style="position: absolute; bottom: 5px; left: 10px; color: gray">
-																				<%=timeAgo %>/<%=timeLeft %>
+																				<%=timeAgo %>/ <%=timeLeft %>
 																			</p>
 																			<div class="link-wrapper"
 																				style="position: absolute; bottom: 10px; right: 10px;">

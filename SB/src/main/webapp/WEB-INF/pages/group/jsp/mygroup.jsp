@@ -20,7 +20,7 @@
 										href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 								</head>
 
-								<body>
+								<body style="background-color: #FFFFF4;">
 									<div style="position: absolute; top: 10px; left: 10px;">
 										<a href="/group/groups"><i class="fa-solid fa-arrow-left"></i></a>
 									</div>
@@ -184,8 +184,7 @@
 																				<button
 																					class="btn btn-primary btn-lg view-details"
 																					data-order-details='<%=new com.fasterxml.jackson.databind.ObjectMapper().writeValueAsString(order.getOrderDetail()) %>'>
-																					<i
-																						class="fa-solid fa-chevron-down"></i>
+																					<i class="fa-solid fa-list"></i>
 																				</button>
 																			</td>
 																</tr>
