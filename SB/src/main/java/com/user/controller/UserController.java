@@ -70,6 +70,8 @@ public class UserController {
 	
 	@Autowired
 	private UserMailService userMailService;
+	
+	@Autowired
 	private SocialPhotosService spService;
 
 	@PostMapping("/userSignUp")

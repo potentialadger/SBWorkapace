@@ -16,8 +16,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
 <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
 
 
@@ -638,28 +636,28 @@ img {
 .card-container {
 	position: absolute;
 	max-width: 849.5px; /*調框的寬度*/
-	width: 30%;
-	height: 30%; /*框跟圖片調這個-裡面全部圖片的長寬*/
+	width: 25%;
+	height: 35%; /*框跟圖片調這個-裡面全部圖片的長寬*/
 }
 
 #userPhotos1 {
-  top: 40%;
-  left: -50%;
+  top: 20%;
+  left: -40%;
 }
 
 #userPhotos2 {
-  top: -60%;
-  right: -52%;
+  top: -80%;
+  right: -62%;
 }
 
 #userPhotos3 {
-  bottom: 57%;
-  left: -50%;
+  bottom: 77%;
+  left: -40%;
 }
 
 #userPhotos4 {
-  bottom: 157%;
-  right: -52%;
+  bottom: 177%;
+  right: -62%;
 }
 
 
@@ -1371,22 +1369,17 @@ div.message.right .corner {
 
 <body>
 	<!--連結到 Google Fonts 的程式碼片段-->
-	<link
-		href="https://fonts.googleapis.com/css?family=DM+Sans:400,500,700&display=swap"
-		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=DM+Sans:400,500,700&display=swap" rel="stylesheet">
 
 	<!--組織和定位網頁中的內容-->
 	<div class="app-container">
 
 		<!--一個按鈕，用來在明亮模式和暗黑模式之間切換-->
 		<button class="mode-switch">
-			<svg class="sun" fill="none" stroke="#fbb046" stroke-linecap="round"
-				stroke-linejoin="round" stroke-width="2" class="feather feather-sun"
-				viewBox="0 0 24 24">
-				<defs />
+			<svg class="sun" fill="none" stroke="#fbb046" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-sun" viewBox="0 0 24 24">
+				<defs/>
 				<circle cx="12" cy="12" r="5" />
-				<path
-					d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" /></svg>
+				<path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" /></svg>
 			<svg class="moon" fill="none" stroke="#ffffff" stroke-linecap="round"
 				stroke-linejoin="round" stroke-width="2"
 				class="feather feather-moon" viewBox="0 0 24 24">
@@ -1400,9 +1393,7 @@ div.message.right .corner {
 
 		<!--Test-->
 		
-		<link
-			href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700'
-			rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 
 
 
@@ -1439,10 +1430,10 @@ div.message.right .corner {
 
 			<!--照片-->
 			<div class="card-container">
-				<div class="carousel" id="userPhotos1"><img src="/localimages/${photos[0]}" alt="" style="width: 378px; height: 315px; object-fit: cover;"></div>
-				<div class="carousel" id="userPhotos2"><img src="/localimages/${photos[1]}" alt="" style="width: 378px; height: 315px; object-fit: cover;"></div>
-				<div class="carousel" id="userPhotos3"><img src="/localimages/${photos[2]}" alt="" style="width: 378px; height: 315px; object-fit: cover;"></div>
-				<div class="carousel" id="userPhotos4"><img src="/localimages/${photos[3]}" alt="" style="width: 378px; height: 315px; object-fit: cover;"></div>
+				<div class="carousel" id="userPhotos1"><img src="/localimages/${photos[0]}" alt="" style="width: 461px; height: 367.63px; object-fit: cover;"></div>
+				<div class="carousel" id="userPhotos2"><img src="/localimages/${photos[1]}" alt="" style="width: 461px; height: 367.63px; object-fit: cover;"></div>
+				<div class="carousel" id="userPhotos3"><img src="/localimages/${photos[2]}" alt="" style="width: 461px; height: 367.63px; object-fit: cover;"></div>
+				<div class="carousel" id="userPhotos4"><img src="/localimages/${photos[3]}" alt="" style="width: 461px; height: 367.63px; object-fit: cover;"></div>
 			</div>  
 
 
@@ -1587,127 +1578,137 @@ div.message.right .corner {
 
 
 				<script>
+				
+				
+				
+				'use strict';
+
+				$(document).ready(function() {
+				    var currentUserNo;
+				    var nope = $('#nope');
+				    var love = $('#love');
+
+				    // 獲取當前用戶ID
+				    function getCurrentUserNo() {
+				        $.ajax({
+				            url: '/getCurrentUserNo',
+				            type: 'GET',
+				            async: false,
+				            success: function(userNo) {
+				                if (userNo !== null) {
+				                    currentUserNo = userNo;
+				                } else {
+				                    console.log('User not logged in');
+				                }
+				            },
+				            error: function(xhr, status, error) {
+				                console.error('Error getting current user ID:', error);
+				            }
+				        });
+				    }
+
+				    getCurrentUserNo();
+
+				    function createButtonListener(love) {
+				        return function(event) {
+				            var user2No = ${userBean.userNo}; // 獲取當前顯示的用戶編號
+
+				            var url = love ? '/like/' + user2No : '/dislike/' + user2No;
+
+				            $.ajax({
+				                url: url,
+				                type: 'POST',
+				                success: function(response) {
+				                    console.log(response);
+				                    if (response === "match/jsp/SuccessPage.jsp") {
+				                        // 如果後端返回的是 SuccessPage.jsp,則跳轉到該頁面
+				                        window.location.href = response;
+				                    } else {
+				                        // 否則,重新載入當前頁面
+				                        location.reload();
+				                    }
+				                },
+				                error: function(xhr, status, error) {
+				                    console.error('Error updating match status:', error);
+				                }
+				            });
+
+				            event.preventDefault();
+				        };
+				    }
+
+				    var nopeListener = createButtonListener(false);
+				    var loveListener = createButtonListener(true);
+
+				    nope.on('click', nopeListener);
+				    love.on('click', loveListener);
+				});
+				
     
     
     
-'use strict';
+/*				'use strict';
 
-$(document).ready(function() {
-  var cardContainer = $('.card-container');
-  var allCards = cardContainer.find('.carousel');
-  var currentUserNo;
-  var nope = $('#nope');
-  var love = $('#love');
+				$(document).ready(function() {
+				    var currentUserNo;
+				    var nope = $('#nope');
+				    var love = $('#love');
 
-  // 獲取當前用戶ID
-  function getCurrentUserNo() {
-    $.ajax({
-      url: '/getCurrentUserNo',
-      type: 'GET',
-      async: false,
-      success: function(userNo) {
-        if (userNo !== null) {
-          currentUserNo = userNo;
-        } else {
-          console.log('User not logged in');
-        }
-      },
-      error: function(xhr, status, error) {
-        console.error('Error getting current user ID:', error);
-      }
-    });
-  }
+				    // 獲取當前用戶ID
+				    function getCurrentUserNo() {
+				        $.ajax({
+				            url: '/getCurrentUserNo',
+				            type: 'GET',
+				            async: false,
+				            success: function(userNo) {
+				                if (userNo !== null) {
+				                    currentUserNo = userNo;
+				                } else {
+				                    console.log('User not logged in');
+				                }
+				            },
+				            error: function(xhr, status, error) {
+				                console.error('Error getting current user ID:', error);
+				            }
+				        });
+				    }
 
-  getCurrentUserNo();
+				    getCurrentUserNo();
 
-  function initCards() {
-    var allCards = cardContainer.find('.carousel');
-    allCards.each(function(index, card) {
-      $(card).css({
-        'z-index': allCards.length - index,
-        'transform': 'scale(1)',
-        'opacity': 1,
-        'transition': 'transform 0.5s'
-      });
-    });
-  }
+				    function createButtonListener(love) {
+				        return function(event) {
+				            var user2No = ${userBean.userNo}; // 獲取當前顯示的用戶編號
 
-  initCards();
+				            var url = love ? '/like/' + user2No : '/dislike/' + user2No;
 
-  function createButtonListener(love) {
-    return function(event) {
-      var cards = cardContainer.find('.carousel:not(.removed)');
-      var moveOutWidth = document.body.clientWidth * 1.5;
+				            $.ajax({
+				                url: url,
+				                type: 'POST',
+				                success: function(response) {
+				                    console.log(response);
+				                    // 重新載入當前頁面
+				                    location.reload();
+				                },
+				                error: function(xhr, status, error) {
+				                    console.error('Error updating match status:', error);
+				                }
+				            });
 
-      if (!cards.length) return false;
+				            event.preventDefault();
+				        };
+				    }
 
-      var card = cards.eq(0);
-      card.addClass('removed');
+				    var nopeListener = createButtonListener(false);
+				    var loveListener = createButtonListener(true);
 
-      if (love) {
-        card.css('transform', 'translate(' + moveOutWidth + 'px, -100px) rotate(-30deg)');
-      } else {
-        card.css('transform', 'translate(-' + moveOutWidth + 'px, -100px) rotate(30deg)');
-      }
+				    nope.on('click', nopeListener);
+				    love.on('click', loveListener);
+				});*/
+				
+				
 
-      setTimeout(function() {
-        card.remove();
-        getNextUser();
-      }, 500);
-
-      event.preventDefault();
-    };
-  }
-
-  var nopeListener = createButtonListener(false);
-  var loveListener = createButtonListener(true);
-
-  nope.on('click', nopeListener);
-  love.on('click', loveListener);
-
-  function getNextUser() {
-    $.ajax({
-      url: '/nextUser',
-      type: 'GET',
-      data: { currentUserNo: currentUserNo },
-      success: function(data) {
-    	console.log('Returned data:', data);           /////
-
-    	  
-    	var photos = data.photos;
-//         var html = '<div class="carousel">';
-        var html;
-        // 遍歷照片陣列,生成對應的HTML結構
-        photos.forEach(function(photo) {
-        	  var photoUrl = "/localimages/" + photo;
-              console.log('Photo URL:', photoUrl); // 添加調試信息
-              
-        	  html += '<img src='+ photoUrl +' class="d-block w-100" width="580" height="230" alt="user photo">';
-        });
-        
-//         html += '</div>';
-        
-        console.log('Generated HTML:', html);   ///////
-
-        
-        // 將生成的HTML結構插入到佔位符中
-        $('#carouselExampleFade2').append(html);
-        
-        // 重新初始化卡片
-        initCards();
-      },
-      error: function(xhr, status, error) {
-        console.error('Error getting next user:', error);
-      }
-    });
-  }
-});
-    
-  	
-  	
-  	
-
-  
+				
+				
 
 // 獲取所有按鈕和內容容器
 const buttons = document.querySelectorAll('.nav-link.icon');

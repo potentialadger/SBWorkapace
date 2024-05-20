@@ -2,7 +2,6 @@ package com.match.controller;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.match.bean.MatchBean;
 import com.match.service.MatchService;
 import com.user.bean.UserBean;
+import com.user.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -25,25 +25,36 @@ public class MatchController {
     @Autowired
     private MatchService mService;
     
+	@Autowired
+	private UserService uService;
+    
     
     @PostMapping("/like/{user2No}")
-    public String likeUser(@PathVariable int user2No, HttpSession session) {
+    public String likeUser(@PathVariable int user2No, HttpSession session,Model m) {
     	UserBean uBean = (UserBean)session.getAttribute("userData");
 
         int matchStatus = mService.likeUser(uBean.getUserNo(), user2No);
         
         if (matchStatus == 2) {
-        	//user1 user2
-        	//m.addaturrbu
-            return "成功的jsp";
+            // 如果 matchStatus 等於 2，代表這兩個用戶匹配成功，則執行相應的處理
+            UserBean user1 = uService.getUserData(uBean.getUserNo());
+            UserBean user2 = uService.getUserData(user2No);
+            
+            // 將用戶資料添加到 Model 對象中
+            m.addAttribute("user1", user1);
+            m.addAttribute("user2", user2);
+            return "match/jsp/SuccessPage.jsp";          // 成功的jsp
         }else {
             return "/newMatchPage";
         }
     }
 
-    @PostMapping("/{user1No}/{user2No}/dislike")
-    public ResponseEntity<String> dislikeUser(@PathVariable int user1No, @PathVariable int user2No) {
-        int matchStatus = mService.dislikeUser(user1No, user2No);
+    @PostMapping("/dislike/{user2No}")
+    public ResponseEntity<String> dislikeUser(@PathVariable int user2No, HttpSession session) {
+    	UserBean uBean = (UserBean)session.getAttribute("userData");
+
+        int matchStatus = mService.dislikeUser(uBean.getUserNo(), user2No);
+        
         if (matchStatus == 3) {
             return ResponseEntity.ok("Match failed.");
         } else if (matchStatus == 1) {
@@ -97,19 +108,7 @@ public class MatchController {
 	    return "redirect:/matchHP";
 	}
 	
-	
-	
-	
-	
-	
-	
-	//-------前端
-	
-	
-	
-	
-	
-	
+
 	
 	
 }
