@@ -36,8 +36,15 @@
             font-size: 18px;
             line-height: 1.5;
         }
-        .btn-info { background-color: #36b9cc; }
-        .btn-danger { background-color: #e74a3b; }
+
+        .btn-info {
+            background-color: #36b9cc;
+        }
+
+        .btn-danger {
+            background-color: #e74a3b;
+        }
+
         .btn-custom {
             background-color: #4e73df;
             color: white;
@@ -52,9 +59,52 @@
             cursor: pointer;
             border-radius: 4px;
         }
+
         .btn-custom:hover {
             background-color: #2e59d9;
             color: white;
+        }
+
+        .header {
+            text-align: center;
+            margin: 40px 0;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #4e73df;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: #858796;
+        }
+
+        .table-container {
+            margin: 20px;
+            overflow-x: auto;
+        }
+
+        .table {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+        }
+
+        .table th, .table td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
         }
     </style>
 </head>
@@ -74,52 +124,58 @@
                 <script src="/js/layout/Z_TopBar.js"></script>
 
                 <!-- 主要內容 -->
+                <div class="header">
+                    <h1>報名成功的活動</h1>
+                    <p>查看您已成功報名的活動</p>
+                </div>
+
                 <div align="center">
-                    <h2>報名成功的活動</h2>
                     <% 
                         List<EventRegistrationsBean> registrations = (List<EventRegistrationsBean>) request.getAttribute("registrations");
                         if (registrations != null && !registrations.isEmpty()) {
                     %>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>活動編號</th>
-                                <th>會員編號</th>
-                                <th>報名者姓名</th>
-                                <th>連絡電話</th>
-                                <th>報名時間</th>
-                                <th>修改</th>
-                                <th>刪除</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% for (EventRegistrationsBean registration : registrations) { %>
+                    <div class="table-container">
+                        <table class="table table-bordered">
+                            <thead>
                                 <tr>
-                                    <td><%= registration.getEventNo() %></td>
-                                    <td><%= registration.getUserNo() %></td>
-                                    <td><%= registration.getParticipantName() %></td>
-                                    <td><%= registration.getContactInfo() %></td>
-                                    <td><%= registration.getRegistrationTime().format(dtf) %></td>
-                                    <td>
-                                        <div class="button-group">
-                                            <a href="getRegistrationsDataForUpdate?registrationID=<%= registration.getRegistrationID() %>" class="btn btn-info btn-circle">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <form method="post" action="/DeleteRegistrations" style="display:inline;">
-                                            <input type="hidden" name="_method" value="delete">
-                                            <input type="hidden" name="registrationID" value="<%= registration.getRegistrationID() %>">
-                                            <button type="submit" class="btn btn-danger btn-circle">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </form>
-                                    </td>
+                                    <th>活動編號</th>
+                                    <th>會員編號</th>
+                                    <th>報名者姓名</th>
+                                    <th>連絡電話</th>
+                                    <th>報名時間</th>
+                                    <th>修改</th>
+                                    <th>刪除</th>
                                 </tr>
-                            <% } %>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <% for (EventRegistrationsBean registration : registrations) { %>
+                                    <tr>
+                                        <td><%= registration.getEventNo() %></td>
+                                        <td><%= registration.getUserNo() %></td>
+                                        <td><%= registration.getParticipantName() %></td>
+                                        <td><%= registration.getContactInfo() %></td>
+                                        <td><%= registration.getRegistrationTime().format(dtf) %></td>
+                                        <td>
+                                            <div class="button-group">
+                                                <a href="getRegistrationsDataForUpdate?registrationID=<%= registration.getRegistrationID() %>" class="btn btn-info btn-circle">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <form method="post" action="/DeleteRegistrations" style="display:inline;">
+                                                <input type="hidden" name="_method" value="delete">
+                                                <input type="hidden" name="registrationID" value="<%= registration.getRegistrationID() %>">
+                                                <button type="submit" class="btn btn-danger btn-circle">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
                     <% } else { %>
                         <h3>目前沒有可顯示的活動。</h3>
                     <% } %>

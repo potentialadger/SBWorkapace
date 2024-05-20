@@ -17,7 +17,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>活動詳情</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -43,6 +43,50 @@
         }
         .btn-info { background-color: #36b9cc; }
         .btn-danger { background-color: #e74a3b; }
+
+        .header {
+            text-align: center;
+            margin: 40px 0;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .header h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #4e73df;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            letter-spacing: 0.1em;
+        }
+
+        table.dataTable {
+            width: 100%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        table.dataTable th,
+        table.dataTable td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        table.dataTable th {
+            background-color: #4e73df;
+            color: white;
+            font-weight: 700;
+        }
+
+        table.dataTable tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table.dataTable tbody tr:hover {
+            background-color: #f1f1f1;
+        }
     </style>
 </head>
 
@@ -50,8 +94,8 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-    
-    <script src="js/layout/Z_slider.js"></script>
+
+        <script src="js/layout/Z_slider.js"></script>
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -63,8 +107,10 @@
                 <script src="/js/layout/Z_TopBar.js"></script>
 
                 <!-- 主要內容 -->
-                <div align="center">
+                <div class="header">
                     <h2>活動詳情</h2>
+                </div>
+                <div align="center">
                     <% 
                         List<EventBean> events = (List<EventBean>) request.getAttribute("events");
                         if (events != null && !events.isEmpty()) {

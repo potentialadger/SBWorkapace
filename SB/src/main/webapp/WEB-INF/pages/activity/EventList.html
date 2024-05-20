@@ -41,7 +41,7 @@
                         fileName.className = 'file-name';
 
                         const title = document.createElement('p');
-                        title.className = 'm-b-5 text-muted';
+                        title.className = 'event-title';
                         title.textContent = event.title;
 
                         // 建立表單
@@ -162,6 +162,16 @@
             font-size: 1.2rem;
             font-weight: 300;
             color: #858796;
+        }
+
+        .event-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #343a40;
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            line-height: 1.4;
         }
     </style>
 </head>
