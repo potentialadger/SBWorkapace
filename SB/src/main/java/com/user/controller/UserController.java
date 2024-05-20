@@ -36,6 +36,7 @@ import com.match.bean.TagsBean;
 import com.user.bean.FriendStateBean;
 import com.user.bean.StateBean;
 import com.match.dto.UpdateTagsDTO;
+import com.match.service.MatchService;
 import com.match.service.SocialPhotosService;
 import com.user.bean.UserBean;
 import com.user.bean.UserBean_Vo;
@@ -73,6 +74,9 @@ public class UserController {
 	
 	@Autowired
 	private SocialPhotosService spService;
+	
+    @Autowired
+    private MatchService mService;
 
 	@PostMapping("/userSignUp")
 	public String processSignUpAction(@RequestParam("account") String account,
@@ -905,22 +909,31 @@ public class UserController {
 	    return ResponseEntity.ok(response);                                              // 返回響應
 	}
 	
+	
 	private UserBean getRandomUser(List<UserBean> users, int currentUserNo) {            // 從用戶列表中獲取下一個隨機用戶	    
 	    List<UserBean> otherUsers = new ArrayList<>();                                   // 過濾掉與當前用戶相同的用戶
+	    
+	    List<Integer> matchedUserNos = mService.getMatchedUserNos();                     // 獲取所有已經配對成功的用戶編號,存儲在 matchedUserNos 列表中
+	    
 	    for (UserBean user : users) {
-	        if (user.getUserNo() != currentUserNo) {
-	            otherUsers.add(user);
+	        if (user.getUserNo() != currentUserNo) {                                     // 排除當前用戶自己
+	        	
+	            if (!matchedUserNos.contains(user.getUserNo())) {                        // 排除已經配對成功的用戶   => 使用 List 的 contains() 方法檢查 matchedUserNos 列表中是否包含當前用戶的編號。如果當前用戶的編號存在於 matchedUserNos 列表中,說明該用戶已經配對成功。   //如果 contains() 方法返回 true,表示當前用戶已經配對成功,! 運算符將結果取反為 false。
+	        	
+	            otherUsers.add(user);                                                    // 將符合條件的用戶添加到 otherUsers 列表中
+	           }
 	        }
 	    }
 	    	    
-	    if (otherUsers.isEmpty()) {                                                      // 如果沒有其他用戶,返回null
+	    if (otherUsers.isEmpty()) {                                                      // 如果沒有符合條件的其他用戶,返回null
 	        return null;
 	    }
 	    	    
 	    Random random = new Random();                                                    // 從其他用戶中隨機選擇一個
 	    int randomIndex = random.nextInt(otherUsers.size());
 	    return otherUsers.get(randomIndex);
-	}
+	    }
+	    
 	
 	
 	

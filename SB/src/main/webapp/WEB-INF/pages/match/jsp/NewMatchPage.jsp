@@ -906,11 +906,24 @@ img {
 }
 
 .tinder--buttons {
-	flex: 0 0 100px;
-	text-align: center;
-	margin-top: 850px; /*如果padding-top調了不會動，請設margin-top*/
-	margin-bottom: 100px; /*如果padding-top調了不會動，請設margin-top*/
-	margin-left: 10.5px; /*調位置*/
+  position: relative;
+  text-align: center;
+  margin-top: 850px;
+  margin-bottom: 100px;
+}
+
+#nope {
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  transform: translate(-60%, 10%);
+}
+
+#love {
+  position: absolute;
+  top: 50%;
+  right: 30%;
+  transform: translate(200%, 10%);
 }
 
 .tinder--buttons button {
@@ -1620,13 +1633,8 @@ div.message.right .corner {
 				                type: 'POST',
 				                success: function(response) {
 				                    console.log(response);
-				                    if (response === "match/jsp/SuccessPage.jsp") {
-				                        // 如果後端返回的是 SuccessPage.jsp,則跳轉到該頁面
-				                        window.location.href = response;
-				                    } else {
-				                        // 否則,重新載入當前頁面
-				                        location.reload();
-				                    }
+				                    // 重新載入當前頁面
+				                    location.reload();
 				                },
 				                error: function(xhr, status, error) {
 				                    console.error('Error updating match status:', error);
