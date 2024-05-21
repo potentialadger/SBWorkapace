@@ -35,6 +35,41 @@
                                     input[type=number] {
                                         -moz-appearance: textfield;
                                     }
+
+                                    .suggestions {
+                                        position: absolute;
+                                        top: 100%;
+                                        left: 0;
+                                        z-index: 1000;
+                                        border: 1px solid #ddd;
+                                        background-color: #fff;
+                                        max-height: 200px;
+                                        overflow-y: auto;
+                                        width: 100%;
+                                    }
+
+                                    .suggestions div {
+                                        padding: 10px;
+                                        cursor: pointer;
+                                    }
+
+                                    .suggestions div:hover {
+                                        background-color: #f0f0f0;
+                                    }
+
+                                    .suggestion-item {
+                                        margin-bottom: 10px;
+                                    }
+
+                                    .suggestion-title {
+                                        font-size: 16px;
+                                        font-weight: bold;
+                                    }
+
+                                    .suggestion-description {
+                                        font-size: 12px;
+                                        color: gray;
+                                    }
                                 </style>
                                 <script async
                                     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAgqI1p1boHUwEIE395YECgaaYngF9FIE&libraries=places&callback=initMap&region=TW&language=zh-TW">
@@ -494,6 +529,7 @@
                                                 </tr>`;
 
                                             $('.cart').append(modalcontext);
+                                            alert('已加入購物車');
                                             $tr.find('.numberinput').val(0);
 
                                         });
@@ -630,6 +666,48 @@
                                     });
                                 </script>
 
+                                <!-- 搜尋列 -->
+                                <script>
+                                    $(document).ready(function () {
+                                        $('#search').on('input', function () {
+                                            const search = $(this).val();
+                                            if (search.length > 0) {
+                                                $.ajax({
+                                                    url: '/group/groupsearch',
+                                                    method: 'get',
+                                                    data: { search: search },
+                                                    success: function (response) {
+                                                        displaySuggestions(response);
+                                                    },
+                                                    error: function (err) {
+                                                        console.log("錯了白痴" + err);
+                                                    }
+                                                })
+                                            } else {
+                                                $('#searchSuggestions').empty();
+                                            }
+                                        });
+
+                                        function displaySuggestions(suggestions) {
+                                            const suggestionsContainer = $('#searchSuggestions');
+                                            suggestionsContainer.empty();
+                                            suggestions.forEach(function (suggestion) {
+                                                const suggestionItem = $('<div>').addClass('suggestion-item');
+                                                const title = $('<div>').text(suggestion.gTitle).addClass('suggestion-title');
+                                                const description = $('<div>').text(suggestion.gDescription).addClass('suggestion-description');
+                                                console.log(suggestion.gDescription);
+                                                suggestionItem.append(title).append(description);
+                                                suggestionItem.on('click', function () {
+                                                    const eventno = suggestion.eventNo;
+                                                    console.log(eventno);
+                                                    window.location.href = '/group/eachgroup/' + eventno;
+                                                });
+                                                suggestionsContainer.append(suggestionItem);
+                                            });
+                                        }
+
+                                    })
+                                </script>
                             </body>
 
                             </html>

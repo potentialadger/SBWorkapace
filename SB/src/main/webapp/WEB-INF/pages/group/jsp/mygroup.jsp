@@ -36,6 +36,43 @@
 									<link rel="stylesheet"
 										href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 
+									<style>
+										.suggestions {
+											position: absolute;
+											top: 100%;
+											left: 0;
+											z-index: 1000;
+											border: 1px solid #ddd;
+											background-color: #fff;
+											max-height: 200px;
+											overflow-y: auto;
+											width: 100%;
+										}
+
+										.suggestions div {
+											padding: 10px;
+											cursor: pointer;
+										}
+
+										.suggestions div:hover {
+											background-color: #f0f0f0;
+										}
+
+										.suggestion-item {
+											margin-bottom: 10px;
+										}
+
+										.suggestion-title {
+											font-size: 16px;
+											font-weight: bold;
+										}
+
+										.suggestion-description {
+											font-size: 12px;
+											color: gray;
+										}
+									</style>
+
 								</head>
 
 								<body id="page-top" style="background-color: #FFFFF4;">
@@ -109,17 +146,19 @@
 																			for (GroupDto group : groups) { %>
 																			<tr>
 																				<td>
-																					<%=group.getEventNo()%>
+																					<%= group.getEventNo() %>
 																				</td>
 																				<td>
-																					<a href="#" data-bs-toggle="modal"
+																					<a href="#"
+																						class="view-group-orders"
+																						data-bs-toggle="modal"
 																						data-bs-target="#groupOrderModal"
-																						data-groupOrder="">
-																						<%=group.getgTitle()%>
+																						data-group-orders='<%= new com.fasterxml.jackson.databind.ObjectMapper().writeValueAsString(group.getGroupOrders()) %>'>
+																						<%= group.getgTitle() %>
 																					</a>
 																				</td>
 																				<td>
-																					<%=group.getgDescription()%>
+																					<%= group.getgDescription() %>
 																				</td>
 																				<% Date endTime=group.getgEndTime();
 																					SimpleDateFormat sdf=new
@@ -128,13 +167,15 @@
 																					formattedEndTime=sdf.format(endTime);
 																					%>
 																					<td>
-																						<%=formattedEndTime%>
+																						<%= formattedEndTime %>
 																					</td>
 																					<td>
-																						<%=group.getgMinTotalAmount()%>
+																						<%= group.getgMinTotalAmount()
+																							%>
 																					</td>
 																					<td>
-																						<%=group.getgMinTotalQuantity()%>
+																						<%= group.getgMinTotalQuantity()
+																							%>
 																					</td>
 																					<% String paymentMethodDisplay="" ;
 																						switch
@@ -157,18 +198,18 @@
 																						paymentMethodDisplay="未知支付方式" ;
 																						break; } %>
 																						<td>
-																							<%=paymentMethodDisplay%>
+																							<%= paymentMethodDisplay %>
 																						</td>
 																						<td>
 																							<button
 																								class="update btn btn-primary btn-lg"
-																								data-groupeventno="<%=group.getEventNo()%>"
-																								data-grouptitle="<%=group.getgTitle()%>"
-																								data-groupdescription="<%=group.getgDescription()%>"
-																								data-groupendtime="<%=formattedEndTime%>"
-																								data-groupmintotalamount="<%=group.getgMinTotalAmount()%>"
-																								data-groupmintotalquantity="<%=group.getgMinTotalQuantity()%>"
-																								data-grouppaymentmethod="<%=paymentMethodDisplay%>"
+																								data-groupeventno="<%= group.getEventNo() %>"
+																								data-grouptitle="<%= group.getgTitle() %>"
+																								data-groupdescription="<%= group.getgDescription() %>"
+																								data-groupendtime="<%= formattedEndTime %>"
+																								data-groupmintotalamount="<%= group.getgMinTotalAmount() %>"
+																								data-groupmintotalquantity="<%= group.getgMinTotalQuantity() %>"
+																								data-grouppaymentmethod="<%= paymentMethodDisplay %>"
 																								data-bs-toggle="modal"
 																								data-bs-target="#exampleModal">
 																								<i
@@ -178,7 +219,7 @@
 																						<td>
 																							<button
 																								class="delete btn btn-primary btn-lg"
-																								data-groupeventno="<%=group.getEventNo()%>">
+																								data-groupeventno="<%= group.getEventNo() %>">
 																								<i
 																									class="fa-solid fa-xmark"></i>
 																							</button>
@@ -186,7 +227,7 @@
 																			</tr>
 																			<% } %>
 																</table>
-																<h3>共<%=groups.size()%>筆團購</h3>
+																<h3>共<%= groups.size() %>筆團購</h3>
 															</div>
 
 															<!-- 我的訂單 -->
@@ -207,10 +248,10 @@
 																			for (OrderDto order : orders) { %>
 																			<tr>
 																				<td>
-																					<%=order.getEventNo() %>
+																					<%= order.getEventNo() %>
 																				</td>
 																				<td>
-																					<%=order.getEventTitle() %>
+																					<%= order.getEventTitle() %>
 																				</td>
 																				<% Date setTime=order.getSetTime();
 																					SimpleDateFormat sdf=new
@@ -219,7 +260,7 @@
 																					formattedSetTime=sdf.format(setTime);
 																					%>
 																					<td>
-																						<%=formattedSetTime%>
+																						<%= formattedSetTime %>
 																					</td>
 																					<% String paymentMethodDisplay="" ;
 																						switch
@@ -242,12 +283,14 @@
 																						paymentMethodDisplay="未知支付方式" ;
 																						break; } %>
 																						<td>
-																							<%=paymentMethodDisplay%>
+																							<%= paymentMethodDisplay %>
 																						</td>
 																						<td>
 																							<button
-																								class="btn btn-primary btn-lg view-details"
-																								data-order-details='<%=new com.fasterxml.jackson.databind.ObjectMapper().writeValueAsString(order.getOrderDetail()) %>'>
+																								class="btn btn-primary btn-lg view-order-details"
+																								data-order-details='<%= new com.fasterxml.jackson.databind.ObjectMapper().writeValueAsString(order.getOrderDetail()) %>'
+																								data-bs-toggle="modal"
+																								data-bs-target="#orderDetailsModal">
 																								<i
 																									class="fa-solid fa-list"></i>
 																							</button>
@@ -314,12 +357,13 @@
 												</div>
 
 												<!-- 商品細節Modal -->
-												<div class="modal fade" id="orderModal" tabindex="-1"
-													aria-labelledby="orderModalLabel" aria-hidden="true">
+												<div class="modal fade" id="orderDetailsModal" tabindex="-1"
+													aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
 													<div class="modal-dialog">
 														<div class="modal-content">
 															<div class="modal-header">
-																<h5 class="modal-title" id="orderModalLabel">訂單細節</h5>
+																<h5 class="modal-title" id="orderDetailsModalLabel">訂單細節
+																</h5>
 																<button type="button" class="btn-close"
 																	data-bs-dismiss="modal" aria-label="Close"></button>
 															</div>
@@ -352,7 +396,8 @@
 													<div class="modal-dialog">
 														<div class="modal-content">
 															<div class="modal-header">
-																<h5 class="modal-title" id="orderModalLabel">團購訂單</h5>
+																<h5 class="modal-title" id="groupOrderModalLabel">團購訂單
+																</h5>
 																<button type="button" class="btn-close"
 																	data-bs-dismiss="modal" aria-label="Close"></button>
 															</div>
@@ -393,8 +438,7 @@
 
 									<!-- Scroll to Top Button-->
 									<a class="scroll-to-top rounded" href="#page-top">
-										<i class="fas fa-angle-up"></i>
-									</a>
+										<i class="fas fa-angle-up"></i></a>
 
 									<!-- Logout Modal-->
 									<script src="/js/layout/Z_Logout Modal.js"></script>
@@ -496,18 +540,68 @@
 														location.reload();
 													},
 													error: function (xhr, status, error) {
-														console.error("更新失败:", error);
+														console.error("更新失敗:", error);
 													}
 												});
 											});
 
-											// 我的訂單細節
-											$(document).on('click', '.view-details', function () {
+											// 我的團購訂單細節
+											$(document).on('click', '.view-group-orders', function () {
+												var groupOrders = JSON.parse($(this).attr('data-group-orders'));
+												var groupOrderDetailsBody = $('#groupOrderDetailsBody');
+												groupOrderDetailsBody.empty(); // 清空之前的細節
+
+												// 添加新的團購訂單細節
+												$.each(groupOrders, function (index, order) {
+													var orderRow = '<tr>' +
+														'<td>' + order.userNo + '-' + order.userName + '</td>' +
+														'<td>' + parsePaymentMethod(order.paymentMethod) + '</td>' +
+														'<td>' + formatDate(order.setTime) + '</td>' +
+														'<td><button class="btn btn-primary view-group-order-details" data-order-details=\'' + JSON.stringify(order.orderDetail) + '\' data-bs-toggle="modal" data-bs-target="#orderDetailsModal"><i class="fa-solid fa-list"></i></button></td>' +
+														'</tr>';
+													groupOrderDetailsBody.append(orderRow);
+												});
+
+												$('#groupOrderModal').modal('show');
+											});
+
+											// 團購中的訂單詳細信息
+											$(document).on('click', '.view-group-order-details', function () {
 												var orderDetails = JSON.parse($(this).attr('data-order-details'));
 												var orderDetailsBody = $('#orderDetailsBody');
-												orderDetailsBody.empty(); // Clear previous details
+												orderDetailsBody.empty();
 
-												// Append new order details
+												// 隱藏團購訂單視窗
+												$('#groupOrderModal').modal('hide');
+
+												// 添加訂單細節
+												$.each(orderDetails, function (index, detail) {
+													var itemTotalPrice = detail.itemQuantity * detail.itemPrice;
+													var detailRow = '<tr>' +
+														'<td>' + detail.itemName + '</td>' +
+														'<td>' + detail.specValue + '</td>' +
+														'<td>' + detail.itemQuantity + '</td>' +
+														'<td>NT$' + itemTotalPrice + '</td>' +
+														'</tr>';
+													orderDetailsBody.append(detailRow);
+												});
+
+												// 顯示訂單細節視窗
+												$('#orderDetailsModal').modal('show');
+
+												// 在訂單細節視窗關閉時顯示團購訂單視窗
+												$('#orderDetailsModal').off('hidden.bs.modal').on('hidden.bs.modal', function () {
+													$('#groupOrderModal').modal('show');
+												});
+											});
+
+											// 我的訂單詳細信息
+											$(document).on('click', '.view-order-details', function () {
+												var orderDetails = JSON.parse($(this).attr('data-order-details'));
+												var orderDetailsBody = $('#orderDetailsBody');
+												orderDetailsBody.empty(); // 清空之前的細節
+
+												// 添加新的訂單細節
 												$.each(orderDetails, function (index, detail) {
 													var itemTotalPrice = detail.itemQuantity * detail.itemPrice;
 													var row = '<tr>' +
@@ -519,13 +613,74 @@
 													orderDetailsBody.append(row);
 												});
 
-												// Show the modal
-												$('#orderModal').modal('show');
+												// 顯示訂單細節視窗
+												$('#orderDetailsModal').modal('show');
+
+												// 在訂單細節視窗關閉時取消綁定的事件處理程序
+												$('#orderDetailsModal').off('hidden.bs.modal');
 											});
 
+											// 格式化日期
+											function formatDate(date) {
+												var d = new Date(date);
+												return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+											}
 
+											// 解析支付方式
+											function parsePaymentMethod(paymentCode) {
+												let methods = [];
+												if (paymentCode.toString().includes('1')) methods.push("匯款");
+												if (paymentCode.toString().includes('2')) methods.push("面交");
+												if (paymentCode.toString().includes('3')) methods.push("SB點數");
+												return methods.join(", ");
+											}
 										});
 									</script>
+
+									<!-- 搜尋列 -->
+									<script>
+										$(document).ready(function () {
+											$('#search').on('input', function () {
+												const search = $(this).val();
+												if (search.length > 0) {
+													$.ajax({
+														url: '/group/groupsearch',
+														method: 'get',
+														data: { search: search },
+														success: function (response) {
+															displaySuggestions(response);
+														},
+														error: function (err) {
+															console.log("錯了白痴" + err);
+														}
+													})
+												} else {
+													$('#searchSuggestions').empty();
+												}
+											});
+
+											function displaySuggestions(suggestions) {
+												const suggestionsContainer = $('#searchSuggestions');
+												suggestionsContainer.empty();
+												suggestions.forEach(function (suggestion) {
+													const suggestionItem = $('<div>').addClass('suggestion-item');
+													const title = $('<div>').text(suggestion.gTitle).addClass('suggestion-title');
+													const description = $('<div>').text(suggestion.gDescription).addClass('suggestion-description');
+													console.log(suggestion.gDescription);
+													suggestionItem.append(title).append(description);
+													suggestionItem.on('click', function () {
+														const eventno = suggestion.eventNo;
+														console.log(eventno);
+														window.location.href = '/group/eachgroup/' + eventno;
+													});
+													suggestionsContainer.append(suggestionItem);
+												});
+											}
+
+										})
+									</script>
+
+
 
 								</body>
 

@@ -100,6 +100,7 @@ public class GroupController {
 				int groupOrderUserNo = groupOrder.getUserNo().getUserNo();
 				String groupOrderUserName = groupOrder.getUserNo().getUserChineseName();
 				Integer groupOrderPayment = groupOrder.getPaymentMethod();
+				Date setTime = groupOrder.getSetTime();
 				
 //				查詢我的團購裡訂單的訂單細節
 				List<OrderDetail> groupOrderDetails = groupOrder.getOrderDetails();
@@ -109,12 +110,14 @@ public class GroupController {
 					String itemName = groupOrderDetail.getItem().getName();
 					Integer itemQuantity = groupOrderDetail.getItemQuantity();
 					String specValue = groupOrderDetail.getItemSpec().getSpecValue();
+					Integer itemPrice = groupOrderDetail.getItem().getPrice();
 					
 					OrderDetailsDto orderDetailsDto = new OrderDetailsDto();
 					orderDetailsDto.setItemNo(itemNo);
 					orderDetailsDto.setItemName(itemName);
 					orderDetailsDto.setItemQuantity(itemQuantity);
 					orderDetailsDto.setSpecValue(specValue);
+					orderDetailsDto.setItemPrice(itemPrice);
 					
 					groupOrderDetailDtos.add(orderDetailsDto);
 				}
@@ -124,6 +127,7 @@ public class GroupController {
 				orderDto.setUserName(groupOrderUserName);
 				orderDto.setPaymentMethod(groupOrderPayment);
 				orderDto.setOrderDetail(groupOrderDetailDtos);
+				orderDto.setSetTime(setTime);
 				
 				groupOrderDtos.add(orderDto);
 			}
@@ -144,6 +148,7 @@ public class GroupController {
 			groupDtos.add(groupDto);
 		}
 		
+
 //		查詢我的訂單
 		List<OrderDto> orders = orderService.findOrdersByUserNo(userNo);
 		
@@ -275,7 +280,8 @@ public class GroupController {
 		String[] payments = newGroup.getPayment();
 		if(Arrays.asList(payments).contains("1")) {
 			account = newGroup.getAccount();
-		}else if (Arrays.asList(payments).contains("2")) {
+		}
+		if (Arrays.asList(payments).contains("2")) {
 			address = newGroup.getAddress();
 		}
 		Group group = gService.insertGroup(userNo, title, description, endTime, payments, minTotalQuantity, minTotalAmount, account, address);
