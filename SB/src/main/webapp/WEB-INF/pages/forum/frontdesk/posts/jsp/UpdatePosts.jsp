@@ -102,7 +102,7 @@
                             <div>
                                 <label for="image_url">圖片 :</label>
                                 <input type="file" name="image_url" class="form-control-file">
-                                <img style="width: 100%; object-fit: cover;" src="http://localhost:8080/localimages/${updateSelect.image_url}">
+                                <img style="width: 100%; object-fit: cover;" src="http://localhost:8080/localimages/${updateSelect.image_url}"${updateSelect.image_url==null ? "hidden" : "" }>
                             </div>
 
                             <div class="form-group">

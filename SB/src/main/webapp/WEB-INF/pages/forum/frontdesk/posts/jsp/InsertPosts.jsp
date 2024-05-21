@@ -78,15 +78,15 @@
 						</div>
 							
 							<div class="form-group">
-								<label for="title">新增文章標題 :</label> <input type="text" id="title" name="title" class="form-control" required>
+								<label for="title">新增文章標題 :</label> <input type="text" id="title" name="title" class="form-control" maxlength="100" required>
 							</div>
 							
 							<div class="form-group">
-								<label for="content">新增文章內容 :</label> <textarea id="content" name="content" class="form-control" rows="15" style="resize: none;" required></textarea>
+								<label for="content">新增文章內容 :</label> <textarea id="content" name="content" class="form-control" rows="15"required></textarea>
 							</div>
 							
 							<div class="form-group">
-								<label for="image_url">新增圖片：</label> <input type="file" id="image_url" name="image_url" class="form-control-file">
+								<label for="image_url">新增圖片：</label> <input type="file" id="image_url" name="image_url" class="form-control-file" maxlength="255" >
 							</div>
 
 							<div class="button-primary-secondary">

@@ -74,7 +74,7 @@
                                         
                                         <label for="reason">檢舉原因 :</label>
                                         
-                                        <textarea id="reason" name="reason" required style="width: 100%; height: 400px; resize: none;"></textarea>
+                                        <textarea id="reason" name="reason" required style="width: 100%; height: 400px; resize: none;" maxlength="255"></textarea>
                                        
                                     <div class="form-group">
                                     	<button type="submit" class="btn btn-primary">提交</button>

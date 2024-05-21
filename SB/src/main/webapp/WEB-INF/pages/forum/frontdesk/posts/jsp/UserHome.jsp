@@ -271,19 +271,27 @@ body {
 										<div class="card mb-2">
 											<div class="card-body p-2 p-sm-3">
 												<div class="media forum-item">
+												 
+												<div class="avatar-container" style="display: flex; flex-direction: column; align-items: center;">		
+														
+													
 													<img
 														src="http://localhost:8080/localimages/${post.userBean.avatar}"
 														class="mr-3" width="50" alt="User"
-														style="border-radius: 50%;" />
+														style="border-radius: 50%; margin-bottom: 26px; border: 1px solid black;" />
+														
+														<span style="color: #007bff;"><c:out value="${post.userBean.userChineseName}" /></span>
+													
+												</div>	
 													<div class="media-body">
 														<h5>
 															<a
 																href="/postsFrontDesk/SelectPosts?postsNo=${post.post_no}"
 																class="text-body" style="font-weight: bold;">
 																<div
-																	style="width: 300px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
+																	style= "color: #000;width: 300px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
 																	${post.title}
-																	</div>
+																</div>
 															</a>
 														</h5>
 														<div

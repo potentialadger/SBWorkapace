@@ -255,7 +255,8 @@ public class FrontDeskPostsController {
 				image_url.transferTo(fileDirPath);
 				postsToUpdate.setImage_url(fileName);
 			}else {
-				postsToUpdate.setImage_url(null);
+				
+				postsToUpdate.setImage_url(postsToUpdate.getImage_url());
 			}
 
 			postsService.updatePosts(postsToUpdate);
