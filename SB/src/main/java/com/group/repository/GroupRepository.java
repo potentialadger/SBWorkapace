@@ -30,4 +30,6 @@ public interface GroupRepository extends JpaRepository<Group, Integer> {
 	@Query("SELECT g FROM Group g LEFT JOIN FETCH g.items WHERE g.status = 'active' AND g.endTime > CURRENT_TIMESTAMP ORDER BY g.endTime ASC")
 	public List<Group> findAllGroupByEndTimeAsc();
 	
+	@Query("SELECT g FROM Group g LEFT JOIN FETCH g.items WHERE g.status = 'done'")
+	public List<Group> findGroupDoneBack();
 }

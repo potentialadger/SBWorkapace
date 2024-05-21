@@ -1,5 +1,6 @@
 package com.group.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,6 +109,26 @@ public class OrderController {
 	public List<BackToFrontOrder> findOrdersByEventNoBack(@PathVariable("eventno") Integer eventNo) {
 		List<BackToFrontOrder> orders = orderService.findOrdersByEventNo(eventNo);
 		return orders;
+	}
+	
+	@GetMapping("/orderdetails/{orderno}")
+	@ResponseBody
+	public List<OrderDetailsDto> getOrderDetails(@PathVariable("orderno") Integer orderNo) {
+	    Order order = orderService.findOrderById(orderNo);
+	    List<OrderDetail> orderDetails = order.getOrderDetails();
+	    List<OrderDetailsDto> orderDetailsDtos = new ArrayList<>();
+
+	    for (OrderDetail orderDetail : orderDetails) {
+	        OrderDetailsDto dto = new OrderDetailsDto();
+	        dto.setItemNo(orderDetail.getItem().getItemNo());
+	        dto.setItemName(orderDetail.getItem().getName());
+	        dto.setItemQuantity(orderDetail.getItemQuantity());
+	        dto.setSpecValue(orderDetail.getItemSpec().getSpecValue());
+	        dto.setItemPrice(orderDetail.getItem().getPrice());
+	        orderDetailsDtos.add(dto);
+	    }
+
+	    return orderDetailsDtos;
 	}
 	
 	@GetMapping("/groupfrontorders/{eventno}")

@@ -181,6 +181,7 @@
             $(document).ready(function () {
                 var specCount = 0;
                 var editingProductContainer = null; // 用於存儲正在編輯的商品容器
+                var imageUrls = []; // 用於存儲每個商品的圖片 URL
 
                 // 添加新規格
                 $('#newSpec').click(function (e) {
@@ -268,6 +269,7 @@
                                 '</div>';
 
                             $('.testimonial-three').append(newProductHtml);
+                            imageUrls.push(imageUrl); // 保存每個商品的圖片 URL
                         }
                         cleanupForm();
                         $('#staticBackdrop').modal('hide');
@@ -276,8 +278,16 @@
 
                     if (itemFile) {
                         reader.readAsDataURL(itemFile);
+                    } else if (editingProductContainer) {
+                        // 如果正在編輯，保留原始圖片
+                        reader.onload({
+                            target: {
+                                result: editingProductContainer.find('.testimonial-image img').attr('src')
+                            }
+                        });
                     }
                 });
+
                 // 編輯商品
                 $(document).on('click', '.edit-product', function () {
                     editingProductContainer = $(this).closest('.testimonial-three-col');
@@ -321,13 +331,14 @@
                     $('#newItem')[0].reset();
                     $('.spec-list').empty();
                 }
-            });
-        </script>
-        <script>
-            $(document).ready(function () {
+
                 $('#submitAllItems').click(function () {
+                    if (!confirm('確定提交商品?')) {
+                        return;
+                    }
+
                     var allItems = [];
-                    $('.testimonial-three-col').each(function () {
+                    $('.testimonial-three-col').each(function (index) {
                         var itemDto = {
                             itemName: $(this).find('.testimonial-name').text(),
                             itemDesc: $(this).find('.testimonial-content p').text(),
@@ -338,7 +349,6 @@
                         allItems.push(itemDto);
                     });
 
-                    // 創建 FormData 來發送數據
                     var formData = new FormData();
                     formData.append('products', JSON.stringify(allItems));  // 將商品數據作為 JSON 字符串添加到 FormData 中
                     console.log(formData);
@@ -347,21 +357,23 @@
                         console.log(pair[0] + ', ' + pair[1]);
                     }
 
+                    const aaa = JSON.stringify(allItems);
+
                     $.ajax({
                         url: '/item/insertitem',
                         type: 'post',
                         contentType: 'application/json',
-                        data: JSON.stringify(allItems),
+                        data: aaa,
                         success: function (data) {
-                            alert('確定提交商品?');
+                            console.log(aaa);
                             window.location.href = data.redirectUrl;
                         },
                         error: function (err) {
-                            console.log(formData);
+                            console.log(err);
                         }
-                    })
-                })
-            })
+                    });
+                });
+            });
         </script>
 
 

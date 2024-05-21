@@ -12,7 +12,7 @@
                     <meta name="description" content="" />
                     <meta name="author" content="" />
 
-                    <title>團購活動後台</title>
+                    <title>上架團購活動後台</title>
 
                     <!-- Custom fonts for this template-->
                     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
@@ -178,6 +178,39 @@
                         </div>
                     </div>
 
+                    <!-- 訂單細節Modal -->
+                    <div class="modal fade" id="orderDetailsModal" tabindex="-1"
+                        aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="orderDetailsModalLabel">訂單詳細信息</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Order details will be injected here -->
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>商品名稱</th>
+                                                <th>價格</th>
+                                                <th>數量</th>
+                                                <th>規格</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="orderDetailsBody">
+                                            <!-- Details go here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Logout Modal-->
                     <script src="/js/layout/Z_Logout Modal.js"></script>
 
@@ -286,12 +319,12 @@
                                                 return methods.join(", ");
                                             }
 
-                                            var content = '<div class="child-row"><table style="width:100%;"> <thead> <tr> <th> 訂購人 </th> <th> 付款方式 </th> <th> 成立時間 </th> ' +
+                                            var content = '<div class="child-row"><table style="width:100%;"> <thead> <tr> <th> 訂購人 </th> <th> 付款方式 </th> <th> 成立時間 </th> <th> 訂單細節 </th> ' +
                                                 '</tr> </thead> <tbody>';
                                             orders.forEach(order => {
                                                 let paymentMethods = parsePaymentMethod(order.payment.toString()); // 转换支付方式
                                                 content += '<tr> <td>' + order.userNo + '-' + order.userName + '</td> <td>' +
-                                                    paymentMethods + '</td> <td>' + order.setTime + '</td> </tr>';
+                                                    paymentMethods + '</td> <td>' + order.setTime + '</td> <td>' + '<button class="order-details-btn" data-orderno="' + order.orderNo + '"><i class="fa-solid fa-list"></i></button>' + '</td> </tr>';
                                             });
                                             content += '</tbody> </table> </div>';
                                             row.child(content).show();
@@ -308,6 +341,38 @@
 
                                 var modal = $(this);
                                 modal.find('#productImage').attr('src', itemImageUrl);
+                            });
+                        });
+
+                        $(document).on('click', '.order-details-btn', function () {
+                            var orderNo = $(this).data('orderno');
+                            $.ajax({
+                                url: '/orderdetails/' + orderNo,
+                                type: 'get',
+                                success: function (orderDetails) {
+                                    var orderDetailsBody = $('#orderDetailsBody');
+                                    orderDetailsBody.empty(); // 清空舊的訂單細節
+                                    var totalAmount = 0;
+
+                                    orderDetails.forEach(detail => {
+                                        var row = '<tr>' +
+                                            '<td>' + detail.itemName + '</td>' +
+                                            '<td>' + detail.itemPrice + '</td>' +
+                                            '<td>' + detail.itemQuantity + '</td>' +
+                                            '<td>' + detail.specValue + '</td>' +
+                                            '</tr>';
+                                        orderDetailsBody.append(row);
+                                        totalAmount += detail.itemPrice * detail.itemQuantity; // 計算總金額
+                                    });
+
+                                    var totalRow = '<tr>' +
+                                        '<td colspan="3" style="text-align: right;"><strong>總金額:</strong></td>' +
+                                        '<td><strong>' + totalAmount + '</strong></td>' +
+                                        '</tr>';
+                                    orderDetailsBody.append(totalRow); // 顯示總金額
+
+                                    $('#orderDetailsModal').modal('show'); // 顯示模態框
+                                }
                             });
                         });
                     </script>

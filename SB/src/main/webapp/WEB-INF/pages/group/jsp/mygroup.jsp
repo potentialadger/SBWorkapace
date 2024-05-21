@@ -140,6 +140,7 @@
 																		<th>付款方式</th>
 																		<th>修改</th>
 																		<th>刪除</th>
+																		<th>結單</th>
 																	</tr>
 																	<% List<GroupDto> groups = (ArrayList<GroupDto>)
 																			request.getAttribute("groups");
@@ -222,6 +223,14 @@
 																								data-groupeventno="<%= group.getEventNo() %>">
 																								<i
 																									class="fa-solid fa-xmark"></i>
+																							</button>
+																						</td>
+																						<td>
+																							<button
+																								class="endGroup btn btn-primary btn-lg"
+																								data-groupeventno="<%= group.getEventNo() %>">
+																								<i
+																									class="fa-solid fa-check"></i>
 																							</button>
 																						</td>
 																			</tr>
@@ -634,6 +643,24 @@
 												if (paymentCode.toString().includes('3')) methods.push("SB點數");
 												return methods.join(", ");
 											}
+
+											// 結單按鈕
+											$('.endGroup').click(function () {
+												var groupNo = $(this).data('groupeventno');
+												if (confirm('確定要結單?')) {
+													$.ajax({
+														url: '/group/groupdone/' + groupNo,
+														type: 'post',
+														success: function () {
+															location.reload();
+														},
+														error: function () {
+															console.log('白癡');
+															location.reload();
+														}
+													})
+												}
+											})
 										});
 									</script>
 

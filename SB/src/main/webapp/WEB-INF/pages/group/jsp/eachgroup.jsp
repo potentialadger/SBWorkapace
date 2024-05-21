@@ -70,6 +70,20 @@
                                         font-size: 12px;
                                         color: gray;
                                     }
+
+                                    .scrollable {
+                                        max-height: 150px;
+                                        max-width: 50px
+                                        /* 设定固定高度，可以根据需要调整 */
+                                        overflow-y: auto;
+                                        /* 启用垂直滚动条 */
+                                        padding: 10px;
+                                        /* 内边距 */
+                                        border: 1px solid #ddd;
+                                        /* 边框，可以根据需要调整 */
+                                        box-sizing: border-box;
+                                        /* 使内边距和边框包含在元素的总宽度和高度内 */
+                                    }
                                 </style>
                                 <script async
                                     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAgqI1p1boHUwEIE395YECgaaYngF9FIE&libraries=places&callback=initMap&region=TW&language=zh-TW">
@@ -236,7 +250,7 @@
                                                                                 </td>
                                                                                 <td>
                                                                                     <ul
-                                                                                        class="list-unstyled ps-0 mb-0 fixed-height">
+                                                                                        class="list-unstyled ps-0 mb-0 fixed-height  scrollable">
                                                                                         <p class="itemdesc">
                                                                                             <%=item.getDescription() %>
                                                                                         </p>

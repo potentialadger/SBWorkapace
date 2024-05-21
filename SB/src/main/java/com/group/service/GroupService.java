@@ -81,6 +81,11 @@ public class GroupService {
 		return groupRepository.findGroupByUser(user);
 	}
 	
+//	後臺查詢結單團購
+	public List<Group> findGroupDoneBack(){
+		return groupRepository.findGroupDoneBack();
+	}
+	
 //	新增活動
 	public Group insertGroup(Integer user, String title, String description, Date endtime,
 							String[] pay, String minquantity, String minamount, String account, String address) {

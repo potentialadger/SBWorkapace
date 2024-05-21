@@ -241,7 +241,15 @@ public class GroupController {
 	public String findAllGroupBack(Model m) {
 		List<Group> groups = gService.findAllGroup();
 		m.addAttribute("groups", groups);
-		return "group/jsp/backallgroups.jsp";
+		return "group/jsp/backallactivegroups.jsp";
+	}
+	
+//	後臺結單活動
+	@GetMapping(value = "/backdonegroups")
+	public String findGroupsDoneBack(Model m) {
+		List<Group> groups = gService.findGroupDoneBack();
+		m.addAttribute("groups", groups);
+		return "group/jsp/backdonegroups.jsp";
 	}
 	
 //	後台下架團購活動
@@ -327,7 +335,24 @@ public class GroupController {
 		return "group/jsp/eachgroup.jsp";
 	}
 	
-	
+	@PostMapping("/groupdone/{eventno}")
+	public String doneGroup(@PathVariable("eventno") Integer eventno, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+//		UserBean user = (UserBean)session.getAttribute("userData");
+		UserBean user = userService.getUserData(1);		
+		Group group = gService.findGroupByEventNo(eventno);
+		
+		Integer userPoint = user.getPoint();		
+		Integer groupPoint = group.getPoint();
+
+		userPoint += groupPoint;
+		user.setPoint(userPoint);
+		group.setStatus("done");
+		
+		userService.updateUser(user);
+		gService.updatePoint(group);
+		return "ok";
+	}
 	
 //	linepay金流
 	@GetMapping("/groups100")

@@ -5,6 +5,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ import com.group.model.Order;
 import com.group.model.OrderDetail;
 import com.group.repository.OrderRepository;
 import com.user.bean.UserBean;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 @Transactional
@@ -50,13 +53,34 @@ public class OrderService {
 			Integer userNo = order.getUserNo().getUserNo();
 			Integer payment = order.getPaymentMethod();
 			Date setTime = order.getSetTime();
-			System.out.println(setTime);
+			Integer orderNO = order.getId();
+			List<OrderDetail> orderDetails = order.getOrderDetails();
+			ArrayList<OrderDetailsDto> orderDetailsDtos = new ArrayList<OrderDetailsDto>();
+			
+			for (OrderDetail orderDetail : orderDetails) {
+				String itemName = orderDetail.getItem().getName();
+				Integer itemPrice = orderDetail.getItem().getPrice();
+				Integer itemNo = orderDetail.getItem().getItemNo();
+				Integer itemQuantity = orderDetail.getItemQuantity();
+				String specValue = orderDetail.getItemSpec().getSpecValue();
+				
+				OrderDetailsDto orderDetailsDto = new OrderDetailsDto();
+				orderDetailsDto.setItemNo(itemNo);
+				orderDetailsDto.setItemName(itemName);
+				orderDetailsDto.setItemQuantity(itemQuantity);
+				orderDetailsDto.setSpecValue(specValue);
+				orderDetailsDto.setItemPrice(itemPrice);
+				
+				orderDetailsDtos.add(orderDetailsDto);
+			}
 			
 			BackToFrontOrder backToFrontOrder = new BackToFrontOrder();
 			backToFrontOrder.setUserNo(userNo);
 			backToFrontOrder.setUserName(userName);
 			backToFrontOrder.setPayment(payment);
 			backToFrontOrder.setSetTime(setTime);
+			backToFrontOrder.setOrderNo(orderNO);
+			backToFrontOrder.setOrderDetailsDto(orderDetailsDtos);
 			
 			orders.add(backToFrontOrder);
 		}
@@ -151,6 +175,18 @@ public class OrderService {
 		}
 		
 		return orders;
+	}
+	
+	public Order findOrderById(Integer orderNo) {
+		 Optional<Order> orderOptional = orderRepository.findById(orderNo);
+		 
+		 if (orderOptional.isEmpty()) {
+			 throw new EntityNotFoundException("order not found with id: " + orderNo);
+		 }
+		 
+		 Order order = orderOptional.get();
+		 
+		 return order;
 	}
 	
 }
