@@ -134,9 +134,13 @@
 														for (Group group : groups) { %>
 														<div
 															class="col-lg-4 col-md-6 col-12 mt-4 pt-2 position-relative">
-															<div
-																class="card service-wrapper rounded border-0 shadow p-4">
-																<div class="content mt-4">
+															<div class="card service-wrapper rounded border-0 shadow p-4"
+																style="padding: 0px;">
+																<a href="/otherAboutMe/<%=group.getUser().getUserNo() %>"><img
+																		src="localimages/<%=group.getUser().getAvatar() %>"
+																		alt=""
+																		style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; margin: 5px"></a>
+																<div class="content mt-4" style="margin: 0px;">
 																	<h5 class="title">
 																		<%=group.getTitle() %>
 																	</h5>
@@ -407,7 +411,7 @@
 									function updateAccountInput(data) {
 										const bankvalue = $('#bank').val();
 										if (data[bankvalue]) {
-											const bankcode = data[bankvalue].code + data[bankvalue].name;
+											const bankcode = data[bankvalue].code + data[bankvalue].name + '-';
 											$('input[name="account"]').val(bankcode);
 										}
 									}

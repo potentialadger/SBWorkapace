@@ -562,21 +562,22 @@
                                                 paymentMethod: paymentMethod,
                                                 orderDetail: orderDetails
                                             }
+                                            if (confirm('確定要送出購物車嗎')) {
+                                                $.ajax({
+                                                    url: '/insertorder',
+                                                    type: 'POST',
+                                                    contentType: 'application/json',
+                                                    data: JSON.stringify(formData),
+                                                    success: function (response) {
+                                                        alert('訂單已送出');
+                                                        window.location.href = "/group/mygroups";
+                                                    },
+                                                    error: function (err) {
+                                                        console.log(formData);
+                                                    }
+                                                })
+                                            }
 
-                                            $.ajax({
-                                                url: '/insertorder',
-                                                type: 'POST',
-                                                contentType: 'application/json',
-                                                data: JSON.stringify(formData),
-                                                success: function (response) {
-                                                    alert('確定送出購物車嗎');
-                                                    console.log(formData);
-                                                    $('#cart').modal('hide');
-                                                },
-                                                error: function (err) {
-                                                    console.log(formData);
-                                                }
-                                            })
                                         })
 
                                         $('#productModal').on('show.bs.modal', function (event) {

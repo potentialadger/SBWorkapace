@@ -65,20 +65,42 @@ public class OrderController {
 		
 		Order insertOrder = orderService.insertOrder(group, userBean, paymentMethod);
 		
+		Integer orderTotalPrice = 0;		
+		
 		for (OrderDetailsDto orderDetailDto : orderDetailsDto) {
 			Integer itemNo = orderDetailDto.getItemNo();
 			Integer itemQuantity = orderDetailDto.getItemQuantity();
 			Integer itemSpecNo = orderDetailDto.getItemSpec();
-			System.out.println("-------------" + itemNo);
-			System.out.println("-------------" + itemQuantity);
-			System.out.println("-------------" + itemSpecNo);
 			
 			Item item = itemService.findItemById(itemNo);
+			Integer selectItemPrice = item.getPrice() * itemQuantity;
+			
+			orderTotalPrice += selectItemPrice;
+			
 			ItemSpecification itemSpec = itemSpecService.findItemSpecById(itemSpecNo);
 			
 			orderDetailService.insertOrderDetail(insertOrder, item, itemQuantity, itemSpec);
 		}
-		return "redirect:/group/eachgroup/" + group.getEventNo();
+		
+		if(paymentMethod == 3) {
+			Integer userPoint = userBean.getPoint();
+			Integer groupPoint = group.getPoint();
+			
+			if(userPoint >= orderTotalPrice) {
+				userPoint = userPoint - orderTotalPrice;
+				groupPoint = groupPoint + orderTotalPrice;
+			}
+			
+			userBean.setPoint(userPoint);
+			group.setPoint(groupPoint);
+			
+			userService.updateUser(userBean);
+			groupService.updatePoint(group);
+			
+		}
+		
+		
+		return "redirect:/group/mygroups";
 	}
 	
 	@GetMapping("/groupbackorders/{eventno}")

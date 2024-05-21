@@ -46,6 +46,11 @@ public class GroupService {
 		return groupRepository.finaAllGroup();
 	}
 	
+//	更新團購點數
+	public Group updatePoint(Group group) {
+		return groupRepository.save(group);
+	}
+	
 //	查詢活躍活動依照開活動時間升序
 	public List<Group> findAllGroupsByStartTimeAsc(){
 		return groupRepository.findAllGroupsByStartTimeAsc();
