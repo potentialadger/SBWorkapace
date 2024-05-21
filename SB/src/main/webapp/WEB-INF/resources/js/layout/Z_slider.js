@@ -29,15 +29,60 @@ slider = `<!-- Sidebar -->
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-            aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-cog"></i>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#userPages"
+            aria-expanded="true" aria-controls="collapsePages">
+            <i class="fas fa-fw fa-users"></i>
+            <span>使用者</span>
+        </a>
+        <div id="userPages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">user</h6>
+                <a class="collapse-item" href="login.html">使用者後台</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#forumPages"
+            aria-expanded="true" aria-controls="collapsePages">
+            <i class="fas fa-fw fa-file"></i>
+            <span>論壇</span>
+        </a>
+        <div id="forumPages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">forum</h6>
+                <a class="collapse-item" href="login.html">論壇後台</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#groupPages"
+            aria-expanded="true" aria-controls="collapsePages">
+            <i class="fas fa-fw fa-shopping-cart"></i>
             <span>團購</span>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="groupPages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                
-                <a class="collapse-item" href="/group/backgroups">團購活動</a>
+                <h6 class="collapse-header">group</h6>
+                <a class="collapse-item" href="login.html">團購活動</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#groupPages"
+            aria-expanded="true" aria-controls="collapsePages">
+            <i class="fas fa-fw fa-shopping-cart"></i>
+            <span>團購</span>
+        </a>
+        <div id="groupPages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">group</h6>
+                <a class="collapse-item" href="login.html">團購活動</a>
             </div>
         </div>
     </li>
