@@ -36,23 +36,23 @@
             margin: 10px 0 5px;
         }
         input[type="text"], input[type="datetime-local"] {
-            width: 100%;
+            width: calc(100% - 16px);
             padding: 8px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
-        button {
+        .btn-custom {
             width: 100%;
             padding: 10px;
-            background-color: #28a745;
+            background-color: #4e73df;
             color: #fff;
             border: none;
             border-radius: 4px;
             cursor: pointer;
         }
-        button:hover {
-            background-color: #218838;
+        .btn-custom:hover {
+            background-color: #2e59d9;
         }
     </style>
 </head>
@@ -66,13 +66,13 @@
             <label for="participantName">參與者姓名：</label>
             <input type="text" id="participantName" name="participantName" value="<%= registration.getParticipantName() %>" required>
             
-            <label for="contactInfo">聯絡信息：</label>
+            <label for="contactInfo">聯絡電話:</label>
             <input type="text" id="contactInfo" name="contactInfo" value="<%= registration.getContactInfo() %>" required>
             
             <label for="registrationTime">註冊時間：</label>
-            <input type="datetime-local" id="registrationTime" name="registrationTime" value="<%= registration.getRegistrationTime().toString().replace(" ", "T") %>" readonly>
+            <input type="datetime-local" id="registrationTime" name="registrationTime" value="${localDateTimeFormat.format(registration.registrationTime)}" readonly>
             
-            <button type="submit">更新信息</button>
+            <button type="submit" class="btn-custom">更新信息</button>
         </form>
     </div>
 </body>

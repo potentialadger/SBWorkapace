@@ -1,6 +1,7 @@
 package com.activity.controller;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -160,6 +161,7 @@ public class EventRegistrationsController {
             Optional<EventRegistrationsBean> registrationOptional = eventRegistrationsService.findByRegistration(registrationID);
             if (registrationOptional.isPresent()) {
                 mav.addObject("registration", registrationOptional.get());
+                mav.addObject("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
             } else {
                 mav.addObject("errorMessage", "No registration found with ID " + registrationID);
             }

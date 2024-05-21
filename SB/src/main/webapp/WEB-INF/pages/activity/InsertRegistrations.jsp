@@ -131,9 +131,15 @@
                                 <td><input type="text" name="contactInfo" required></td>
                             </tr>
                             <tr>
+                                <td>註冊時間:</td>
+                                <td> <input type="text" name="registrationTime" value="${LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)}"></td>
+                            </tr>
+                            
+                            <tr>
                                 <td colspan="2" align="center">
-                                    <input type="hidden" name="registrationTime" value="${LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)}">
+                                   
                                     <button type="submit" class="btn-custom">提交報名</button>
+                                    <button type="button" class="btn-custom" id="oneToInput">一鍵輸入</button>
                                 </td>
                             </tr>
                         </table>
@@ -178,6 +184,12 @@
     <script src="/js/demo/chart-area-demo.js"></script>
     <script src="/js/demo/chart-pie-demo.js"></script>
 
+    <script>
+        document.getElementById('oneToInput').addEventListener('click', function () {
+            document.getElementsByName('participantName')[0].value = "雷霆驚龍霸天烈焰";
+            document.getElementsByName('contactInfo')[0].value = "0987654321";
+        });
+    </script>
 </body>
 
 </html>
