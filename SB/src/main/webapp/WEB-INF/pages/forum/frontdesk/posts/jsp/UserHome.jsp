@@ -243,7 +243,17 @@ body {
 
 									<form class="custom-form-allposts" method="get"
 										action="/postsFrontDesk/AllPosts">
-										<button type="submit" class="custom-allposts-button">全部文章</button>
+										<button type="submit" class="custom-allposts-button">由新到舊</button>
+									</form>
+									
+									<form class="custom-form-allposts" method="get"
+										action="/postsFrontDesk/AllPostsAsc">
+										<button type="submit" class="custom-allposts-button">由舊到新</button>
+									</form>
+									
+									<form class="custom-form-allposts" method="get"
+										action="/postsFrontDesk/AllPostsSee">
+										<button type="submit" class="custom-allposts-button">熱門文章</button>
 									</form>
 									<!-- <span class="input-icon input-icon-sm ml-auto w-auto">
 													<input type="text"

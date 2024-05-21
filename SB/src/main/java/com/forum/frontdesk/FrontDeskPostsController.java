@@ -72,7 +72,7 @@ public class FrontDeskPostsController {
 		return "/forum/frontdesk/posts/jsp/UserHome.jsp";
 	}
 
-	// 前台 全部查詢
+	// 前台 新到舊 全部查詢
 	@GetMapping("/AllPosts")
 	public String getAllPosts(Model m) {
 		List<PostsBean> postsList = postsService.findAllOrderByCreatedAtDesc();
@@ -80,6 +80,30 @@ public class FrontDeskPostsController {
 
 		m.addAttribute("postsM", postsList);
 		m.addAttribute("categoriesM", categoriesList); 
+
+		return "/forum/frontdesk/posts/jsp/UserHome.jsp";
+	}
+	
+	// 前台 舊到新 全部查詢
+	@GetMapping("/AllPostsAsc")
+	public String getAllPostsAsc(Model m) {
+		List<PostsBean> postsList = postsService.findAllOrderByUpdateDateAsc();
+		List<CategoriesBean> categoriesList = categoriesService.getAllCategories();
+
+		m.addAttribute("postsM", postsList);
+		m.addAttribute("categoriesM", categoriesList);
+
+		return "/forum/frontdesk/posts/jsp/UserHome.jsp";
+	}
+	
+	// 前台 瀏覽次數 全部查詢
+	@GetMapping("/AllPostsSee")
+	public String getAllPostsSee(Model m) {
+		List<PostsBean> postsList = postsService.findAllByOrderByViewCountDesc();
+		List<CategoriesBean> categoriesList = categoriesService.getAllCategories();
+
+		m.addAttribute("postsM", postsList);
+		m.addAttribute("categoriesM", categoriesList);
 
 		return "/forum/frontdesk/posts/jsp/UserHome.jsp";
 	}

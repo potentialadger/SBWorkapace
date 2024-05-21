@@ -36,8 +36,10 @@ public interface PostsServiceInterface {
     // 新到舊排序
     List<PostsBean> findAllOrderByCreatedAtDesc();
     
+    // 舊到新排序
+    List<PostsBean> findAllOrderByUpdateDateAsc();
     
-//    // 依照瀏覽次數排序
-//    List<PostsBean> findAllByOrderByViewCountDesc();
+    // 依照瀏覽次數排序
+    List<PostsBean> findAllByOrderByViewCountDesc();
     
 }
