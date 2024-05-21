@@ -75,6 +75,7 @@ public class UserService {
 		return 1;
 	}
 
+	@Transactional
 	public UserBean updateUser(UserBean inputUserBean) {
 		return uRepository.save(inputUserBean);
 	}

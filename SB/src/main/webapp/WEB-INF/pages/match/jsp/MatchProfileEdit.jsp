@@ -5,369 +5,55 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>MatchProfileEdit</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous"/>
-<link rel="stylesheet" href="/mycss/custom.css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.carousel.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css">
-<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
-<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-<style type="text/css">
-body {
-	margin-top: 20px;
-	color: #9b9ca1;
-}
+    <title>SB Admin 2 - Dashboard</title>
 
-.bg-secondary-soft {
-	background-color: rgba(208, 212, 217, 0.1) !important;
-}
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-.rounded {
-	border-radius: 5px !important;
-}
-
-.py-5 {
-	padding-top: 3rem !important;
-	padding-bottom: 3rem !important;
-}
-
-.px-4 {
-	padding-right: 1.5rem !important;
-	padding-left: 1.5rem !important;
-}
-
-/*標籤樣式設置*/
-.nav-tabs .nav-link {
-	font-weight: bold;
-}
-
-/* 未選中的顏色 */
-.nav-tabs .nav-link {
-	color: #ADD8E6;
-}
-
-/* 鼠標懸停時的顏色 */
-.nav-tabs .nav-link:hover {
-	color: #ACC3CA;
-}
-
-/* 點選時的顏色 */
-.nav-tabs .nav-link.active, .nav-tabs .nav-link:focus {
-	color: #656363;
-}
-
-/*整個頁面增加底部間距*/
-.container {
-	margin-bottom: 200px;
-	/* 調整這個數值來增加或減少底部間距 */
-}
-
-.file-upload .square {
-	height: 250px;
-	width: 250px;
-	margin: auto;
-	vertical-align: middle;
-	border: 1px solid #e5dfe4;
-	background-color: #fff;
-	border-radius: 5px;
-}
-
-.text-secondary {
-	--bs-text-opacity: 1;
-	color: rgba(208, 212, 217, 0.5) !important;
-}
-
-/*頭像上傳跟刪除按鈕*/
-.btn-success-soft {
-	color: #28a745;
-	background-color: rgba(40, 167, 69, 0.1);
-}
-
-.btn-danger-soft {
-	color: #dc3545;
-	background-color: rgba(220, 53, 69, 0.1);
-}
-
-/*頭像按鈕移上去樣式*/
-.btn-success-soft:hover {
-	color: #222121;
-	background-color: #E5F2E8;
-}
-
-.btn-danger-soft:hover {
-	color: #222121;
-	background-color: #F7E6E8;
-}
-
-/*頭像圖片框*/
-.form-control {
-	display: block;
-	width: 100%;
-	padding: 0.5rem 1rem;
-	font-size: 0.9375rem;
-	font-weight: 400;
-	line-height: 1.6;
-	color: #29292e;
-	background-color: #fff;
-	background-clip: padding-box;
-	border: 1px solid #e5dfe4;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-	border-radius: 5px;
-	-webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow
-		0.15s ease-in-out;
-	transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s
-		ease-in-out;
-	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
-		-webkit-box-shadow 0.15s ease-in-out;
-}
-
-/* 頭像樣式 */
-.avatar {
-	width: 100%;
-	/* 設置頭像的寬度 */
-	height: 100%;
-	/* 設置頭像的高度 */
-	object-fit: cover;
-	/* 確保圖像完全填充頭像框 */
-	border-radius: 5px;
-}
-
-/*輪播*/
-.owl-carousel .item {
-	margin: 5px;
-}
-
-.owl-carousel .item img {
-	display: block;
-	width: 100%;
-	height: 500px;
-	/* 調整這個值來設定照片高度 */
-	object-fit: cover;
-	/* 確保照片不會被拉伸或壓縮 */
-}
-
-/*輪播圖片 - 框跟圖示*/
-.photo-container {
-	position: relative;
-}
-
-/*主題名稱區塊*/
-.theme-name {
-	background-color: #918e8e77;
-	/* 背景顏色 */
-	color: #333;
-	/* 文字顏色 */
-	padding: 20px;
-	/* 內邊距 */
-	font-size: 16.5px;
-	/* 字體大小 */
-	border-radius: 5px;
-	/* 圓角 */
-	border-top-left-radius: 0px;
-	/* 上左角方形 */
-	border-top-right-radius: 0px;
-	/* 上右角方形 */
-	border-bottom-left-radius: 5px;
-	/* 下左角圓形 */
-	border-bottom-right-radius: 5px;
-	/* 下右角圓形 */
-}
-
-.photo-container .square {
-	opacity: 0;
-	transition: opacity 0.3s;
-}
-
-.photo-container:hover .square {
-	opacity: 1;
-}
-
-.add-photo {
-	cursor: pointer;
-}
-
-/*框線長寬*/
-.image-frame {
-	width: 200px;
-	/* 調整寬度 */
-	height: 500px;
-	/* 調整高度 */
-	display: inline-block;
-	/* 或者 float:left; */
-	overflow: hidden;
-	/* 裁切超出框架的部分 */
-}
-
-/*主題照片框線樣式*/
-.photo-container .image-frame {
-	display: block;
-	width: 100%;
-	padding: 0;
-	/* 移除內邊距 */
-	font-size: 0.9375rem;
-	font-weight: 400;
-	line-height: 1.6;
-	color: #29292e;
-	background-color: #d8d8d86d;
-	background-clip: padding-box;
-	border: 1px solid #e5dfe4;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-	border-radius: 5px;
-	overflow: hidden;
-	/* 確保圖片不會溢出框 */
-	border-top-left-radius: 5px;
-	/* 上左角方形 */
-	border-top-right-radius: 5px;
-	/* 上右角方形 */
-	border-bottom-left-radius: 0px;
-	/* 下左角圓形 */
-	border-bottom-right-radius: 0px;
-	/* 下右角圓形 */
-	-webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow
-		0.15s ease-in-out;
-	transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s
-		ease-in-out;
-	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
-		-webkit-box-shadow 0.15s ease-in-out;
-}
-
-.image-frame img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	/* 確保圖片完全覆蓋框架區域 */
-}
-
-.delete-photo {
-	color: #6c757d;
-	/* 初始狀態下的顏色 */
-	border-color: transparent;
-	background-color: transparent;
-}
-
-.delete-photo:hover {
-	background-color: #dc3545;
-	/* 移上去後的背景色（紅色） */
-	border-color: #dc3545;
-}
-
-.delete-photo i {
-	color: #111111;
-	/* "x" 圖標顏色 */
-}
-
-.delete-photo:hover i {
-	color: #fff;
-	/* 移上去後的 "x" 圖標顏色 */
-}
-
-/*頁籤與個性標籤頁面的距離*/
-.nav.nav-tabs {
-	margin-bottom: 5px;
-}
-
-#tagsTabPane .bg-secondary-soft {
-	margin-top: 25px;
-}
-
-#tagsTabPane .gap-3 {
-	margin-top: 25px;
-}
-
-/*可選標籤 : 下拉式選單 */
-.customSuggestionsList>div {
-	max-height: 300px;
-	min-height: 50px;
-	border: 2px solid #80ade8;
-	overflow: auto;
-}
-
-.customSuggestionsList .empty {
-	color: #999;
-	font-size: 20px;
-	text-align: center;
-	padding: 1em;
-}
-
-/*可選標籤 : 框裡選擇再在外面顯示標籤*/
-.tagify--outside {
-	border: 0;
-}
-
-/* 在外部的 tagify 輸入框樣式 */
-.tagify--outside .tagify__input {
-	order: -1;
-	flex: 100%;
-	border: 1px solid var(--tags-border-color);
-	margin-bottom: 1em;
-	transition: .1s;
-}
-
-.tagify--outside .tagify__input:hover {
-	border-color: var(--tags-hover-border-color);
-}
-
-.tagify--outside.tagify--focus .tagify__input {
-	transition: 0s;
-	border-color: var(--tags-focus-border-color);
-}
-
-/* 清除全部按鈕樣式 */
-.tags--removeAllBtn {
-	background-color: #80ade8;
-	/* 更改背景顏色 */
-	color: #ffffff;
-	/* 更改文本顏色 */
-	font-size: 12px;
-	/* 調整按鈕文字大小 */
-	border: 1px solid #80ade8;
-	/* 更改邊框顏色 */
-	padding: 3px 15px;
-	/* 調整內邊距 */
-	border-radius: 5px;
-	/* 圓角 */
-	margin-top: 39px;
-	/* 調整上方 margin */
-	margin-bottom: 0;
-	width: auto;
-	/* 自動調整寬度 */
-	height: 25px;
-	/* 自動調整高度 */
-}
-
-.tags--removeAllBtn:hover {
-	background-color: #c82333;
-	/* 滑鼠移過時的背景顏色 */
-	border-color: #c82333;
-	/* 滑鼠移過時的邊框顏色 */
-}
-
-/*從以下清單中新增標籤: 樣式*/
-.tag-label {
-	font-size: 15px;
-	color: #80ade8;
-	font-weight: bold;
-	margin-bottom: 0;
-	margin-top: 35px;
-	/* 調整上方 margin */
-}
-</style>
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous"/>
+	<link rel="stylesheet" href="/mycss/custom.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.carousel.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+	<link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css"/>
+	<link rel="stylesheet" href="mycss/MatchEdit.css">
+	
 
 </head>
 
-<body>
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!--        <script src="js/test/Z_slider.js"></script>-->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <script src="js/layout/Z_TopBar.js"></script>
+
+                <!-- 主要內容 -->
+
 	<div class="container">
 
 		<div class="row g-3">
@@ -380,27 +66,18 @@ body {
 			<!-- 頁籤 -->
 			<ul class="nav nav-tabs" id="tab" role="tablist">
 				<li class="nav-item" role="presentation">
-					<button class="nav-link active" id="profileTab"
-						data-bs-toggle="tab" data-bs-target="#profileTabPane"
-						type="button" role="tab" aria-controls="profileTabPane"
-						aria-selected="true">基本資料</button>
+					<button class="nav-link active" id="profileTab" data-bs-toggle="tab" data-bs-target="#profileTabPane" type="button" role="tab" aria-controls="profileTabPane" aria-selected="true">基本資料</button>
 				</li>
 				<li class="nav-item" role="presentation">
-					<button class="nav-link" id="accordionTab" data-bs-toggle="tab"
-						data-bs-target="#tagsTabPane" type="button" role="tab"
-						aria-controls="accordionTabPane" aria-selected="false">
+					<button class="nav-link" id="accordionTab" data-bs-toggle="tab" data-bs-target="#tagsTabPane" type="button" role="tab" aria-controls="accordionTabPane" aria-selected="false">
 						自訂標籤</button>
 				</li>
 				<li class="nav-item" role="presentation">
-					<button class="nav-link" id="photosTab" data-bs-toggle="tab"
-						data-bs-target="#photosTabPane" type="button" role="tab"
-						aria-controls="photosTabPane" aria-selected="false">主題照片
+					<button class="nav-link" id="photosTab" data-bs-toggle="tab" data-bs-target="#photosTabPane" type="button" role="tab" aria-controls="photosTabPane" aria-selected="false">主題照片
 					</button>
 				</li>
 				<li class="nav-item" role="presentation">
-					<button class="nav-link" id="accordionTab" data-bs-toggle="tab"
-						data-bs-target="#othersTabPane" type="button" role="tab"
-						aria-controls="accordionTabPane" aria-selected="false">
+					<button class="nav-link" id="accordionTab" data-bs-toggle="tab" data-bs-target="#othersTabPane" type="button" role="tab" aria-controls="accordionTabPane" aria-selected="false">
 						其他</button>
 				</li>
 			</ul>
@@ -410,17 +87,15 @@ body {
 			<div class="tab-content" id="tabContent">
 
 				<!-- 基本資料 -->
-				<div class="tab-pane fade show active" id="profileTabPane"
-					role="tabpanel" aria-labelledby="profileTab" tabindex="0">
+				<div class="tab-pane fade show active" id="profileTabPane" role="tabpanel" aria-labelledby="profileTab" tabindex="0">
 					<div class="mb-3">
 						<div>
-							<form class="file-upload">
+							<form class="file-upload" action="/updateUserProfile" method="post">
 								<div class="row mb-5 gx-5">
 									<div class="tab-content">
 
 										<div class="tab-content">
-											<div class="tab-pane fade show active" id="tab-basic"
-												role="tabpanel">
+											<div class="tab-pane fade show active" id="tab-basic" role="tabpanel">
 												<!-- 基本資料內容 -->
 											</div>
 										</div>
@@ -445,22 +120,17 @@ body {
 												</div>
 
 												<div class="col-md-6">
-													<label class="form-label">生日 </label> <input type="date"
-														class="form-control" id="date" name="birthday"
-														value="${localDateTimeDateFormat.format(userBean.birthday)}"
-														pattern='yyyy-MM-dd' onchange="calculateZodiac()">
+													<label class="form-label">生日 </label> <input type="date" class="form-control" id="date" name="birthday" value="${localDateTimeDateFormat.format(userBean.birthday)}" pattern='yyyy-MM-dd' onchange="calculateZodiac()">
 												</div>
 												
 												<div class="col-md-6">
                                                     <label class="form-label">星座</label>
-                                                    <input type="text" class="form-control" id="zodiac"
-                                                        placeholder="自動載入星座" readonly>
+                                                    <input type="text" class="form-control" id="zodiac" placeholder="自動載入星座" readonly>
                                                 </div>
 
 												<div class="col-md-6">
 													<label for="inputBloodType" class="form-label">血型 </label>
-													<select id="inputBloodType" class="form-select"
-														name="bloodType">
+													<select id="inputBloodType" class="form-select" name="bloodType">
 														<option value=""
 															${empty userBean.bloodType ? "selected" : ""}>選擇血型</option>
 														<option value="A"
@@ -574,10 +244,7 @@ body {
 
 													<!--顯示用戶的頭像或者預設的用戶圖示 - Font Awesome圖標-->
 													<div class="square position-relative display-2 mb-3">
-														<img
-															src="https://p1-tt.byteimg.com/origin/tos-cn-i-qvj2lq49k0/a2752baadcc147cb80408dc7179fe65b.jpg"
-															alt="Avatar"
-															class="position-absolute avatar top-50 start-50 translate-middle img-fluid">
+														<img src="https://p1-tt.byteimg.com/origin/tos-cn-i-qvj2lq49k0/a2752baadcc147cb80408dc7179fe65b.jpg" alt="Avatar" class="position-absolute avatar top-50 start-50 translate-middle img-fluid">
 													</div>
 
 													<input type="file" id="customFile" name="file" hidden>
@@ -612,38 +279,28 @@ body {
 												</div>
 
 												<div class="col-md-6">
-													<label class="form-label"><i
-														class="fab fa-fw fa-twitter text-twitter me-2"></i>Twitter
-														*</label> <input type="text" class="form-control" placeholder
-														aria-label="Twitter" value="http://www.twitter.com">
+													<label class="form-label"><i class="fab fa-fw fa-twitter text-twitter me-2"></i>Twitter
+														*</label> <input type="text" class="form-control" placeholder aria-label="Twitter" value="http://www.twitter.com">
 												</div>
 
 												<div class="col-md-6">
-													<label class="form-label"><i
-														class="fab fa-fw fa-linkedin-in text-linkedin me-2"></i>Linkedin
-														*</label> <input type="text" class="form-control" placeholder
-														aria-label="Linkedin" value="http://www.linkedin.com">
+													<label class="form-label"><i class="fab fa-fw fa-linkedin-in text-linkedin me-2"></i>Linkedin
+														*</label> <input type="text" class="form-control" placeholder aria-label="Linkedin" value="http://www.linkedin.com">
 												</div>
 
 												<div class="col-md-6">
-													<label class="form-label"><i
-														class="fab fa-fw fa-instagram text-instagram me-2"></i>Instagram
-														*</label> <input type="text" class="form-control" placeholder
-														aria-label="Instragram" value="http://www.instragram.com">
+													<label class="form-label"><i class="fab fa-fw fa-instagram text-instagram me-2"></i>Instagram
+														*</label> <input type="text" class="form-control" placeholder aria-label="Instragram" value="http://www.instragram.com">
 												</div>
 
 												<div class="col-md-6">
-													<label class="form-label"><i
-														class="fas fa-fw fa-basketball-ball text-dribbble me-2"></i>Dribble
-														*</label> <input type="text" class="form-control" placeholder
-														aria-label="Dribble" value="http://www.dribble.com">
+													<label class="form-label"><i class="fas fa-fw fa-basketball-ball text-dribbble me-2"></i>Dribble
+														*</label> <input type="text" class="form-control" placeholder aria-label="Dribble" value="http://www.dribble.com">
 												</div>
 
 												<div class="col-md-6">
-													<label class="form-label"><i
-														class="fab fa-fw fa-pinterest text-pinterest"></i>Pinterest
-														*</label> <input type="text" class="form-control" placeholder
-														aria-label="Pinterest" value="http://www.pinterest.com">
+													<label class="form-label"><i class="fab fa-fw fa-pinterest text-pinterest"></i>Pinterest
+														*</label> <input type="text" class="form-control" placeholder aria-label="Pinterest" value="http://www.pinterest.com">
 												</div>
 											</div>
 										</div>
@@ -655,29 +312,25 @@ body {
 												<h4 class="my-4">Change Password</h4>
 
 												<div class="col-md-6">
-													<label for="exampleInputPassword1" class="form-label">Old
-														password *</label> <input type="password" class="form-control"
+													<label for="exampleInputPassword1" class="form-label">Old password *</label> <input type="password" class="form-control"
 														id="exampleInputPassword1">
 												</div>
 
 												<div class="col-md-6">
-													<label for="exampleInputPassword2" class="form-label">New
-														password *</label> <input type="password" class="form-control"
+													<label for="exampleInputPassword2" class="form-label">New password *</label> <input type="password" class="form-control"
 														id="exampleInputPassword2">
 												</div>
 
 												<div class="col-md-12">
-													<label for="exampleInputPassword3" class="form-label">Confirm
-														Password *</label> <input type="password" class="form-control"
-														id="exampleInputPassword3">
+													<label for="exampleInputPassword3" class="form-label">Confirm Password *</label> <input type="password" class="form-control" id="exampleInputPassword3">
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 
-								<div
-									class="gap-3 d-md-flex justify-content-md-end text-center my-5">
+										
+								<div class="gap-3 d-md-flex justify-content-md-end text-center my-5">
 									<button type="button" class="btn btn-primary btn-lg">確定修改</button>
 									<button type="button" class="btn btn-danger btn-lg">
 										確定刪除</button>
@@ -686,18 +339,12 @@ body {
 						</div>
 					</div>
 				</div>
-				
-				
 
 				
 				
 				
-				
-				
-				
 								<!-- 個性標籤 -->
-				<div class="tab-pane fade" id="tagsTabPane" role="tabpanel"
-					aria-labelledby="tagsTab" tabindex="0">
+				<div class="tab-pane fade" id="tagsTabPane" role="tabpanel" aria-labelledby="tagsTab" tabindex="0">
 
 					<!-- 在這裡添加你的個性標籤頁籤的內容 -->
 					<div class="row mb-5 gx-5">
@@ -707,11 +354,9 @@ body {
 									<h4 class="mb-4 mt-0">個性標籤</h4>
 
 									<!--Tagify標籤輸入外掛-->
-									<input name='tags-manual-suggestions'
-										placeholder='輸入文字查詢標籤 / 限制只能選15個' style="margin-bottom: 10px;">
+									<input name='tags-manual-suggestions' placeholder='輸入文字查詢標籤 / 限制只能選15個' style="margin-bottom: 10px;">
 									<!-- 調整下方 margin -->
-									<div
-										class="d-flex justify-content-between align-items-center mt-4">
+									<div class="d-flex justify-content-between align-items-center mt-4">
 										<h3 class="mb-0 tag-label">☝ 從以下清單中新增標籤:</h3>
 										<button class='tags--removeAllBtn'>清除全部</button>
 										<!-- 調整上方 margin -->
@@ -1246,76 +891,46 @@ deleteButtons.forEach((button) => {
 
 
 
-		<script>
-/*				// 獲取 LocalDateTime 對象
-		LocalDateTime birthday = ${localDateTimeDateFormat.format(userBean.birthday)};
-
-		// 檢查是否為 null
-		if (birthday != null) {
-		    // 格式化為 "yyyy-MM-dd" 字串
-		    String birthdayStr = birthday.format(DateTimeFormatter.ISO_LOCAL_DATE);
-		    
-		    // 將 birthdayStr 傳給前端
-		} else {
-		    // 處理 birthday 為 null 的情況
-		}*/
-</script>
 
 
 
+                <!-- 主要內容結尾 -->
 
-		<script>
-/*	function updatePhotos() {
-		  const form = document.getElementById('photoForm');
-		  const formData = new FormData(form);
+            </div>
+            <!-- End of Main Content -->
 
-		  const photoContainers = document.querySelectorAll('.photo-container');
-		  photoContainers.forEach((container, index) => {
-		    const imageFrame = container.querySelector('.image-frame');
-		    const img = imageFrame.querySelector('img');
+            <!-- footer -->
+            <script src="js/layout/Z_footer.js"></script>
 
-		    if (img) {
-		      const photoTheme = container.querySelector('.theme-name input[name="photoTheme"]').value;
-		      const photoPath = dataURLtoFile(img.src, `photo_${index}.jpg`);
+        </div>
+        <!-- End of Content Wrapper -->
 
-		      formData.append(`photoTheme[${index}]`, photoTheme);
-		      formData.append(`photoPath`, photoPath);
-		    }
-		  });
+    </div>
+    <!-- End of Page Wrapper -->
 
-		  fetch('/updateSPhotos', {
-		    method: 'POST',
-		    headers: {
-		        'Content-Type': 'application/json'
-		      },
-		    body: formData
-		  })
-		  .then(response => response.json())
-		  .then(data => {
-		    console.log(data);
-		    alert('照片已成功更新');
-		  })
-		  .catch(error => {
-		    console.error('Error:', error);
-		    alert('更新照片時發生錯誤');
-		  });
-		}
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
 
-		function dataURLtoFile(dataurl, filename) {
-		  var arr = dataurl.split(','),
-		      mime = arr[0].match(/:(.*?);/)[1],
-		      bstr = atob(arr[1]), 
-		      n = bstr.length, 
-		      u8arr = new Uint8Array(n);
-		      
-		  while(n--){
-		      u8arr[n] = bstr.charCodeAt(n);
-		  }
-		  
-		  return new File([u8arr], filename, {type:mime});
-		}*/
-        
-        </script>
+    <!-- Logout Modal-->
+    <script src="js/layout/Z_Logout Modal.js"></script>
+
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+
+
 </body>
 
 </html>

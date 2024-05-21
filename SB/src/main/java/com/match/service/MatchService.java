@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.match.bean.MatchBean;
 import com.match.repository.MatchRepository;
+import com.user.bean.UserBean;
+import com.user.service.UserService;
+
 import jakarta.transaction.Transactional;
 
 @Service
@@ -17,6 +20,9 @@ public class MatchService {
 
     @Autowired
     private MatchRepository matchRepos;
+    
+    @Autowired
+    private UserService uService;
 
     public int likeUser(int user1No, int user2No) {
         MatchBean match = matchRepos.findByUser1NoAndUser2No(user1No, user2No);
@@ -125,9 +131,7 @@ public class MatchService {
         return matchRepos.findByMatchStatus(2); // 獲取 MatchStatus 為 2 (配對成功) 的記錄
     }
     
-    
-    
-    // 獲取成功的使用者匹配列表，並將每個匹配中的使用者ID提取出來，放入一個列表中返回
+ // 獲取成功的使用者匹配列表，並將每個匹配中的使用者ID提取出來，放入一個列表中返回
     public List<Integer> getMatchedUserNos() {
         List<MatchBean> successfulMatches = getSuccessfulMatches();
         List<Integer> matchedUserNos = new ArrayList<>();
@@ -137,6 +141,33 @@ public class MatchService {
         }
         return matchedUserNos;
     }
+    
+    
+    public List<MatchBean> findByUser1NoAndMatchStatusIsSuccess(Integer user1No){
+    	return matchRepos.findByUser1NoAndMatchStatus(user1No, 2);
+	}
+    
+    public List<Integer> getMyMatchedUserNos(Integer user1No) {
+        List<MatchBean> successfulMatches = findByUser1NoAndMatchStatusIsSuccess(user1No);
+        List<Integer> matchedUserNos = new ArrayList<>();
+        for (MatchBean match : successfulMatches) {
+            matchedUserNos.add(match.getUser2No());
+        }
+        return matchedUserNos;
+    }
+    
+    public List<UserBean> getMyMatchedUserBean(Integer user1No) {
+        List<MatchBean> successfulMatches = findByUser1NoAndMatchStatusIsSuccess(user1No);
+        List<UserBean> matchedUsers = new ArrayList<>();
+        for (MatchBean match : successfulMatches) {
+        	matchedUsers.add(uService.getUserData(match.getUser2No()));
+        }
+        return matchedUsers;
+    }
+
+    
+    
+    
     
     
     

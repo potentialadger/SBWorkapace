@@ -1,205 +1,144 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ page import="com.match.bean.MatchBean"%>
 <%@ page import="java.util.List"%>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>SB Admin 2 - Dashboard</title>
+
+<!-- Custom fonts for this template-->
+<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+	type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="css/sb-admin-2.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-<style>
-
-https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css
-
-*{
-  box-sizing:border-box;
- /* outline:1px solid ;*/
-}
-body{
-background: #ffffff;
-background: linear-gradient(to bottom, #ffffff 0%,#e1e8ed 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='pruple',GradientType=0 );
-    height: 100%;
-        margin: 0;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-
-}
-.image {
-  height: 100px;
-  width: auto;
-}
-.main-content__checkmark {
-  font-size:4.0625rem !important;
-  line-height:1 !important;
-  color:#24b663;
-}
-.wrapper-1{
-  width:100%;
-  height:100vh;
-  display: flex;
-flex-direction: column;
-}
-.wrapper-2{
-  padding :30px;
-  text-align:center;
-}
-.wrapper-4{
-  padding :30px;
-  text-align:center;
-}
-h1{
-  font-family: 'Kaushan Script', cursive;
-  font-size:4em;
-  letter-spacing:3px;
-  color: #a976b2 ;
-  margin:0;
-  margin-bottom:20px;
-}
-.wrapper-4 p{
-  margin:0;
-  font-size:1.3em;
-  color:#000;
-  font-family: 'Source Sans Pro', sans-serif;
-  letter-spacing:1px;
-}
-.wrapper-2 p{
-  margin:0;
-  font-size:1.3em;
-  color:#aaa;
-  font-family: 'Source Sans Pro', sans-serif;
-  letter-spacing:1px;
-}
-.go-home{
-  text-align: center;
-  color:#fff;
-  background:#a976b2;
-  border:none;
-  padding:10px 50px;
-  margin:30px 0;
-  border-radius:30px;
-  text-transform:capitalize;
-  box-shadow: 4px 8px 40px 8px #a976b275;
-  margin-top: 280px;
-  cursor: pointer;
-}
-.footer-like{
-  margin-top: auto;
-  background:#a976b233;
-  padding:6px;
-  text-align:center;
-}
-.footer-like p{
-  margin:0;
-  padding:4px;
-  color:#000;
-  font-family: 'Source Sans Pro', sans-serif;
-  letter-spacing:1px;
-}
-.footer-like p a{
-  text-decoration:none;
-  color:#a976b2;
-  font-weight:600;
-}
-iframe {
-  margin-top:  20px;
-  border: none;
-  margin-bottom: 10px;
-}
-
-@media (min-width:360px){
-  h1{
-    font-size:4.5em;
-  }
-  .go-home{
-    margin-bottom:20px;
-  }
-}
-
-.fa-face-kiss-wink-heart {
-  font-size: 10em; /* 調整元素大小 */
-  position: relative;
-  top: 140px;
-  margin-left: -20px;/
-}
-
-h2, p {
-  text-align: center; /* 文本水平置中 */
-  position: relative;
-  top: 220px;
-}
-
-
-@media (min-width:600px){
-  .content{
-  max-width:1000px;
-  margin:0 auto;
-}
-  .wrapper-1{
-  height: 750px;
-  max-width:750px;                        /*調框的大小*/
-  margin:0 auto;
-  margin-top:50px;
-  box-shadow: 4px 8px 40px 8px #a976b275;
-}
-
-}
-
-
-</style>
+<link rel="stylesheet" href="mycss/MatchSuccess.css">
 
 
 </head>
-<body>
 
- <div class=content>
-  <div class="wrapper-1">
-    <div class="wrapper-2">
-      <img src="https://tulipex.com/wp-content/uploads/2019/06/Tulipex-Logo-Op.png" alt="" class="image">
-      <h1>配對成功!</h1>
-      <i class="fa-regular fa-face-kiss-wink-heart fa-2xl" style="color: #e4aac6 ;"></i>
-            
-      <h2>Deposit on it's way</h2>
-      <p>Please be patient as it goes through blockchain confirmation</p>
-	  <button class="go-home" onclick="window.location.href='/newMatchPage'">
-      回去配對頁面
-      </button>
-      </div>
+<body id="page-top">
 
-      <div class="footer-like">
-      <p>Email not received?
-<!--        <a href="#">Click here to send again</a> -->
-      </p>
-    </div>
-</div>
-</div>
-<link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Source+Sans+Pro" rel="stylesheet">	
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+
+		<!--        <script src="js/test/Z_slider.js"></script>-->
+
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+
+			<!-- Main Content -->
+			<div id="content">
+
+				<!-- Topbar -->
+				<script src="js/layout/Z_TopBar.js"></script>
+
+				<!-- 主要內容 -->
 
 
-<script>
+				<div class="success-content">
+					<div class="wrapper-1">
+						<div class="wrapper-2">
+							<img
+								src="https://tulipex.com/wp-content/uploads/2019/06/Tulipex-Logo-Op.png"
+								alt="" class="image">
+							<h1>配對成功!</h1>
+							<i class="fa-brands fa-gratipay fa-2xl" style="color: #e4aac6;"></i>
 
-$( document ).ready(function() {
-	  // perform some jQuery when page is loaded
-	  
-	$("h1").hover(function() { 
-	  // when user is hovering the h1
-	  $( this ).addClass("animated infinite pulse"); 
-	  // we add pulse animation and to infinite
-	}, function() {
-	  // when user no longer hover on the h1
-	  $( this ).removeClass("animated infinite pulse");
-	  // we remove the pulse
-	});
-	});
+							<h2>可以開始聊天了</h2>
+							<p class="safety-tip">
+								交友時要保持警惕，避免輕信陌生人<br>建議在公共場所見面，並告知朋友或家人你的行蹤
+							</p>
+							<button class="go-home"
+								onclick="window.location.href='/newMatchPage'">繼續配對</button>
+						</div>
 
-</script>
+						<div class="footer-like">
+							<p>
+								Email not received?
+								<!--        <a href="#">Click here to send again</a> -->
+							</p>
+						</div>
+					</div>
+				</div>
 
 
+				<script>
+					$(document).ready(function() {
+						// perform some jQuery when page is loaded
+
+						$("h1").hover(function() {
+							// when user is hovering the h1
+							$(this).addClass("animated infinite pulse");
+							// we add pulse animation and to infinite
+						}, function() {
+							// when user no longer hover on the h1
+							$(this).removeClass("animated infinite pulse");
+							// we remove the pulse
+						});
+					});
+				</script>
+
+
+				<!-- 主要內容結尾 -->
+
+			</div>
+			<!-- End of Main Content -->
+
+			<!-- footer -->
+			<script src="js/layout/Z_footer.js"></script>
+
+		</div>
+		<!-- End of Content Wrapper -->
+
+	</div>
+	<!-- End of Page Wrapper -->
+
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
+
+	<!-- Logout Modal-->
+	<script src="js/layout/Z_Logout Modal.js"></script>
+
+	<!-- Bootstrap core JavaScript-->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Core plugin JavaScript-->
+	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+	<!-- Custom scripts for all pages-->
+	<script src="js/sb-admin-2.min.js"></script>
+
+	<!-- Page level plugins -->
+	<script src="vendor/chart.js/Chart.min.js"></script>
+
+	<!-- Page level custom scripts -->
+	<script src="js/demo/chart-area-demo.js"></script>
+	<script src="js/demo/chart-pie-demo.js"></script>
 
 
 </body>
+
 </html>

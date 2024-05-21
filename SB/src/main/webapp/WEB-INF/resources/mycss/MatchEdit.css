@@ -1,5 +1,4 @@
 .container {
-	margin-top: 20px;
 	color: #9b9ca1;
 }
 
@@ -41,11 +40,6 @@
 	color: #656363;
 }
 
-/*整個頁面增加底部間距*/
-.container {
-	margin-bottom: 200px;
-	/* 調整這個數值來增加或減少底部間距 */
-}
 
 .file-upload .square {
 	height: 250px;

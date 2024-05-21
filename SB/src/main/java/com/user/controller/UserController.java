@@ -783,6 +783,7 @@ public class UserController {
 	
 	//當會員點擊 fa-solid fa-user-pen 按鈕時,表單將被提交到 /editMatchProfile 路徑,並由 processEditMatchProfile 方法處理。在該方法中,我們更新資料庫中的用戶資料,並跳轉到 MatchProfileEdit.jsp 頁面
 	
+	
 	                        //編輯交友資料的路徑     //傳資料到前端的方式
 	@RequestMapping(value = "/editMatchProfile", method = {RequestMethod.GET, RequestMethod.POST})
 	public String editMatchProfile(@RequestParam(value = "nickName", required = false) String nickName,   //將 @RequestParam 註解的 required 屬性設置為 false,表示這些參數是可選的。這樣即使在重新整理頁面時沒有傳遞這些參數,也不會拋出異常。
@@ -823,9 +824,28 @@ public class UserController {
 	
 	
 	
+	
+	@RequestMapping(value = "/newMatchPage", method = {RequestMethod.GET, RequestMethod.POST})
+	public String newMatchPage(HttpSession session, Model m) {
+		UserBean uBean = (UserBean)session.getAttribute("userData");
+		List<UserBean> allUsers = uService.getAllUserData();                            // 獲取所有用戶	  	    
+	    UserBean randomUser = getRandomUser(allUsers, uBean.getUserNo());     
+//		UserBean randomUser = uService.getUserData(11);
+	    
+	    List<String> photos = spService.findByUserNo(randomUser.getUserNo());
+	    
+	    // 載入已經儲存的資料到輸入框
+	    m.addAttribute("userBean", randomUser);
+	    m.addAttribute("photos", photos);
+	    m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	    m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+	    
+	    return "match/jsp/NewMatchPage.jsp";
+	}
+	
+	
 
-
-    						//配對頁面的路徑	      //傳資料到前端的方式
+/*    						//配對頁面的路徑	      //傳資料到前端的方式
 	@RequestMapping(value = "/matchPage", method = {RequestMethod.GET, RequestMethod.POST})
 	public String matchPage(@RequestParam(value = "nickName", required = false) String nickName,
 	                        @RequestParam(value = "bloodType", required = false) String bloodType,
@@ -864,27 +884,47 @@ public class UserController {
 	    session.setAttribute("userData", userBean);
 	    
 	    return "match/jsp/MatchPage.jsp";
+	}*/
+	
+	
+	
+	
+    // ----- 編輯資料 實作 -----
+
+	
+	
+	@PostMapping("/updateUserProfile")
+	public String updateUserProfile(@RequestParam("nickName") String nickName,
+	                                @RequestParam("gender") Integer gender,
+	                                @RequestParam("birthday") String birthday,
+	                                @RequestParam("bloodType") String bloodType,
+	                                @RequestParam("MBTI") String MBTI,
+	                                @RequestParam("goalNo") Integer goalNo,
+	                                HttpSession session) {
+	    // 從 session 中獲取當前登入的使用者
+	    UserBean userBean = (UserBean) session.getAttribute("userData");
+
+	    // 更新 userBean 的屬性
+	    userBean.setNickName(nickName);
+	    userBean.setGender(gender);
+	    userBean.setBirthday(LocalDateTime.parse(birthday, DateTimeFormatter.ofPattern("yyyy-MM-dd"))); // 使用 LocalDateTime.parse() 方法,並指定日期格式
+	    userBean.setBloodType(bloodType);
+	    userBean.setMBTI(MBTI);
+	    userBean.setGoalNo(goalNo);
+
+	    // 調用 service 方法更新資料庫中的使用者資料
+	    uService.updateUser(userBean);
+
+	    // 更新 session 中的 "userData" 屬性
+	    session.setAttribute("userData", userBean);
+
+	    // 重定向回基本資料頁面
+	    return "redirect:/MatchProfileEdit";
 	}
 	
 	
+
 	
-	
-	@RequestMapping(value = "/newMatchPage", method = {RequestMethod.GET, RequestMethod.POST})
-	public String newMatchPage(HttpSession session, Model m) {
-		UserBean uBean = (UserBean)session.getAttribute("userData");
-		List<UserBean> allUsers = uService.getAllUserData();                            // 獲取所有用戶	  	    
-	    UserBean randomUser = getRandomUser(allUsers, uBean.getUserNo());     
-	    
-	    List<String> photos = spService.findByUserNo(randomUser.getUserNo());
-	    
-	    // 載入已經儲存的資料到輸入框
-	    m.addAttribute("userBean", randomUser);
-	    m.addAttribute("photos", photos);
-	    m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-	    m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-	    
-	    return "match/jsp/NewMatchPage.jsp";
-	}
 	
     // ----- Match 實作 -----
     
@@ -913,14 +953,14 @@ public class UserController {
 	private UserBean getRandomUser(List<UserBean> users, int currentUserNo) {            // 從用戶列表中獲取下一個隨機用戶	    
 	    List<UserBean> otherUsers = new ArrayList<>();                                   // 過濾掉與當前用戶相同的用戶
 	    
-	    List<Integer> matchedUserNos = mService.getMatchedUserNos();                     // 獲取所有已經配對成功的用戶編號,存儲在 matchedUserNos 列表中
+	    List<Integer> matchedUserNos = mService.getMyMatchedUserNos(currentUserNo);                     // 獲取所有已經配對成功的用戶編號,存儲在 matchedUserNos 列表中
 	    
 	    for (UserBean user : users) {
 	        if (user.getUserNo() != currentUserNo) {                                     // 排除當前用戶自己
 	        	
 	            if (!matchedUserNos.contains(user.getUserNo())) {                        // 排除已經配對成功的用戶   => 使用 List 的 contains() 方法檢查 matchedUserNos 列表中是否包含當前用戶的編號。如果當前用戶的編號存在於 matchedUserNos 列表中,說明該用戶已經配對成功。   //如果 contains() 方法返回 true,表示當前用戶已經配對成功,! 運算符將結果取反為 false。
 	        	
-	            otherUsers.add(user);                                                    // 將符合條件的用戶添加到 otherUsers 列表中
+	            	otherUsers.add(user);                                                    // 將符合條件的用戶添加到 otherUsers 列表中
 	           }
 	        }
 	    }
