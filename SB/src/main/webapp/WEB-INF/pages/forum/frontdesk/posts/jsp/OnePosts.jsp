@@ -243,13 +243,13 @@
 
 												<button class="delete-btn"
 													data-reply-id="${replies.reply_no}"
-													onclick="confirmDelete(this)">刪除</button>
+													onclick="confirmDelete(this)" ${replies.userBean.userNo==userNo?"":"hidden"}>刪除</button>
 
 												<form method="get"
 													action="/repliesFrontDesk/UpdateSelectReplies">
 													<input type="hidden" name="repliesNo"
 														value="${replies.reply_no}">
-													<button type="submit">編輯</button>
+													<button type="submit" ${replies.userBean.userNo==userNo?"":"hidden"}>編輯</button>
 												</form>
 
 											</div>

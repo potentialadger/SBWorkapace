@@ -91,19 +91,34 @@
 
 .custom-allposts-button {
     background-color: #4e73df;
-    border-color: #4e73df;
     color: #fff;
-    padding: 0.375rem 0.75rem;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
     font-size: 1rem;
-    line-height: 1.5;
-    border-radius: 0.25rem;
-    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
-        color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 .custom-allposts-button:hover {
     background-color: #2151e0;
-    border-color: #224abe;
+    transform: scale(1.05);
+}
+
+.custom-allposts-button-hot {
+    background-color: #e43838;
+    color: #ffffff;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.custom-allposts-button-hot:hover {
+    background-color: #e92424;
+    transform: scale(1.05);
 }
 
 .inner-main-header {
@@ -253,7 +268,7 @@ body {
 									
 									<form class="custom-form-allposts" method="get"
 										action="/postsFrontDesk/AllPostsSee">
-										<button type="submit" class="custom-allposts-button">熱門文章</button>
+										<button type="submit" class="custom-allposts-button-hot">熱門文章</button>
 									</form>
 									<!-- <span class="input-icon input-icon-sm ml-auto w-auto">
 													<input type="text"
@@ -274,7 +289,8 @@ body {
 											<div class="card-body p-2 p-sm-3">
 												<div class="media forum-item">
 												 
-												<div class="avatar-container" style="display: flex; flex-direction: column; align-items: center;">		
+											<div style="margin-right: 20px;">	 
+												<div class="avatar-container" style="display: flex; flex-direction: column; align-items: flex-start;">		
 														
 													
 													<img
@@ -285,6 +301,8 @@ body {
 														<span style="color: #007bff;"><c:out value="${post.userBean.userChineseName}" /></span>
 													
 												</div>	
+											</div>	
+												
 													<div class="media-body">
 														<h5>
 															<a
