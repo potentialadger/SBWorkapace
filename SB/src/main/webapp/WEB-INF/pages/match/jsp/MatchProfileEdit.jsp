@@ -125,7 +125,7 @@
 												
 												<div class="col-md-6">
                                                     <label class="form-label">星座</label>
-                                                    <input type="text" class="form-control" id="zodiac" placeholder="自動載入星座" readonly>
+                                                    <input type="text" class="form-control" id="zodiac" placeholder="射手座" readonly>
                                                 </div>
 
 												<div class="col-md-6">
@@ -248,8 +248,7 @@
 													</div>
 
 													<input type="file" id="customFile" name="file" hidden>
-													<label class="btn btn-success-soft btn-block"
-														for="customFile">Upload</label>
+													<label class="btn btn-success-soft btn-block" for="customFile">Upload</label>
 													<button type="button" class="btn btn-danger-soft">Remove</button>
 
 													<p class="text-muted mt-3 mb-0">
@@ -332,8 +331,7 @@
 										
 								<div class="gap-3 d-md-flex justify-content-md-end text-center my-5">
 									<button type="button" class="btn btn-primary btn-lg">確定修改</button>
-									<button type="button" class="btn btn-danger btn-lg">
-										確定刪除</button>
+									<button type="button" class="btn btn-danger btn-lg">確定刪除</button>
 								</div>
 							</form>
 						</div>
@@ -551,8 +549,44 @@
 
 
 
+                <!-- 主要內容結尾 -->
 
-		<!--如果日期欄位為空,就清空星座欄位-->
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- footer -->
+            <script src="js/layout/Z_footer.js"></script>
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <script src="js/layout/Z_Logout Modal.js"></script>
+
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+    
+    
+    		<!--如果日期欄位為空,就清空星座欄位-->
 		<script>
             function calculateZodiac() {
                 var dateInput = document.getElementById("date");
@@ -888,47 +922,6 @@ deleteButtons.forEach((button) => {
                 maxTags: 3 // 限制選擇的標籤數量為3
             })
         </script>
-
-
-
-
-
-
-                <!-- 主要內容結尾 -->
-
-            </div>
-            <!-- End of Main Content -->
-
-            <!-- footer -->
-            <script src="js/layout/Z_footer.js"></script>
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <script src="js/layout/Z_Logout Modal.js"></script>
-
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
 
 
 </body>

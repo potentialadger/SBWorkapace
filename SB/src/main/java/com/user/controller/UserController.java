@@ -38,6 +38,7 @@ import com.user.bean.StateBean;
 import com.match.dto.UpdateTagsDTO;
 import com.match.service.MatchService;
 import com.match.service.SocialPhotosService;
+import com.match.service.TagsService;
 import com.user.bean.UserBean;
 import com.user.bean.UserBean_Vo;
 import com.user.bean.UserImageBean;
@@ -77,6 +78,9 @@ public class UserController {
 	
     @Autowired
     private MatchService mService;
+    
+    @Autowired
+    private TagsService tagsService;
 
 	@PostMapping("/userSignUp")
 	public String processSignUpAction(@RequestParam("account") String account,
@@ -833,58 +837,18 @@ public class UserController {
 //		UserBean randomUser = uService.getUserData(11);
 	    
 	    List<String> photos = spService.findByUserNo(randomUser.getUserNo());
+	    List<String> tagNames = tagsService.findTagNamesByUserNo(randomUser.getUserNo());
 	    
 	    // 載入已經儲存的資料到輸入框
 	    m.addAttribute("userBean", randomUser);
 	    m.addAttribute("photos", photos);
+	    m.addAttribute("tagNames", tagNames); // 將標籤名稱列表添加到 Model 中
 	    m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 	    m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 	    
 	    return "match/jsp/NewMatchPage.jsp";
 	}
-	
-	
 
-/*    						//配對頁面的路徑	      //傳資料到前端的方式
-	@RequestMapping(value = "/matchPage", method = {RequestMethod.GET, RequestMethod.POST})
-	public String matchPage(@RequestParam(value = "nickName", required = false) String nickName,
-	                        @RequestParam(value = "bloodType", required = false) String bloodType,
-	                        @RequestParam(value = "MBTI", required = false) String MBTI,
-	                        @RequestParam(value = "goalNo", required = false) Integer goalNo,
-	                        @RequestParam(value = "birthday", required = false) Integer birthday,
-
-	                        HttpSession session, Model m) {
-
-	    UserBean uBean = (UserBean)session.getAttribute("userData");
-	    Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
-	    UserBean userBean = dataById.get();
-	    
-	    // 如果請求參數為 null,則從 userBean 中獲取對應的屬性值
-	    nickName = (nickName != null) ? nickName : userBean.getNickName();
-	    bloodType = (bloodType != null) ? bloodType : userBean.getBloodType();
-	    MBTI = (MBTI != null) ? MBTI : userBean.getMBTI();
-	    goalNo = (goalNo != null) ? goalNo : userBean.getGoalNo();
-
-	    
-	    // 設置表單提交的數據到 UserBean 對象中
-	    userBean.setNickName(nickName);
-	    userBean.setBloodType(bloodType);
-	    userBean.setMBTI(MBTI);
-	    userBean.setGoalNo(goalNo);
-	    
-	    // 將更新後的用戶資料保存到資料庫
-	    uService.updateUser(userBean);
-	    
-	    // 載入已經儲存的資料到輸入框
-	    m.addAttribute("userBean", userBean);
-	    m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-	    m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-	    
-	    // 重設 session 中的 "userData" attribute
-	    session.setAttribute("userData", userBean);
-	    
-	    return "match/jsp/MatchPage.jsp";
-	}*/
 	
 	
 	
@@ -931,7 +895,6 @@ public class UserController {
 
 	// 在控制器中實現獲取下一個隨機用戶及其照片的端點
 
-
 	@GetMapping("/nextUser")
 	public ResponseEntity<Map<String, Object>> getNextUser(@RequestParam("currentUserNo") Integer currentUserNo) {
 			   
@@ -942,10 +905,13 @@ public class UserController {
 	        return ResponseEntity.notFound().build();
 	    }
 	    	    
-	    List<String> photos = spService.findByUserNo(randomUser.getUserNo());            // 根據用戶編號查詢照片路徑	  	    
+	    List<String> photos = spService.findByUserNo(randomUser.getUserNo());            // 根據用戶編號查詢照片路徑	
+	    List<String> tagNames = tagsService.findTagNamesByUserNo(randomUser.getUserNo()); // 查詢使用者關聯的標籤名稱
+
 	    Map<String, Object> response = new HashMap<>();                                  // 建立響應數據
 	    response.put("userNo", randomUser.getUserNo());
-	    response.put("photos", photos);		    
+	    response.put("photos", photos);
+	    response.put("tagNames", tagNames);                                              // 將標籤名稱加入響應資料中
 	    return ResponseEntity.ok(response);                                              // 返回響應
 	}
 	
@@ -953,7 +919,7 @@ public class UserController {
 	private UserBean getRandomUser(List<UserBean> users, int currentUserNo) {            // 從用戶列表中獲取下一個隨機用戶	    
 	    List<UserBean> otherUsers = new ArrayList<>();                                   // 過濾掉與當前用戶相同的用戶
 	    
-	    List<Integer> matchedUserNos = mService.getMyMatchedUserNos(currentUserNo);                     // 獲取所有已經配對成功的用戶編號,存儲在 matchedUserNos 列表中
+	    List<Integer> matchedUserNos = mService.getMyMatchedUserNos(currentUserNo);      // 獲取所有已經配對成功的用戶編號,存儲在 matchedUserNos 列表中
 	    
 	    for (UserBean user : users) {
 	        if (user.getUserNo() != currentUserNo) {                                     // 排除當前用戶自己

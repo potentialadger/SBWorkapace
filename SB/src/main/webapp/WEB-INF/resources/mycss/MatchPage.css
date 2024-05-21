@@ -538,7 +538,8 @@ img {
 }
 
 .carousel img {
-	height: 800px; /* 設定 carousel 區塊高度 */ /*框跟圖片調這個-裡面全部圖片的長寬*/
+	width: 100%;
+	height: 100%; /* 設定 carousel 區塊高度 */ /*框跟圖片調這個-裡面全部圖片的長寬*/
 	overflow: hidden; /* 隱藏超出區塊的部分 */
 	object-fit: cover; /* 圖片保持比例填滿容器 */
 }
@@ -651,6 +652,13 @@ img {
 	cursor: pointer;
 }
 
+.info-container {
+  position: relative;
+  width: 100%;
+  height: 450px; /* 根據需要調整容器的高度 */
+}
+
+
 /*右邊欄位裡面*/
 .matchsname {
 	text-align: center;
@@ -718,25 +726,44 @@ img {
 		format('truetype');
 }
 
+.tags {
+	font-size: 18px;
+    color: #8C8C8C;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.gender, .birthday, .bloodType, .MBTI {
+  position: absolute;
+  left: 80px;
+  color: #4D4D4D;
+  line-height: 1; /*行與行之間的垂直間距*/
+  margin-top: 20px; /* 根據需要調整這個值以增加距離 */
+}
+
+
 .goal {
 	text-align: center;
 	font-family: "cwTeXYen", sans-serif;
-	font-size: 24px;
+	font-size: 25px;
 	font-weight: 100;
-	line-height: 3; /*行與行之間的垂直間距*/
+	line-height: 2.3; /*行與行之間的垂直間距*/
 	transition: all .3s ease; /*在屬性值變化時平滑過渡*/
 	color: #4D4D4D;
 }
 
 .goal-text {
-	font-size: 21px;
-	color: #8C8C8C;
+    font-size: 18px;
+    color: #8C8C8C;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: #f0f0f0;
 }
 
 .topic {
 	text-align: center;
 	font-family: "cwTeXYen", sans-serif;
-	font-size: 24px;
+	font-size: 25px;
 	font-weight: 100;
 	line-height: 3; /*行與行之間的垂直間距*/
 	transition: all .3s ease; /*在屬性值變化時平滑過渡*/
@@ -746,29 +773,31 @@ img {
 .aboutMe {
 	text-align: center;
 	font-family: "cwTeXYen", sans-serif;
-	font-size: 24px;
+	font-size: 25px;
 	font-weight: 100;
 	line-height: 3; /*行與行之間的垂直間距*/
 	transition: all .3s ease; /*在屬性值變化時平滑過渡*/
-	color: #4D4D4D;
+	color: #4D4D4D;	
 }
 
-
-
 .gender {
-	margin-right: 140px; /* 向右移動 20 像素 */
-	font-size: 21px;
+    top: 0;
+	font-size: 22px;
 	color: #4D4D4D;
 }
 
 .gender-text {
-	color:"";
+	font-size: 22px;
 }
 
 .birthday {
-	margin-right: 140px; /* 向右移動 20 像素 */
-	font-size: 20px;
+    top: 40px;
+	font-size: 22px;
 	color: #4D4D4D;
+}
+
+.date {
+	font-size: 20px;
 }
 
 .starSign {
@@ -777,13 +806,17 @@ img {
 }
 
 .bloodType {
-	margin-right: 140px; /* 向右移動 20 像素 */
-	font-size: 21px;
+    top: 80px;
+	font-size: 22px;
+}
+
+.blood-type-value {
+		font-size: 20px;	
 }
 
 .MBTI {
-	margin-right: 140px; /* 向右移動 20 像素 */
-	font-size: 18px;
+    top: 120px;
+	font-size: 19px;	
 }
 
 /*愛心跟X*/
@@ -795,10 +828,12 @@ img {
   position: fixed;
   text-align: center;
   bottom: 20px;
-  left: 50%;
+  left: 50.5%;
   transform: translateX(-50%);
   z-index: 999;
 }
+
+
 
 #nope {
   position: fixed;
@@ -823,6 +858,11 @@ img {
   display: inline-block;
   margin: 0 20px;
   box-shadow: var(--navigation-box-shadow);
+  transition: box-shadow 0.3s ease; /* 添加过渡效果 */
+}
+
+.tinder--buttons button:hover {
+  box-shadow: 0 0 10px 3px #EDEBEC; /* 添加懸停時的亮色邊框效果 */
 }
 
 .tinder--buttons button:focus {
@@ -928,31 +968,6 @@ img {
 	background: #eaeef0;
 }
 
-#search {
-	background: #e3e9ed
-		url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/search.png")
-		-11px 0 no-repeat;
-	height: 60px;
-	width: 330px; /*要跟#chatbox一樣*/
-	position: absolute;
-	bottom: 0;
-	left: 0;
-}
-
-#searchfield {
-	background: #e3e9ed;
-	margin: 21px 0 0 55px;
-	border: none;
-	padding: 0;
-	font-size: 16px;
-	font-family: "Open Sans", sans-serif;
-	font-weight: 400px;
-	color: #8198ac;
-}
-
-#searchfield:focus {
-	outline: 0;
-}
 
 #chatview {
 	width: 330px; /*要跟#friendslist一樣*/

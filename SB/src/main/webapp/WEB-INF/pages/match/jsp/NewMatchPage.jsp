@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<!--FontAwesome圖標字體-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
 	<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <link rel="stylesheet" href="mycss/MatchPage.css">
@@ -110,10 +110,10 @@
 
 			<!--照片-->
 			<div class="card-container">
-				<div class="carousel" id="userPhotos1"><img src="/localimages/${photos[0]}" alt="" style="width: 461px; height: 367.63px; object-fit: cover;"></div>
-				<div class="carousel" id="userPhotos2"><img src="/localimages/${photos[1]}" alt="" style="width: 461px; height: 367.63px; object-fit: cover;"></div>
-				<div class="carousel" id="userPhotos3"><img src="/localimages/${photos[2]}" alt="" style="width: 461px; height: 367.63px; object-fit: cover;"></div>
-				<div class="carousel" id="userPhotos4"><img src="/localimages/${photos[3]}" alt="" style="width: 461px; height: 367.63px; object-fit: cover;"></div>
+				<div class="carousel" id="userPhotos1"><img src="/localimages/${photos[0]}" alt="" style= "object-fit: cover;"></div>
+				<div class="carousel" id="userPhotos2"><img src="/localimages/${photos[1]}" alt="" style= "object-fit: cover;"></div>
+				<div class="carousel" id="userPhotos3"><img src="/localimages/${photos[2]}" alt="" style= "object-fit: cover;"></div>
+				<div class="carousel" id="userPhotos4"><img src="/localimages/${photos[3]}" alt="" style= "object-fit: cover;"></div>
 			</div>  
 
 
@@ -138,21 +138,25 @@
 
 
 
-
-
-
-
 		<div class="right-side">
 			<div class="chat-container">
 				<div class="chat-header">
 
 					<div class="matchsname">${userBean.nickName} ${userBean.userNo}</div>
+					
+					<div class="tags">
+					    <c:forEach var="tagName" items="${tagNames}">
+				        	<span class="tag">#${tagName}</span>
+					    </c:forEach>
+					</div>
+					
 					<div class="social">
-						<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"> <i
-							class="fa fa-twitter"></i></a> <a href="#"> <i
-							class="fa fa-google-plus"></i></a>
+						<a href="#"><i class="fa fa-facebook"></i></a> 
+						<a href="#"> <i class="fa fa-twitter"></i></a> 
+						<a href="#"> <i class="fa fa-google-plus"></i></a>
 						<hr class="hr">
 					</div>
+
 
 					<div class="goal">
 						尋找關係<br> 
@@ -187,26 +191,32 @@
 
 					<div class="aboutMe">
 						關於我
-
+						
+						
+					<div class="info-container">
 						<div class="gender">
-							性別 <span class="gender-text"><c:choose>
+							性別&nbsp;&nbsp; <span class="gender-text"><c:choose>
 									<c:when test="${userBean.gender == 0}">生理女</c:when>
 									<c:otherwise>生理男</c:otherwise>
 								</c:choose></span>
 						</div>
 
-						<div class="birthday">生日 ${localDateTimeDateFormat.format(userBean.birthday)}</div>
-
+						<div class="birthday">
+						    生日&nbsp;&nbsp; <span class="date">${localDateTimeDateFormat.format(userBean.birthday)}</span>
+						</div>
 						<!-- <div class="starSign">星座 </div> -->
 
-						<div class="bloodType">血型 ${userBean.bloodType}</div>
-
-						<div class="MBTI">MBTI ${userBean.MBTI}</div>
+						<div class="bloodType">
+						    血型&nbsp;&nbsp; <span class="blood-type-value">${userBean.bloodType}</span>
+						</div>
+						
+						<div class="MBTI">MBTI&nbsp; ${userBean.MBTI}</div>
 					</div>
 				</div>
 			</div>
 		</div>		
 	</div>
+</div>
 		
 		
 

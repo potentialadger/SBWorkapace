@@ -5,11 +5,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 	<link rel="stylesheet" href="mycss/MatchCreate.css">
-	
+
 </head>
 
 <body id="page-top">
@@ -47,10 +47,8 @@
                 <script src="js/layout/Z_TopBar.js"></script>
 
                 <!-- 主要內容 -->
-                
-                
-                
-                
+
+
  <div id="custom-container">
                
   <!-- multistep form -->
@@ -177,10 +175,8 @@
 				</select>
 			</div>
 
-			<input type="button" name="previous" class="previous action-button"
-				value="Previous" onclick="prevStep()" /> <input type="button"
-				name="next" class="next action-button" value="Next"
-				onclick="nextStep()" />
+			<input type="button" name="previous" class="previous action-button" value="Previous" onclick="prevStep()" /> 
+			<input type="button" name="next" class="next action-button" value="Next" onclick="nextStep()" />
 		</fieldset>
 
 
@@ -190,20 +186,15 @@
 			<h3 class="fs-subtitle">We will never sell it</h3>
 			<div class="edit-match">
 				<!-- 路徑 -->
-				<button type="submit" name="targetPage" value="/editMatchProfile"
-					class="icon-button">
-					<i class="fa-solid fa-user-pen"
-						style="color: #8f8f8f; font-size: 4em; margin-right: 25px; margin-bottom: 66px;"></i>
+				<button type="submit" name="targetPage" value="/editMatchProfile" class="icon-button">
+					<i class="fa-solid fa-user-pen" style="color: #8f8f8f; font-size: 4em; margin-right: 25px; margin-bottom: 66px;"></i>
 				</button>
 				<!-- 路徑 -->
-				<button type="submit" name="targetPage" value="/matchPage"
-					class="icon-button">
-					<i class="fa-solid fa-heart-circle-xmark"
-						style="color: #8f8f8f; font-size: 4em; margin-top: 66px;"></i>
+				<button type="submit" name="targetPage" value="/newMatchPage" class="icon-button">
+					<i class="fa-solid fa-heart-circle-xmark" style="color: #8f8f8f; font-size: 4em; margin-top: 66px;"></i>
 				</button>
 			</div>
-			<input type="button" name="previous" class="previous action-button"
-				value="Previous" onclick="prevStep()" />
+			<input type="button" name="previous" class="previous action-button" value="Previous" onclick="prevStep()" />
 		</fieldset>
 
 
@@ -214,41 +205,12 @@
 	
 	</div>
 
-	<script>
-		// 表單內容
-		var formSteps = [ "step1", "step2", "step3" ];
 
-		var currentStep = 0; // 初始步驟
 
-		// 下一步
-		function nextStep() {
-			if (currentStep < formSteps.length - 1) {
-				document.getElementById(formSteps[currentStep]).style.display = "none";
-				document.getElementById(formSteps[currentStep + 1] + "Tab").classList
-						.add("active");
-				document.getElementById(formSteps[currentStep + 1] + "Tab").style.color = "#27AE60";
-				document.getElementById(formSteps[currentStep + 1] + "Tab").style.fontWeight = "bold";
-				currentStep++;
-				document.getElementById(formSteps[currentStep]).style.display = "block";
-			}
-		}
 
-		// 上一步
-		function prevStep() {
-			if (currentStep > 0) {
-				document.getElementById(formSteps[currentStep]).style.display = "none";
-				document.getElementById(formSteps[currentStep] + "Tab").classList
-						.remove("active");
-				document.getElementById(formSteps[currentStep] + "Tab").style.color = "white";
-				document.getElementById(formSteps[currentStep] + "Tab").style.fontWeight = "normal";
-				currentStep--;
-				document.getElementById(formSteps[currentStep]).style.display = "block";
-			}
-		}
-                
-                
 
-                
+
+
 
                 <!-- 主要內容結尾 -->
 
@@ -285,11 +247,38 @@
     <!-- Page level plugins -->
     <script src="vendor/chart.js/Chart.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+<script src="js/demo/chart-area-demo.js"></script>
+<script src="js/demo/chart-pie-demo.js"></script>
 
+<script>
+    // 表單內容
+    var formSteps = [ "step1", "step2", "step3" ];
+    var currentStep = 0; // 初始步驟
+
+    // 下一步
+    function nextStep() {
+        if (currentStep < formSteps.length - 1) {
+            document.getElementById(formSteps[currentStep]).style.display = "none";
+            document.getElementById(formSteps[currentStep + 1] + "Tab").classList.add("active");
+            document.getElementById(formSteps[currentStep + 1] + "Tab").style.color = "#27AE60";
+            document.getElementById(formSteps[currentStep + 1] + "Tab").style.fontWeight = "bold";
+            currentStep++;
+            document.getElementById(formSteps[currentStep]).style.display = "block";
+        }
+    }
+
+    // 上一步
+    function prevStep() {
+        if (currentStep > 0) {
+            document.getElementById(formSteps[currentStep]).style.display = "none";
+            document.getElementById(formSteps[currentStep] + "Tab").classList.remove("active");
+            document.getElementById(formSteps[currentStep] + "Tab").style.color = "white";
+            document.getElementById(formSteps[currentStep] + "Tab").style.fontWeight = "normal";
+            currentStep--;
+            document.getElementById(formSteps[currentStep]).style.display = "block";
+        }
+    }
+</script>
 
 </body>
-
 </html>
