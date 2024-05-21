@@ -60,12 +60,11 @@
 .post-category {
 	position: absolute;
 	top: 0;
-	right: 0;
-	background-color: #f0f0f0;
-	padding: 2px 5px;
-	border-radius: 3px;
-	color: #555555cb;
-	font-family: Arial Black;
+	right: 10px;
+	color: gray;
+	font-weight:bold;
+	font-size: 20px;
+	font-style: italic;
 }
 
 .text-muted {
@@ -233,14 +232,7 @@ body {
 									<a
 										class="nav-link nav-icon rounded-circle nav-link-faded mr-3 d-md-none"
 										href="#" data-toggle="inner-sidebar"><i
-										class="material-icons">arrow_forward_ios</i></a> <select
-										class="custom-select custom-select-sm w-auto mr-1">
-										<option selected="">Latest</option>
-										<option value="1">Popular</option>
-										<option value="3">Solved</option>
-										<option value="3">Unsolved</option>
-										<option value="3">No Replies Yet</option>
-									</select>
+										class="material-icons">arrow_forward_ios</i></a> 
 
 									<form class="my-search-form" method="get"
 										action="/postsFrontDesk/OnePosts">

@@ -75,7 +75,7 @@ public class FrontDeskPostsController {
 	// 前台 全部查詢
 	@GetMapping("/AllPosts")
 	public String getAllPosts(Model m) {
-		List<PostsBean> postsList = postsService.findAllByOrderByViewCountDesc();
+		List<PostsBean> postsList = postsService.findAllOrderByCreatedAtDesc();
 		List<CategoriesBean> categoriesList = categoriesService.getAllCategories();
 
 		m.addAttribute("postsM", postsList);
