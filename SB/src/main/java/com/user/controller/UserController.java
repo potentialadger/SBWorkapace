@@ -65,16 +65,16 @@ public class UserController {
 
 	@Autowired
 	private UserService uService;
-	
+
 	@Autowired
 	private UserImageService uImgService;
-	
+
 	@Autowired
 	private FriendStateService fsService;
-	
+
 	@Autowired
 	private StateService stateService;
-	
+
 	@Autowired
 	private UserMailService userMailService;
 	private SocialPhotosService spService;
@@ -85,21 +85,17 @@ public class UserController {
 			@RequestParam("UEName") String UEName, @RequestParam("Email") String email,
 			@RequestParam("Birthday") String birthday, @RequestParam("Phone") String phone,
 			@RequestParam("UserAddress") String userAddress, @RequestParam("gender") Integer gender,
-			@RequestParam("key") String key, @RequestParam("avatar") MultipartFile avatar, 
-			Model m) {
+			@RequestParam("key") String key, @RequestParam("avatar") MultipartFile avatar, Model m) {
 
 		UserBean insertBean = new UserBean();
-		
+
 		// 處理頭貼圖片
-		if(!avatar.isEmpty() || avatar.getSize() > 0)
-		{
+		if (!avatar.isEmpty() || avatar.getSize() > 0) {
 			String uploadImgPath = UserUtil.uploadImg(avatar);
 			insertBean.setAvatar(uploadImgPath);
-		}
-		else {
+		} else {
 			insertBean.setAvatar("userDefault.png");
 		}
-		
 
 		insertBean.setUserAccount(account);
 		insertBean.setUserPassword(password);
@@ -131,11 +127,11 @@ public class UserController {
 		insertBean.setPoint(0);
 
 		UserBean creatUser = uService.creatUser(insertBean);
-		
-		//將頭貼存進使用者圖片的資料庫裡
+
+		// 將頭貼存進使用者圖片的資料庫裡
 		UserImageBean userImageBean = new UserImageBean(creatUser, creatUser.getAvatar());
 		uImgService.saveUserImageBean(userImageBean);
-		
+
 		return "user/html/NewLogin.html";
 	}
 
@@ -183,7 +179,7 @@ public class UserController {
 
 		return "user/jsp/UserUpdate.jsp";
 	}
-	
+
 	@GetMapping("/userResponseBody/{userno}")
 	@ResponseBody
 	public UserBean processResponseBodyFindUserForUpdateAction(@PathVariable("userno") int userNo) {
@@ -196,29 +192,26 @@ public class UserController {
 	public String processUpdateUserAction(@RequestParam("userNo") Integer userNo,
 			@RequestParam("account") String account, @RequestParam("password") String password,
 			@RequestParam("UCName") String UCName, @RequestParam("UEName") String UEName,
-			@RequestParam("avatar") MultipartFile avatar,
-			@RequestParam("email") String email, @RequestParam("birthday") String birthday,
-			@RequestParam("phone") String phone, @RequestParam("address") String address,
-			@RequestParam("creationDateTime") String creationDateTime,
+			@RequestParam("avatar") MultipartFile avatar, @RequestParam("email") String email,
+			@RequestParam("birthday") String birthday, @RequestParam("phone") String phone,
+			@RequestParam("address") String address, @RequestParam("creationDateTime") String creationDateTime,
 			@RequestParam("lastLoginDatetime") String lastLoginDatetime, @RequestParam("gender") Integer gender,
-			@RequestParam("suspension") Integer suspension,
-			@RequestParam("verify") Integer verify, @RequestParam("isDelete") Integer isDelete,
-			@RequestParam("isManager") Integer isManager, Model m) {
+			@RequestParam("suspension") Integer suspension, @RequestParam("verify") Integer verify,
+			@RequestParam("isDelete") Integer isDelete, @RequestParam("isManager") Integer isManager, Model m) {
 
 		DateTimeFormatter birthdayDF = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm");
 
 //		UserBean userBean = new UserBean();
 		UserBean userBean = uService.getUserData(userNo);
-		
+
 		userBean.setUserAccount(account);
 		userBean.setUserPassword(password);
 		userBean.setUserChineseName(UCName);
 		userBean.setUserEnglishName(UEName);
 //		userBean.setNickName(nickName);
-		
-		if(!avatar.isEmpty() || avatar.getSize() > 0)
-		{
+
+		if (!avatar.isEmpty() || avatar.getSize() > 0) {
 			String uploadImgPath = UserUtil.uploadImg(avatar);
 			userBean.setAvatar(uploadImgPath);
 		}
@@ -262,20 +255,19 @@ public class UserController {
 		return "redirect:/users";
 	}
 
-
 	@GetMapping("getTopBarData")
 	@ResponseBody
 	public UserBean_Vo getTopBarData(HttpSession session) {
-		UserBean uBean = (UserBean)session.getAttribute("userData");
+		UserBean uBean = (UserBean) session.getAttribute("userData");
 		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
 		UserBean userBean = dataById.get();
 		UserBean_Vo userBean_Vo = userBean.getUserBean_Vo();
 		return userBean_Vo;
 	}
-	
+
 	@GetMapping("aboutMe")
 	public String abountAction(HttpSession session, Model m) {
-		UserBean uBean = (UserBean)session.getAttribute("userData");
+		UserBean uBean = (UserBean) session.getAttribute("userData");
 		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
 		UserBean userBean = dataById.get();
 		m.addAttribute("userBean", userBean);
@@ -283,47 +275,44 @@ public class UserController {
 		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		return "user/jsp/aboutMe_FontSatge.jsp";
 	}
-	
+
 	@GetMapping("aboutMeForUpdate")
 	public String aboutMeForUpdateAction(HttpSession session, Model m) {
-		UserBean uBean = (UserBean)session.getAttribute("userData");
+		UserBean uBean = (UserBean) session.getAttribute("userData");
 		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
 		UserBean userBean = dataById.get();
-		
+
 		m.addAttribute("userBean", userBean);
 		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		return "user/jsp/updateAboutMe_FontSatge.jsp";
 	}
-	
+
 	@PutMapping("/aboutMeUserUpdate")
 	public String processaboutMeUserUpdateAction(@RequestParam("userNo") Integer userNo,
 			@RequestParam("UCName") String UCName, @RequestParam("UEName") String UEName,
-			@RequestParam("avatar") MultipartFile avatar,
-			@RequestParam("email") String email, @RequestParam("birthday") String birthday,
-			@RequestParam("phone") String phone, @RequestParam("address") String address,
-			@RequestParam("gender") Integer gender,
-			 Model m) {
+			@RequestParam("avatar") MultipartFile avatar, @RequestParam("email") String email,
+			@RequestParam("birthday") String birthday, @RequestParam("phone") String phone,
+			@RequestParam("address") String address, @RequestParam("gender") Integer gender, Model m) {
 
 		DateTimeFormatter birthdayDF = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm");
 
 //		UserBean userBean = new UserBean();
 		UserBean userBean = uService.getUserData(userNo);
-		
-		if(!avatar.isEmpty() || avatar.getSize() > 0)
-		{
+
+		if (!avatar.isEmpty() || avatar.getSize() > 0) {
 			String uploadImgPath = UserUtil.uploadImg(avatar);
 			userBean.setAvatar(uploadImgPath);
-			
+
 			UserImageBean userImageBean = new UserImageBean(userBean, uploadImgPath);
 			uImgService.saveUserImageBean(userImageBean);
 		}
-		
+
 		userBean.setUserChineseName(UCName);
 		userBean.setUserEnglishName(UEName);
 //		userBean.setNickName(nickName);
-		
+
 		userBean.setEmail(email);
 
 		birthday += " 00-00-00";
@@ -355,307 +344,329 @@ public class UserController {
 
 		return "redirect:/aboutMe";
 	}
-	
+
 	@GetMapping("userPhotos")
 	public String userPhotosAction(HttpSession session, Model m) {
-		UserBean uBean = (UserBean)session.getAttribute("userData");
+		UserBean uBean = (UserBean) session.getAttribute("userData");
 		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
 		UserBean userBean = dataById.get();
-		
+
 		m.addAttribute("userBean", userBean);
 		m.addAttribute("userImagesCount", userBean.getUserImages().size());
 		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 //		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		return "user/jsp/MyPhoto_FontSatge.jsp";
 	}
-	
+
 	@PostMapping("userUploadImages")
-	public String userUploadImagesAction(HttpSession session, Model m,@RequestParam("images") MultipartFile[] imgs) {
-		UserBean uBean = (UserBean)session.getAttribute("userData");
+	public String userUploadImagesAction(HttpSession session, Model m, @RequestParam("images") MultipartFile[] imgs) {
+		UserBean uBean = (UserBean) session.getAttribute("userData");
 		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
 		UserBean userBean = dataById.get();
-		
-		for(MultipartFile img : imgs) {
-			if(!img.isEmpty() || img.getSize() > 0)
-			{
+
+		for (MultipartFile img : imgs) {
+			if (!img.isEmpty() || img.getSize() > 0) {
 				String uploadImgPath = UserUtil.uploadImg(img);
-				
+
 				UserImageBean userImageBean = new UserImageBean(userBean, uploadImgPath);
 				uImgService.saveUserImageBean(userImageBean);
 			}
 		}
 		return "redirect:/userPhotos";
 	}
-	
+
 	@GetMapping("userFriends")
 	public String userFriendsAction(HttpSession session, Model m) {
-		UserBean uBean = (UserBean)session.getAttribute("userData");
+		UserBean uBean = (UserBean) session.getAttribute("userData");
 		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
 		UserBean userBean = dataById.get();
-		
-		
+
 		StateBean state = stateService.findStateBystateName("好友");
-		
+
 		List<FriendStateBean> friendStateBeans = fsService.findSomeStateFriendState(userBean, state);
-		
+
 		List<UserBean> friendBeans = new ArrayList<UserBean>();
-		
-		for(FriendStateBean fsBean : friendStateBeans) {
+
+		for (FriendStateBean fsBean : friendStateBeans) {
 			friendBeans.add(fsBean.getFriendBean());
 		}
-		
+
 		m.addAttribute("userBean", userBean);
-		
+
 		m.addAttribute("userFriendsCount", friendBeans.size());
 		m.addAttribute("userFriends", friendBeans);
 		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 //		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		return "user/jsp/MyFriends_FontSatge.jsp";
 	}
-	
-	
+
 	@GetMapping("userSearch")
 	@ResponseBody
-	public List<UserBean_Vo> findUserBySearch(@RequestParam("search") String search){
+	public List<UserBean_Vo> findUserBySearch(@RequestParam("search") String search) {
 		List<UserBean> findUserBySearch = uService.findUserBySearch(search);
 		List<UserBean_Vo> userBean_Vos = new ArrayList<UserBean_Vo>();
-		
-		for(UserBean ub : findUserBySearch) {
+
+		for (UserBean ub : findUserBySearch) {
 			userBean_Vos.add(ub.getUserBean_Vo());
 		}
-		
+
 		return userBean_Vos;
 	}
-	
+
 	@GetMapping("setOtherUserNo/{userNo}")
 	public String setOtherUserBean(@PathVariable("userNo") Integer userNo, HttpSession session, Model m) {
-		UserBean uBean = (UserBean)session.getAttribute("userData");
-		if(uBean.getUserNo() == userNo) {
+		UserBean uBean = (UserBean) session.getAttribute("userData");
+		if (uBean.getUserNo() == userNo) {
 			return "redirect:/aboutMe";
-		}
-		else {
+		} else {
 			UserBean otherUserBean = uService.getUserData(userNo);
 			session.setAttribute("otherUserData", otherUserBean);
-			
+
 			return "redirect:/otherAboutMe";
 		}
 	}
-	
+
 	@GetMapping("otherAboutMe")
 	public String otherAbountAction(HttpSession session, Model m) {
-		UserBean uBean = (UserBean)session.getAttribute("otherUserData");
+		UserBean uBean = (UserBean) session.getAttribute("otherUserData");
 		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
 		UserBean userBean = dataById.get();
-		
-		UserBean loginUserBean = (UserBean)session.getAttribute("userData");
+
+		UserBean loginUserBean = (UserBean) session.getAttribute("userData");
 		Optional<UserBean> loginUserById = uService.getDataById(loginUserBean.getUserNo());
 		loginUserBean = loginUserById.get();
-		
+
 		FriendStateBean findFriendState = fsService.findFriendState(loginUserBean, uBean);
-		
+
 		m.addAttribute("findFriendState", findFriendState);
 		m.addAttribute("userBean", userBean);
 		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		return "user/jsp/other_AboutMe_FontSatge.jsp";
 	}
-	
+
 	@GetMapping("otherUserPhotos")
 	public String otherUserPhotosAction(HttpSession session, Model m) {
-		UserBean uBean = (UserBean)session.getAttribute("otherUserData");
+		UserBean uBean = (UserBean) session.getAttribute("otherUserData");
 		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
 		UserBean userBean = dataById.get();
-		
+
 		m.addAttribute("userBean", userBean);
 		m.addAttribute("userImagesCount", userBean.getUserImages().size());
 		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 //		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		return "user/jsp/other_MyPhoto_FontSatge.jsp";
 	}
-	
+
 	@GetMapping("otherUserFriends")
 	public String otherUserFriendsAction(HttpSession session, Model m) {
-		UserBean uBean = (UserBean)session.getAttribute("otherUserData");
+		UserBean uBean = (UserBean) session.getAttribute("otherUserData");
 		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
 		UserBean userBean = dataById.get();
-		
+
 		List<FriendStateBean> friendStateBeans = userBean.getFriendStates();
-		
+
 		List<UserBean> friendBeans = new ArrayList<UserBean>();
-		
-		for(FriendStateBean fsBean : friendStateBeans) {
+
+		for (FriendStateBean fsBean : friendStateBeans) {
 			friendBeans.add(fsBean.getFriendBean());
 		}
-		
+
 		m.addAttribute("userBean", userBean);
-		
+
 		m.addAttribute("userFriendsCount", friendBeans.size());
 		m.addAttribute("userFriends", friendBeans);
 		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 //		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		return "user/jsp/other_MyFriends_FontSatge.jsp";
 	}
-	
-	
+
 	@GetMapping("otherAboutMe/{userNo}")
 	public String otherAbountIDAction(@PathVariable("userNo") Integer userNo, HttpSession session, Model m) {
 		UserBean userBean = uService.getUserData(userNo);
 		session.setAttribute("otherUserData", userBean);
-		
-		
-		
-		UserBean loginUserBean = (UserBean)session.getAttribute("userData");
+
+		UserBean loginUserBean = (UserBean) session.getAttribute("userData");
 		Optional<UserBean> loginUserById = uService.getDataById(loginUserBean.getUserNo());
 		loginUserBean = loginUserById.get();
-		
+
 		FriendStateBean findFriendState = fsService.findFriendState(loginUserBean, userBean);
-		
+
 		m.addAttribute("findFriendState", findFriendState);
 		m.addAttribute("userBean", userBean);
 		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-		
-		if(loginUserBean.getUserNo() == userNo) {
+
+		if (loginUserBean.getUserNo() == userNo) {
 			return "redirect:/aboutMe";
 		}
-		
+
 		return "user/jsp/other_AboutMe_FontSatge.jsp";
 	}
-	
+
 	@GetMapping("otherUserPhotos/{userNo}")
 	public String otherUserPhotosIDAction(@PathVariable("userNo") Integer userNo, HttpSession session, Model m) {
 		UserBean userBean = uService.getUserData(userNo);
 		session.setAttribute("otherUserData", userBean);
-		
+
 		m.addAttribute("userBean", userBean);
 		m.addAttribute("userImagesCount", userBean.getUserImages().size());
 		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 //		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-		
-		UserBean loginUserBean = (UserBean)session.getAttribute("userData");
-		if(loginUserBean.getUserNo() == userNo) {
+
+		UserBean loginUserBean = (UserBean) session.getAttribute("userData");
+		if (loginUserBean.getUserNo() == userNo) {
 			return "redirect:/userPhotos";
 		}
 		return "user/jsp/other_MyPhoto_FontSatge.jsp";
 	}
-	
+
 	@GetMapping("otherUserFriends/{userNo}")
 	public String otherUserFriendsIDAction(@PathVariable("userNo") Integer userNo, HttpSession session, Model m) {
 		UserBean userBean = uService.getUserData(userNo);
 		session.setAttribute("otherUserData", userBean);
-		
+
 		List<FriendStateBean> friendStateBeans = userBean.getFriendStates();
-		
+
 		List<UserBean> friendBeans = new ArrayList<UserBean>();
-		
-		for(FriendStateBean fsBean : friendStateBeans) {
+
+		for (FriendStateBean fsBean : friendStateBeans) {
 			friendBeans.add(fsBean.getFriendBean());
 		}
-		
+
 		m.addAttribute("userBean", userBean);
-		
+
 		m.addAttribute("userFriendsCount", friendBeans.size());
 		m.addAttribute("userFriends", friendBeans);
 		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 //		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-		
-		
-		UserBean loginUserBean = (UserBean)session.getAttribute("userData");
-		if(loginUserBean.getUserNo() == userNo) {
+
+		UserBean loginUserBean = (UserBean) session.getAttribute("userData");
+		if (loginUserBean.getUserNo() == userNo) {
 			return "redirect:/userFriends";
 		}
-		
+
 		return "user/jsp/other_MyFriends_FontSatge.jsp";
 	}
-	
+
 	@GetMapping("forgetPasswordToSendMail")
-	public String forgetPasswordAction(@RequestParam("email")String email, @RequestParam("account")String account, Model m) throws MessagingException {
-		
+	public String forgetPasswordAction(@RequestParam("email") String email, @RequestParam("account") String account,
+			Model m) throws MessagingException {
+
 		UserBean findForgetUserBean = uService.findForgetUserBean(email, account);
-		if(findForgetUserBean == null)
-		{
+		if (findForgetUserBean == null) {
 			m.addAttribute("err", "並未找到此帳號");
 			return "user/jsp/forgot-passwordErr.jsp";
 		}
-		
+
 		String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        StringBuilder sb = new StringBuilder();
-        Random random = new Random();
+		StringBuilder sb = new StringBuilder();
+		Random random = new Random();
 
-        for (int i = 0; i < 12; i++) {
-            int index = random.nextInt(characters.length());
-            sb.append(characters.charAt(index));
-        }
+		for (int i = 0; i < 12; i++) {
+			int index = random.nextInt(characters.length());
+			sb.append(characters.charAt(index));
+		}
 
-        String randomPassword = sb.toString();
-		
-        findForgetUserBean.setUserPassword(randomPassword);
-        uService.updateUser(findForgetUserBean);
-        
-		
+		String randomPassword = sb.toString();
+
+		findForgetUserBean.setUserPassword(randomPassword);
+		uService.updateUser(findForgetUserBean);
+
 		List<String> receivers = new ArrayList<String>();
 		receivers.add(findForgetUserBean.getEmail());
-		
+
 		String mailContent = "<h1>密碼重設</h1>";
-		mailContent += "<p>驗證碼："+ randomPassword + "</p>";
+		mailContent += "<p>驗證碼：" + randomPassword + "</p>";
 		mailContent += "<a href=\"http://localhost:8080/resetPassword\">點此重新設定密碼</a>";
-		
+
 		userMailService.sendPlainText(receivers, "SocialBook 忘記密碼", mailContent);
 		return "redirect:/sendMailSuccess";
 	}
+
 	@GetMapping("checkAndResetPassword")
-	public String checkAndResetPasswordAction(@RequestParam("verificationCode")String verificationCode, @RequestParam("newPassword")String newPassword, Model m) {
+	public String checkAndResetPasswordAction(@RequestParam("verificationCode") String verificationCode,
+			@RequestParam("newPassword") String newPassword, Model m) {
 		UserBean uBean = uService.checkVerificationCode(verificationCode);
-		
-		if(uBean == null) {
+
+		if (uBean == null) {
 			return "user/jsp/reset-passwordErr.jsp";
 		}
-		
+
 		uBean.setUserPassword(newPassword);
 		uService.updateUser(uBean);
-		
+
 		return "redirect:/resetPasswordSuccess";
 	}
-	
-	
+
 	@PostMapping("/googleLogin")
-	public void googleLogin(@RequestParam("credential")String credential) throws GeneralSecurityException, IOException {
+	public String googleLogin(@RequestParam("credential") String credential, HttpSession session, Model m)
+			throws GeneralSecurityException, IOException {
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
 				.setAudience(Collections.singletonList("443989407598-j91o8of7q5mra4h5br1ujtputrf05pvv.apps.googleusercontent.com"))
 				.build();
-		
+
 		GoogleIdToken idToken = verifier.verify(credential);
-		
-		if(idToken != null) {
+
+		if (idToken != null) {
 			Payload payload = idToken.getPayload();
-			
+
 			String userId = payload.getSubject();
 			System.out.println("User ID : " + userId);
-			
+
 			String email = payload.getEmail();
-			String name = (String)payload.get("name");
-			String pictureUrl = (String)payload.get("picture");
-			String locale = (String)payload.get("locale");
-			String familyName = (String)payload.get("family_Name");
-			String givenName = (String)payload.get("given_name");
-			
+			String name = (String) payload.get("name");
+			String pictureUrl = (String) payload.get("picture");
+			String locale = (String) payload.get("locale");
+			String familyName = (String) payload.get("family_Name");
+			String givenName = (String) payload.get("given_name");
+
 			System.out.println("email : " + email);
 			System.out.println("name : " + name);
 			System.out.println("pictureUrl : " + pictureUrl);
 			System.out.println("locale : " + locale);
 			System.out.println("familyName : " + familyName);
 			System.out.println("givenName : " + givenName);
-		}
-		else {
+
+			UserBean googleLoginUserData = uService.getGoogleLoginUserData(userId);
+
+			if (googleLoginUserData == null) {
+				UserBean insertBean = new UserBean();
+				insertBean.setUserAccount(userId);
+				insertBean.setUserPassword("googleLoginPassword");
+				insertBean.setUserChineseName(name);
+
+				String fileName = UserUtil.saveWebPhoto(pictureUrl);
+				insertBean.setAvatar(fileName);
+				insertBean.setGender(1);
+				insertBean.setSuspension(0);
+				insertBean.setVerify(0);
+				insertBean.setIsDelete(0);
+
+				insertBean.setCreationDatetime(LocalDateTime.now());
+				insertBean.setLastLoginDatetime(LocalDateTime.now());
+				insertBean.setIsManager(0);
+				insertBean.setPoint(0);
+
+				googleLoginUserData = uService.creatUser(insertBean);
+			}
+
+			// 更新最後登入時間
+			googleLoginUserData = uService.updateUserLastLoginTime(googleLoginUserData);
+			m.addAttribute("userData", googleLoginUserData);
+//			session.setAttribute("userData", googleLoginUserData);
+
+			
+			return "redirect:/aboutMeForUpdate";
+
+		} else {
 			System.out.println("Invalid ID token.");
 		}
+
+		return "redirect:/users";
 	}
-	
-	
-	
 
 	// ---Tags : ManyToMany
-	
 
 	// 獲取單個使用者及其關聯的標籤
 	@GetMapping(path = "/getUserTags/{userNo}")
@@ -669,29 +680,25 @@ public class UserController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
-    // 指定返回 JSON 格式的資料，以及資料的編碼格式為 UTF-8
-    // @GetMapping(path = "/getUserTags/{userNo}", produces = "application/json;charset=UTF-8"
-	
-	
+
+	// 指定返回 JSON 格式的資料，以及資料的編碼格式為 UTF-8
+	// @GetMapping(path = "/getUserTags/{userNo}", produces =
+	// "application/json;charset=UTF-8"
+
 	// 獲取所有使用者及其關聯的標籤
 //	@GetMapping(path = "/getAllUsersWithTags")
 //	public ResponseEntity<List<Set<TagsBean>>> getAllUsersWithTags() {
 //	    List<Set<TagsBean>> userTags = uService.getAllUsersWithTags();
 //	    return ResponseEntity.ok(userTags);
 //	}
-	
-	
-	
+
 	// 獲取所有使用者及所有資料
 	@GetMapping(path = "/getAllUsersWithTags")
 	public ResponseEntity<List<UserBean>> getAllUsersWithTags() {
 		List<UserBean> users = uService.getAllUsersWithTags();
 		return ResponseEntity.ok(users);
 	}
-	
-	
-	
+
 	// 使用者添加一個或多個標籤 (返回該所有用戶資料)
 	@PostMapping(path = "/addUserTags/{userNo}/tags")
 	public ResponseEntity<UserBean> addTagsToUser(@PathVariable Integer userNo, @RequestBody List<Integer> tagNos) {
@@ -702,9 +709,7 @@ public class UserController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
-	
-	
+
 	// 使用者添加一個或多個標籤 (只返回關聯的標籤資料)
 //	@PostMapping("/addUserTags/{userNo}/tags")
 //	public ResponseEntity<Set<TagsBean>> addTagsToUser(@PathVariable Integer userNo, @RequestBody List<Integer> tagNos) {
@@ -715,8 +720,6 @@ public class UserController {
 //	        return ResponseEntity.notFound().build();
 //	    }
 //	}
-	
-	
 
 	// 使用者移除一個或多個標籤 (返回標籤資料)
 	@DeleteMapping(path = "/deleteUserTags/{userNo}/tags")
@@ -737,275 +740,243 @@ public class UserController {
 //		uService.updateUserWithTags(user, tagNos);
 //		return "redirect:/users/" + userNo;
 //	}
-	
-	
-	
-	
-	
+
 // -----------前端實作Tags------
-	
-	
-    // 保存使用者選擇的標籤
-    @PostMapping("/{userNo}/tags")
-    public ResponseEntity<?> saveUserTags(@PathVariable("userNo") Integer userNo, 
-                                          @RequestBody List<Integer> tagNos) {
-        try {
-            UserBean user = uService.addTagsToUser(userNo, tagNos);
-            return ResponseEntity.ok(user);
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-    
-    
-    // 處理標籤更新
-    @PostMapping("/updateTags")
-    public ResponseEntity<UserBean> updateTags(@RequestBody UpdateTagsDTO selectedTags, HttpSession session) {
-    	try {
-            // 從 session 中獲取當前使用者
-            UserBean userBean = (UserBean) session.getAttribute("userData");
-    		Optional<UserBean> dataById = uService.getDataById(userBean.getUserNo());
-    		userBean = dataById.get();
-            // 更新使用者的標籤
-            uService.updateUserTags(userBean, selectedTags.getSelectedTags());
-            
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-        	System.err.println(e.getMessage());
-            return ResponseEntity.badRequest().build();
-        }
-    }
-        
-	
-	
 
-	
+	// 保存使用者選擇的標籤
+	@PostMapping("/{userNo}/tags")
+	public ResponseEntity<?> saveUserTags(@PathVariable("userNo") Integer userNo, @RequestBody List<Integer> tagNos) {
+		try {
+			UserBean user = uService.addTagsToUser(userNo, tagNos);
+			return ResponseEntity.ok(user);
+		} catch (IllegalArgumentException ex) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	// 處理標籤更新
+	@PostMapping("/updateTags")
+	public ResponseEntity<UserBean> updateTags(@RequestBody UpdateTagsDTO selectedTags, HttpSession session) {
+		try {
+			// 從 session 中獲取當前使用者
+			UserBean userBean = (UserBean) session.getAttribute("userData");
+			Optional<UserBean> dataById = uService.getDataById(userBean.getUserNo());
+			userBean = dataById.get();
+			// 更新使用者的標籤
+			uService.updateUserTags(userBean, selectedTags.getSelectedTags());
+
+			return ResponseEntity.ok().build();
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			return ResponseEntity.badRequest().build();
+		}
+	}
+
 // ----------前端創建資料-------
-	
-	
-	
-	            //創建交友資料的路徑
-	@GetMapping("/createMatchProfile")           
-    public String createMatchProfile(HttpSession session, Model m) {
-        UserBean uBean = (UserBean)session.getAttribute("userData");     //從存使用者資料的session中取出它放資料的變數   //為什麼要轉成UserBean的型態?因為userData只有存資料，它不知道每個資料的型態是什麼，UserBean會設定每個屬性的型態
-        Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
-        UserBean userBean = dataById.get();
 
-        //載入已經儲存的資料到輸入框
-        m.addAttribute("userBean", userBean);
-        m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        
-        uBean.setNickName(userBean.getNickName());
-        uBean.setBloodType(userBean.getBloodType());
-        uBean.setMBTI(userBean.getMBTI());
-        uBean.setGoalNo(userBean.getGoalNo());
-        
-        // 將更新後的用戶資料保存到資料庫
-        uService.updateUser(uBean);
-        
-        // 重設 session 中的 "userData" attribute
-        session.setAttribute("userData", uBean);
-        
-        return "match/jsp/MatchProfileCreate.jsp";
-    }
-	
-	
-	
-	
-	//當會員點擊 fa-solid fa-user-pen 按鈕時,表單將被提交到 /editMatchProfile 路徑,並由 processEditMatchProfile 方法處理。在該方法中,我們更新資料庫中的用戶資料,並跳轉到 MatchProfileEdit.jsp 頁面
-	
-	                        //編輯交友資料的路徑     //傳資料到前端的方式
-	@RequestMapping(value = "/editMatchProfile", method = {RequestMethod.GET, RequestMethod.POST})
-	public String editMatchProfile(@RequestParam(value = "nickName", required = false) String nickName,   //將 @RequestParam 註解的 required 屬性設置為 false,表示這些參數是可選的。這樣即使在重新整理頁面時沒有傳遞這些參數,也不會拋出異常。
-	                               @RequestParam(value = "bloodType", required = false) String bloodType,
-	                               @RequestParam(value = "MBTI", required = false) String MBTI,
-	                               @RequestParam(value = "goalNo", required = false) Integer goalNo,
-	                               HttpSession session, Model m) {
+	// 創建交友資料的路徑
+	@GetMapping("/createMatchProfile")
+	public String createMatchProfile(HttpSession session, Model m) {
+		UserBean uBean = (UserBean) session.getAttribute("userData"); // 從存使用者資料的session中取出它放資料的變數
+																		// //為什麼要轉成UserBean的型態?因為userData只有存資料，它不知道每個資料的型態是什麼，UserBean會設定每個屬性的型態
+		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
+		UserBean userBean = dataById.get();
 
-	    UserBean uBean = (UserBean)session.getAttribute("userData");
-	    Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
-	    UserBean userBean = dataById.get();
-	    
-	    // 如果請求參數為 null,則從 userBean 中獲取對應的屬性值
-	    nickName = (nickName != null) ? nickName : userBean.getNickName();           //在方法中添加相應的邏輯來處理請求參數為 null 的情況。你可以從 session 中獲取用戶資料,並將其設置到模型中,以便在頁面中顯示。
-	    bloodType = (bloodType != null) ? bloodType : userBean.getBloodType();
-	    MBTI = (MBTI != null) ? MBTI : userBean.getMBTI();
-	    goalNo = (goalNo != null) ? goalNo : userBean.getGoalNo();
-	    
-	    // 設置表單提交的數據到 UserBean 對象中
-	    userBean.setNickName(nickName);
-	    userBean.setBloodType(bloodType);
-	    userBean.setMBTI(MBTI);
-	    userBean.setGoalNo(goalNo);
-	    
-	    // 將更新後的用戶資料保存到資料庫
-	    uService.updateUser(userBean);
-	    
-	    // 載入已經儲存的資料到輸入框
-	    m.addAttribute("userBean", userBean);
-	    m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-	    m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-	    
-	    // 重設 session 中的 "userData" attribute
-	    session.setAttribute("userData", userBean);
-	    
-	    return "match/jsp/MatchProfileEdit.jsp";
+		// 載入已經儲存的資料到輸入框
+		m.addAttribute("userBean", userBean);
+		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+		uBean.setNickName(userBean.getNickName());
+		uBean.setBloodType(userBean.getBloodType());
+		uBean.setMBTI(userBean.getMBTI());
+		uBean.setGoalNo(userBean.getGoalNo());
+
+		// 將更新後的用戶資料保存到資料庫
+		uService.updateUser(uBean);
+
+		// 重設 session 中的 "userData" attribute
+		session.setAttribute("userData", uBean);
+
+		return "match/jsp/MatchProfileCreate.jsp";
 	}
-	
-	
-	
 
+	// 當會員點擊 fa-solid fa-user-pen 按鈕時,表單將被提交到 /editMatchProfile 路徑,並由
+	// processEditMatchProfile 方法處理。在該方法中,我們更新資料庫中的用戶資料,並跳轉到 MatchProfileEdit.jsp 頁面
 
-    						//配對頁面的路徑	      //傳資料到前端的方式
-	@RequestMapping(value = "/matchPage", method = {RequestMethod.GET, RequestMethod.POST})
+	// 編輯交友資料的路徑 //傳資料到前端的方式
+	@RequestMapping(value = "/editMatchProfile", method = { RequestMethod.GET, RequestMethod.POST })
+	public String editMatchProfile(@RequestParam(value = "nickName", required = false) String nickName, // 將
+																										// @RequestParam
+																										// 註解的 required
+																										// 屬性設置為
+																										// false,表示這些參數是可選的。這樣即使在重新整理頁面時沒有傳遞這些參數,也不會拋出異常。
+			@RequestParam(value = "bloodType", required = false) String bloodType,
+			@RequestParam(value = "MBTI", required = false) String MBTI,
+			@RequestParam(value = "goalNo", required = false) Integer goalNo, HttpSession session, Model m) {
+
+		UserBean uBean = (UserBean) session.getAttribute("userData");
+		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
+		UserBean userBean = dataById.get();
+
+		// 如果請求參數為 null,則從 userBean 中獲取對應的屬性值
+		nickName = (nickName != null) ? nickName : userBean.getNickName(); // 在方法中添加相應的邏輯來處理請求參數為 null 的情況。你可以從 session
+																			// 中獲取用戶資料,並將其設置到模型中,以便在頁面中顯示。
+		bloodType = (bloodType != null) ? bloodType : userBean.getBloodType();
+		MBTI = (MBTI != null) ? MBTI : userBean.getMBTI();
+		goalNo = (goalNo != null) ? goalNo : userBean.getGoalNo();
+
+		// 設置表單提交的數據到 UserBean 對象中
+		userBean.setNickName(nickName);
+		userBean.setBloodType(bloodType);
+		userBean.setMBTI(MBTI);
+		userBean.setGoalNo(goalNo);
+
+		// 將更新後的用戶資料保存到資料庫
+		uService.updateUser(userBean);
+
+		// 載入已經儲存的資料到輸入框
+		m.addAttribute("userBean", userBean);
+		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+		// 重設 session 中的 "userData" attribute
+		session.setAttribute("userData", userBean);
+
+		return "match/jsp/MatchProfileEdit.jsp";
+	}
+
+	// 配對頁面的路徑 //傳資料到前端的方式
+	@RequestMapping(value = "/matchPage", method = { RequestMethod.GET, RequestMethod.POST })
 	public String matchPage(@RequestParam(value = "nickName", required = false) String nickName,
-	                        @RequestParam(value = "bloodType", required = false) String bloodType,
-	                        @RequestParam(value = "MBTI", required = false) String MBTI,
-	                        @RequestParam(value = "goalNo", required = false) Integer goalNo,
-	                        @RequestParam(value = "birthday", required = false) Integer birthday,
+			@RequestParam(value = "bloodType", required = false) String bloodType,
+			@RequestParam(value = "MBTI", required = false) String MBTI,
+			@RequestParam(value = "goalNo", required = false) Integer goalNo,
+			@RequestParam(value = "birthday", required = false) Integer birthday,
 
-	                        HttpSession session, Model m) {
+			HttpSession session, Model m) {
 
-	    UserBean uBean = (UserBean)session.getAttribute("userData");
-	    Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
-	    UserBean userBean = dataById.get();
-	    
-	    // 如果請求參數為 null,則從 userBean 中獲取對應的屬性值
-	    nickName = (nickName != null) ? nickName : userBean.getNickName();
-	    bloodType = (bloodType != null) ? bloodType : userBean.getBloodType();
-	    MBTI = (MBTI != null) ? MBTI : userBean.getMBTI();
-	    goalNo = (goalNo != null) ? goalNo : userBean.getGoalNo();
+		UserBean uBean = (UserBean) session.getAttribute("userData");
+		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
+		UserBean userBean = dataById.get();
 
-	    
-	    // 設置表單提交的數據到 UserBean 對象中
-	    userBean.setNickName(nickName);
-	    userBean.setBloodType(bloodType);
-	    userBean.setMBTI(MBTI);
-	    userBean.setGoalNo(goalNo);
-	    
-	    // 將更新後的用戶資料保存到資料庫
-	    uService.updateUser(userBean);
-	    
-	    // 載入已經儲存的資料到輸入框
-	    m.addAttribute("userBean", userBean);
-	    m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-	    m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-	    
-	    // 重設 session 中的 "userData" attribute
-	    session.setAttribute("userData", userBean);
-	    
-	    return "match/jsp/MatchPage.jsp";
+		// 如果請求參數為 null,則從 userBean 中獲取對應的屬性值
+		nickName = (nickName != null) ? nickName : userBean.getNickName();
+		bloodType = (bloodType != null) ? bloodType : userBean.getBloodType();
+		MBTI = (MBTI != null) ? MBTI : userBean.getMBTI();
+		goalNo = (goalNo != null) ? goalNo : userBean.getGoalNo();
+
+		// 設置表單提交的數據到 UserBean 對象中
+		userBean.setNickName(nickName);
+		userBean.setBloodType(bloodType);
+		userBean.setMBTI(MBTI);
+		userBean.setGoalNo(goalNo);
+
+		// 將更新後的用戶資料保存到資料庫
+		uService.updateUser(userBean);
+
+		// 載入已經儲存的資料到輸入框
+		m.addAttribute("userBean", userBean);
+		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+		// 重設 session 中的 "userData" attribute
+		session.setAttribute("userData", userBean);
+
+		return "match/jsp/MatchPage.jsp";
 	}
-	
-	
-	
-	
-	@RequestMapping(value = "/newMatchPage", method = {RequestMethod.GET, RequestMethod.POST})
+
+	@RequestMapping(value = "/newMatchPage", method = { RequestMethod.GET, RequestMethod.POST })
 	public String newMatchPage(HttpSession session, Model m) {
-		UserBean uBean = (UserBean)session.getAttribute("userData");
-		List<UserBean> allUsers = uService.getAllUserData();                            // 獲取所有用戶	  	    
-	    UserBean randomUser = getRandomUser(allUsers, uBean.getUserNo());     
-	    
-	    List<String> photos = spService.findByUserNo(randomUser.getUserNo());
-	    
-	    // 載入已經儲存的資料到輸入框
-	    m.addAttribute("userBean", randomUser);
-	    m.addAttribute("photos", photos);
-	    m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-	    m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-	    
-	    return "match/jsp/NewMatchPage.jsp";
+		UserBean uBean = (UserBean) session.getAttribute("userData");
+		List<UserBean> allUsers = uService.getAllUserData(); // 獲取所有用戶
+		UserBean randomUser = getRandomUser(allUsers, uBean.getUserNo());
+
+		List<String> photos = spService.findByUserNo(randomUser.getUserNo());
+
+		// 載入已經儲存的資料到輸入框
+		m.addAttribute("userBean", randomUser);
+		m.addAttribute("photos", photos);
+		m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+		return "match/jsp/NewMatchPage.jsp";
 	}
-	
-    // ----- Match 實作 -----
-    
+
+	// ----- Match 實作 -----
 
 	// 在控制器中實現獲取下一個隨機用戶及其照片的端點
 
-
 	@GetMapping("/nextUser")
 	public ResponseEntity<Map<String, Object>> getNextUser(@RequestParam("currentUserNo") Integer currentUserNo) {
-			   
-	    List<UserBean> allUsers = uService.getAllUserData();                            // 獲取所有用戶	  	    
-	    UserBean randomUser = getRandomUser(allUsers, currentUserNo);                   // 獲取下一個隨機用戶
-	    	    
-	    if (randomUser == null) {                                                       // 如果沒有其他用戶,返回404
-	        return ResponseEntity.notFound().build();
-	    }
-	    	    
-	    List<String> photos = spService.findByUserNo(randomUser.getUserNo());            // 根據用戶編號查詢照片路徑	  	    
-	    Map<String, Object> response = new HashMap<>();                                  // 建立響應數據
-	    response.put("userNo", randomUser.getUserNo());
-	    response.put("photos", photos);		    
-	    return ResponseEntity.ok(response);                                              // 返回響應
+
+		List<UserBean> allUsers = uService.getAllUserData(); // 獲取所有用戶
+		UserBean randomUser = getRandomUser(allUsers, currentUserNo); // 獲取下一個隨機用戶
+
+		if (randomUser == null) { // 如果沒有其他用戶,返回404
+			return ResponseEntity.notFound().build();
+		}
+
+		List<String> photos = spService.findByUserNo(randomUser.getUserNo()); // 根據用戶編號查詢照片路徑
+		Map<String, Object> response = new HashMap<>(); // 建立響應數據
+		response.put("userNo", randomUser.getUserNo());
+		response.put("photos", photos);
+		return ResponseEntity.ok(response); // 返回響應
 	}
-	
-	private UserBean getRandomUser(List<UserBean> users, int currentUserNo) {            // 從用戶列表中獲取下一個隨機用戶	    
-	    List<UserBean> otherUsers = new ArrayList<>();                                   // 過濾掉與當前用戶相同的用戶
-	    for (UserBean user : users) {
-	        if (user.getUserNo() != currentUserNo) {
-	            otherUsers.add(user);
-	        }
-	    }
-	    	    
-	    if (otherUsers.isEmpty()) {                                                      // 如果沒有其他用戶,返回null
-	        return null;
-	    }
-	    	    
-	    Random random = new Random();                                                    // 從其他用戶中隨機選擇一個
-	    int randomIndex = random.nextInt(otherUsers.size());
-	    return otherUsers.get(randomIndex);
+
+	private UserBean getRandomUser(List<UserBean> users, int currentUserNo) { // 從用戶列表中獲取下一個隨機用戶
+		List<UserBean> otherUsers = new ArrayList<>(); // 過濾掉與當前用戶相同的用戶
+		for (UserBean user : users) {
+			if (user.getUserNo() != currentUserNo) {
+				otherUsers.add(user);
+			}
+		}
+
+		if (otherUsers.isEmpty()) { // 如果沒有其他用戶,返回null
+			return null;
+		}
+
+		Random random = new Random(); // 從其他用戶中隨機選擇一個
+		int randomIndex = random.nextInt(otherUsers.size());
+		return otherUsers.get(randomIndex);
 	}
-	
-	
-	
+
 	// 從HttpSession中獲取當前用戶的資料,並返回用戶的ID
-	
+
 	@GetMapping("/getCurrentUserNo")
 	@ResponseBody
 	public Integer getCurrentUserNo(HttpSession session) {
-	    UserBean userBean = (UserBean) session.getAttribute("userData");
-	    if (userBean != null) {
-	        return userBean.getUserNo();
-	    }
-	    return null;                                                                      // 用戶未登錄
+		UserBean userBean = (UserBean) session.getAttribute("userData");
+		if (userBean != null) {
+			return userBean.getUserNo();
+		}
+		return null; // 用戶未登錄
 	}
-	
-	
-	
-
-	
 
 //	-----------LinePay------------
 
 	@PostMapping("/getLinePay")
 	@ResponseBody
-	public String getRequestLinePay(@RequestBody LinePayDto linePayOrder, HttpServletRequest request, Model m) throws ParseException, IOException, JSONException {
+	public String getRequestLinePay(@RequestBody LinePayDto linePayOrder, HttpServletRequest request, Model m)
+			throws ParseException, IOException, JSONException {
 		Integer amount = linePayOrder.getAmount();
 		String confirmUrl = linePayOrder.getConfirmUrl();
 		String currency = linePayOrder.getCurrency();
 		String productName = linePayOrder.getProductName();
-		
+
 		System.out.println("amount = " + amount);
 		System.out.println("url = " + confirmUrl);
 		System.out.println("currency = " + currency);
 		System.out.println("product = " + productName);
-		
+
 		HttpSession session = request.getSession();
 //		UserBean userBean = (UserBean)session.getAttribute("userData");
 		UserBean userBean = uService.getUserData(1);
-		
+
 		String confirmWeb = uService.getRequestLinePay(userBean, amount, currency, productName, confirmUrl);
 		System.out.println("回傳網址:--------------------" + confirmWeb);
-		
+
 		return confirmWeb;
 	}
-	
-
-
-
-	
-	
 
 }

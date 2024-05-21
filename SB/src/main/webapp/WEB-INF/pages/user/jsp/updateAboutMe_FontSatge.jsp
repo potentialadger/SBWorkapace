@@ -503,7 +503,9 @@
                                                                                     <h4 class="m-t-10 m-b-5">
                                                                                         ${userBean.userChineseName}</h4>
                                                                                     <p class="mb-5">
-                                                                                        ${userBean.userEnglishName}</p>
+                                                                                        ${userBean.userEnglishName ==
+                                                                                        null ? "尚未設定" :
+                                                                                        userBean.userEnglishName}</p>
                                                                                     <!-- <a href="#"
                                                                                         class="btn btn-xs btn-success disabled">編輯</a> -->
 
@@ -768,7 +770,7 @@
                                                                                                             id="updateBirthday"
                                                                                                             name="birthday"
                                                                                                             class="form-control"
-                                                                                                            value="${localDateTimeDateFormat.format(userBean.birthday)}">
+                                                                                                            value="${userBean.birthday == null ? '' : localDateTimeDateFormat.format(userBean.birthday)}">
 
                                                                                                     </td>
                                                                                                 </tr>
