@@ -144,6 +144,13 @@
                             </span>
                             <span class="text">確定</span>
                         </button>
+                        <!-- 一鍵輸入按鈕 -->
+                        <button type="button" class="btn btn-info btn-icon-split" id="oneToInput">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-magic"></i>
+                            </span>
+                            <span class="text">一鍵輸入</span>
+                        </button>
                     </form>
                 </div>
 
@@ -191,6 +198,17 @@
         document.getElementById('imagepath').addEventListener('change', function () {
             var fileName = this.files[0] ? this.files[0].name : '未選擇任何檔案';
             document.querySelector('.file-info').textContent = fileName;
+        });
+
+        // 一鍵輸入功能
+        document.getElementById('oneToInput').addEventListener('click', function () {
+            document.getElementById('title').value = "低音號演奏會";
+            document.getElementById('description').value = "這是一次精彩的低音號演奏會，將在音樂學系音樂廳舉行。";
+            document.getElementById('activityTime').value = "2024-06-01T09:00";
+            document.getElementById('signupStartTime').value = "2024-05-01T09:00";
+            document.getElementById('signupEndTime').value = "2024-05-31T18:00";
+            document.getElementById('location').value = "台灣藝術大學";
+            document.getElementById('status').value = "報名中";
         });
     </script>
 
