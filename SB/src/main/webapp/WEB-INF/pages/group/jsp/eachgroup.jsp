@@ -72,17 +72,20 @@
                                     }
 
                                     .scrollable {
-                                        max-height: 150px;
-                                        max-width: 50px
-                                        /* 设定固定高度，可以根据需要调整 */
+                                        max-height: 75px;
+                                        max-width: 288px;
                                         overflow-y: auto;
-                                        /* 启用垂直滚动条 */
                                         padding: 10px;
-                                        /* 内边距 */
-                                        border: 1px solid #ddd;
-                                        /* 边框，可以根据需要调整 */
                                         box-sizing: border-box;
-                                        /* 使内边距和边框包含在元素的总宽度和高度内 */
+                                    }
+
+                                    .centered-cell {
+                                        text-align: center;
+                                        vertical-align: auto;
+                                    }
+
+                                    .productadd {
+                                        margin-top: 19px;
                                     }
                                 </style>
                                 <script async
@@ -198,24 +201,23 @@
                                                 <table class="table table-striped align-middle table-nowrap">
                                                     <thead>
                                                         <tr>
-                                                            <td>
+                                                            <td class="centered-cell">
                                                                 <h4>商品名稱</h4>
                                                             </td>
-                                                            <td>
+                                                            <td class="centered-cell">
                                                                 <h4>商品簡述</h4>
                                                             </td>
-                                                            <td>
-                                                            </td>
-                                                            <td>
+
+                                                            <td class="centered-cell">
                                                                 <h4>商品規格</h4>
                                                             </td>
-                                                            <td>
+                                                            <td class="centered-cell">
                                                                 <h4>商品價格</h4>
                                                             </td>
-                                                            <td>
+                                                            <td class="centered-cell">
                                                                 <h4>商品數量</h4>
                                                             </td>
-                                                            <td>
+                                                            <td class="centered-cell">
                                                                 <h4>功能</h4>
                                                             </td>
                                                         </tr>
@@ -230,8 +232,8 @@
                                                                         for (Item item : items) {
                                                                         List<ItemSpecification> specifications =
                                                                             specificationsMap.get(item.getItemNo());%>
-                                                                            <tr>
-                                                                                <td>
+                                                                            <tr style="height: 100px">
+                                                                                <td class="centered-cell">
                                                                                     <div>
                                                                                         <h5 class="font-size-18">
                                                                                             <a href="#"
@@ -248,20 +250,17 @@
                                                                                         </h5>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td>
-                                                                                    <ul
-                                                                                        class="list-unstyled ps-0 mb-0 fixed-height  scrollable">
-                                                                                        <p class="itemdesc">
-                                                                                            <%=item.getDescription() %>
-                                                                                        </p>
-                                                                                    </ul>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <ul>
+                                                                                <td class="centered-cell">
 
-                                                                                    </ul>
+                                                                                    <p class="itemdesc centered-cell scrollable"
+                                                                                        style="margin-left: 37px;">
+                                                                                        <%=item.getDescription() %>
+                                                                                    </p>
+
                                                                                 </td>
-                                                                                <td style="width: 180px;">
+
+                                                                                <td class="centered-cell"
+                                                                                    style="width: 180px;">
                                                                                     <p style="margin-bottom: 5px">規格:
                                                                                     </p>
                                                                                     <select class="item-spec-select">
@@ -277,7 +276,7 @@
                                                                                             <% } %>
                                                                                     </select>
                                                                                 </td>
-                                                                                <td style="width: 220px;">
+                                                                                <td class="centered-cell">
                                                                                     <h3 class="mb-0 font-size-20">
                                                                                         NT$
                                                                                         <b class="itemprice">
@@ -285,7 +284,7 @@
                                                                                         </b>
                                                                                     </h3>
                                                                                 </td>
-                                                                                <td>
+                                                                                <td class="centered-cell">
                                                                                     <p style="margin-bottom: 5px">數量:
                                                                                     </p>
                                                                                     <button
@@ -297,12 +296,14 @@
                                                                                     <button
                                                                                         class="plus btn btn-primary btn-sm">+</button>
                                                                                 </td>
-                                                                                <td>
-                                                                                    <button type="button"
-                                                                                        class="btn btn-primary waves-effect waves-light productadd"
-                                                                                        data-itemno="<%=item.getItemNo() %>"><i
-                                                                                            class="bx bx-cart me-2 font-size-15 align-middle"></i>
-                                                                                        Add</button>
+                                                                                <td class="centered-cell">
+                                                                                    <div class="centered-cell">
+                                                                                        <button type="button"
+                                                                                            class="btn btn-primary waves-effect waves-light productadd"
+                                                                                            data-itemno="<%=item.getItemNo() %>"><i
+                                                                                                class="bx bx-cart me-2 font-size-15 align-middle"></i>
+                                                                                            Add</button>
+                                                                                    </div>
                                                                                 </td>
                                                                             </tr>
                                                                             <% } %>

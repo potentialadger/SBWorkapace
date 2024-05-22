@@ -136,7 +136,8 @@
 															class="col-lg-4 col-md-6 col-12 mt-4 pt-2 position-relative">
 															<div class="card service-wrapper rounded border-0 shadow p-4"
 																style="padding: 0px;">
-																<a href="/otherAboutMe/<%=group.getUser().getUserNo() %>"><img
+																<a
+																	href="/otherAboutMe/<%=group.getUser().getUserNo() %>"><img
 																		src="localimages/<%=group.getUser().getAvatar() %>"
 																		alt=""
 																		style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; margin: 5px"></a>
@@ -253,6 +254,19 @@
 																	name="payment[]" value="3">SB點數</label>
 														</li>
 														<br>
+														<li class="bank-account"
+															style="display:none;margin: 0;padding: 0">
+															<label style="display: flex;">
+																匯款帳戶:
+															</label>
+															<br>
+															<select id="bank" name="bank">
+																<option>銀行</option>
+															</select>
+															<input class="rounded-input" type="input" name="account"
+																placeholder="帳戶" style="width: 411px;">
+														</li>
+														<br>
 														<li class="meetup-address"
 															style="display:none;margin: 0;padding: 0">
 															<label style="display: flex;">
@@ -268,19 +282,6 @@
 															<br>
 															<input class="rounded-input" type="text" name="address"
 																style="display:none; width: 411px;">
-														</li>
-														<br>
-														<li class="bank-account"
-															style="display:none;margin: 0;padding: 0">
-															<label style="display: flex;">
-																匯款帳戶:
-															</label>
-															<br>
-															<select id="bank" name="bank">
-																<option>銀行</option>
-															</select>
-															<input class="rounded-input" type="input" name="account"
-																placeholder="帳戶" style="width: 411px;">
 														</li>
 													</ol>
 												</fieldset>

@@ -248,6 +248,7 @@
 																	<tr>
 																		<th>活動編號</th>
 																		<th>活動標題</th>
+																		<th>活動狀態</th>
 																		<th>成立時間</th>
 																		<th>付款方式</th>
 																		<th>訂單細節</th>
@@ -257,10 +258,13 @@
 																			for (OrderDto order : orders) { %>
 																			<tr>
 																				<td>
-																					<%= order.getEventNo() %>
+																					<%=order.getEventNo() %>
 																				</td>
 																				<td>
-																					<%= order.getEventTitle() %>
+																					<%=order.getEventTitle() %>
+																				</td>
+																				<td>
+																					<%=order.getEventStatus() %>
 																				</td>
 																				<% Date setTime=order.getSetTime();
 																					SimpleDateFormat sdf=new
@@ -269,7 +273,7 @@
 																					formattedSetTime=sdf.format(setTime);
 																					%>
 																					<td>
-																						<%= formattedSetTime %>
+																						<%=formattedSetTime %>
 																					</td>
 																					<% String paymentMethodDisplay="" ;
 																						switch
@@ -292,7 +296,7 @@
 																						paymentMethodDisplay="未知支付方式" ;
 																						break; } %>
 																						<td>
-																							<%= paymentMethodDisplay %>
+																							<%=paymentMethodDisplay %>
 																						</td>
 																						<td>
 																							<button
