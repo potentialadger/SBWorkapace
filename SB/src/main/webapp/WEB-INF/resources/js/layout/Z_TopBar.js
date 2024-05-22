@@ -6,6 +6,11 @@ Topbar = `<!-- Topbar -->
         <i class="fa fa-bars"></i>
     </button>
 
+    <a href="#"
+        class="m-b-5" title="首頁" style="color:#d1d3e2;">
+        <i class="fas fa-home fa-2x fa-fw" aria-hidden="true"></i>
+    </a>
+
     <!-- Topbar Search -->
     <form
         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
@@ -144,16 +149,16 @@ Topbar = `<!-- Topbar -->
                     個人資料
                 </a>
                 <a class="dropdown-item" href="#">
-                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Settings
+                    <i class="fas fa-calendar fa-sm fa-fw mr-2 text-gray-400"></i>
+                    活動
                 </a>
                 <a class="dropdown-item" href="/group/mygroups">
-                    <i class="fa fa-folder fa-sm fa-fw mr-2 text-gray-400"></i>
+                    <i class="fa fa-shopping-cart fa-sm fa-fw mr-2 text-gray-400"></i>
                     我的團購
                 </a>
                 <a class="dropdown-item" href="#">
-                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Activity Log
+                    <i class="fas fa-sign-language fa-sm fa-fw mr-2 text-gray-400"></i>
+                    配對
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">

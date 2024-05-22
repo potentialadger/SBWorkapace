@@ -32,7 +32,7 @@ slider = `<!-- Sidebar -->
         <div id="userPages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">user</h6>
-                <a class="collapse-item" href="login.html">使用者後台</a>
+                <a class="collapse-item" href="/users">使用者後台</a>
             </div>
         </div>
     </li>
@@ -77,7 +77,7 @@ slider = `<!-- Sidebar -->
         </a>
         <div id="activityPages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">group</h6>
+                <h6 class="collapse-header">activity</h6>
                 <a class="collapse-item" href="login.html">活動後台</a>
             </div>
         </div>
@@ -92,7 +92,7 @@ slider = `<!-- Sidebar -->
         </a>
         <div id="matchPages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">group</h6>
+                <h6 class="collapse-header">match</h6>
                 <a class="collapse-item" href="login.html">配對後台</a>
             </div>
         </div>
