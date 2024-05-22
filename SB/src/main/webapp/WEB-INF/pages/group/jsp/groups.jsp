@@ -263,8 +263,8 @@
 															<select id="bank" name="bank">
 																<option>銀行</option>
 															</select>
-															<input class="rounded-input" type="input" name="account"
-																placeholder="帳戶" style="width: 411px;">
+															<input class="rounded-input" id="bankAccount" type="text"
+																name="account" placeholder="帳戶" style="width: 411px;">
 														</li>
 														<br>
 														<li class="meetup-address"
@@ -280,8 +280,8 @@
 																<option value="">請選擇</option>
 															</select>
 															<br>
-															<input class="rounded-input" type="text" name="address"
-																style="display:none; width: 411px;">
+															<input class="rounded-input" id="groupAddress" type="text"
+																name="address" style="display:none; width: 411px;">
 														</li>
 													</ol>
 												</fieldset>
@@ -294,6 +294,10 @@
 												</fieldset>
 										</div>
 										</form>
+										<div style="display: flex;align-items: center;justify-content: center;">
+											<button class="btn btn-warning" style="width: 100px;"
+												id="quickButton">一鍵輸入</button>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -545,8 +549,18 @@
 											})
 										}
 									});
+
+									$('#quickButton').click(function () {
+										$('#gTitle').val('最強新北伴手禮-小潘鳳梨酥');
+										$('#gDescription').val('板橋No.1伴手禮名店的「小潘蛋糕坊」，可是超適合送禮、有夠熱賣的啦，平日總是大排長龍，入手超級困難啊。');
+										$('#gMinTotalAmount').val(0);
+										$('#gMinTotalQuantity').val(0);
+										$('#bankAccount').val('822中國信託商業銀行-123456789123456');
+										$('#groupAddress').val('新北市板橋區中山路一段258號');
+									})
 								});
 							</script>
+
 						</body>
 
 						</html>
