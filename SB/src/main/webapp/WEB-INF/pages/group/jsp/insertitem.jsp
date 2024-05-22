@@ -44,96 +44,105 @@
 
                     <!-- Topbar -->
                     <script src="/js/layout/Z_TopBar.js"></script>
+                    <div class="container">
 
-                    <section class="section-medium section-arrow--bottom-center section-arrow-primary-color bg-info">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-12 text-white text-center">
-                                    <h2 class="section-title">
-                                        <%=group.getTitle() %>
-                                    </h2>
-                                    <p class="section-sub-title">
-                                        <%=group.getDescription() %>
-                                    </p>
+                        <section
+                            class="section-medium section-arrow--bottom-center section-arrow-primary-color bg-info">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12 text-white text-center">
+                                        <h2 class="section-title">
+                                            <%=group.getTitle() %>
+                                        </h2>
+                                        <p class="section-sub-title">
+                                            <%=group.getDescription() %>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <br>
+                        <br>
+                        <div class="d-flex justify-content-center align-items-center" style="height: 50px;">
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop" style="width: 20%">
+                                新增商品
+                            </button>
+                        </div>
+                        <section class="section-primary t-bordered">
+                            <div class="container">
+                                <div class="row testimonial-three testimonial-three--col-three">
+                                </div>
+                            </div>
+                        </section>
+                        <br>
+                        <div class="d-flex justify-content-center align-items-center" style="height: 50px;">
+                            <button type="button" class="btn btn-danger" id="submitAllItems"
+                                style="width: 75%">提交所有商品</button>
+                        </div>
+
+                        <!-- modal視窗 -->
+                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">商品內容</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <form id="newItem">
+                                        <div class="modal-body">
+                                            <div class="formGroup">
+                                                <label for="itemFile">商品圖片:</label>
+                                                <br>
+
+                                                <input type="file" name="itemfile" id="itemFile">
+                                            </div>
+                                            <div class="formGroup">
+                                                <label for="itemName">商品名稱:</label>
+                                                <br>
+                                                <input class="rounded-input" type="text" name="itemname" id="itemName"
+                                                    placeholder="請輸入商品名稱">
+                                            </div>
+                                            <div class="formGroup">
+                                                <label for="itemDesc">商品描述:</label>
+                                                <br>
+                                                <input class="rounded-input" type="text" name="itemdescription"
+                                                    id="itemDesc" placeholder="請輸入商品描述">
+                                            </div>
+                                            <div class="formGroup">
+                                                <label for="itemPrice">商品價錢:</label>
+                                                <br>
+                                                <input class="rounded-input" type="number" name="itemprice"
+                                                    id="itemPrice" placeholder="請輸入價錢">
+                                            </div>
+                                            <div class="formGroup">
+                                                <label for="itemSpec">商品規格:</label>
+                                                <br>
+                                                <div class="spec-button">
+                                                    <button type="button" class="btn btn-outline-secondary"
+                                                        id="newSpec">
+                                                        <i class="fa-regular fa-plus"></i> 新增規格
+                                                    </button>
+                                                </div>
+                                                <div class="spec-list mt-3">
+                                                    <!-- 動態添加規格輸入框 -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">關閉視窗</button>
+                                            <button type="button" class="btn btn-primary"
+                                                id="submitNewItem">輸入確定</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-                    </section>
-                    <div></div>
-                    <br>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop" style="width: 100%">
-                        新增商品
-                    </button>
-                    <section class="section-primary t-bordered">
-                        <div class="container">
-                            <div class="row testimonial-three testimonial-three--col-three">
-                            </div>
-                        </div>
-                    </section>
-                    <br>
-                    <button type="button" class="btn btn-success" id="submitAllItems"
-                        style="width: 100%">提交所有商品</button>
 
-                    <!-- modal視窗 -->
-                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="staticBackdropLabel">商品內容</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <form id="newItem">
-                                    <div class="modal-body">
-                                        <div class="formGroup">
-                                            <label for="itemFile">商品圖片:</label>
-                                            <br>
-
-                                            <input type="file" name="itemfile" id="itemFile">
-                                        </div>
-                                        <div class="formGroup">
-                                            <label for="itemName">商品名稱:</label>
-                                            <br>
-                                            <input class="rounded-input" type="text" name="itemname" id="itemName"
-                                                placeholder="請輸入商品名稱">
-                                        </div>
-                                        <div class="formGroup">
-                                            <label for="itemDesc">商品描述:</label>
-                                            <br>
-                                            <input class="rounded-input" type="text" name="itemdescription"
-                                                id="itemDesc" placeholder="請輸入商品描述">
-                                        </div>
-                                        <div class="formGroup">
-                                            <label for="itemPrice">商品價錢:</label>
-                                            <br>
-                                            <input class="rounded-input" type="number" name="itemprice" id="itemPrice"
-                                                placeholder="請輸入價錢">
-                                        </div>
-                                        <div class="formGroup">
-                                            <label for="itemSpec">商品規格:</label>
-                                            <br>
-                                            <div class="spec-button">
-                                                <button type="button" class="btn btn-outline-secondary" id="newSpec">
-                                                    <i class="fa-regular fa-plus"></i> 新增規格
-                                                </button>
-                                            </div>
-                                            <div class="spec-list mt-3">
-                                                <!-- 動態添加規格輸入框 -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">關閉視窗</button>
-                                        <button type="button" class="btn btn-primary" id="submitNewItem">輸入確定</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
                     </div>
-
                 </div>
                 <!-- End of Main Content -->
 

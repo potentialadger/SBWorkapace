@@ -21,6 +21,9 @@ public class GroupDto {
 	private Integer eventNo;
 	private Integer paymentMethod;
 	private List<OrderDto> groupOrders;
+	private String bank;
+	private String city;
+	private String area;
 	
 	public String getgTitle() {
 		return gTitle;
@@ -100,6 +103,24 @@ public class GroupDto {
 	}
 	public void setGroupOrders(List<OrderDto> groupOrders) {
 		this.groupOrders = groupOrders;
+	}
+	public String getBank() {
+		return bank;
+	}
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getArea() {
+		return area;
+	}
+	public void setArea(String area) {
+		this.area = area;
 	}
 
 	

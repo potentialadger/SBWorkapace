@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,8 +60,11 @@ public class GroupController {
 	
 //	全活躍活動
 	@GetMapping(value = "/groups")
-	public String findAllGroup(Model m, HttpServletRequest request) {
-		List<Group> groups = gService.findAllGroup();
+	public String findAllGroup(Model m, HttpServletRequest request, @RequestParam(defaultValue = "0") int page) {
+		int pageSize = 9;
+		
+		PageRequest pageAble = PageRequest.of(page, pageSize);
+		Page<Group> groups = gService.findAllGroupPage(pageAble);
 		
 		HttpSession session = request.getSession();
 //		UserBean user = (UserBean)session.getAttribute("userData");
@@ -160,8 +165,12 @@ public class GroupController {
 	
 //	全活躍活動依開團時間升序
 	@GetMapping(value = "/groupsbystimeasc")
-	public String findAllGroupByStartTimeAsc(HttpServletRequest request, Model m) {
-		List<Group> groups = gService.findAllGroupsByStartTimeAsc();
+	public String findAllGroupByStartTimeAsc(HttpServletRequest request, Model m, @RequestParam(defaultValue = "0") int page) {
+		int pageSize = 9;
+		
+		PageRequest pageAble = PageRequest.of(page, pageSize);
+		Page<Group> groups = gService.findAllGroupsByStartTimeAsc(pageAble);
+		
 		HttpSession session = request.getSession();
 //		UserBean user = (UserBean)session.getAttribute("userData");
 		UserBean user = userService.getUserData(1);
@@ -170,6 +179,9 @@ public class GroupController {
 		m.addAttribute("userData", user);
 		
 		return "group/jsp/groups.jsp";
+		
+		
+		
 		
 	}
 	
@@ -183,8 +195,12 @@ public class GroupController {
 	
 //	全活躍活動依結團時間升序
 	@GetMapping(value = "/groupsbyetimeasc")
-	public String findAllGroupByEndTimeAsc(HttpServletRequest request, Model m){
-		List<Group> groups = gService.findALLGroupsByEndTimeAsc();
+	public String findAllGroupByEndTimeAsc(HttpServletRequest request, Model m, @RequestParam(defaultValue = "0") int page){
+		int pageSize = 9;
+		
+		PageRequest pageAble = PageRequest.of(page, pageSize);
+		Page<Group> groups = gService.findALLGroupsByEndTimeAsc(pageAble);
+		
 		HttpSession session = request.getSession();
 //		UserBean user = (UserBean)session.getAttribute("userData");
 		UserBean user = userService.getUserData(1);
@@ -193,6 +209,9 @@ public class GroupController {
 		m.addAttribute("userData", user);
 		
 		return "group/jsp/groups.jsp";
+		
+		
+		
 	}
 	
 //	全活躍活動依結團時間降序
@@ -271,6 +290,11 @@ public class GroupController {
 		String account = null;
 		String minTotalAmount = null;
 		String minTotalQuantity = null;
+		String bank = null;
+		String area = null;
+		String city = null;
+		String saveAccount = null;
+		String saveAddress = null;
 		
 		String title = newGroup.getgTitle();
 		String description = newGroup.getgDescription();
@@ -287,12 +311,17 @@ public class GroupController {
 		}
 		String[] payments = newGroup.getPayment();
 		if(Arrays.asList(payments).contains("1")) {
+			bank = newGroup.getBank();
 			account = newGroup.getAccount();
+			saveAccount = bank + "-" + account;
 		}
 		if (Arrays.asList(payments).contains("2")) {
 			address = newGroup.getAddress();
+			city = newGroup.getCity();
+			area = newGroup.getArea();
+			saveAddress = city + area + address ;
 		}
-		Group group = gService.insertGroup(userNo, title, description, endTime, payments, minTotalQuantity, minTotalAmount, account, address);
+		Group group = gService.insertGroup(userNo, title, description, endTime, payments, minTotalQuantity, minTotalAmount, saveAccount, saveAddress);
 		
 		session.setAttribute("eventno", group.getEventNo());
 		m.addAttribute("group", group);

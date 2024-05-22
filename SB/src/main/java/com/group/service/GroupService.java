@@ -1,5 +1,6 @@
 package com.group.service;
 
+
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Arrays;
@@ -17,6 +18,11 @@ import com.user.bean.UserBean;
 import com.user.repository.UserRepository;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 @Service
 @Transactional
@@ -41,10 +47,15 @@ public class GroupService {
 		return group;
 	}
 	
-//	查詢活躍活動
-	public List<Group> findAllGroup(){
-		return groupRepository.finaAllGroup();
-	}
+//	查詢前台活躍活動
+    public Page<Group> findAllGroupPage(PageRequest  pageRequest) {
+        return groupRepository.findAllGroupPage(pageRequest);
+    }
+    
+//  查詢後台活躍活動
+    public List<Group> findAllGroup(){
+    	return groupRepository.findAllGroup();
+    }
 	
 //	更新團購點數
 	public Group updatePoint(Group group) {
@@ -52,8 +63,8 @@ public class GroupService {
 	}
 	
 //	查詢活躍活動依照開活動時間升序
-	public List<Group> findAllGroupsByStartTimeAsc(){
-		return groupRepository.findAllGroupsByStartTimeAsc();
+	public Page<Group> findAllGroupsByStartTimeAsc(PageRequest  pageRequest){
+		return groupRepository.findAllGroupsByStartTimeAsc(pageRequest);
 	}
 	
 //	查詢活躍活動依照開活動時間降序
@@ -62,8 +73,8 @@ public class GroupService {
 	}
 	
 //	查詢活躍活動依照結束時間升序
-	public List<Group> findALLGroupsByEndTimeAsc(){
-		return groupRepository.findAllGroupByEndTimeAsc();
+	public Page<Group> findALLGroupsByEndTimeAsc(PageRequest  pageRequest){
+		return groupRepository.findAllGroupByEndTimeAsc(pageRequest);
 	}
 	
 //	查詢活躍活動依照結束時間降序

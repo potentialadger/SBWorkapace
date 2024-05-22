@@ -39,7 +39,7 @@
                                 <script src="/js/layout/Z_TopBar.js"></script>
 
                                 <!-- 主要內容 -->
-                                <div>
+                                <div class="container">
                                     <h2>上架團購列表</h2>
                                     <table id="table_id" class="display">
                                         <thead>
