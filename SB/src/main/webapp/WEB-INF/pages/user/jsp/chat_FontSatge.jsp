@@ -4,6 +4,7 @@
 			<%@page import="com.user.bean.UserBean" %>
 				<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 					<%!@SuppressWarnings("unchecked")%>
+					<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 						<!DOCTYPE html>
 						<html lang="en">
@@ -672,207 +673,31 @@
 													</div>
 												</div>
 											</div>
+											
 											<div class="row sideBar">
-												<div class="row sideBar-body">
-													<div class="col-sm-3 col-xs-3 sideBar-avatar">
-														<div class="avatar-icon">
-															<img
-																src="https://bootdey.com/img/Content/avatar/avatar1.png">
-														</div>
-													</div>
-													<div class="col-sm-9 col-xs-9 sideBar-main">
-														<div class="row">
-															<div class="col-sm-8 col-xs-8 sideBar-name">
-																<span class="name-meta">John Doe
-																</span>
-															</div>
-															<div class="col-sm-4 col-xs-4 pull-right sideBar-time">
-																<span class="time-meta pull-right">18:18
-																</span>
+												<c:forEach var="friend" items="${userFriends}">
+													<div class="row sideBar-body" onclick="editChatContent(event, this, ${friend.userNo})">
+														<div class="col-sm-3 col-xs-3 sideBar-avatar">
+															<div class="avatar-icon">
+																<img
+																	src="/localimages/${friend.avatar}" id="sideBarAvatar">
 															</div>
 														</div>
-													</div>
-												</div>
-												<div class="row sideBar-body">
-													<div class="col-sm-3 col-xs-3 sideBar-avatar">
-														<div class="avatar-icon">
-															<img
-																src="https://bootdey.com/img/Content/avatar/avatar2.png">
-														</div>
-													</div>
-													<div class="col-sm-9 col-xs-9 sideBar-main">
-														<div class="row">
-															<div class="col-sm-8 col-xs-8 sideBar-name">
-																<span class="name-meta">John Doe
-																</span>
-															</div>
-															<div class="col-sm-4 col-xs-4 pull-right sideBar-time">
-																<span class="time-meta pull-right">18:18
-																</span>
+														<div class="col-sm-9 col-xs-9 sideBar-main">
+															<div class="row">
+																<div class="col-sm-6 col-xs-6 sideBar-name">
+																	<span class="name-meta" id="sideBarName">${friend.userChineseName}
+																	</span>
+																</div>
+																<div class="col-sm-6 col-xs-6 pull-right sideBar-time">
+																	<span class="time-meta pull-right">${localDateTimeFormat.format(friend.lastLoginDatetime)}
+																	</span>
+																</div>
 															</div>
 														</div>
 													</div>
-												</div>
-												<div class="row sideBar-body">
-													<div class="col-sm-3 col-xs-3 sideBar-avatar">
-														<div class="avatar-icon">
-															<img
-																src="https://bootdey.com/img/Content/avatar/avatar3.png">
-														</div>
-													</div>
-													<div class="col-sm-9 col-xs-9 sideBar-main">
-														<div class="row">
-															<div class="col-sm-8 col-xs-8 sideBar-name">
-																<span class="name-meta">John Doe
-																</span>
-															</div>
-															<div class="col-sm-4 col-xs-4 pull-right sideBar-time">
-																<span class="time-meta pull-right">18:18
-																</span>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="row sideBar-body">
-													<div class="col-sm-3 col-xs-3 sideBar-avatar">
-														<div class="avatar-icon">
-															<img
-																src="https://bootdey.com/img/Content/avatar/avatar4.png">
-														</div>
-													</div>
-													<div class="col-sm-9 col-xs-9 sideBar-main">
-														<div class="row">
-															<div class="col-sm-8 col-xs-8 sideBar-name">
-																<span class="name-meta">John Doe
-																</span>
-															</div>
-															<div class="col-sm-4 col-xs-4 pull-right sideBar-time">
-																<span class="time-meta pull-right">18:18
-																</span>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="row sideBar-body">
-													<div class="col-sm-3 col-xs-3 sideBar-avatar">
-														<div class="avatar-icon">
-															<img
-																src="https://bootdey.com/img/Content/avatar/avatar5.png">
-														</div>
-													</div>
-													<div class="col-sm-9 col-xs-9 sideBar-main">
-														<div class="row">
-															<div class="col-sm-8 col-xs-8 sideBar-name">
-																<span class="name-meta">John Doe
-																</span>
-															</div>
-															<div class="col-sm-4 col-xs-4 pull-right sideBar-time">
-																<span class="time-meta pull-right">18:18
-																</span>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="row sideBar-body">
-													<div class="col-sm-3 col-xs-3 sideBar-avatar">
-														<div class="avatar-icon">
-															<img
-																src="https://bootdey.com/img/Content/avatar/avatar6.png">
-														</div>
-													</div>
-													<div class="col-sm-9 col-xs-9 sideBar-main">
-														<div class="row">
-															<div class="col-sm-8 col-xs-8 sideBar-name">
-																<span class="name-meta">John Doe
-																</span>
-															</div>
-															<div class="col-sm-4 col-xs-4 pull-right sideBar-time">
-																<span class="time-meta pull-right">18:18
-																</span>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="row sideBar-body">
-													<div class="col-sm-3 col-xs-3 sideBar-avatar">
-														<div class="avatar-icon">
-															<img
-																src="https://bootdey.com/img/Content/avatar/avatar1.png">
-														</div>
-													</div>
-													<div class="col-sm-9 col-xs-9 sideBar-main">
-														<div class="row">
-															<div class="col-sm-8 col-xs-8 sideBar-name">
-																<span class="name-meta">John Doe
-																</span>
-															</div>
-															<div class="col-sm-4 col-xs-4 pull-right sideBar-time">
-																<span class="time-meta pull-right">18:18
-																</span>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="row sideBar-body">
-													<div class="col-sm-3 col-xs-3 sideBar-avatar">
-														<div class="avatar-icon">
-															<img
-																src="https://bootdey.com/img/Content/avatar/avatar2.png">
-														</div>
-													</div>
-													<div class="col-sm-9 col-xs-9 sideBar-main">
-														<div class="row">
-															<div class="col-sm-8 col-xs-8 sideBar-name">
-																<span class="name-meta">John Doe
-																</span>
-															</div>
-															<div class="col-sm-4 col-xs-4 pull-right sideBar-time">
-																<span class="time-meta pull-right">18:18
-																</span>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="row sideBar-body">
-													<div class="col-sm-3 col-xs-3 sideBar-avatar">
-														<div class="avatar-icon">
-															<img
-																src="https://bootdey.com/img/Content/avatar/avatar3.png">
-														</div>
-													</div>
-													<div class="col-sm-9 col-xs-9 sideBar-main">
-														<div class="row">
-															<div class="col-sm-8 col-xs-8 sideBar-name">
-																<span class="name-meta">John Doe
-																</span>
-															</div>
-															<div class="col-sm-4 col-xs-4 pull-right sideBar-time">
-																<span class="time-meta pull-right">18:18
-																</span>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="row sideBar-body">
-													<div class="col-sm-3 col-xs-3 sideBar-avatar">
-														<div class="avatar-icon">
-															<img
-																src="https://bootdey.com/img/Content/avatar/avatar4.png">
-														</div>
-													</div>
-													<div class="col-sm-9 col-xs-9 sideBar-main">
-														<div class="row">
-															<div class="col-sm-8 col-xs-8 sideBar-name">
-																<span class="name-meta">John Doe
-																</span>
-															</div>
-															<div class="col-sm-4 col-xs-4 pull-right sideBar-time">
-																<span class="time-meta pull-right">18:18
-																</span>
-															</div>
-														</div>
-													</div>
-												</div>
+												</c:forEach>
+											
 											</div>
 										</div>
 										<div class="side-two">
@@ -1100,15 +925,21 @@
 											</div>
 										</div>
 									</div>
+
+									<!-- 存放目前發送者的UserNo -->
+									<input type="hidden" name="" id="sendOutUser" value="${userBean.userNo}">
+									<!-- 存放目前接收者的UserNo -->
+									<input type="hidden" name="" id="receiveUser" value="2">
+
 									<div class="col-sm-8 conversation">
 										<div class="row heading">
 											<div class="col-sm-2 col-md-1 col-xs-3 heading-avatar">
 												<div class="heading-avatar-icon">
-													<img src="https://bootdey.com/img/Content/avatar/avatar6.png">
+													<img id="chatAvatar" src="https://bootdey.com/img/Content/avatar/avatar6.png">
 												</div>
 											</div>
 											<div class="col-sm-8 col-xs-7 heading-name">
-												<a class="heading-name-meta">John Doe
+												<a class="heading-name-meta" id="chatName">John Doe
 												</a>
 												<span class="heading-online">Online</span>
 											</div>
@@ -1118,10 +949,8 @@
 										</div>
 										<div class="row message" id="conversation">
 											<div class="row message-previous">
-												<div class="col-sm-12 previous">
-													<a onclick="previous(this)" id="ankitjain28" name="20">
-														Show Previous Message!
-													</a>
+												<div class="col-sm-12 previous" style="color: #337ab7;">
+													已經沒有訊息囉!
 												</div>
 											</div>
 											<div class="row message-body">
@@ -1291,7 +1120,7 @@
 											<div class="col-sm-1 col-xs-1 reply-recording">
 												<i class="fa fa-microphone fa-2x" aria-hidden="true"></i>
 											</div>
-											<div class="col-sm-1 col-xs-1 reply-send">
+											<div class="col-sm-1 col-xs-1 reply-send" onclick="send()">
 												<i class="fa fa-send fa-2x" aria-hidden="true"></i>
 											</div>
 										</div>
@@ -1313,8 +1142,269 @@
 											"left": "-100%"
 										});
 									});
+
+
+									//把卷軸拉到最下面
+									var scrollHeight = $("#conversation").prop("scrollHeight");
+									$("#conversation").scrollTop(scrollHeight);
 								})
 							</script>
+
+							<script type="text/javascript">
+								var websocket = null;
+								
+								$(function(){
+									connectWebSocket();
+								});
+
+								//連接WebSocket
+								function connectWebSocket() {
+									var sendOutUser = document.getElementById("sendOutUser").value;
+									if (sendOutUser === "") {
+										alert("請輸入用戶名稱");
+										return;
+									}
+									//判斷當前瀏覽器是否支援websocket
+									if ('WebSocket' in window) {
+										websocket = new WebSocket("ws://localhost:8080/web-socket/"+document.getElementById("sendOutUser").value);
+									} else {
+										alert('當前瀏覽器 not support websocket')
+									}
+									//連接發生錯誤時回傳的方法
+									websocket.onerror = function () {
+										alert("連接發生錯誤");
+									};
+									//連接成功的回調方法
+									websocket.onopen = function () {
+
+										console.log("成功")
+										var sendOutUser = document.getElementById("sendOutUser")
+										sendOutUser.readOnly = true
+										sendOutUser.style.backgroundColor='#ddd'
+									}
+									//接收到消息的回調方法
+									websocket.onmessage = function (event) {
+										console.log(event.data)
+										innerdiv("",event.data)
+									}
+									//連接關閉的回調方法
+									websocket.onclose = function () {
+										// innerdiv("","websocket連接關閉");
+									}
+									//監聽視窗關閉事件，當視窗關閉時，主動去關閉websocket連接，防止連接尚未段開就關閉視窗，server端會拋出異常。
+									window.onbeforeunload = function () {
+										closewebsocket();
+									}
+								}
+
+								//關閉連線
+								function closeWebSocket() {
+									websocket.close();
+								}
+
+								//發送訊息
+								function send() {
+									var m = new Map(); // 空Map
+									var sendOutId = document.getElementById("sendOutUser")  //發送者
+									var msg = document.getElementById("comment").value  //發送的訊息
+									if (msg === "") {
+										alert("请输入消息");
+										return;
+									}
+									
+									var receiveUser = document.getElementById("receiveUser").value //接收者
+									m.set("sendOutUser",sendOutUser.value);
+									m.set("msg",msg)
+									
+									// 接收者
+									m.set("receiveUser",receiveUser)
+									m.set("type",1)
+									
+									json = mapToJson(m)
+									websocket.send(json)
+									innerdiv("我",msg)
+
+									$("#comment").val("");
+								}
+
+								//map轉成json
+								function  mapToJson(map) {
+									var obj= Object.create(null);
+									for (var[k,v] of map) {
+										obj[k] = v;
+									}
+									return JSON.stringify(obj);
+								}
+
+								function getCurrentTimeString(){
+									let currentDate = new Date();
+									let formattedDateTime = currentDate.toLocaleString('default', {
+										hour12: false,
+										hour: '2-digit',
+										minute: '2-digit',
+										second: '2-digit'
+									});
+
+									return formattedDateTime;
+								};
+
+								//顯示聊天紀錄到頁面
+								function innerdiv(id,txt){
+									
+									var msgList = document.getElementById("conversation")
+									
+									var currentTime = getCurrentTimeString();
+									console.log("當前時間 : " + currentTime);
+
+									if (id === "") {
+										msgList.innerHTML += `
+											<div class="row message-body">
+												<div class="col-sm-12 message-main-receiver">
+													<div class="receiver">
+														<div class="message-text">`+
+															txt+
+														`</div>
+														<span class="message-time pull-right">`+
+															currentTime+
+														`</span>
+													</div>
+												</div>
+											</div>
+										`;
+									}else{
+										msgList.innerHTML += `
+											<div class="row message-body">
+												<div class="col-sm-12 message-main-sender">
+													<div class="sender">
+														<div class="message-text">`+
+															txt +
+														`</div>
+														<span class="message-time pull-right">` + 
+															currentTime +
+														`</span>
+													</div>
+												</div>
+											</div>
+										`;
+									}
+
+									//卷軸往下推
+									var scrollHeight = $("#conversation").prop("scrollHeight");
+									$("#conversation").scrollTop(scrollHeight);
+								}
+
+								function formatTime(contentTime){
+									console.log(contentTime); 
+									const dateTime = new Date(
+										contentTime[0], // 年
+										contentTime[1] - 1, // 月 (0-11)
+										contentTime[2], // 日
+										contentTime[3], // 時
+										contentTime[4], // 分
+										contentTime[5]
+									);
+
+									console.log(dateTime);
+
+									const formattedDateTime = dateTime.toLocaleString('en-US', {
+										timeZone: 'Asia/Taipei', // 設定時區為台北
+										hour: '2-digit',
+										minute: '2-digit',
+										second: '2-digit',
+										hour12: false
+									});
+
+
+									// const formattedDateTime = dateTime.toISOString();
+
+									return formattedDateTime;
+								}
+								
+								function editChatContent(event, element, friendNo){
+									$("#receiveUser").val(friendNo);
+
+									//把頭貼跟名字移過去聊天室的上面
+									var name = $(element).find("#sideBarName").text();
+									var avatarPath = $(element).find("#sideBarAvatar").attr('src');
+									$("#chatName").text(name);
+									$("#chatAvatar").attr('src', avatarPath);
+
+
+									fetch("/getChatContent/" + friendNo).then(function (response) {
+										if (response.status != 200) {
+											console.log(response.status + " " + response.statusText);
+
+											return;
+										}
+
+										response.json().then(function (data) {
+											console.log(data);
+											$("#conversation").empty();
+											$("#conversation").html(`
+												<div class="row message-previous">
+													<div class="col-sm-12 previous" style="color: #337ab7;">
+														已經沒有訊息囉!
+													</div>
+												</div>
+											`);
+											
+											for(var i = 0; i < data.length; i++){
+												var contentTime = formatTime(data[i].contentTime);
+												if(data[i].userNo == $("#sendOutUser").val()){
+													$("#conversation").append(`
+														<div class="row message-body">
+															<div class="col-sm-12 message-main-sender">
+																<div class="sender">
+																	<div class="message-text">`+
+																		data[i].chatContent +
+																	`</div>
+																	<span class="message-time pull-right">` + 
+																		contentTime +
+																	`</span>
+																</div>
+															</div>
+														</div>
+													`);
+												}else{
+													$("#conversation").append(`
+														<div class="row message-body">
+															<div class="col-sm-12 message-main-receiver">
+																<div class="receiver">
+																	<div class="message-text">`+
+																		data[i].chatContent+
+																	`</div>
+																	<span class="message-time pull-right">`+
+																		contentTime+
+																	`</span>
+																</div>
+															</div>
+														</div>
+													`);
+												}
+											}
+
+											// document.querySelector("#userName").innerHTML = data.userChineseName;
+											// document.querySelector("#topBarAvatar").src = "/localimages/" + data.avatar;
+
+											// var resultText = "";
+											// for (var i = 0; i < data.length; i++) {
+											//     resultText += data[i].houseid + " " + data[i].housename + "<br/>";
+											// }
+
+											// document.querySelector("#result").innerHTML = resultText;
+										});
+									});
+
+
+									//全部資料都印好後，卷軸推到底
+									var scrollHeight = $("#conversation").prop("scrollHeight");
+									$("#conversation").scrollTop(scrollHeight);
+								}
+
+								
+								
+							</script>
+							
 						</body>
 
 						</html>

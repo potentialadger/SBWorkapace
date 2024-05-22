@@ -1,14 +1,18 @@
 package com.user.util;
 
+import java.time.LocalDateTime;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.user.bean.SocketMsg;
+import com.user.bean.UserChatBean;
+import com.user.service.UserChatService;
 
 import jakarta.websocket.server.ServerEndpoint;
 import jakarta.websocket.*;
@@ -36,20 +40,41 @@ public class WebSocketUtil {
     /**
      * 私聊：向指定客户端推送消息
      */
-    public synchronized static void privateMessage(SocketMsg socketMsg) {
+    
+    
+    private static UserChatService ucService;
+    
+    @Autowired
+    private void setService(UserChatService userChatService) {
+    	WebSocketUtil.ucService = userChatService;
+    }
+    
+    public synchronized void privateMessage(SocketMsg socketMsg) {
         //接收消息的用户
         Session receiveUser = sessionMap.get(USER_NAME_PREFIX + socketMsg.getReceiveUser());
+        
+        //存進資料庫
+        UserChatBean userChatBean = new UserChatBean();
+        userChatBean.setUserNo(Integer.parseInt(socketMsg.getSendOutUser()));
+        userChatBean.setFriendNo(Integer.parseInt(socketMsg.getReceiveUser()));
+        userChatBean.setChatContent(socketMsg.getMsg());
+        userChatBean.setContentTime(LocalDateTime.now());
+        
+//        UserChatService ucService = new UserChatService();
+        
+        ucService.saveOrUpdateUserChat(userChatBean);
+        
         //发送给接收者
         if(receiveUser != null){
             //发送给接收者
             System.out.println(socketMsg.getSendOutUser()+" 向 "+socketMsg.getReceiveUser()+" 发送了一条消息："+socketMsg.getMsg());
-            receiveUser.getAsyncRemote().sendText(socketMsg.getSendOutUser()+"："+socketMsg.getMsg());
+            receiveUser.getAsyncRemote().sendText(socketMsg.getMsg());
         }else{
             //发送消息的用户
             System.out.println(socketMsg.getSendOutUser()+" 私聊的用户 "+socketMsg.getReceiveUser()+" 不在线或者输入的用户名不对");
             Session sendOutUser = sessionMap.get(USER_NAME_PREFIX + socketMsg.getSendOutUser());
             //将系统提示推送给发送者
-            sendOutUser.getAsyncRemote().sendText("系统消息：对方不在线或者您输入的用户名不对");
+//            sendOutUser.getAsyncRemote().sendText("系统消息：对方不在线或者您输入的用户名不对");
         }
     }
 
@@ -90,7 +115,7 @@ public class WebSocketUtil {
         //在线数加1
         String tips = userName+" 加入聊天室。当前聊天室人数为" + webSocketSet.size();
         System.out.println(tips);
-        publicMessage(userName,tips,true);
+//        publicMessage(userName,tips,true);
     }
 
     /**
@@ -133,7 +158,7 @@ public class WebSocketUtil {
         }
         String tips = userName+" 退出聊天室。当前聊天室人数为" + webSocketSet.size();
         System.out.println(tips);
-        publicMessage(userName,tips,true);
+//        publicMessage(userName,tips,true);
     }
 
     /**
