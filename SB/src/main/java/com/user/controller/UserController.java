@@ -357,6 +357,20 @@ public class UserController {
 		UserBean uBean = (UserBean) session.getAttribute("userData");
 		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
 		UserBean userBean = dataById.get();
+		
+		//顯示圖片頁面的朋友們
+		StateBean state = stateService.findStateBystateName("好友");
+
+		List<FriendStateBean> friendStateBeans = fsService.findSomeStateFriendState(userBean, state);
+
+		List<UserBean> friendBeans = new ArrayList<UserBean>();
+
+		for (FriendStateBean fsBean : friendStateBeans) {
+			friendBeans.add(fsBean.getFriendBean());
+		}
+
+		m.addAttribute("userFriendsCount", friendBeans.size());
+		m.addAttribute("userFriends", friendBeans);
 
 		m.addAttribute("userBean", userBean);
 		m.addAttribute("userImagesCount", userBean.getUserImages().size());
@@ -457,6 +471,15 @@ public class UserController {
 		UserBean uBean = (UserBean) session.getAttribute("otherUserData");
 		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
 		UserBean userBean = dataById.get();
+		
+		StateBean state = stateService.findStateBystateName("好友");
+		List<FriendStateBean> friendStateBeans = fsService.findSomeStateFriendState(userBean, state);
+		List<UserBean> friendBeans = new ArrayList<UserBean>();
+		for (FriendStateBean fsBean : friendStateBeans) {
+			friendBeans.add(fsBean.getFriendBean());
+		}
+		m.addAttribute("userFriendsCount", friendBeans.size());
+		m.addAttribute("userFriends", friendBeans);
 
 		m.addAttribute("userBean", userBean);
 		m.addAttribute("userImagesCount", userBean.getUserImages().size());
@@ -515,6 +538,15 @@ public class UserController {
 	public String otherUserPhotosIDAction(@PathVariable("userNo") Integer userNo, HttpSession session, Model m) {
 		UserBean userBean = uService.getUserData(userNo);
 		session.setAttribute("otherUserData", userBean);
+		
+		StateBean state = stateService.findStateBystateName("好友");
+		List<FriendStateBean> friendStateBeans = fsService.findSomeStateFriendState(userBean, state);
+		List<UserBean> friendBeans = new ArrayList<UserBean>();
+		for (FriendStateBean fsBean : friendStateBeans) {
+			friendBeans.add(fsBean.getFriendBean());
+		}
+		m.addAttribute("userFriendsCount", friendBeans.size());
+		m.addAttribute("userFriends", friendBeans);
 
 		m.addAttribute("userBean", userBean);
 		m.addAttribute("userImagesCount", userBean.getUserImages().size());

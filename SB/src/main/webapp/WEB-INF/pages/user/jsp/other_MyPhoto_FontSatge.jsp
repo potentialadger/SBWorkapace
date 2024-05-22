@@ -568,44 +568,14 @@
                                                                                             <div class="value">
                                                                                                 ${userBean.phone}</div>
                                                                                         </li>
-                                                                                        <li class="title">朋友清單 (9)</li>
+                                                                                        <li class="title">朋友清單 (${userFriendsCount})</li>
                                                                                         <li class="img-list">
-                                                                                            <a href="#"
-                                                                                                class="m-b-5"><img
-                                                                                                    src="https://www.bootdey.com/image/150x150/008B8B/000000"
-                                                                                                    alt="" /></a>
-                                                                                            <a href="#"
-                                                                                                class="m-b-5"><img
-                                                                                                    src="https://www.bootdey.com/image/150x150/008B8B/000000"
-                                                                                                    alt="" /></a>
-                                                                                            <a href="#"
-                                                                                                class="m-b-5"><img
-                                                                                                    src="https://www.bootdey.com/image/150x150/008B8B/000000"
-                                                                                                    alt="" /></a>
-                                                                                            <a href="#"
-                                                                                                class="m-b-5"><img
-                                                                                                    src="https://www.bootdey.com/image/150x150/008B8B/000000"
-                                                                                                    alt="" /></a>
-                                                                                            <a href="#"
-                                                                                                class="m-b-5"><img
-                                                                                                    src="https://www.bootdey.com/image/150x150/008B8B/000000"
-                                                                                                    alt="" /></a>
-                                                                                            <a href="#"
-                                                                                                class="m-b-5"><img
-                                                                                                    src="https://www.bootdey.com/image/150x150/008B8B/000000"
-                                                                                                    alt="" /></a>
-                                                                                            <a href="#"
-                                                                                                class="m-b-5"><img
-                                                                                                    src="https://www.bootdey.com/image/150x150/008B8B/000000"
-                                                                                                    alt="" /></a>
-                                                                                            <a href="#"
-                                                                                                class="m-b-5"><img
-                                                                                                    src="https://www.bootdey.com/image/150x150/008B8B/000000"
-                                                                                                    alt="" /></a>
-                                                                                            <a href="#"
-                                                                                                class="m-b-5"><img
-                                                                                                    src="https://www.bootdey.com/image/150x150/008B8B/000000"
-                                                                                                    alt="" /></a>
+                                                                                            <c:forEach var="friendBean"
+                                                                                                    items="${userFriends}">
+                                                                                                <a href="/otherAboutMe/${friendBean.userNo}"
+                                                                                                    class="m-b-5" title="${friendBean.userChineseName}">
+                                                                                                    <img src="/localimages/${friendBean.avatar}" alt="" style="width: 36px; height: 36px; object-fit: cover;"/></a>
+                                                                                            </c:forEach>
                                                                                         </li>
                                                                                     </ul>
                                                                                 </div>
