@@ -113,7 +113,7 @@ public class MatchController {
 	
 	@GetMapping("/chatPage")
 	public String chatPage() {
-	    return "chat/index.html";
+	    return "chat/ChatIndex.jsp";
 	}
 	
 	

@@ -496,7 +496,7 @@ img {
 /*調整輪播大小*/
 .card-container {
 	position: absolute;
-	max-width: 849.5px; /*調框的寬度*/
+	max-width: 800px; /*調框的寬度*/
 	width: 25%;
 	height: 30%; /*框跟圖片調這個-裡面全部圖片的長寬*/
 }

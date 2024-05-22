@@ -25,7 +25,152 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-	<link rel="stylesheet" href="mycss/MatchSuccessPeople.css">
+
+	<style>
+	.team-bg {
+	background-color: #eee;
+	overflow: hidden;
+}
+
+.team .section-title {
+	padding-bottom: 40px;
+}
+
+.team .section-title .main-team-subheading {
+	font-size: 17px;
+	font-weight: 500;
+	padding: 0;
+	line-height: 1px;
+	margin: 0 0 5px 0;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	color: #aaaaaa;
+}
+
+.team .section-title .main-team-subheading::after {
+	content: "";
+	width: 120px;
+	height: 1px;
+	display: inline-block;
+	background: #556270;
+	margin: 4px 10px;
+}
+
+.team .main-team-heading {
+	margin: 0;
+	font-size: 36px;
+	font-weight: 700;
+	text-transform: uppercase;
+	color: #556270;
+}
+
+.team .member {
+	position: relative;
+	box-shadow: 0px 2px 15px rgba(85, 98, 112, 0.08);
+	padding: 30px;
+	border-radius: 4px;
+	background: #fff;
+}
+
+.team .member .pic {
+	overflow: hidden;
+	width: 180px;
+	border-radius: 4px;
+	margin-top: 28px;
+	position: relative; /* 添加這行 */
+}
+
+.team .member .pic img {
+	transition: ease-in-out 0.3s;
+}
+
+.team .member:hover img {
+	transform: scale(1.1);
+}
+
+.team .member .member-info {
+	padding-left: 30px;
+}
+
+.team .member .member-heading {
+	font-weight: 700;
+	margin-bottom: 5px;
+	font-size: 26px;
+	color: #556270;
+	line-height: 1.2;
+}
+
+.team .member span {
+	display: block;
+	font-size: 16px;
+	padding-bottom: 10px;
+	position: relative;
+	font-weight: 500;
+}
+
+.team .member span::after {
+	content: '';
+	position: absolute;
+	display: block;
+	width: 50px;
+	height: 1px;
+	background: #dee2e6;
+	bottom: 0;
+	left: 0;
+}
+
+.team .member .member-para {
+	margin: 10px 0 0 0;
+	font-size: 16px;
+}
+
+.team .member .social {
+	margin-top: 12px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.team .member .social a {
+	transition: ease-in-out 0.3s;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 4px;
+	width: 32px;
+	height: 32px;
+	background: #8795a4;
+}
+
+.team .member .social a+a {
+	margin-left: 8px;
+}
+
+.team .member .social a:hover {
+	background: #41A1FD;
+}
+
+.team .member .social a .team-icon {
+	color: #fff;
+	font-size: 16px;
+	margin: 0 2px;
+}
+
+.custom-margin {
+    margin-top: 80px;
+    margin-bottom: 100px;
+}
+	
+.button-group {
+    position: relative;
+    top: 60px; /* 調整這個值來改變按鈕組的上下位置 */
+}
+
+
+	</style>
+
+	
+	
 	
 </head>
 
@@ -111,6 +256,15 @@
 				</c:forEach>
 
 			</div>
+			
+			
+<div class="container text-center">
+    <div class="button-group d-flex justify-content-center custom-margin">
+        <button type="button" class="btn btn-primary mx-2" onclick="window.location.href='/chatPage'">開始聊天</button>
+        <button type="button" class="btn btn-danger mx-2" onclick="window.location.href='/newMatchPage'">繼續配對</button>
+    </div>
+</div>
+			
 		</div>
 	</section>
 	

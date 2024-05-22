@@ -839,7 +839,7 @@ public class UserController {
 	
 	
 	
-	
+	                         // 配對頁面
 	@RequestMapping(value = "/newMatchPage", method = {RequestMethod.GET, RequestMethod.POST})
 	public String newMatchPage(HttpSession session, Model m) {
 		UserBean uBean = (UserBean)session.getAttribute("userData");
@@ -1015,6 +1015,22 @@ public class UserController {
 	        return userBean.getUserNo();
 	    }
 	    return null;                                                                      // 用戶未登錄
+	}
+	
+	
+	@GetMapping("/showSpecificMatch/{userNo}")
+	public String showSpecificMatch(@PathVariable("userNo") int userNo, Model model) {
+	    UserBean specificUser = uService.getUserData(userNo);
+	    List<String> photos = spService.findByUserNo(specificUser.getUserNo());
+	    List<String> tagNames = tagsService.findTagNamesByUserNo(specificUser.getUserNo());
+
+	    model.addAttribute("userBean", specificUser);
+	    model.addAttribute("photos", photos);
+	    model.addAttribute("tagNames", tagNames);
+	    model.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	    model.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+	    return "match/jsp/NewMatchPage.jsp";
 	}
 	
 	

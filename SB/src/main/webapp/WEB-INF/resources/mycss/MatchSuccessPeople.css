@@ -125,3 +125,8 @@
 	font-size: 16px;
 	margin: 0 2px;
 }
+
+.custom-margin {
+    margin-top: 80px !important;
+    margin-bottom: 80px !important;
+}
