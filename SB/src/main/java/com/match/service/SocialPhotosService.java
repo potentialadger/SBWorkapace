@@ -32,12 +32,13 @@ public class SocialPhotosService {
 	public List<SocialPhotosBean> findAll() {
 		return spRepos.findAll();
 	}
+	
+    
+    public List<SocialPhotosBean> findByPhotoTheme(String photoTheme) {
+        return spRepos.findByPhotoTheme(photoTheme);
+    }
 
-	// 根據用戶ID查詢照片
-	/*
-	 * public List<SocialPhotosBean> findByUserNo(Integer userNo) { return
-	 * spRepos.findByUserNo(userNo); }
-	 */
+
 
 	// Match 實作 - 根據用戶編號查詢照片路徑
 	public List<String> findByUserNo(Integer userNo) {

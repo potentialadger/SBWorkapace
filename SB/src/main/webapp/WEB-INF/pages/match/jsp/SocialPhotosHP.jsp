@@ -57,8 +57,8 @@
 				<span>交友照片編號</span> <input type="text" id="photoNoInput"
 					name="photoNo" placeholder="請輸入交友照片編號">
 				<!-- 用交友圖片名稱查詢 -->
-				<span>交友照片名稱</span> <input type="text" id="photoThemeInput"
-					name="photoTheme" placeholder="請輸入交友照片名稱">
+				<span>照片主題名稱</span> <input type="text" id="photoThemeInput"
+					name="photoTheme" placeholder="請輸入照片主題名稱">
 				<button class="button select" type="submit">查詢</button>
 				<!-- 刷新/查詢全部 -->
 				<button class="button refresh"

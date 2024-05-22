@@ -90,7 +90,7 @@
 				<div class="tab-pane fade show active" id="profileTabPane" role="tabpanel" aria-labelledby="profileTab" tabindex="0">
 					<div class="mb-3">
 						<div>
-							<form class="file-upload" action="/updateUserProfile" method="post">
+							<form class="file-upload" action="/editUserProfile" method="post">
 								<div class="row mb-5 gx-5">
 									<div class="tab-content">
 
@@ -120,7 +120,8 @@
 												</div>
 
 												<div class="col-md-6">
-													<label class="form-label">生日 </label> <input type="date" class="form-control" id="date" name="birthday" value="${localDateTimeDateFormat.format(userBean.birthday)}" pattern='yyyy-MM-dd' onchange="calculateZodiac()">
+													<label class="form-label">生日 </label> 
+													<input type="date" class="form-control" id="date" name="birthday" value="${localDateTimeDateFormat.format(userBean.birthday)}" pattern='yyyy-MM-dd' onchange="calculateZodiac()">
 												</div>
 												
 												<div class="col-md-6">
@@ -330,7 +331,7 @@
 
 										
 								<div class="gap-3 d-md-flex justify-content-md-end text-center my-5">
-									<button type="button" class="btn btn-primary btn-lg">確定修改</button>
+									<button type="submit" class="btn btn-primary btn-lg">確定修改</button>
 									<button type="button" class="btn btn-danger btn-lg">確定刪除</button>
 								</div>
 							</form>

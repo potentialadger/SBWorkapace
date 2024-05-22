@@ -1,6 +1,7 @@
 package com.user.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -887,6 +888,56 @@ public class UserController {
 	}
 	
 	
+	// 使用者編輯資料
+	@PostMapping("/editUserProfile")
+	public String editUserProfile(
+	    @RequestParam(value = "nickName", required = false) String nickName,
+	    @RequestParam(value = "gender", required = false) Integer gender,
+	    @RequestParam(value = "birthday", required = false) String birthday,
+	    @RequestParam(value = "bloodType", required = false) String bloodType,
+	    @RequestParam(value = "MBTI", required = false) String MBTI,
+	    @RequestParam(value = "goalNo", required = false) Integer goalNo,
+	    HttpSession session) {
+
+	    UserBean userBean = (UserBean) session.getAttribute("userData");
+
+	    if (nickName != null) {
+	        userBean.setNickName(nickName);
+	    }
+	    if (gender != null) {
+	        userBean.setGender(gender);
+	    }
+	    if (birthday != null) {
+	        userBean.setBirthday(LocalDate.parse(birthday, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay()); // 修改這一行
+	    }
+	    if (bloodType != null) {
+	        userBean.setBloodType(bloodType);
+	    }
+	    if (MBTI != null) {
+	        userBean.setMBTI(MBTI);
+	    }
+	    if (goalNo != null) {
+	        userBean.setGoalNo(goalNo);
+	    }
+
+	    uService.updateUser(userBean);
+	    session.setAttribute("userData", userBean);
+
+	    return "redirect:/editProfile";
+	}
+	
+	
+	@GetMapping("/editProfile")
+	public String showMatchProfileEditPage(HttpSession session, Model model) {
+	    UserBean userBean = (UserBean) session.getAttribute("userData");
+	    
+	    model.addAttribute("userBean", userBean);
+	    model.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	    
+	    return "match/jsp/MatchProfileEdit.jsp";
+	}
+	
+	
 
 	
 	
@@ -916,6 +967,7 @@ public class UserController {
 	}
 	
 	
+
 	private UserBean getRandomUser(List<UserBean> users, int currentUserNo) {            // 從用戶列表中獲取下一個隨機用戶	    
 	    List<UserBean> otherUsers = new ArrayList<>();                                   // 過濾掉與當前用戶相同的用戶
 	    

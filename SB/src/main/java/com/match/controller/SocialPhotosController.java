@@ -8,12 +8,14 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,8 +43,8 @@ public class SocialPhotosController {
 	
 	
 	
-	// 查詢編號+姓名 for GoalsHP.jsp
-/*	@GetMapping("/queryPhotoNo")
+	// 查詢編號+主題名稱 
+	@GetMapping("/queryPhotoNo")
 	public String queryPhotos(@RequestParam(required = false, name = "photoNo") Integer photoNo,
 	                         @RequestParam(required = false, name = "photoTheme") String photoTheme,
 	                         Model model) {
@@ -57,7 +59,7 @@ public class SocialPhotosController {
 	    }
 	    model.addAttribute("photos", photos);
 	    return "match/jsp/SocialPhotosHP.jsp";
-	}*/
+	}
 
 
 	
@@ -110,11 +112,11 @@ public class SocialPhotosController {
 
 	
 	// 根據主題查詢照片
-//    @GetMapping("/photos/theme/{photoTheme}")
-//    public ResponseEntity<List<SocialPhotosBean>> getPhotosByTheme(@PathVariable String photoTheme) {
-//        List<SocialPhotosBean> photos = spService.findByPhotoTheme(photoTheme);
-//        return ResponseEntity.ok(photos);
-//    }
+    @GetMapping("/photos/theme/{photoTheme}")
+    public ResponseEntity<List<SocialPhotosBean>> getPhotosByTheme(@PathVariable String photoTheme) {
+        List<SocialPhotosBean> photos = spService.findByPhotoTheme(photoTheme);
+        return ResponseEntity.ok(photos);
+    }
 	
 	
     // 删除照片

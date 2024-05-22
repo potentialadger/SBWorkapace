@@ -18,6 +18,6 @@ public interface SocialPhotosRepository extends JpaRepository<SocialPhotosBean, 
     public List<SocialPhotosBean> findByUserNo(@Param("userNo") Integer userNo); 
     
     
-    /*    @Query(value="from SocialPhotosBean where photoTheme like %:photoTheme%")
-    public List<SocialPhotosBean> findByPhotoTheme(@Param("photoTheme") String photoTheme);*/
+    @Query(value="from SocialPhotosBean where photoTheme like %:photoTheme%")
+    public List<SocialPhotosBean> findByPhotoTheme(@Param("photoTheme") String photoTheme);
 }

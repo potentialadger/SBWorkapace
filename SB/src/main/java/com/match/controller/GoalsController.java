@@ -68,7 +68,7 @@ public class GoalsController {
 	public String processInsertAction(@RequestParam("goalNameParam") String goalNameParam) { // 必須精確匹配請求中對應的參數名稱 => // input type="text" // name="goalNameParam"																				
 		GoalsBean insertBean = new GoalsBean(goalNameParam);                                 // 注意JavaBean的初始化，必須要有同樣數量的屬性 ...?
 		iGService.insert(insertBean);                                                        // iGService，上面定義的
-		return "queryGoalNo";   //..?
+		return "redirect:goalsHP";   //..?
 	}
 
 	
