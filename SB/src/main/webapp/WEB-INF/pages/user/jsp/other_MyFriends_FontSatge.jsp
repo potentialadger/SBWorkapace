@@ -855,7 +855,7 @@
                                                                                 <ul
                                                                                     class="profile-header-tab nav nav-tabs">
                                                                                     <li class="nav-item"><a
-                                                                                            href="https://www.bootdey.com/snippets/view/bs4-profile-with-timeline-posts"
+                                                                                            href="/otherUserPosts"
                                                                                             class="nav-link_">貼文</a>
                                                                                     </li>
                                                                                     <li class="nav-item"><a
@@ -895,7 +895,8 @@
                                                                                                 <div class="team-img">
 
                                                                                                     <img src="/localimages/${friend.avatar}"
-                                                                                                        alt="team Image">
+                                                                                                        alt="team Image"
+                                                                                                        style="width: 315px; height: 315px; object-fit: cover;">
                                                                                                     <div
                                                                                                         class="normal-text">
                                                                                                         <h4
@@ -919,7 +920,7 @@
                                                                                                                 </div>
                                                                                                                 <ul
                                                                                                                     class="team-social icons-1">
-                                                                                                                    <li><a href="#"
+                                                                                                                    <li><a href="otherUserPosts/${friend.userNo}"
                                                                                                                             class="social-icon"><i
                                                                                                                                 class="fa fa-newspaper-o"></i></a>
                                                                                                                     </li>
@@ -1059,7 +1060,8 @@
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
-                                            <form action="/userUploadImages" method="post" enctype="multipart/form-data">
+                                            <form action="/userUploadImages" method="post"
+                                                enctype="multipart/form-data">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel">上傳圖片</h5>
                                                     <button type="button" class="close" data-dismiss="modal"

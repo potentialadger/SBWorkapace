@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.forum.bean.PostsBean;
 import com.forum.dao.PostsDaoInterface;
+import com.user.bean.UserBean;
 
 import java.util.List;
 import java.util.Optional;
@@ -91,4 +92,9 @@ public class PostsService implements PostsServiceInterface {
 	    public List<PostsBean> findAllByOrderByViewCountDesc() {
 	        return postsDao.findAllByOrderByViewCountDesc();
 	    }
+	 
+	 @Override
+	public List<PostsBean> findByUserBeanOrderByCreatedAtDesc(UserBean userBean){
+		 return postsDao.findByUserBeanOrderByCreatedAtDesc(userBean);
+	 }
 }

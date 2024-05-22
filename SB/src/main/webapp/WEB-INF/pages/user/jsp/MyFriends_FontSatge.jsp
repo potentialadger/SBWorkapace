@@ -889,7 +889,7 @@
                                                                                 <ul
                                                                                     class="profile-header-tab nav nav-tabs">
                                                                                     <li class="nav-item"><a
-                                                                                            href="https://www.bootdey.com/snippets/view/bs4-profile-with-timeline-posts"
+                                                                                            href="/userPosts"
                                                                                             class="nav-link_">貼文</a>
                                                                                     </li>
                                                                                     <li class="nav-item"><a
@@ -929,7 +929,8 @@
                                                                                                 <div class="team-img">
 
                                                                                                     <img src="/localimages/${friend.avatar}"
-                                                                                                        alt="team Image">
+                                                                                                        alt="team Image"
+                                                                                                        style="width: 315px; height: 315px; object-fit: cover;">
                                                                                                     <div
                                                                                                         class="normal-text">
                                                                                                         <h4
@@ -953,7 +954,7 @@
                                                                                                                 </div>
                                                                                                                 <ul
                                                                                                                     class="team-social icons-1">
-                                                                                                                    <li><a href="#"
+                                                                                                                    <li><a href="otherUserPosts/${friend.userNo}"
                                                                                                                             class="social-icon"><i
                                                                                                                                 class="fa fa-newspaper-o"></i></a>
                                                                                                                     </li>
@@ -1245,7 +1246,7 @@
                                     });
                                 </script>
 
-                               
+
                                 <script src="/js/user/userSearch.js"></script>
                             </body>
 

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.forum.bean.PostsBean;
+import com.user.bean.UserBean;
 
 public interface PostsDaoInterface extends JpaRepository<PostsBean, Integer> {
 
@@ -25,4 +26,8 @@ public interface PostsDaoInterface extends JpaRepository<PostsBean, Integer> {
 	// 更新瀏覽次數
 	@Query("UPDATE PostsBean p SET p.view_count = :viewCount WHERE p.post_no = :postId")
 	void updateViewCount(@Param("postId") Integer postId, @Param("viewCount") int viewCount);
+	
+	// 新到舊排序與使用者No
+    @Query("SELECT p FROM PostsBean p WHERE p.userBean = :userBean ORDER BY p.update_date DESC")
+    List<PostsBean> findByUserBeanOrderByCreatedAtDesc(@Param("userBean") UserBean userBean);
 }

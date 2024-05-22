@@ -3,7 +3,7 @@ $(document).ready(function() {
 		const search = $(this).val();
 		if (search.length > 0) {
 			$.ajax({
-				url: 'userSearch',
+				url: '/userSearch',
 				method: 'get',
 				data: { search: search },
 				success: function(response) {

@@ -33,6 +33,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.forum.bean.PostsBean;
+import com.forum.service.PostsService;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
@@ -77,8 +79,13 @@ public class UserController {
 
 	@Autowired
 	private UserMailService userMailService;
+	
+	@Autowired
 	private SocialPhotosService spService;
 
+	@Autowired
+	private PostsService postsService;
+	
 	@PostMapping("/userSignUp")
 	public String processSignUpAction(@RequestParam("account") String account,
 			@RequestParam("password") String password, @RequestParam("UCName") String UCName,
@@ -664,6 +671,54 @@ public class UserController {
 		}
 
 		return "redirect:/users";
+	}
+	
+	
+	@GetMapping("userPosts")
+	public String userPposts(HttpSession session, Model m) {
+		UserBean uBean = (UserBean) session.getAttribute("userData");
+		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
+		UserBean userBean = dataById.get();
+		
+		List<PostsBean> findByUserBeanOrderByCreatedAtDesc = postsService.findByUserBeanOrderByCreatedAtDesc(userBean);
+
+		m.addAttribute("userBean", userBean);
+		m.addAttribute("posts", findByUserBeanOrderByCreatedAtDesc);
+		
+		return "user/jsp/MyPost_FontSatge.jsp";
+	}
+	
+	@GetMapping("otherUserPosts/{userNo}")
+	public String otherUserPostsIDAction(@PathVariable("userNo") Integer userNo, HttpSession session, Model m) {
+		UserBean userBean = uService.getUserData(userNo);
+		session.setAttribute("otherUserData", userBean);
+		
+		List<PostsBean> findByUserBeanOrderByCreatedAtDesc = postsService.findByUserBeanOrderByCreatedAtDesc(userBean);
+
+
+		m.addAttribute("userBean", userBean);
+		m.addAttribute("posts", findByUserBeanOrderByCreatedAtDesc);
+
+		UserBean loginUserBean = (UserBean) session.getAttribute("userData");
+		if (loginUserBean.getUserNo() == userNo) {
+			return "redirect:/userPosts";
+		}
+		return "user/jsp/other_MyPost_FontSatge.jsp";
+	}
+	
+	@GetMapping("otherUserPosts")
+	public String otherUserPostsAction(HttpSession session, Model m) {
+		UserBean uBean = (UserBean) session.getAttribute("otherUserData");
+		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
+		UserBean userBean = dataById.get();
+		
+		List<PostsBean> findByUserBeanOrderByCreatedAtDesc = postsService.findByUserBeanOrderByCreatedAtDesc(userBean);
+
+		m.addAttribute("userBean", userBean);
+		m.addAttribute("posts", findByUserBeanOrderByCreatedAtDesc);
+		
+		
+		return "user/jsp/other_MyPost_FontSatge.jsp";
 	}
 
 	// ---Tags : ManyToMany
