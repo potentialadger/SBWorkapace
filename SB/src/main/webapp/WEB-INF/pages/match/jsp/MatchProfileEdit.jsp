@@ -385,7 +385,9 @@
 			
 			
 			
-			<form id="upload-form" method="post" enctype="multipart/form-data">
+			<form id="upload-form" method="post" enctype="multipart/form-data" action="/updatePhotos">
+			   <input type="hidden" name="userNo" value="${userBean.userNo}">
+				
 				<!--主題照片- 輪播-->
                 <div class="tab-pane fade my-5" id="photosTabPane" role="tabpanel" aria-labelledby="photosTab" tabindex="0">
                     <div class="mb-3">
@@ -394,7 +396,9 @@
                             <!--第一個主題-->
                             <div class="item">
                                 <div class="photo-container position-relative">
-                                    <div class="image-frame"></div>
+                                    <div class="image-frame">
+                                    	<img class="imgBody" src="/localimages/${photo1}" alt="" style="width: 100%; height: 100%; object-fit: cover;" ${photo1 == null ? "hidden" : ""}>
+                                    </div>
                                     <!--刪除按鈕-->
                                     <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
@@ -402,7 +406,8 @@
                                     <label for="customFile1" class="square position-absolute top-50 start-50 translate-middle display-2 ">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
-                                    <input type="file" id="customFile1" name="file1" data-theme="我的照片" hidden>
+                                    <input type="file" id="customFile1" name="file1" hidden>
+                                    <input type="text" name="file1Theme" value="我的照片" hidden>                                   
                                     <div class="theme-name text-center p-2">
                                         我的照片
                                     </div>
@@ -411,7 +416,9 @@
 
                             <div class="item">
                                 <div class="photo-container position-relative">
-                                    <div class="image-frame"></div>
+                                    <div class="image-frame">
+                                    	<img class="imgBody" src="/localimages/${photo2}" alt="" style="width: 100%; height: 100%; object-fit: cover;" ${photo2 == null ? "hidden" : ""}>
+                                    </div>
                                     <!--刪除按鈕-->
                                     <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
@@ -419,7 +426,8 @@
                                     <label for="customFile2" class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
-                                    <input type="file" id="customFile2" name="file2" data-theme="旅行壯遊" hidden>
+                                    <input type="file" id="customFile2" name="file2" hidden>
+                                    <input type="text" name="file2Theme" value="旅行壯遊" hidden>                                                                       
                                     <div class="theme-name text-center p-2">
                                         旅行壯遊
                                     </div>
@@ -428,7 +436,9 @@
 
                             <div class="item">
                                 <div class="photo-container position-relative">
-                                    <div class="image-frame"></div>
+                                    <div class="image-frame">
+                                    	<img class="imgBody" src="/localimages/${photo3}" alt="" style="width: 100%; height: 100%; object-fit: cover;" ${photo3 == null ? "hidden" : ""}>
+                                    </div>
                                     <!--刪除按鈕-->
                                     <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
@@ -436,7 +446,8 @@
                                     <label for="customFile3" class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
-                                    <input type="file" id="customFile3" name="file3" data-theme="我的寵物" hidden>
+                                    <input type="file" id="customFile3" name="file3" hidden>
+                                    <input type="text" name="file3Theme" value="我的寵物" hidden>                                                                                                           
                                     <div class="theme-name text-center p-2">
                                         我的寵物
                                     </div>
@@ -446,7 +457,9 @@
 
                             <div class="item">
                                 <div class="photo-container position-relative">
-                                    <div class="image-frame"></div>
+                                    <div class="image-frame">
+                                    	<img class="imgBody" src="/localimages/${photo4}" alt="" style="width: 100%; height: 100%; object-fit: cover;" ${photo4 == null ? "hidden" : ""}>
+                                    </div>
                                     <!--刪除按鈕-->
                                     <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
@@ -454,7 +467,8 @@
                                     <label for="customFile4" class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
-                                    <input type="file" id="customFile4" name="file4" data-theme="偉大紀錄" hidden>
+                                    <input type="file" id="customFile4" name="file4" hidden>
+                                    <input type="text" name="file4Theme" value="偉大紀錄" hidden>                                                                                                                                               
                                     <div class="theme-name text-center p-2">
                                         偉大紀錄
                                     </div>
@@ -463,7 +477,9 @@
 
                             <div class="item">
                                 <div class="photo-container position-relative">
-                                    <div class="image-frame"></div>
+                                    <div class="image-frame">
+                                    	<img class="imgBody" src="/localimages/${photo5}" alt="" style="width: 100%; height: 100%; object-fit: cover;" ${photo5 == null ? "hidden" : ""}>
+                                    </div>
                                     <!--刪除按鈕-->
                                     <button type="button"
                                         class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
@@ -472,7 +488,8 @@
                                     <label for="customFile5" class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
-                                    <input type="file" id="customFile5" name="file5" data-theme="展露身材" hidden>
+                                    <input type="file" id="customFile5" name="file5" hidden>
+                                    <input type="text" name="file5Theme" value="展露身材" hidden>                                                                                                                                                                                   
                                     <div class="theme-name text-center p-2">
                                         展露身材
                                     </div>
@@ -481,15 +498,18 @@
 
                             <div class="item">
                                 <div class="photo-container position-relative">
-                                    <div class="image-frame"></div>
+                                    <div class="image-frame">
+                                    	<img class="imgBody" src="/localimages/${photo6}" alt="" style="width: 100%; height: 100%; object-fit: cover;" ${photo6 == null ? "hidden" : ""}>
+                                    </div>
                                     <!--刪除按鈕-->
                                     <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile10" class="square position-absolute top-50 start-50 translate-middle display-2">
+                                    <label for="customFile6" class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
-                                    <input type="file" id="customFile10" name="file6" data-theme="我的收藏" hidden>
+                                    <input type="file" id="customFile6" name="file6" hidden>
+                                    <input type="text" name="file6Theme" value="我的收藏" hidden>                                                                                                                                                                                                                       
                                     <div class="theme-name text-center p-2">
                                         我的收藏
                                     </div>
@@ -498,15 +518,18 @@
 
                             <div class="item">
                                 <div class="photo-container position-relative">
-                                    <div class="image-frame"></div>
+                                    <div class="image-frame">
+                                    	<img class="imgBody" src="/localimages/${photo7}" alt="" style="width: 100%; height: 100%; object-fit: cover;" ${photo7 == null ? "hidden" : ""}>
+                                    </div>
                                     <!--刪除按鈕-->
                                     <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile12" class="square position-absolute top-50 start-50 translate-middle display-2">
+                                    <label for="customFile7" class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
-                                    <input type="file" id="customFile12" name="file7" data-theme="最愛的電影" hidden>
+                                    <input type="file" id="customFile7" name="file7" hidden>
+                                    <input type="text" name="file7Theme" value="最愛的電影" hidden>                                                                                                                                                                                                                                                          
                                     <div class="theme-name text-center p-2">
                                         最愛的電影
                                     </div>
@@ -515,15 +538,18 @@
 
                             <div class="item">
                                 <div class="photo-container position-relative">
-                                    <div class="image-frame"></div>
+                                    <div class="image-frame">
+                                    	<img class="imgBody" src="/localimages/${photo8}" alt="" style="width: 100%; height: 100%; object-fit: cover;" ${photo8 == null ? "hidden" : ""}>
+                                    </div>
                                     <!--刪除按鈕-->
                                     <button type="button" class="btn btn-outline-secondary rounded-circle delete-photo position-absolute top-0 end-0 m-2">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <label for="customFile14" class="square position-absolute top-50 start-50 translate-middle display-2">
+                                    <label for="customFile8" class="square position-absolute top-50 start-50 translate-middle display-2">
                                         <i class="fas fa-fw fa-plus text-secondary add-photo"></i>
                                     </label>
-                                    <input type="file" id="customFile14" name="file8" data-theme="最愛的遊戲" hidden>
+                                    <input type="file" id="customFile8" name="file8" hidden>
+                                    <input type="text" name="file8Theme" value="最愛的遊戲" hidden>                                                                                                                                                                                                                                                                                              
                                     <div class="theme-name text-center p-2">
                                         最愛的遊戲
                                     </div>
@@ -533,7 +559,7 @@
 
 
 						<div class="gap-3 d-md-flex justify-content-md-end text-center my-5">
-					    	<button type="button" class="btn btn-primary btn-lg" id="submit-btn">確定修改</button>
+					    	<button type="submit" class="btn btn-primary btn-lg" id="submit-btn">確定修改</button>
 					    	<button type="button" class="btn btn-danger btn-lg" id="delete-btn">確定刪除</button>					    						 					    	
 						</div>
                     </div>
@@ -683,23 +709,27 @@ fileInputs.forEach((input) => {
     input.addEventListener('change', (event) => {
         const file = event.target.files[0]; // 獲取選擇的文件
         const imageFrame = event.target.parentNode.querySelector('.image-frame'); // 獲取對應的圖片框
+        const imageBody = event.target.parentNode.querySelector('.imgBody'); // 獲取對應的圖片框
 
         if (file) {
             const reader = new FileReader(); // 創建一個新的 FileReader 對象
 
             reader.onload = (e) => {
-                // 清空圖片框
-                imageFrame.innerHTML = '';
+                // // 清空圖片框
+                // imageFrame.innerHTML = '';
 
-                // 創建一個新的 <img> 元素,並設置其 src 屬性為文件的數據 URL
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.style.width = '100%';
-                img.style.height = '100%';
-                img.style.objectFit = 'cover';
+                // // 創建一個新的 <img> 元素,並設置其 src 屬性為文件的數據 URL
+                // const img = document.createElement('img');
+                // img.src = e.target.result;
+                // img.style.width = '100%';
+                // img.style.height = '100%';
+                // img.style.objectFit = 'cover';
 
-                // 將新的圖片元素添加到圖片框中
-                imageFrame.appendChild(img);
+                // // 將新的圖片元素添加到圖片框中
+                // imageFrame.appendChild(img);
+
+                imageBody.src = e.target.result;
+                imageBody.hidden = false;
             };
 
             reader.readAsDataURL(file); // 讀取文件並將其轉換為數據 URL
@@ -708,7 +738,7 @@ fileInputs.forEach((input) => {
 });
 
 //綁定確定修改按鈕點擊事件
-submitBtn.addEventListener('click', async () => {
+/*submitBtn.addEventListener('click', async () => {
   // 創建請求參數對象
   const requestData = {
     userNo: 123 // 替換為實際的 userNo 值
@@ -755,7 +785,7 @@ function convertToBase64(file) {
     reader.onload = () => resolve(reader.result.split(',')[1]);
     reader.onerror = error => reject(error);
   });
-}
+}*/
 
 </script>
 

@@ -204,13 +204,13 @@
 				<div class="modal-header">
 
 					<!-- 帶有"X"圖標的按鈕 -->
-					<h5 class="modal-title" id="addModalLabel">新增交友目標</h5>
+					<h5 class="modal-title" id="addModalLabel">新增個性標籤</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					<form id="addForm">
 						<div class="mb-3">
-							<label for="addTagName" class="form-label">交友目標名稱</label>
+							<label for="addTagName" class="form-label">個性標籤名稱</label>
 						    <input type="text" class="form-control" id="addTagName" name="tagName" required>
 						</div>
 					</form>
@@ -242,14 +242,14 @@
                 modal.hide();
                 
                 // 重新加載頁面
-                location.reload();
             } else {
                 alert("Insert Failed");
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert("An error occurred");
+            	location.reload();
+
         });
     }
     

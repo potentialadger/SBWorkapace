@@ -81,7 +81,7 @@
 					<th scope="col">配對對象</th>
 					<th scope="col">配對狀態</th>
 					<th scope="col">配對時間</th>
-					<th scope="col">操作</th>
+					<!-- <th scope="col">操作</th> -->
 				</tr>
 			</thead>
 			<tbody>
@@ -99,8 +99,8 @@
  					<td><%=match.getMatchStatus()%></td> 
  					<td><%=match.getMatchedAt()%></td> 
  					<td>
- 						<button type="button" class="button update" data-bs-toggle="modal" data-bs-target="#updateModal_<%=match.getMatchNo()%>">修改</button> 
- 						<button type="button" class="button delete" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#deleteModal_<%=match.getMatchNo()%>">删除</button>
+ 						<!-- <button type="button" class="button update" data-bs-toggle="modal" data-bs-target="#updateModal_<%=match.getMatchNo()%>">修改</button> 
+ 						<button type="button" class="button delete" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#deleteModal_<%=match.getMatchNo()%>">删除</button> -->
  					</td> 
    				</tr> 
 
@@ -312,6 +312,13 @@
 
     // 顯示選中的交友照片列表
     document.getElementById('deleteBatchModal').addEventListener('show.bs.modal', showSelectedMatches);
+    
+    
+    document.querySelector('.delete-batch').style.display = 'none';
+    
+    document.querySelector('.button.insert').style.display = 'none';
+
+
 
     </script>
 					

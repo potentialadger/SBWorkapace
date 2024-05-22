@@ -820,7 +820,17 @@ public class UserController {
 	    m.addAttribute("userBean", userBean);
 	    m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 	    m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-	    
+
+	    m.addAttribute("photo1", spService.findByUserNoAndPhotoThemePathString(userBean.getUserNo(), "我的照片"));
+	    m.addAttribute("photo2", spService.findByUserNoAndPhotoThemePathString(userBean.getUserNo(), "旅行壯遊"));
+	    m.addAttribute("photo3", spService.findByUserNoAndPhotoThemePathString(userBean.getUserNo(), "我的寵物"));
+	    m.addAttribute("photo4", spService.findByUserNoAndPhotoThemePathString(userBean.getUserNo(), "偉大紀錄"));
+	    m.addAttribute("photo5", spService.findByUserNoAndPhotoThemePathString(userBean.getUserNo(), "展露身材"));
+	    m.addAttribute("photo6", spService.findByUserNoAndPhotoThemePathString(userBean.getUserNo(), "我的收藏"));
+	    m.addAttribute("photo7", spService.findByUserNoAndPhotoThemePathString(userBean.getUserNo(), "最愛的電影"));
+	    m.addAttribute("photo8", spService.findByUserNoAndPhotoThemePathString(userBean.getUserNo(), "最愛的遊戲"));
+
+
 	    // 重設 session 中的 "userData" attribute
 	    session.setAttribute("userData", userBean);
 	    

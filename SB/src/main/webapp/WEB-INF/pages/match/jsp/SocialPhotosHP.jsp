@@ -67,10 +67,10 @@
 		</div>
 		
 		
-		<div class="separator"></div>
+		<!-- <div class="separator"></div>
 		<button type="button" class="button insert" data-bs-toggle="modal" data-bs-target="#addModal">新增交友照片</button>
-		<!-- 在新增交友照片右邊添加一個批量刪除按鈕 -->
-		<button type="button" class="button delete-batch" data-bs-toggle="modal" data-bs-target="#deleteBatchModal">批量删除</button>
+		<!-- 在新增交友照片右邊添加一個批量刪除按鈕
+		<button type="button" class="button delete-batch" data-bs-toggle="modal" data-bs-target="#deleteBatchModal">批量删除</button> --> 
 
 
 		<table>
@@ -81,8 +81,6 @@
 					<th scope="col">使用者編號</th>
 					<th scope="col">交友照片編號</th>
 					<th scope="col">交友照片主題名稱</th>
-					<th scope="col">交友照片</th>
-					<th scope="col">操作</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -97,11 +95,10 @@
  					<td><%=photo.getUserNo()%></td> 
  					<td><%=photo.getPhotoNo()%></td>             <!-- 記得多的屬性要加 -->
  					<td><%=photo.getPhotoTheme()%></td>      
- 					<td><img src="<%=photo.getPhotoPath()%>" alt="交友照片" width="100" height="100"></td>
- 					<td>
+ 					<!-- <td>
  						<button type="button" class="button update" data-bs-toggle="modal" data-bs-target="#updateModal_<%=photo.getPhotoNo()%>">修改</button> 
  						<button type="button" class="button delete" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#deleteModal_<%=photo.getPhotoNo()%>">删除</button>
- 					</td> 
+ 					</td>  -->
    				</tr> 
 
 <!-- 				修改模態框 -->

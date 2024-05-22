@@ -275,14 +275,13 @@
                 modal.hide();
                 
                 // 重新加載頁面
-                location.reload();
             } else {
                 alert("Insert Failed");
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert("An error occurred");
+                location.reload();
         });
     }
     

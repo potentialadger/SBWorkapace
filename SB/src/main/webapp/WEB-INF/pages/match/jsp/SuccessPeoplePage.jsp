@@ -62,7 +62,7 @@
 						  <div class="col-lg-6 mt-4 mt-lg-0">
 							<div class="member d-flex align-items-start">
 							  <div class="pic">
-							  	<img src="https://th.bing.com/th/id/OIP.1E2uPdWprrqMH39OUUPqdwHaHa?rs=1&pid=ImgDetMain" class="img-fluid" alt=""></div>
+							  	<img src="" class="img-fluid randomImgs" alt=""></div>
 							  	  <div class="member-info">
 									<p class="member-heading">${matchData.nickName}</p>
 								
@@ -156,7 +156,25 @@
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
 
+	<script>
+		window.onload = function(){
+			var allRandomImgs = document.querySelectorAll(".randomImgs");
+			allRandomImgs = [...allRandomImgs];
+			console.log("allRandomImgs :　" + allRandomImgs);
 
+			for(var i = 0; i < allRandomImgs.length; i++)
+			{
+				allRandomImgs[i].src = randomImgPath();
+			}
+		}
+
+		function randomImgPath(){
+			var imgPaths = ["/localimages/randomImg01.jpg", "/localimages/random1.jpeg", "/localimages/random2.jpeg","/localimages/random3.png","/localimages/random4.jpg","/localimages/random5.png","/localimages/random6.jpg","/localimages/random7.png","/localimages/random8.png","/localimages/random9.jpg","/localimages/random10.jpg"]
+			var r = Math.floor(Math.random() * imgPaths.length);
+			var randomPath = imgPaths[r];
+			return randomPath;
+		}
+	</script>
 </body>
 
 </html>

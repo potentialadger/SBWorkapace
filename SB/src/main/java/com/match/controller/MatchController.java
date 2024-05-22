@@ -110,6 +110,16 @@ public class MatchController {
 	}
 	
 
+	
+	@GetMapping("/chatPage")
+	public String chatPage() {
+	    return "chat/index.html";
+	}
+	
+	
+	
+	
+	
 																								  // session取資料
 																								  // service方法
 																								  // 找到跟自己配對成功的人

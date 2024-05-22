@@ -179,9 +179,8 @@ public class SocialPhotosController {
     
     
 	// 更新照片方法
-    @PostMapping(value = "/updatePhotos", consumes = "application/json", produces = "application/json;charset=UTF-8")     //POSTMAN測試 : consumes = "multipart/form-data"
-    @ResponseBody
-    public List<SocialPhotosBean> updateSPhotos(
+    @PostMapping(value = "/updatePhotos", consumes = "multipart/form-data", produces = "application/json;charset=UTF-8")     //POSTMAN測試 : consumes = "multipart/form-data"
+    public String updateSPhotos(
         @RequestParam("userNo") Integer userNo,
         @RequestParam(value = "file1", required = false) MultipartFile file1,
         @RequestParam(value = "file1Theme", required = false) String file1Theme,
@@ -199,9 +198,10 @@ public class SocialPhotosController {
         @RequestParam(value = "file7Theme", required = false) String file7Theme,
         @RequestParam(value = "file8", required = false) MultipartFile file8,
         @RequestParam(value = "file8Theme", required = false) String file8Theme,
-        HttpServletRequest request) throws IllegalStateException, IOException {
+        HttpServletRequest request, Model m) throws IllegalStateException, IOException {
 
         List<SocialPhotosBean> updatedPhotos = new ArrayList<>();
+        
         
         try {
             // 處理每個文件
@@ -230,12 +230,13 @@ public class SocialPhotosController {
                 updatedPhotos.add(processPhoto(file8, file8Theme, userNo));
             }
             
+            
         } catch (Exception e) {
             System.err.println(e.getMessage());
             throw new RuntimeException("Photo update failed", e);
         }
 
-        return updatedPhotos;
+        return "redirect:/editMatchProfile";
     }
 	
 	
@@ -254,6 +255,8 @@ public class SocialPhotosController {
 	}                                                                    // processPhoto 方法接受一個 theme 參數，該參數表示每個文件對應的主題
 	return null;
 }	
+    
+   
 	
 	
     // 生成唯一的文件名
