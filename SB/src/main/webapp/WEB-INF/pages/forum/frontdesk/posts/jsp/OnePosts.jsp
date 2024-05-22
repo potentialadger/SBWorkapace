@@ -193,8 +193,10 @@
 									<form id="replyForm" method="post"
 										action="/repliesFrontDesk/InsertReplies">
 										<input type="hidden" name="user_no"
-											value="${post.userBean.userNo}"> <input type="hidden"
+											value="${post.userBean.userNo}"> 
+											<input type="hidden" id ="getPostId"
 											name="post_no" value="${post.post_no}">
+											<!--<input type="hidden" id ="getPostId" name="post_no" value="${post.post_no}">的id ="getPostId"在下方喜歡的方法中有用到-->
 
 
 										<div class="img-push">
@@ -342,6 +344,34 @@
                                 }
                             });
                         }
+                        
+                      //用於實現維持喜歡填滿 收回空心
+                        function checkLikesStatus(post_no) {
+                            $.ajax({
+                                url: "/likesFrontDesk/getUserLikes?post_no=" + post_no ,
+                                method: 'GET',
+                                
+                                success: function (response) {
+                                	if (response === "Liked") {
+                                        document.querySelector('#heartIcon').classList.remove('far');
+                                        document.querySelector('#heartIcon').classList.add('fas');
+                                    } else if (response === "Unliked") {
+                                        document.querySelector('#heartIcon').classList.remove('fas');
+                                        document.querySelector('#heartIcon').classList.add('far');
+                                    }
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+                            });
+                        }
+
+                        // 在頁面加載時檢查喜歡的狀態
+                        $(document).ready(function() {
+                        	var postId = $('#getPostId').val();
+                        	console.log(postId);
+                            checkLikesStatus(postId);
+                        });
 						
                      	// 按下 Enter 鍵時阻止表單預設行為（除非同時按下 Shift 鍵）
                         document.getElementById("replyContent").addEventListener("keydown", function(event) {
