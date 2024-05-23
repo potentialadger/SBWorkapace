@@ -578,8 +578,8 @@
 														$('#gDescription').val('板橋No.1伴手禮名店的「小潘蛋糕坊」，可是超適合送禮、有夠熱賣的啦，平日總是大排長龍，入手超級困難啊。');
 														$('#gMinTotalAmount').val(0);
 														$('#gMinTotalQuantity').val(0);
-														$('#bankAccount').val('822中國信託商業銀行-123456789123456');
-														$('#groupAddress').val('新北市板橋區中山路一段258號');
+														$('#bankAccount').val('123456789123456');
+														$('#groupAddress').val('中正路135巷11-1號');
 													})
 													
 													const currentUrl = window.location.href;
