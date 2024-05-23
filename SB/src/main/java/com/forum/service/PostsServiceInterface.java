@@ -2,7 +2,10 @@ package com.forum.service;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
+
 import com.forum.bean.PostsBean;
+import com.user.bean.UserBean;
 
 public interface PostsServiceInterface {
 	
@@ -41,5 +44,7 @@ public interface PostsServiceInterface {
     
     // 依照瀏覽次數排序
     List<PostsBean> findAllByOrderByViewCountDesc();
+    
+    List<PostsBean> findByUserBeanOrderByCreatedAtDesc(UserBean userBean);
     
 }

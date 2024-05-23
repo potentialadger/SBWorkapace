@@ -22,6 +22,9 @@ public interface UserRepository extends JpaRepository<UserBean, Integer> {
 	@Query(value = "from UserBean where userPassword = ?1")
 	public UserBean checkVerificationCode(String verificationCode);
 	
+	@Query(value = "from UserBean where userAccount = ?1")
+	public UserBean getGoogleLoginUserData(String googleID);
+	
 	//查詢指定欄位的資料，查詢將會返回一個List<Object[]>，其中每個Object[]都包含了查詢結果的各個欄位值
 	@Query("SELECT u.nickName, u.goalNo, u.MBTI, u.bloodType, u.userNo FROM UserBean u")
     List<Object[]> findUserFields();

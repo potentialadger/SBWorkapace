@@ -532,7 +532,7 @@
                                                                             <!-- BEGIN profile-header-tab -->
                                                                             <ul class="profile-header-tab nav nav-tabs">
                                                                                 <li class="nav-item"><a
-                                                                                        href="https://www.bootdey.com/snippets/view/bs4-profile-with-timeline-posts"
+                                                                                        href="/otherUserPosts"
                                                                                         class="nav-link_">貼文</a></li>
                                                                                 <li class="nav-item"><a href=""
                                                                                         class="nav-link_ active">關於我</a>

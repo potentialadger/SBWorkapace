@@ -20,6 +20,7 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css/" rel="stylesheet">
 
+    <script src="https://accounts.google.com/gsi/client?hl=en" async></script>
 </head>
 
 <body class="bg-gradient-primary">
@@ -36,8 +37,8 @@
                         <!-- Nested Row within Card Body -->
                         <div class="row">
                             <div class="col-lg-6 d-none d-lg-block"><img
-                                    style="width: 100%; height: 100%;	object-fit: cover;" src="images/IMG_0279.jpg"
-                                    alt=""></div>
+                                    style="width: 100%; height: 100%;	object-fit: cover;"
+                                    src="/resourceImages/IMG_0279.jpg" alt=""></div>
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
@@ -58,12 +59,22 @@
                                         <!--                                            Login-->
                                         <!--                                        </a>-->
                                         <hr>
-                                        <a href="index.html" class="btn btn-google btn-user btn-block">
+                                        <!-- <a href="index.html" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Login with Google
                                         </a>
                                         <a href="index.html" class="btn btn-facebook btn-user btn-block">
                                             <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                        </a>
+                                        </a> -->
+
+                                        <div id="g_id_onload"
+                                            data-client_id="443989407598-j91o8of7q5mra4h5br1ujtputrf05pvv.apps.googleusercontent.com"
+                                            data-context="signin" data-ux_mode="popup"
+                                            data-login_uri="http://localhost:8080/googleLogin" data-auto_prompt="false">
+                                        </div>
+                                        <div class="g_id_signin d-flex justify-content-center my-3" data-type="standard"
+                                            data-size="large" data-theme="outline" data-text="sign_in_with"
+                                            data-shape="pill" data-logo_alignment="left"></div>
+
                                     </form>
                                     <hr>
                                     <div class="text-center">
@@ -91,7 +102,8 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-    
+
+
 </body>
 
 </html>

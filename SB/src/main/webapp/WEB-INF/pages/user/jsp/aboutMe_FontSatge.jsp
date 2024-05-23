@@ -505,7 +505,9 @@
                                                                                     <h4 class="m-t-10 m-b-5">
                                                                                         ${userBean.userChineseName}</h4>
                                                                                     <p class="m-b-10">
-                                                                                        ${userBean.userEnglishName}</p>
+                                                                                        ${userBean.userEnglishName ==
+                                                                                        null ? "尚未設定" :
+                                                                                        userBean.userEnglishName}</p>
                                                                                     <a href="/aboutMeForUpdate"
                                                                                         class="btn btn-xs btn-success">編輯</a>
                                                                                 </div>
@@ -515,7 +517,7 @@
                                                                             <!-- BEGIN profile-header-tab -->
                                                                             <ul class="profile-header-tab nav nav-tabs">
                                                                                 <li class="nav-item"><a
-                                                                                        href="https://www.bootdey.com/snippets/view/bs4-profile-with-timeline-posts"
+                                                                                        href="/userPosts"
                                                                                         class="nav-link_">貼文</a></li>
                                                                                 <li class="nav-item"><a href=""
                                                                                         class="nav-link_ active">關於我</a>
@@ -573,7 +575,9 @@
                                                                                             <tr>
                                                                                                 <td class="field">英文姓名
                                                                                                 </td>
-                                                                                                <td>${userBean.userEnglishName}
+                                                                                                <td>${userBean.userEnglishName
+                                                                                                    == null ? "尚未設定" :
+                                                                                                    userBean.userEnglishName}
                                                                                                 </td>
                                                                                             </tr>
                                                                                             <tr>
@@ -628,19 +632,25 @@
                                                                                             <tr>
                                                                                                 <td class="field">電話
                                                                                                 </td>
-                                                                                                <td>${userBean.phone}
+                                                                                                <td>${userBean.phone ==
+                                                                                                    null ? "尚未設定" :
+                                                                                                    userBean.phone}
                                                                                                 </td>
                                                                                             </tr>
                                                                                             <tr>
                                                                                                 <td class="field">住址
                                                                                                 </td>
-                                                                                                <td>${userBean.userAddress}
+                                                                                                <td>${userBean.userAddress
+                                                                                                    == null ? "尚未設定" :
+                                                                                                    userBean.userAddress}
                                                                                                 </td>
                                                                                             </tr>
                                                                                             <tr>
                                                                                                 <td class="field">電子郵件
                                                                                                 </td>
-                                                                                                <td>${userBean.email}
+                                                                                                <td>${userBean.email ==
+                                                                                                    null ? "尚未設定" :
+                                                                                                    userBean.email}
                                                                                                 </td>
                                                                                             </tr>
 
@@ -657,7 +667,9 @@
                                                                                             <tr>
                                                                                                 <td class="field">生日
                                                                                                 </td>
-                                                                                                <td>${localDateTimeDateFormat.format(userBean.birthday)}
+                                                                                                <td>${userBean.birthday
+                                                                                                    == null ? "尚未設定" :
+                                                                                                    localDateTimeDateFormat.format(userBean.birthday)}
                                                                                                 </td>
                                                                                             </tr>
                                                                                             <tr>

@@ -97,6 +97,10 @@ public class UserService {
 		return uRepository.checkVerificationCode(verificationCode);
 	}
 	
+	public UserBean getGoogleLoginUserData(String googleID) {
+		return uRepository.getGoogleLoginUserData(googleID);
+	}
+	
 
 	
 // ----- Tags : ManyToMany -------

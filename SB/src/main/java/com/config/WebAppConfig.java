@@ -46,7 +46,7 @@ public class WebAppConfig implements WebMvcConfigurer {
 		registry.addViewController("/getLinePayPay").setViewName("group/html/linpay.html");
 
 		
-		registry.addViewController("/adger.test").setViewName("user/html/AboutMeTest.html");
+		registry.addViewController("/adger.test").setViewName("test/webSocketTest.html");
 		registry.addViewController("/forgotPassword").setViewName("user/html/forgot-password.html");
 		registry.addViewController("/resetPassword").setViewName("user/html/reset-password.html");
 		registry.addViewController("/resetPasswordSuccess").setViewName("user/html/resetPasswordSuccess.html");
@@ -60,6 +60,7 @@ public class WebAppConfig implements WebMvcConfigurer {
 		registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/resources/mycss/");
 		registry.addResourceHandler("/vendor/**").addResourceLocations("/WEB-INF/resources/vendor/");
 		registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/resources/images/");
+		registry.addResourceHandler("/resourceImages/**").addResourceLocations("/WEB-INF/resources/images/");
 		registry.addResourceHandler("/groupimages/**").addResourceLocations("file:/C:/temp/upload/");
 		registry.addResourceHandler("/localimages/**").addResourceLocations("file:/C:/temp/upload/");
 		registry.addResourceHandler("/forumimages/**").addResourceLocations("file:/C:/temp/upload/");
