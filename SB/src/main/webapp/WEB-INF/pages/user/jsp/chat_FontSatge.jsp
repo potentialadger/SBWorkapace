@@ -13,7 +13,7 @@
 							<meta charset="utf-8">
 
 
-							<title>Whatsapp web chat template - Bootdey.com</title>
+							<title>聊天室</title>
 							<meta name="viewport" content="width=device-width, initial-scale=1">
 							<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 								rel="stylesheet">
@@ -652,7 +652,7 @@
 											<div class="row heading">
 												<div class="col-sm-3 col-xs-3 heading-avatar">
 													<div class="heading-avatar-icon">
-														<img src="https://bootdey.com/img/Content/avatar/avatar1.png">
+														<img src="/localimages/${userBean.avatar}">
 													</div>
 												</div>
 												<div class="col-sm-1 col-xs-1  heading-dot  pull-right">
