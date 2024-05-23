@@ -36,8 +36,8 @@ slider = `<!-- Sidebar -->
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                
                 <a class="collapse-item" href="/group/backgroups">團購活動</a>
+				<a class="collapse-item" href="/group/backdonegroups">結單團購</a>
             </div>
         </div>
     </li>

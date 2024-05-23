@@ -12,10 +12,17 @@ public class OrderDto {
 	private String userName;
 	private Integer eventNo;
 	private String eventTitle;
+	private String eventStatus;
 	private Integer paymentMethod;
 	private List<OrderDetailsDto> orderDetail;
 	private Date setTime;
 	
+	public String getEventStatus() {
+		return eventStatus;
+	}
+	public void setEventStatus(String eventStatus) {
+		this.eventStatus = eventStatus;
+	}
 	public Integer getEventNo() {
 		return eventNo;
 	}

@@ -5,6 +5,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ import com.group.model.Order;
 import com.group.model.OrderDetail;
 import com.group.repository.OrderRepository;
 import com.user.bean.UserBean;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 @Transactional
@@ -50,13 +53,34 @@ public class OrderService {
 			Integer userNo = order.getUserNo().getUserNo();
 			Integer payment = order.getPaymentMethod();
 			Date setTime = order.getSetTime();
-			System.out.println(setTime);
+			Integer orderNO = order.getId();
+			List<OrderDetail> orderDetails = order.getOrderDetails();
+			ArrayList<OrderDetailsDto> orderDetailsDtos = new ArrayList<OrderDetailsDto>();
+			
+			for (OrderDetail orderDetail : orderDetails) {
+				String itemName = orderDetail.getItem().getName();
+				Integer itemPrice = orderDetail.getItem().getPrice();
+				Integer itemNo = orderDetail.getItem().getItemNo();
+				Integer itemQuantity = orderDetail.getItemQuantity();
+				String specValue = orderDetail.getItemSpec().getSpecValue();
+				
+				OrderDetailsDto orderDetailsDto = new OrderDetailsDto();
+				orderDetailsDto.setItemNo(itemNo);
+				orderDetailsDto.setItemName(itemName);
+				orderDetailsDto.setItemQuantity(itemQuantity);
+				orderDetailsDto.setSpecValue(specValue);
+				orderDetailsDto.setItemPrice(itemPrice);
+				
+				orderDetailsDtos.add(orderDetailsDto);
+			}
 			
 			BackToFrontOrder backToFrontOrder = new BackToFrontOrder();
 			backToFrontOrder.setUserNo(userNo);
 			backToFrontOrder.setUserName(userName);
 			backToFrontOrder.setPayment(payment);
 			backToFrontOrder.setSetTime(setTime);
+			backToFrontOrder.setOrderNo(orderNO);
+			backToFrontOrder.setOrderDetailsDto(orderDetailsDtos);
 			
 			orders.add(backToFrontOrder);
 		}
@@ -119,7 +143,21 @@ public class OrderService {
 			Integer eventNo = getOrder.getGroup().getEventNo();
 			Date setTime = getOrder.getSetTime();
 			Integer paymentMethod = getOrder.getPaymentMethod();
+			String groupStatus = getOrder.getGroup().getStatus();
+			
+			System.out.println("我要測試狀態馬AAAAAAAAAAAAAAAAAA     " + groupStatus);
+			String returnStatus;
 			List<OrderDetail> orderDetails = getOrder.getOrderDetails();
+			
+			if("done".equals(groupStatus)) {
+				returnStatus = "團購已成立，訂單已結單";
+			}else if ("active".equals(groupStatus)) {
+				returnStatus = "團購上架中，訂單未結單";
+			}else if ("banned".equals(groupStatus)) {
+				returnStatus = "團購被下架，訂單無效";
+			}else {
+				returnStatus = "團購未知狀態";
+			}
 			
 			List<OrderDetailsDto> orderDetailsDto = new ArrayList<OrderDetailsDto>();
 			for (OrderDetail orderDetail : orderDetails) {
@@ -140,17 +178,31 @@ public class OrderService {
 				
 				orderDetailsDto.add(orderDetailDto);
 			}
+			
 			orderDto.setEventNo(eventNo);
 			orderDto.setOrderDetail(orderDetailsDto);
 			orderDto.setPaymentMethod(paymentMethod);
 			orderDto.setEventNo(eventNo);
 			orderDto.setEventTitle(groupTitle);
 			orderDto.setSetTime(setTime);
+			orderDto.setEventStatus(returnStatus);
 			
 			orders.add(orderDto);
 		}
 		
 		return orders;
+	}
+	
+	public Order findOrderById(Integer orderNo) {
+		 Optional<Order> orderOptional = orderRepository.findById(orderNo);
+		 
+		 if (orderOptional.isEmpty()) {
+			 throw new EntityNotFoundException("order not found with id: " + orderNo);
+		 }
+		 
+		 Order order = orderOptional.get();
+		 
+		 return order;
 	}
 	
 }

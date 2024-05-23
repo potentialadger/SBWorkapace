@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,11 +22,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.group.dto.GroupDto;
+import com.group.dto.OrderDetailsDto;
 import com.group.dto.OrderDto;
 import com.group.model.Group;
 import com.group.model.Item;
 import com.group.model.ItemSpecification;
 import com.group.model.Order;
+import com.group.model.OrderDetail;
 import com.group.service.GroupService;
 import com.group.service.ItemService;
 import com.group.service.ItemSpecService;
@@ -56,8 +60,11 @@ public class GroupController {
 	
 //	全活躍活動
 	@GetMapping(value = "/groups")
-	public String findAllGroup(Model m, HttpServletRequest request) {
-		List<Group> groups = gService.findAllGroup();
+	public String findAllGroup(Model m, HttpServletRequest request, @RequestParam(defaultValue = "0") int page) {
+		int pageSize = 9;
+		
+		PageRequest pageAble = PageRequest.of(page, pageSize);
+		Page<Group> groups = gService.findAllGroupPage(pageAble);
 		
 		HttpSession session = request.getSession();
 //		UserBean user = (UserBean)session.getAttribute("userData");
@@ -77,20 +84,61 @@ public class GroupController {
 //		int userNo = userbean.getUserNo();
 		Integer userNo = 1;
 		
-		List<Group> groups = gService.findGroupByUser(userNo);
+//		查詢我的團購
+		List<Group> userGroups = gService.findGroupByUser(userNo);
 		ArrayList<GroupDto> groupDtos = new ArrayList<GroupDto>();
-		for (Group group : groups) {
-			String title = group.getTitle();
-			Integer paymentMethod = group.getPaymentMethod();
-			String description = group.getDescription();
-			Date endTime = group.getEndTime();
-			String account = group.getAccount();
-			String address = group.getAddress();
-			Integer eventNo = group.getEventNo();
-			Integer minAmount = group.getMinTotalAmount();
-			Integer minQuantity = group.getMinTotalQuantity();
+		for (Group userGroup : userGroups) {
+			String title = userGroup.getTitle();
+			Integer paymentMethod = userGroup.getPaymentMethod();
+			String description = userGroup.getDescription();
+			Date endTime = userGroup.getEndTime();
+			String account = userGroup.getAccount();
+			String address = userGroup.getAddress();
+			Integer eventNo = userGroup.getEventNo();
+			Integer minAmount = userGroup.getMinTotalAmount();
+			Integer minQuantity = userGroup.getMinTotalQuantity();
+			
+//			查詢我的團購裡的訂單
+			List<Order> groupOrders = userGroup.getOrders();
+			ArrayList<OrderDto> groupOrderDtos = new ArrayList<OrderDto>();
+			for (Order groupOrder : groupOrders) {
+				int groupOrderUserNo = groupOrder.getUserNo().getUserNo();
+				String groupOrderUserName = groupOrder.getUserNo().getUserChineseName();
+				Integer groupOrderPayment = groupOrder.getPaymentMethod();
+				Date setTime = groupOrder.getSetTime();
+				
+//				查詢我的團購裡訂單的訂單細節
+				List<OrderDetail> groupOrderDetails = groupOrder.getOrderDetails();
+				ArrayList<OrderDetailsDto> groupOrderDetailDtos = new ArrayList<OrderDetailsDto>();
+				for (OrderDetail groupOrderDetail : groupOrderDetails) {
+					Integer itemNo = groupOrderDetail.getItem().getItemNo();
+					String itemName = groupOrderDetail.getItem().getName();
+					Integer itemQuantity = groupOrderDetail.getItemQuantity();
+					String specValue = groupOrderDetail.getItemSpec().getSpecValue();
+					Integer itemPrice = groupOrderDetail.getItem().getPrice();
+					
+					OrderDetailsDto orderDetailsDto = new OrderDetailsDto();
+					orderDetailsDto.setItemNo(itemNo);
+					orderDetailsDto.setItemName(itemName);
+					orderDetailsDto.setItemQuantity(itemQuantity);
+					orderDetailsDto.setSpecValue(specValue);
+					orderDetailsDto.setItemPrice(itemPrice);
+					
+					groupOrderDetailDtos.add(orderDetailsDto);
+				}
+				
+				OrderDto orderDto = new OrderDto();
+				orderDto.setUserNo(groupOrderUserNo);
+				orderDto.setUserName(groupOrderUserName);
+				orderDto.setPaymentMethod(groupOrderPayment);
+				orderDto.setOrderDetail(groupOrderDetailDtos);
+				orderDto.setSetTime(setTime);
+				
+				groupOrderDtos.add(orderDto);
+			}
 			
 			GroupDto groupDto = new GroupDto();
+			
 			groupDto.setAccount(account);
 			groupDto.setAddress(address);
 			groupDto.setgDescription(description);
@@ -100,10 +148,13 @@ public class GroupController {
 			groupDto.setEventNo(eventNo);
 			groupDto.setgMinTotalAmount(minAmount.toString());
 			groupDto.setgMinTotalQuantity(minQuantity.toString());
+			groupDto.setGroupOrders(groupOrderDtos);
 			
 			groupDtos.add(groupDto);
 		}
 		
+
+//		查詢我的訂單
 		List<OrderDto> orders = orderService.findOrdersByUserNo(userNo);
 		
 		m.addAttribute("orders", orders);
@@ -114,8 +165,12 @@ public class GroupController {
 	
 //	全活躍活動依開團時間升序
 	@GetMapping(value = "/groupsbystimeasc")
-	public String findAllGroupByStartTimeAsc(HttpServletRequest request, Model m) {
-		List<Group> groups = gService.findAllGroupsByStartTimeAsc();
+	public String findAllGroupByStartTimeAsc(HttpServletRequest request, Model m, @RequestParam(defaultValue = "0") int page) {
+		int pageSize = 9;
+		
+		PageRequest pageAble = PageRequest.of(page, pageSize);
+		Page<Group> groups = gService.findAllGroupsByStartTimeAsc(pageAble);
+		
 		HttpSession session = request.getSession();
 //		UserBean user = (UserBean)session.getAttribute("userData");
 		UserBean user = userService.getUserData(1);
@@ -124,6 +179,9 @@ public class GroupController {
 		m.addAttribute("userData", user);
 		
 		return "group/jsp/groups.jsp";
+		
+		
+		
 		
 	}
 	
@@ -137,8 +195,12 @@ public class GroupController {
 	
 //	全活躍活動依結團時間升序
 	@GetMapping(value = "/groupsbyetimeasc")
-	public String findAllGroupByEndTimeAsc(HttpServletRequest request, Model m){
-		List<Group> groups = gService.findALLGroupsByEndTimeAsc();
+	public String findAllGroupByEndTimeAsc(HttpServletRequest request, Model m, @RequestParam(defaultValue = "0") int page){
+		int pageSize = 9;
+		
+		PageRequest pageAble = PageRequest.of(page, pageSize);
+		Page<Group> groups = gService.findALLGroupsByEndTimeAsc(pageAble);
+		
 		HttpSession session = request.getSession();
 //		UserBean user = (UserBean)session.getAttribute("userData");
 		UserBean user = userService.getUserData(1);
@@ -147,6 +209,9 @@ public class GroupController {
 		m.addAttribute("userData", user);
 		
 		return "group/jsp/groups.jsp";
+		
+		
+		
 	}
 	
 //	全活躍活動依結團時間降序
@@ -195,7 +260,15 @@ public class GroupController {
 	public String findAllGroupBack(Model m) {
 		List<Group> groups = gService.findAllGroup();
 		m.addAttribute("groups", groups);
-		return "group/jsp/backallgroups.jsp";
+		return "group/jsp/backallactivegroups.jsp";
+	}
+	
+//	後臺結單活動
+	@GetMapping(value = "/backdonegroups")
+	public String findGroupsDoneBack(Model m) {
+		List<Group> groups = gService.findGroupDoneBack();
+		m.addAttribute("groups", groups);
+		return "group/jsp/backdonegroups.jsp";
 	}
 	
 //	後台下架團購活動
@@ -217,6 +290,11 @@ public class GroupController {
 		String account = null;
 		String minTotalAmount = null;
 		String minTotalQuantity = null;
+		String bank = null;
+		String area = null;
+		String city = null;
+		String saveAccount = null;
+		String saveAddress = null;
 		
 		String title = newGroup.getgTitle();
 		String description = newGroup.getgDescription();
@@ -233,11 +311,17 @@ public class GroupController {
 		}
 		String[] payments = newGroup.getPayment();
 		if(Arrays.asList(payments).contains("1")) {
+			bank = newGroup.getBank();
 			account = newGroup.getAccount();
-		}else if (Arrays.asList(payments).contains("2")) {
-			address = newGroup.getAddress();
+			saveAccount = bank + "-" + account;
 		}
-		Group group = gService.insertGroup(userNo, title, description, endTime, payments, minTotalQuantity, minTotalAmount, account, address);
+		if (Arrays.asList(payments).contains("2")) {
+			address = newGroup.getAddress();
+			city = newGroup.getCity();
+			area = newGroup.getArea();
+			saveAddress = city + area + address ;
+		}
+		Group group = gService.insertGroup(userNo, title, description, endTime, payments, minTotalQuantity, minTotalAmount, saveAccount, saveAddress);
 		
 		session.setAttribute("eventno", group.getEventNo());
 		m.addAttribute("group", group);
@@ -280,7 +364,24 @@ public class GroupController {
 		return "group/jsp/eachgroup.jsp";
 	}
 	
-	
+	@PostMapping("/groupdone/{eventno}")
+	public String doneGroup(@PathVariable("eventno") Integer eventno, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+//		UserBean user = (UserBean)session.getAttribute("userData");
+		UserBean user = userService.getUserData(1);		
+		Group group = gService.findGroupByEventNo(eventno);
+		
+		Integer userPoint = user.getPoint();		
+		Integer groupPoint = group.getPoint();
+
+		userPoint += groupPoint;
+		user.setPoint(userPoint);
+		group.setStatus("done");
+		
+		userService.updateUser(user);
+		gService.updatePoint(group);
+		return "ok";
+	}
 	
 //	linepay金流
 	@GetMapping("/groups100")

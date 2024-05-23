@@ -59,7 +59,6 @@ public class ItemController {
 		Integer eventno = (Integer) session.getAttribute("eventno");
 
 		Random random = new Random();
-		int raNumber = random.nextInt(10000);
 
 		String fileDir = "C:/temp/upload/";
 
@@ -68,6 +67,7 @@ public class ItemController {
 			Integer itemPrice = insertItemJson.getItemPrice();
 			String itemDesc = insertItemJson.getItemDesc();
 			String itemImgData = insertItemJson.getItemImgPath();
+			int raNumber = random.nextInt(100000);
 
 			if (itemImgData.startsWith("data:image")) {
 				List<String> itemSpecs = insertItemJson.getItemSpec();
