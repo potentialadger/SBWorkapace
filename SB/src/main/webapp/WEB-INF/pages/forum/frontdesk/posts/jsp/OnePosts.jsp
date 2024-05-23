@@ -37,24 +37,27 @@
 	display: none;
 }
 
-.title-location {
+ .title-location {
 	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 24px;
-}
+ 	margin-right:8px;
+ 	} 
+
 
 .category-name {
 	order: 1;
 	margin-right: auto;
-	font-size: 25px;
-	background-color: #f0f0f0;
+	font-size: 20px;
+	font-style: italic;
+	color: gray;
+	font-weight:bold;
+	margin-right:8px;
 }
 
 .post-title {
 	order: 2;
-	font-size: 24px;
+	font-size: 40px;
 	margin-right: 500px;
+	font-weight:bold;
 }
 </style>
 
@@ -89,14 +92,15 @@
 
 									<div class="title-location">
 
-										<span class="category-name"> <c:out
-												value="${post.categoriesBean.title_name}" />
-										</span> <span class="post-title"> <c:out value="${post.title}" />
-										</span>
+										<span class="category-name"> <c:out value="${post.categoriesBean.title_name}" /></span> 
 
 									</div>
+										
+										<span class="post-title" style= "color: #000; width: 300px; word-wrap:break-word;white-space:pre-line;"> <c:out value="${post.title}" /></span>
+									
 
-									<div class="row">
+
+									<div class="row" style="margin-top:10px;">
 										<div class="user-block col-6">
 
 											<img class="img-circle"
@@ -111,7 +115,7 @@
 
 										<div class="box-tools col-6">
 											<form method="post" action="/postsFrontDesk/DeletePosts"
-												onsubmit="return confirm('您確定要刪除這個帖子嗎？');">
+												onsubmit="return confirm('確定要刪除此文章嗎？');">
 												<input type="hidden" name="postsNo" value="${post.post_no}">
 												<input type="hidden" name="_method" value="delete">
 												<button type="submit"
@@ -133,9 +137,8 @@
 								</div>
 
 								<div class="box-body">
-
-									<c:out value="${post.content}" />
-
+									<div style="word-wrap:break-word;white-space:pre-line; color: black; font-size: 18px;"><c:out value="${post.content}"/></div>
+									
 
 									<img class="attachment-img mb-5"
 										style="width: 100%; object-fit: cover;"
@@ -149,8 +152,11 @@
 										<form method="get"
 											action="/reportsFrontDesk/SelectReportsPosts">
 											<input type="hidden" name="postsNo" value="${post.post_no}">
-											<button type="submit" class="submit-reply"
-												style="margin: 2px; background-color: red;">
+											<button type="submit" ${post.userBean.userNo!=userNo?"":"hidden"}
+												class="submit-reply"
+												style="margin: 2px; background-color: red;"
+												 onmouseover="this.style.backgroundColor='darkred'"
+            									 onmouseout="this.style.backgroundColor='red'">
 												<i class="fas fa-flag"></i> 檢舉
 											</button>
 										</form>
@@ -187,14 +193,17 @@
 									<form id="replyForm" method="post"
 										action="/repliesFrontDesk/InsertReplies">
 										<input type="hidden" name="user_no"
-											value="${post.userBean.userNo}"> <input type="hidden"
+											value="${post.userBean.userNo}"> 
+											<input type="hidden" id ="getPostId"
 											name="post_no" value="${post.post_no}">
+											<!--<input type="hidden" id ="getPostId" name="post_no" value="${post.post_no}">的id ="getPostId"在下方喜歡的方法中有用到-->
 
 
 										<div class="img-push">
-											<input id="replyContent" name="content" type="text"
+											<textarea id="replyContent" name="content" type="text"
 												class="form-control input-sm"
-												placeholder="Press enter to post comment">
+												style="width: 1060px; height: 100px; font-size: 16px; padding: 10px; resize: none;
+												"placeholder="請輸入回覆內容"></textarea>
 											<button type="button" class="submit-reply mt-3 mb-3"
 												onclick="submitReply()">提交回覆</button>
 										</div>
@@ -227,23 +236,22 @@
 												</span>
 
 												</span>
-
-												<c:out value="${replies.content}" />
-
-
-											</div>
+												
+												<div style="word-wrap:break-word;white-space:pre-line">
+												<c:out value="${replies.content}"/></div>
+												</div>
 
 											<div class="delete-and-edit-replies">
 
 												<button class="delete-btn"
 													data-reply-id="${replies.reply_no}"
-													onclick="confirmDelete(this)">刪除</button>
+													onclick="confirmDelete(this)" ${replies.userBean.userNo==userNo?"":"hidden"}>刪除</button>
 
 												<form method="get"
 													action="/repliesFrontDesk/UpdateSelectReplies">
 													<input type="hidden" name="repliesNo"
 														value="${replies.reply_no}">
-													<button type="submit">編輯</button>
+													<button type="submit" ${replies.userBean.userNo==userNo?"":"hidden"}>編輯</button>
 												</form>
 
 											</div>
@@ -336,7 +344,42 @@
                                 }
                             });
                         }
+                        
+                      //用於實現維持喜歡填滿 收回空心
+                        function checkLikesStatus(post_no) {
+                            $.ajax({
+                                url: "/likesFrontDesk/getUserLikes?post_no=" + post_no ,
+                                method: 'GET',
+                                
+                                success: function (response) {
+                                	if (response === "Liked") {
+                                        document.querySelector('#heartIcon').classList.remove('far');
+                                        document.querySelector('#heartIcon').classList.add('fas');
+                                    } else if (response === "Unliked") {
+                                        document.querySelector('#heartIcon').classList.remove('fas');
+                                        document.querySelector('#heartIcon').classList.add('far');
+                                    }
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+                            });
+                        }
 
+                        // 在頁面加載時檢查喜歡的狀態
+                        $(document).ready(function() {
+                        	var postId = $('#getPostId').val();
+                        	console.log(postId);
+                            checkLikesStatus(postId);
+                        });
+						
+                     	// 按下 Enter 鍵時阻止表單預設行為（除非同時按下 Shift 鍵）
+                        document.getElementById("replyContent").addEventListener("keydown", function(event) {
+                            if (event.key === "Enter" && !event.shiftKey) {
+                                event.preventDefault();
+                            }
+                        });
+                        
                         //回覆
                         function submitReply() {
                             $.ajax({
@@ -387,7 +430,7 @@
                         //確定是否刪除回覆
                         function confirmDelete(button) {
                             var replyNo = $(button).data('reply-id');
-                            var confirmation = confirm('您確定要刪除此回覆嗎？');
+                            var confirmation = confirm('確定要刪除此回覆嗎？');
                             if (confirmation) {
                                 deleteReply(button); // 如果用戶確定刪除，則調用刪除回覆的函數
                             }

@@ -60,12 +60,11 @@
 .post-category {
 	position: absolute;
 	top: 0;
-	right: 0;
-	background-color: #f0f0f0;
-	padding: 2px 5px;
-	border-radius: 3px;
-	color: #555555cb;
-	font-family: Arial Black;
+	right: 10px;
+	color: gray;
+	font-weight: bold;
+	font-size: 20px;
+	font-style: italic;
 }
 
 .text-muted {
@@ -91,35 +90,49 @@
 }
 
 .custom-allposts-button {
-    background-color: #4e73df;
-    border-color: #4e73df;
-    color: #fff;
-    padding: 0.375rem 0.75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    border-radius: 0.25rem;
-    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
-        color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	background-color: #4e73df;
+	color: #fff;
+	border: none;
+	border-radius: 0.5rem;
+	padding: 0.5rem 1rem;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: background-color 0.3s, transform 0.2s;
 }
 
 .custom-allposts-button:hover {
-    background-color: #2151e0;
-    border-color: #224abe;
+	background-color: #2151e0;
+	transform: scale(1.05);
+}
+
+.custom-allposts-button-hot {
+	background-color: #e43838;
+	color: #ffffff;
+	border: none;
+	border-radius: 0.5rem;
+	padding: 0.5rem 1rem;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: background-color 0.3s, transform 0.2s;
+}
+
+.custom-allposts-button-hot:hover {
+	background-color: #e92424;
+	transform: scale(1.05);
 }
 
 .inner-main-header {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .custom-form-allposts {
-    margin-left: auto;
+	margin-left: auto;
 }
 
 body {
-    font-family: Arial, sans-serif;
+	font-family: Arial, sans-serif;
 }
-
 </style>
 
 </head>
@@ -233,14 +246,7 @@ body {
 									<a
 										class="nav-link nav-icon rounded-circle nav-link-faded mr-3 d-md-none"
 										href="#" data-toggle="inner-sidebar"><i
-										class="material-icons">arrow_forward_ios</i></a> <select
-										class="custom-select custom-select-sm w-auto mr-1">
-										<option selected="">Latest</option>
-										<option value="1">Popular</option>
-										<option value="3">Solved</option>
-										<option value="3">Unsolved</option>
-										<option value="3">No Replies Yet</option>
-									</select>
+										class="material-icons">arrow_forward_ios</i></a>
 
 									<form class="my-search-form" method="get"
 										action="/postsFrontDesk/OnePosts">
@@ -251,7 +257,17 @@ body {
 
 									<form class="custom-form-allposts" method="get"
 										action="/postsFrontDesk/AllPosts">
-										<button type="submit" class="custom-allposts-button">全部文章</button>
+										<button type="submit" class="custom-allposts-button">由新到舊</button>
+									</form>
+
+									<form class="custom-form-allposts" method="get"
+										action="/postsFrontDesk/AllPostsAsc">
+										<button type="submit" class="custom-allposts-button">由舊到新</button>
+									</form>
+
+									<form class="custom-form-allposts" method="get"
+										action="/postsFrontDesk/AllPostsSee">
+										<button type="submit" class="custom-allposts-button-hot">熱門文章</button>
 									</form>
 									<!-- <span class="input-icon input-icon-sm ml-auto w-auto">
 													<input type="text"
@@ -269,45 +285,61 @@ body {
 									<!-- <c:if test="${not empty postsM}"> -->
 									<c:forEach var="post" items="${postsM}">
 										<div class="card mb-2">
-											<div class="card-body p-2 p-sm-3">
-												<div class="media forum-item">
-													<img
-														src="http://localhost:8080/localimages/${post.userBean.avatar}"
-														class="mr-3" width="50" alt="User"
-														style="border-radius: 50%;" />
-													<div class="media-body">
-														<h5>
-															<a
-																href="/postsFrontDesk/SelectPosts?postsNo=${post.post_no}"
-																class="text-body" style="font-weight: bold;">
-																<div
-																	style="width: 300px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
-																	${post.title}
-																	</div>
-															</a>
-														</h5>
+											<a href="/postsFrontDesk/SelectPosts?postsNo=${post.post_no}"
+												class="text-body" style="text-decoration: none; color: inherit;">
+												<div class="card-body p-2 p-sm-3">
+													<div class="media forum-item">
+
+														<div style="margin-right: 20px;">
+															<div class="avatar-container"
+																style="display: flex; flex-direction: column; align-items: flex-start;">
+
+
+																<img
+																	src="http://localhost:8080/localimages/${post.userBean.avatar}"
+																	class="mr-3" width="50" alt="User"
+																	style="border-radius: 50%; margin-bottom: 26px; border: 1px solid black;" />
+
+																<span style="color: #007bff;"><c:out
+																		value="${post.userBean.userChineseName}" /></span>
+
+															</div>
+														</div>
+
+														<div class="media-body">
+															<h5>
+<!-- 																<a 原本用標題連結 現在改為全部-->
+<%-- 																	href="/postsFrontDesk/SelectPosts?postsNo=${post.post_no}" --%>
+<!-- 																	class="text-body" style="font-weight: bold;"> -->
+																	<div
+																		style="color: #000; width: 300px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
+																		${post.title}</div>
+<!-- 																</a> -->
+															</h5>
+															<div
+																style="width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
+																${post.content}</div>
+
+
+															<span class="post-category">${post.categoriesBean.title_name}</span>
+
+
+															<p class="text-muted">
+																<span class="text-secondary font-weight-bold"><fmt:formatDate
+																		value="${post.update_date}" pattern="yyyy-MM-dd HH:mm" /></span>
+															</p>
+														</div>
 														<div
-															style="width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
-															${post.content}</div>
-
-
-														<span class="post-category">${post.categoriesBean.title_name}</span>
-
-
-														<p class="text-muted">
-															<span class="text-secondary font-weight-bold"><fmt:formatDate
-																	value="${post.update_date}" pattern="yyyy-MM-dd HH:mm" /></span>
-														</p>
-													</div>
-													<div class="text-muted small text-center align-self-center">
-														<span class="d-none d-sm-inline-block"><i
-															class="far fa-eye"></i> ${post.view_count}</span> <span><i
-															class="far fa-comment ml-2"></i>
-															${post.repliesBean.size()}</span> <span><i
-															class="fas fa-heart"></i> ${post.likesBean.size()}</span>
+															class="text-muted small text-center align-self-center">
+															<span class="d-none d-sm-inline-block"><i
+																class="far fa-eye"></i> ${post.view_count}</span> <span><i
+																class="far fa-comment ml-2"></i>
+																${post.repliesBean.size()}</span> <span><i
+																class="fas fa-heart"></i> ${post.likesBean.size()}</span>
+														</div>
 													</div>
 												</div>
-											</div>
+											</a>
 										</div>
 									</c:forEach>
 									<!-- </c:if> -->
@@ -328,11 +360,9 @@ body {
 									<div class="card mb-2">
 										<div class="card-body">
 											<div class="media forum-item">
-												<a href="javascript:void(0)" class="card-link"> 
-												
-												<img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle" width="50" alt="User" /> 
-													
-													<small
+												<a href="javascript:void(0)" class="card-link"> <img
+													src="https://bootdey.com/img/Content/avatar/avatar1.png"
+													class="rounded-circle" width="50" alt="User" /> <small
 													class="d-block text-center text-muted">Newbie</small>
 												</a>
 												<div class="media-body ml-3">
@@ -465,9 +495,8 @@ body {
 				category.classList.remove('hovered'); // 移除反灰樣式
 			});
 		});
-		</script>
+	</script>
 
-		</body>
+</body>
 
-		</html>
-	
+</html>

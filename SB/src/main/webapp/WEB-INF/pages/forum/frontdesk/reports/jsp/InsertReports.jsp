@@ -24,6 +24,7 @@
                 <link href="/css/sb-admin-2.min.css" rel="stylesheet">
 
                 <style>
+                
                     .input-group.position-relative {
                         display: none;
                     }
@@ -39,21 +40,6 @@
                         margin-right: auto;
                         color: black !important;
                     }
-
-                    .submit-button {
-                        background-color: #3761d4;
-                        color: white;
-                        padding: 10px 20px;
-                        border: none;
-                        border-radius: 5px;
-                        cursor: pointer;
-                        transition: background-color 0.3s;
-                    }
-
-                    .submit-button:hover {
-                        background-color: #4b59d8;
-                    }
-                     .button-container {
     					
                 </style>
 
@@ -80,7 +66,7 @@
                             <div class="reports-container">
                                 <div class="forum-form-container">
                                     
-                                    <form id="myForm" method="post" action="/reportsFrontDesk/InsertReports" onsubmit="return confirmSubmission()">
+                                    <form  method="post" action="/reportsFrontDesk/InsertReports" onsubmit="return confirmPublish()">
                                         
                                         <input type="hidden" name="post_no" value="${reportsPosts.post_no}">
                                         
@@ -88,13 +74,14 @@
                                         
                                         <label for="reason">檢舉原因 :</label>
                                         
-                                        <textarea id="reason" name="reason" required style="width: 100%; height: 400px; resize: none;"></textarea>
+                                        <textarea id="reason" name="reason" required style="width: 100%; height: 400px; resize: none;" maxlength="255"></textarea>
                                        
+                                    <div class="form-group">
+                                    	<button type="submit" class="btn btn-primary">提交</button>
+                                    	<button type="button" class="btn btn-secondary" onclick="goBack()">返回</button>
+                                	</div>
+                                    
                                     </form>
-                                       	
-                                    <input type="button" onclick="submitMyForm()" value="提交" class="submit-button" />
-
-                                    <button onclick="goBack()" class="submit-button">返回</button>
                                 
                                 </div>
                             </div>
@@ -141,18 +128,15 @@
                 <script src="/js/demo/chart-pie-demo.js"></script>
 
                 <script>
-                    function confirmSubmission() {
-                        return confirm("您確定要檢舉嗎？");
-                    }
-
+                	
+                	function confirmPublish() {
+        				return confirm("確定要檢舉該文章嗎？");
+        			}
+                
                     function goBack() {
                         window.history.back();
                     }
                     
-                    function submitMyForm() {
-                        var form = document.getElementById("myForm");
-                        form.submit();
-                    }
                 </script>
 
 

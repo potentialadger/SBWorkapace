@@ -33,6 +33,12 @@ public interface PostsServiceInterface {
     // 更新瀏覽次數
     void updateViewCount(Integer postId, int viewCount);
     
+    // 新到舊排序
+    List<PostsBean> findAllOrderByCreatedAtDesc();
+    
+    // 舊到新排序
+    List<PostsBean> findAllOrderByUpdateDateAsc();
+    
     // 依照瀏覽次數排序
     List<PostsBean> findAllByOrderByViewCountDesc();
     

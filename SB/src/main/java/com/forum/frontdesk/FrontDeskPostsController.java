@@ -72,14 +72,38 @@ public class FrontDeskPostsController {
 		return "/forum/frontdesk/posts/jsp/UserHome.jsp";
 	}
 
-	// 前台 全部查詢
+	// 前台 新到舊 全部查詢
 	@GetMapping("/AllPosts")
 	public String getAllPosts(Model m) {
-		List<PostsBean> postsList = postsService.findAllByOrderByViewCountDesc();
+		List<PostsBean> postsList = postsService.findAllOrderByCreatedAtDesc();
 		List<CategoriesBean> categoriesList = categoriesService.getAllCategories();
 
 		m.addAttribute("postsM", postsList);
 		m.addAttribute("categoriesM", categoriesList); 
+
+		return "/forum/frontdesk/posts/jsp/UserHome.jsp";
+	}
+	
+	// 前台 舊到新 全部查詢
+	@GetMapping("/AllPostsAsc")
+	public String getAllPostsAsc(Model m) {
+		List<PostsBean> postsList = postsService.findAllOrderByUpdateDateAsc();
+		List<CategoriesBean> categoriesList = categoriesService.getAllCategories();
+
+		m.addAttribute("postsM", postsList);
+		m.addAttribute("categoriesM", categoriesList);
+
+		return "/forum/frontdesk/posts/jsp/UserHome.jsp";
+	}
+	
+	// 前台 瀏覽次數 全部查詢
+	@GetMapping("/AllPostsSee")
+	public String getAllPostsSee(Model m) {
+		List<PostsBean> postsList = postsService.findAllByOrderByViewCountDesc();
+		List<CategoriesBean> categoriesList = categoriesService.getAllCategories();
+
+		m.addAttribute("postsM", postsList);
+		m.addAttribute("categoriesM", categoriesList);
 
 		return "/forum/frontdesk/posts/jsp/UserHome.jsp";
 	}
@@ -255,7 +279,8 @@ public class FrontDeskPostsController {
 				image_url.transferTo(fileDirPath);
 				postsToUpdate.setImage_url(fileName);
 			}else {
-				postsToUpdate.setImage_url(null);
+				
+				postsToUpdate.setImage_url(postsToUpdate.getImage_url());
 			}
 
 			postsService.updatePosts(postsToUpdate);
@@ -271,66 +296,71 @@ public class FrontDeskPostsController {
 	}
 
 	
-	// 單筆查詢跳轉and瀏覽次數更新
-	@GetMapping("/SelectPosts")
-	public String selectPosts(
-	        @RequestParam("postsNo") Integer postsNo,
-	        HttpSession session,
-	        Model m) {
-	    PostsBean posts = postsService.getPostsNo(postsNo);
-	    
-	    UserBean userData = (UserBean) session.getAttribute("userData"); 
-	    
-	    // 檢查 Session 中是否存在已訪問標記，如果不存在則增加瀏覽次數並設置已訪問標記
-	    if (session.getAttribute("visitedPost_" + postsNo) == null) {
-	        int originalViewCount = posts.getView_count();
-	        int newViewCount = originalViewCount + 1;
-	        postsService.updateViewCount(postsNo, newViewCount);
-	        
-	        // 設置已訪問標記
-	        session.setAttribute("visitedPost_" + postsNo, true);
-	    }
-	    
-	    List<RepliesBean> repliesList = repliesService.findByPostNo(postsNo);
-	    
-	    List<PostsBean> postsList = new ArrayList<>();
-	    postsList.add(posts);
-	    
-	    m.addAttribute("userNo",userData.getUserNo());
-	    
-	    m.addAttribute("updateSelect", postsList);
-	    
-	    m.addAttribute("repliesM", repliesList);
-	    
-	    return "/forum/frontdesk/posts/jsp/OnePosts.jsp";
-	}
-}
-
-//	// 單筆查詢跳轉and瀏覽次數更新 舊編輯的時候瀏覽次數會更新
+//	// 單筆查詢跳轉and瀏覽次數更新 同個使用者觀看同篇文章 瀏覽次數不會更新第2次
 //	@GetMapping("/SelectPosts")
-//    public String selectPosts(
-//    		@RequestParam("postsNo") Integer postsNo,
-//    		HttpSession session,
-//            Model m) {
-//		PostsBean posts = postsService.getPostsNo(postsNo);
-//		
-//		UserBean userData = (UserBean) session.getAttribute("userData"); 
-//		
-//		// 取得原有的瀏覽次數
-//	    int originalViewCount = posts.getView_count();
+//	public String selectPosts(
+//	        @RequestParam("postsNo") Integer postsNo,
+//	        HttpSession session,
+//	        Model m) {
+//	    PostsBean posts = postsService.getPostsNo(postsNo);
 //	    
-//	    // 新的瀏覽次數加1
-//	    int newViewCount = originalViewCount + 1;
-//		
-//		postsService.updateViewCount(postsNo,newViewCount);
-//		
-//		List<PostsBean> postsList = new ArrayList<>();
-//		
-//		postsList.add(posts);
-//			
-//		m.addAttribute("userNo",userData.getUserNo());
-//		
-//        m.addAttribute("updateSelect", postsList);
-//        
-//        return "/forum/frontdesk/posts/jsp/OnePosts.jsp";
-//    }	
+//	    UserBean userData = (UserBean) session.getAttribute("userData"); 
+//	    
+//	    // 檢查 Session 中是否存在已訪問標記，如果不存在則增加瀏覽次數並設置已訪問標記
+//	    if (session.getAttribute("visitedPost_" + postsNo) == null) {
+//	        int originalViewCount = posts.getView_count();
+//	        int newViewCount = originalViewCount + 1;
+//	        postsService.updateViewCount(postsNo, newViewCount);
+//	        
+//	        // 設置已訪問標記
+//	        session.setAttribute("visitedPost_" + postsNo, true);
+//	    }
+//	    
+//	    List<RepliesBean> repliesList = repliesService.findByPostNo(postsNo);
+//	    
+//	    List<PostsBean> postsList = new ArrayList<>();
+//	    postsList.add(posts);
+//	    
+//	    m.addAttribute("userNo",userData.getUserNo());
+//	    
+//	    m.addAttribute("updateSelect", postsList);
+//	    
+//	    m.addAttribute("repliesM", repliesList);
+//	    
+//	    return "/forum/frontdesk/posts/jsp/OnePosts.jsp";
+//	}
+//}
+
+	// 單筆查詢跳轉and瀏覽次數更新 同個使用者觀看同篇文章 瀏覽次數會不斷更新
+	@GetMapping("/SelectPosts")
+    public String selectPosts(
+    		@RequestParam("postsNo") Integer postsNo,
+    		HttpSession session,
+            Model m) {
+		PostsBean posts = postsService.getPostsNo(postsNo);
+		
+		UserBean userData = (UserBean) session.getAttribute("userData"); 
+		
+		// 取得原有的瀏覽次數
+	    int originalViewCount = posts.getView_count();
+	    
+	    // 新的瀏覽次數加1
+	    int newViewCount = originalViewCount + 1;
+		
+		postsService.updateViewCount(postsNo,newViewCount);
+		
+		List<PostsBean> postsList = new ArrayList<>();
+		
+		postsList.add(posts);
+		
+		List<RepliesBean> repliesList = repliesService.findByPostNo(postsNo);
+			
+		m.addAttribute("userNo",userData.getUserNo());
+		
+        m.addAttribute("updateSelect", postsList);
+        
+        m.addAttribute("repliesM", repliesList);
+        
+        return "/forum/frontdesk/posts/jsp/OnePosts.jsp";
+    }
+}

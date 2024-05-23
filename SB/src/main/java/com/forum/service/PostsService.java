@@ -86,9 +86,22 @@ public class PostsService implements PostsServiceInterface {
 	    }
 	}
 	
+	// 新到舊排序
+	 @Override
+	    public List<PostsBean> findAllOrderByCreatedAtDesc() {
+	        return postsDao.findAllOrderByCreatedAtDesc();
+	    }
+	 
+	 // 舊到新排序
+	 @Override
+	 public List<PostsBean> findAllOrderByUpdateDateAsc() {
+		 return postsDao.findAllOrderByUpdateDateAsc();
+	 }
+	
 	// 依照瀏覽次數排序
 	 @Override
 	    public List<PostsBean> findAllByOrderByViewCountDesc() {
 	        return postsDao.findAllByOrderByViewCountDesc();
 	    }
+
 }
