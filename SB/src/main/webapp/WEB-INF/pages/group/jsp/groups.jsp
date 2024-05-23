@@ -134,7 +134,7 @@
 																				style="padding: 0px;">
 																				<a
 																					href="/otherAboutMe/<%=group.getUser().getUserNo() %>"><img
-																						src="localimages/<%=group.getUser().getAvatar() %>"
+																						src="/localimages/<%=group.getUser().getAvatar() %>"
 																						alt=""
 																						style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; margin: 5px"></a>
 																				<div class="content mt-4"

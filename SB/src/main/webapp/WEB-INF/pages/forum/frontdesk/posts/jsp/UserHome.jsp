@@ -297,8 +297,8 @@ body {
 
 																<img
 																	src="http://localhost:8080/localimages/${post.userBean.avatar}"
-																	class="mr-3" width="50" alt="User"
-																	style="border-radius: 50%; margin-bottom: 26px; border: 1px solid black;" />
+																	class="mr-3" alt="User"
+																	style="border-radius: 50%; margin-bottom: 26px; border: 1px solid black; object-fit: cover; width: 50px; height: 50px;" />
 
 																<span style="color: #007bff;"><c:out
 																		value="${post.userBean.userChineseName}" /></span>
@@ -331,11 +331,9 @@ body {
 														</div>
 														<div
 															class="text-muted small text-center align-self-center">
-															<span class="d-none d-sm-inline-block"><i
-																class="far fa-eye"></i> ${post.view_count}</span> <span><i
-																class="far fa-comment ml-2"></i>
-																${post.repliesBean.size()}</span> <span><i
-																class="fas fa-heart"></i> ${post.likesBean.size()}</span>
+															<span><i class="fas fa-heart"></i> ${post.likesBean.size()}</span>
+															<span class="d-none d-sm-inline-block"><i class="far fa-eye"></i> ${post.view_count}</span> 
+															<span><i class="far fa-comment ml-2"></i> ${post.repliesBean.size()}</span> 
 														</div>
 													</div>
 												</div>

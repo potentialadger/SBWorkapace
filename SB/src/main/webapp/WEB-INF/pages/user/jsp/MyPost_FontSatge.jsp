@@ -874,7 +874,7 @@
                                                                                                                     <span
                                                                                                                         class="m-r-15 text-inverse-lighter">
                                                                                                                         <i
-                                                                                                                            class="fa fa-share fa-fw fa-lg m-r-3"></i>
+                                                                                                                            class="fas fa-eye fa-fw fa-lg m-r-3"></i>
                                                                                                                         ${post.view_count}</span>
                                                                                                                 </div>
                                                                                                             </div>

@@ -652,7 +652,9 @@
 											<div class="row heading">
 												<div class="col-sm-3 col-xs-3 heading-avatar">
 													<div class="heading-avatar-icon">
-														<img src="/localimages/${userBean.avatar}">
+														<a href="/aboutMe">
+															<img src="/localimages/${userBean.avatar}">
+														</a>
 													</div>
 												</div>
 												<div class="col-sm-1 col-xs-1  heading-dot  pull-right">
@@ -931,7 +933,7 @@
 									<!-- 存放目前接收者的UserNo -->
 									<input type="hidden" name="" id="receiveUser" value="2">
 
-									<div class="col-sm-8 conversation">
+									<div class="col-sm-8 conversation" id="outConversation" hidden>
 										<div class="row heading">
 											<div class="col-sm-2 col-md-1 col-xs-3 heading-avatar">
 												<div class="heading-avatar-icon">
@@ -1321,6 +1323,9 @@
 								}
 								
 								function editChatContent(event, element, friendNo){
+									$("#outConversation").hide(100);
+									
+
 									$("#receiveUser").val(friendNo);
 
 									//把頭貼跟名字移過去聊天室的上面
@@ -1394,11 +1399,15 @@
 											// document.querySelector("#result").innerHTML = resultText;
 										});
 									});
+									
+									$("#outConversation").show(500);
 
 
 									//全部資料都印好後，卷軸推到底
-									var scrollHeight = $("#conversation").prop("scrollHeight");
-									$("#conversation").scrollTop(scrollHeight);
+									setTimeout(function() {
+										var scrollHeight = $("#conversation").prop("scrollHeight");
+										$("#conversation").scrollTop(scrollHeight);
+										}, 300);
 								}
 
 								

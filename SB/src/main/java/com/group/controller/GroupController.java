@@ -67,8 +67,8 @@ public class GroupController {
 		Page<Group> groups = gService.findAllGroupPage(pageAble);
 		
 		HttpSession session = request.getSession();
-//		UserBean user = (UserBean)session.getAttribute("userData");
-		UserBean user = userService.getUserData(1);
+		UserBean user = (UserBean)session.getAttribute("userData");
+//		UserBean user = userService.getUserData(1);
 		
 		m.addAttribute("groups", groups);
 		m.addAttribute("userData", user);
@@ -80,9 +80,9 @@ public class GroupController {
 	@GetMapping(value = "/mygroups")
 	public String findGroupByUser(HttpServletRequest request, Model m) {
 		HttpSession session = request.getSession();
-//		UserBean userbean = (UserBean)session.getAttribute("userData");
-//		int userNo = userbean.getUserNo();
-		Integer userNo = 1;
+		UserBean userbean = (UserBean)session.getAttribute("userData");
+		int userNo = userbean.getUserNo();
+//		Integer userNo = 1;
 		
 //		查詢我的團購
 		List<Group> userGroups = gService.findGroupByUser(userNo);
@@ -172,8 +172,8 @@ public class GroupController {
 		Page<Group> groups = gService.findAllGroupsByStartTimeAsc(pageAble);
 		
 		HttpSession session = request.getSession();
-//		UserBean user = (UserBean)session.getAttribute("userData");
-		UserBean user = userService.getUserData(1);
+		UserBean user = (UserBean)session.getAttribute("userData");
+//		UserBean user = userService.getUserData(1);
 		
 		m.addAttribute("groups", groups);
 		m.addAttribute("userData", user);
@@ -202,8 +202,8 @@ public class GroupController {
 		Page<Group> groups = gService.findALLGroupsByEndTimeAsc(pageAble);
 		
 		HttpSession session = request.getSession();
-//		UserBean user = (UserBean)session.getAttribute("userData");
-		UserBean user = userService.getUserData(1);
+		UserBean user = (UserBean)session.getAttribute("userData");
+//		UserBean user = userService.getUserData(1);
 		
 		m.addAttribute("groups", groups);
 		m.addAttribute("userData", user);
@@ -219,8 +219,8 @@ public class GroupController {
 	public String findAllGroupByEndTimeDesc(HttpServletRequest request, Model m){
 		List<Group> groups = gService.findALLGroupsByEndTimeDesc();
 		HttpSession session = request.getSession();
-//		UserBean user = (UserBean)session.getAttribute("userData");
-		UserBean user = userService.getUserData(1);
+		UserBean user = (UserBean)session.getAttribute("userData");
+//		UserBean user = userService.getUserData(1);
 		
 		m.addAttribute("groups", groups);
 		m.addAttribute("userData", user);
@@ -283,8 +283,8 @@ public class GroupController {
 	public String insertGroup(@ModelAttribute GroupDto newGroup, HttpServletRequest request, Model m) {
 		HttpSession session = request.getSession();
 		UserBean userbean = (UserBean)session.getAttribute("userData");
-//		Integer userNo = userbean.getUserNo();
-		Integer userNo = 1;
+		Integer userNo = userbean.getUserNo();
+//		Integer userNo = 1;
 		
 		String address = null;
 		String account = null;
@@ -367,8 +367,8 @@ public class GroupController {
 	@PostMapping("/groupdone/{eventno}")
 	public String doneGroup(@PathVariable("eventno") Integer eventno, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-//		UserBean user = (UserBean)session.getAttribute("userData");
-		UserBean user = userService.getUserData(1);		
+		UserBean user = (UserBean)session.getAttribute("userData");
+//		UserBean user = userService.getUserData(1);		
 		Group group = gService.findGroupByEventNo(eventno);
 		
 		Integer userPoint = user.getPoint();		
@@ -387,8 +387,8 @@ public class GroupController {
 	@GetMapping("/groups100")
 	public String getDirect100(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-//		UserBean user = (UserBean)session.getAttribute("userData");
-		UserBean user = userService.getUserData(1);
+		UserBean user = (UserBean)session.getAttribute("userData");
+//		UserBean user = userService.getUserData(1);
 		
 		userService.insertPoint100(user);
 		
@@ -398,8 +398,8 @@ public class GroupController {
 	@GetMapping("/groups300")
 	public String getDirect300(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-//		UserBean user = (UserBean)session.getAttribute("userData");
-		UserBean user = userService.getUserData(1);
+		UserBean user = (UserBean)session.getAttribute("userData");
+//		UserBean user = userService.getUserData(1);
 		
 		userService.insertPoint300(user);
 		
@@ -409,8 +409,8 @@ public class GroupController {
 	@GetMapping("/groups500")
 	public String getDirect500(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-//		UserBean user = (UserBean)session.getAttribute("userData");
-		UserBean user = userService.getUserData(1);
+		UserBean user = (UserBean)session.getAttribute("userData");
+//		UserBean user = userService.getUserData(1);
 		
 		userService.insertPoint500(user);
 		
@@ -420,8 +420,8 @@ public class GroupController {
 	@GetMapping("/groups1000")
 	public String getDirect1000(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-//		UserBean user = (UserBean)session.getAttribute("userData");
-		UserBean user = userService.getUserData(1);
+		UserBean user = (UserBean)session.getAttribute("userData");
+//		UserBean user = userService.getUserData(1);
 		
 		userService.insertPoint1000(user);
 		
@@ -431,8 +431,8 @@ public class GroupController {
 	@GetMapping("/groups2000")
 	public String getDirect2000(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-//		UserBean user = (UserBean)session.getAttribute("userData");
-		UserBean user = userService.getUserData(1);
+		UserBean user = (UserBean)session.getAttribute("userData");
+//		UserBean user = userService.getUserData(1);
 		
 		userService.insertPoint2000(user);
 		
@@ -442,8 +442,8 @@ public class GroupController {
 	@GetMapping("/groups3000")
 	public String getDirect3000(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-//		UserBean user = (UserBean)session.getAttribute("userData");
-		UserBean user = userService.getUserData(1);
+		UserBean user = (UserBean)session.getAttribute("userData");
+//		UserBean user = userService.getUserData(1);
 		
 		userService.insertPoint3000(user);
 		

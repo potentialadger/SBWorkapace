@@ -503,7 +503,8 @@ public class UserController {
 		Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
 		UserBean userBean = dataById.get();
 
-		List<FriendStateBean> friendStateBeans = userBean.getFriendStates();
+		StateBean state = stateService.findStateBystateName("好友");
+		List<FriendStateBean> friendStateBeans = fsService.findSomeStateFriendState(userBean, state);
 
 		List<UserBean> friendBeans = new ArrayList<UserBean>();
 
@@ -574,7 +575,8 @@ public class UserController {
 		UserBean userBean = uService.getUserData(userNo);
 		session.setAttribute("otherUserData", userBean);
 
-		List<FriendStateBean> friendStateBeans = userBean.getFriendStates();
+		StateBean state = stateService.findStateBystateName("好友");
+		List<FriendStateBean> friendStateBeans = fsService.findSomeStateFriendState(userBean, state);
 
 		List<UserBean> friendBeans = new ArrayList<UserBean>();
 

@@ -56,8 +56,8 @@ public class OrderController {
 	@PostMapping("/insertorder")
 	public String insertOrder(HttpServletRequest request,@RequestBody OrderDto submitOrder) {
 		HttpSession session = request.getSession();
-//		UserBean userBean = (UserBean)session.getAttribute("userData");
-		UserBean userBean = userService.getUserData(1);
+		UserBean userBean = (UserBean)session.getAttribute("userData");
+//		UserBean userBean = userService.getUserData(1);
 		
 		Integer eventNo = submitOrder.getEventNo();
 		Group group = groupService.findGroupByEventNo(eventNo);

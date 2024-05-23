@@ -245,7 +245,7 @@
 
 													<!--顯示用戶的頭像或者預設的用戶圖示 - Font Awesome圖標-->
 													<div class="square position-relative display-2 mb-3">
-														<img src="https://p1-tt.byteimg.com/origin/tos-cn-i-qvj2lq49k0/a2752baadcc147cb80408dc7179fe65b.jpg" alt="Avatar" class="position-absolute avatar top-50 start-50 translate-middle img-fluid">
+														<img src="/localimages/${userData.avatar}" alt="Avatar" class="position-absolute avatar top-50 start-50 translate-middle img-fluid">
 													</div>
 
 													<input type="file" id="customFile" name="file" hidden>

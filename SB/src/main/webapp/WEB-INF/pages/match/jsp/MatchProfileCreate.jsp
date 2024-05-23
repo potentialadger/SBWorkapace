@@ -68,7 +68,7 @@
 			<!-- 暱稱 -->
 			<div class="form-group">
 				<!-- 注意name要跟userbean的屬性一樣 -->
-				<input type="text" class="form-control" name="nickName"
+				<input type="text" class="form-control" name="nickName" value="${userBean.nickName}"
 					placeholder="暱稱" style="font-size: inherit;">
 			</div>
 
