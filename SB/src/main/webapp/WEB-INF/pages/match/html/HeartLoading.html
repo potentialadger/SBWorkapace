@@ -102,12 +102,30 @@
     opacity: 0;
   }
 }
-    </style>
+
+  </style>
 </head>
+
+
+
 <body>
     <div class="heart-loader">
         <div class="heart pulse"></div>
         <div class="heart echo"></div>
       </div>
+      
+      
+      
+    <script>
+    
+    
+    window.onload = function() {
+        setTimeout(function() {
+            window.location.href = "/createMatchProfile";
+        }, 3500); // 3000毫秒 = 3秒
+    };
+    	
+    
+    </script>
 </body>
 </html>

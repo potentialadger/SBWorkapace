@@ -8,12 +8,14 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,7 +24,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,8 +43,8 @@ public class SocialPhotosController {
 	
 	
 	
-	// 查詢編號+姓名 for GoalsHP.jsp
-/*	@GetMapping("/queryPhotoNo")
+	// 查詢編號+主題名稱 
+	@GetMapping("/queryPhotoNo")
 	public String queryPhotos(@RequestParam(required = false, name = "photoNo") Integer photoNo,
 	                         @RequestParam(required = false, name = "photoTheme") String photoTheme,
 	                         Model model) {
@@ -58,7 +59,7 @@ public class SocialPhotosController {
 	    }
 	    model.addAttribute("photos", photos);
 	    return "match/jsp/SocialPhotosHP.jsp";
-	}*/
+	}
 
 
 	
@@ -111,11 +112,11 @@ public class SocialPhotosController {
 
 	
 	// 根據主題查詢照片
-//    @GetMapping("/photos/theme/{photoTheme}")
-//    public ResponseEntity<List<SocialPhotosBean>> getPhotosByTheme(@PathVariable String photoTheme) {
-//        List<SocialPhotosBean> photos = spService.findByPhotoTheme(photoTheme);
-//        return ResponseEntity.ok(photos);
-//    }
+    @GetMapping("/photos/theme/{photoTheme}")
+    public ResponseEntity<List<SocialPhotosBean>> getPhotosByTheme(@PathVariable String photoTheme) {
+        List<SocialPhotosBean> photos = spService.findByPhotoTheme(photoTheme);
+        return ResponseEntity.ok(photos);
+    }
 	
 	
     // 删除照片
@@ -178,9 +179,8 @@ public class SocialPhotosController {
     
     
 	// 更新照片方法
-    @PostMapping(value = "/updatePhotos", consumes = "application/json", produces = "application/json;charset=UTF-8")     //POSTMAN測試 : consumes = "multipart/form-data"
-    @ResponseBody
-    public List<SocialPhotosBean> updateSPhotos(
+    @PostMapping(value = "/updatePhotos", consumes = "multipart/form-data", produces = "application/json;charset=UTF-8")     //POSTMAN測試 : consumes = "multipart/form-data"
+    public String updateSPhotos(
         @RequestParam("userNo") Integer userNo,
         @RequestParam(value = "file1", required = false) MultipartFile file1,
         @RequestParam(value = "file1Theme", required = false) String file1Theme,
@@ -198,9 +198,10 @@ public class SocialPhotosController {
         @RequestParam(value = "file7Theme", required = false) String file7Theme,
         @RequestParam(value = "file8", required = false) MultipartFile file8,
         @RequestParam(value = "file8Theme", required = false) String file8Theme,
-        HttpServletRequest request) throws IllegalStateException, IOException {
+        HttpServletRequest request, Model m) throws IllegalStateException, IOException {
 
         List<SocialPhotosBean> updatedPhotos = new ArrayList<>();
+        
         
         try {
             // 處理每個文件
@@ -229,12 +230,13 @@ public class SocialPhotosController {
                 updatedPhotos.add(processPhoto(file8, file8Theme, userNo));
             }
             
+            
         } catch (Exception e) {
             System.err.println(e.getMessage());
             throw new RuntimeException("Photo update failed", e);
         }
 
-        return updatedPhotos;
+        return "redirect:/editMatchProfile";
     }
 	
 	
@@ -253,6 +255,8 @@ public class SocialPhotosController {
 	}                                                                    // processPhoto 方法接受一個 theme 參數，該參數表示每個文件對應的主題
 	return null;
 }	
+    
+   
 	
 	
     // 生成唯一的文件名

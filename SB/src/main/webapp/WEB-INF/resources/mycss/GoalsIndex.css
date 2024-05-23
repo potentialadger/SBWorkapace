@@ -161,3 +161,7 @@ h2 {
 .insert {
     margin-bottom: 20px; /* 調整按鈕下方的外邊距 */
 }
+
+.icon svg {
+  fill: gray;
+}

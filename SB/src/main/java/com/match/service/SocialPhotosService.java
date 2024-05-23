@@ -1,9 +1,10 @@
 package com.match.service;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -34,12 +35,13 @@ public class SocialPhotosService {
 	public List<SocialPhotosBean> findAll() {
 		return spRepos.findAll();
 	}
+	
+    
+    public List<SocialPhotosBean> findByPhotoTheme(String photoTheme) {
+        return spRepos.findByPhotoTheme(photoTheme);
+    }
 
-	// 根據用戶ID查詢照片
-	/*
-	 * public List<SocialPhotosBean> findByUserNo(Integer userNo) { return
-	 * spRepos.findByUserNo(userNo); }
-	 */
+
 
 	// Match 實作 - 根據用戶編號查詢照片路徑
 	public List<String> findByUserNo(Integer userNo) {
@@ -72,41 +74,23 @@ public class SocialPhotosService {
 			return spRepos.save(photo);
 		}
 	}
-
-	// 新增或更新照片
-	/*
-	 * public SocialPhotosBean insertOrUpdate(Integer userNo, String photoPath) {
-	 * SocialPhotosBean photo = new SocialPhotosBean(); photo.setUserNo(userNo);
-	 * photo.setPhotoPath(photoPath);
-	 * 
-	 * 
-	 * // 檢查是否存在具有相同 userNo 和 photoPath 的照片紀錄 List<SocialPhotosBean> existingPhotos
-	 * = spRepos.findByUserNoAndPhotoPath(userNo, photoPath); if
-	 * (!existingPhotos.isEmpty()) {
-	 * 
-	 * // 如果存在具有相同 userNo 和 photoPath 的照片紀錄,則更新第一條紀錄的 photoPath SocialPhotosBean
-	 * existingPhoto = existingPhotos.get(0); existingPhoto.setPhotoPath(photoPath);
-	 * return spRepos.save(existingPhoto); } else {
-	 * 
-	 * // 如果不存在具有相同 userNo 和 photoPath 的照片紀錄,則插入新照片 return spRepos.save(photo); } }
-	 */
-
+	
+	
 	// 刪除照片
 	public void deleteById(Integer photoNo) {
 		spRepos.deleteById(photoNo);
 	}
 	
-	
-	
 
+	public String findByUserNoAndPhotoThemePathString(Integer userNo, String photoTheme){
+		List<SocialPhotosBean> byUserNoAndPhotoTheme = spRepos.findByUserNoAndPhotoTheme(userNo, photoTheme);
+		if(byUserNoAndPhotoTheme.isEmpty()) {
+			return null;
+		}
+		else {
+			return byUserNoAndPhotoTheme.get(0).getPhotoPath();
+		}
+		
+	}
 }
 
-//	//新增照片
-//	public SocialPhotosBean insert(SocialPhotosBean spBean) {  // 為什麼參數接收的是整個bean? 因為要用save()?
-//		return spRepos.save(spBean);                           // 實際新增
-//	}
-//	
-//	//修改照片
-//	public SocialPhotosBean update(SocialPhotosBean spBean) {
-//		return spRepos.save(spBean);
-//	}

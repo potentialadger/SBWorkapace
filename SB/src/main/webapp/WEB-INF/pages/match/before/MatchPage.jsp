@@ -1398,7 +1398,9 @@ div.message.right .corner {
 
 
 
-		<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+		<link
+			href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700'
+			rel='stylesheet' type='text/css'>
 
 
 
@@ -1607,19 +1609,19 @@ div.message.right .corner {
 
 
 			<!--照片-->
- 			<div class="card-container">
+			<!-- <div class="card-container">
 				<div class="carousel" id="userPhotos1"></div>
 				<div class="carousel" id="userPhotos2"></div>
 				<div class="carousel" id="userPhotos3"></div>
 				<div class="carousel" id="userPhotos4"></div>
 				<div class="carousel" id="userPhotos5"></div>
-			</div> 
+			</div> -->
 
 
 
 
 	<!--照片-->
- <!--   <div class="card-container">
+	  <div class="card-container">
     <div class="carousel" id="userPhotos">
       <img src="https://images.unsplash.com/photo-1566821582776-92b13ab46bb4?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" width="580" height="230" alt="destination">
       <img src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80" width="580" height="230" alt="destination">
@@ -1631,9 +1633,7 @@ div.message.right .corner {
       <img src="http://fakeimg.pl/580x230/FFF/121212/?text=destination8&font=lobster" width="580" height="230" alt="destination">
       <img src="http://fakeimg.pl/580x230/FFF/121212/?text=destination9&font=lobster" width="580" height="230" alt="destination">
     </div>   
-  </div> 
-  
- 
+  </div>
   <div class="card-container">
     <div class="carousel">
       <img src="https://images.pexels.com/photos/6241/sky-sunset-red-romantic.jpg?cs=srgb&dl=pexels-6241.jpg&fm=jpg" width="580" height="230" alt="destination">
@@ -1647,7 +1647,7 @@ div.message.right .corner {
       <img src="http://fakeimg.pl/580x230/FFF/121212/?text=destination9&font=lobster" width="580" height="230" alt="destination">
     </div>
   </div>
--->
+
 
 
 			<!--按鈕-->

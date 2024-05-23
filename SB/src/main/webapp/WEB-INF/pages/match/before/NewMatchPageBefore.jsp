@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ page import="com.match.bean.MatchBean"%>
 <%@ page import="java.util.List"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -6,47 +7,83 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
-
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--FontAwesome圖標字體-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<!--FontAwesome圖標字體-->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
-	<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
-	<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <link rel="stylesheet" href="mycss/MatchPage.css">
-    <link href="https://fonts.googleapis.com/css?family=DM+Sans:400,500,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="mycss/MatchPage.css">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
-    
-    <style>
-    
-    * {
+<title>Document</title>
+<style>
+* {
 	margin: 0px;
 	padding: 0px;
-} 
+} /*leftside*/
 * {
 	box-sizing: border-box;
 }
 
+html, body {
+	width: 100%;
+	height: 100vh;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+button {
+	outline: none;
+	transition: .2s;
+	cursor: pointer;
+	&:
+	hover
+	{
+	opacity
+	:
+	.7;
+}
+
+}
+body {
+	--app-background: #eaebf5;
+	--chat-background: #fff;
+	--link-color: #c0c1c5;
+	--navigation-bg: #fff;
+	--navigation-box-shadow: 0 2px 6px 0 rgba(136, 148, 171, 0.2), 0 24px
+		20px -24px rgba(71, 82, 107, 0.1);
+	--main-color: #3d42df;
+	--message-bg: #f3f4f9;
+	--message-bg-2: #3d42df;
+	--message-text: #2c303a;
+	--placeholder-text: #a2a4bc;
+	--button-bg: #fff;
+}
+
+body.dark {
+	--app-background: #262a42;
+	--navigation-box-shadow: 0px 0px 8px 0px #282b33;
+	--chat-background: #3c3f56;
+	--message-bg: #2c3046;
+	--message-text: rgba(255, 255, 255, 0.8);
+	--placeholder-text: #fff;
+	--navigation-bg: #3c3f56;
+	--button-bg: #3c3f56;
+	--main-color: #6f74ff;
+	--message-bg-2: #6f74ff;
+	.
+	mic
+	{
+	background-image
+	:
+	url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-mic-off' viewBox='0 0 24 24'%3E%3Cpath d='M1 1l22 22M9 9v3a3 3 0 005.12 2.12M15 9.34V4a3 3 0 00-5.94-.6'/%3E%3Cpath d='M17 16.95A7 7 0 015 12v-2m14 0v2a7 7 0 01-.11 1.23M12 19v4M8 23h8'/%3E%3C/svg%3E%0A")
+	;
+}
 
 .camera {
 	background-image:
@@ -70,32 +107,31 @@
 	color: #fff;
 }
 
+}
 a {
 	text-decoration: none;
 }
 
 .app-container {
 	background-color: var(--app-background);
-	height:90%;
-	width: 100%;	
-	min-height: 100vh;                            /*頁面的高度能夠根據內容自動擴展*/
+	width: 100%;
+	height: 100%;
 	font-family: 'DM Sans', sans-serif;
 	display: flex;
 	transition: .2s;
-	
-	--app-background: #eaebf5;
-	--chat-background: #fff;
-	--link-color: #c0c1c5;
-	--navigation-bg: #fff;
-	--navigation-box-shadow: 0 2px 6px 0 rgba(136, 148, 171, 0.2), 0 24px 20px -24px rgba(71, 82, 107, 0.1);
-	--main-color: #3d42df;
-	--message-bg: #f3f4f9;
-	--message-bg-2: #3d42df;
-	--message-text: #2c303a;
-	--placeholder-text: #a2a4bc;
-	--button-bg: #fff;
 }
 
+/*可以刪*/
+.left-side {
+	position: relative;
+	padding: 16px;
+	flex-basis: 120px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
 
 .navigation {
 	display: flex;
@@ -128,9 +164,9 @@ a {
 	height: 80%;
 	padding: 16px;
 	right: 98px; /*調位置*/
-	top: 3.1%;
+	top: 6.39%;
 	position: relative;
-	transition: all 300ms cubic-bezier(0.190, 1.000, 0.560, 1.000); show
+	transition: all 300ms cubic-bezier(0.190, 1.000, 0.560, 1.000); &. show
 	{ display : block;
 	transform: translateX(0);
 }
@@ -206,7 +242,13 @@ a {
 	color: var(--message-text);
 }
 
-
+.message-wrapper {
+	padding: 16px 0; &. reverse { flex-direction : row-reverse; . message {
+	background-color : var( --message-bg-2);
+	color: #fff;
+	margin-left: auto;
+	border-radius: 16px 0px 16px 16px;
+}
 
 .profile-picture {
 	margin-right: 0px;
@@ -217,6 +259,27 @@ a {
 	text-align: right;
 }
 
+}
+}
+.message-file {
+	border: 1px solid var(--message-bg);
+	width: 100%;
+	margin-top: 16px;
+	border-radius: 4px;
+	padding: 8px;
+	display: flex; . sketch { border-radius : 4px;
+	padding: 2px;
+	background-color: #fdeee2;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 32px;
+	height: 32px; svg { width : 20px;
+	height: 20px;
+}
+
+}
+}
 .file-info {
 	flex: 1;
 	padding: 0 40px 0 8px;
@@ -244,6 +307,41 @@ a {
 	padding: 16px;
 }
 
+.chat-typing-area {
+	display: flex;
+	border-radius: 10px;
+	padding: 8px;
+	box-shadow: var(--navigation-box-shadow);
+	background-color: var(--message-bg);
+	.
+	dark
+	&
+	{
+	box-shadow
+	:
+	none;
+}
+
+}
+.chat-input {
+	border: none;
+	font-size: 14px;
+	line-height: 24px;
+	outline: none;
+	color: var(--message-text);
+	flex: 1;
+	background-color: transparent;
+	&:
+	placeholder
+	{
+	color
+	:
+	var(
+	--placeholder-text
+	);
+}
+
+}
 .send-button {
 	color: #fff;
 	background-color: var(--main-color);
@@ -265,7 +363,6 @@ a {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	
 }
 
 /*調整圖片框的大小*/
@@ -434,7 +531,7 @@ a {
 	justify-content: center;
 	align-items: center;
 	display: none;
-	&
+	&.
 	show
 	{
 	display
@@ -466,7 +563,7 @@ a {
 		transform: translateX(100%); /*調上下*/
 		z-index: 2;
 		width: 100%;
-		&
+		&.
 		show
 		{
 		transform
@@ -531,40 +628,36 @@ body {
 }
 
 img {
-	max-width: 100%;
+	max-width: auto;
 	height: auto;
 }
 
 /*調整輪播大小*/
 .card-container {
 	position: absolute;
-	max-width: 800px; /*調框的寬度*/
+	max-width: 849.5px; /*調框的寬度*/
 	width: 25%;
-	height: 28%; /*框跟圖片調這個-裡面全部圖片的長寬*/
+	height: 35%; /*框跟圖片調這個-裡面全部圖片的長寬*/
 }
 
 #userPhotos1 {
-  border-radius: 16px 0px 0px 0px; /* 左上、右上、右下、左下 */
-  top: -8%;
-  left: -31%;
+  top: 20%;
+  left: -40%;
 }
 
 #userPhotos2 {
-  border-radius: 0px 16px 0px 0px; /* 左上、右上、右下、左下 */
-  top: -108%;
-  right: -69%;
+  top: -80%;
+  right: -62%;
 }
 
 #userPhotos3 {
-  border-radius: 0px 0px 0px 16px; /* 左上、右上、右下、左下 */
-  bottom: 108%;
-  left: -31%;
+  bottom: 77%;
+  left: -40%;
 }
 
 #userPhotos4 {
-  border-radius: 0px 0px 16px 0px; /* 左上、右上、右下、左下 */
-  bottom: 208%;
-  right: -69%;
+  bottom: 177%;
+  right: -62%;
 }
 
 
@@ -584,8 +677,7 @@ img {
 }
 
 .carousel img {
-	width: 100%;
-	height: 100%; /* 設定 carousel 區塊高度 */ /*框跟圖片調這個-裡面全部圖片的長寬*/
+	height: 800px; /* 設定 carousel 區塊高度 */ /*框跟圖片調這個-裡面全部圖片的長寬*/
 	overflow: hidden; /* 隱藏超出區塊的部分 */
 	object-fit: cover; /* 圖片保持比例填滿容器 */
 }
@@ -635,36 +727,15 @@ img {
 #home {
 	margin-left: 38px;
 	position: absolute; /* 將按鈕設為絕對定位 */
-	top: 140px; /* 距頂部 20px */
-	left: -50px; /* 距左側 0px */
-}
-
-#friends {
-	margin-left: 38px;
-	position: absolute; /* 將按鈕設為絕對定位 */
-	top: 170px; 
-	left: -46px; 
+	top: 23px; /* 距頂部 20px */
+	left: 110px; /* 距左側 0px */
 }
 
 #edit {
 	margin-left: 38px;
 	position: absolute; /* 將按鈕設為絕對定位 */
-	top: 230px; /* 距頂部 20px */
-	left: -50px; /* 距左側 0px */
-}
-
-#filter {
-	margin-left: 38px;
-	position: absolute; /* 將按鈕設為絕對定位 */
-	top: 290px; /* 距頂部 20px */
-	left: -51px; /* 距左側 0px */
-}
-
-#focus {
-	margin-left: 38px;
-	position: absolute; /* 將按鈕設為絕對定位 */
-	top: 380px; /* 距頂部 20px */
-	left: -51px; /* 距左側 0px */
+	top: -9.5px; /* 距頂部 20px */
+	left: 190px; /* 距左側 0px */
 }
 
 #leftmenu {
@@ -712,13 +783,6 @@ img {
 	cursor: pointer;
 }
 
-.info-container {
-  position: relative;
-  width: 100%;
-  height: 450px; /* 根據需要調整容器的高度 */
-}
-
-
 /*右邊欄位裡面*/
 .matchsname {
 	text-align: center;
@@ -727,12 +791,10 @@ img {
 	font-weight: 700;
 	line-height: 3; /*行與行之間的垂直間距*/
 	transition: all .3s ease; /*在屬性值變化時平滑過渡*/
-    color: #545454;
-	
 }
 
 .chat-header {
-	overflow-y: hidden;
+	overflow-y: auto; /* 垂直滾輪 */
 	background-color: 0;
 }
 
@@ -786,97 +848,56 @@ img {
 		format('truetype');
 }
 
-.tags {
-	font-size: 18px;
-    color: #8C8C8C;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.gender, .birthday, .bloodType, .MBTI {
-  position: absolute;
-  left: 80px;
-  color: #4D4D4D;
-  line-height: 1; /*行與行之間的垂直間距*/
-  margin-top: 20px; /* 根據需要調整這個值以增加距離 */
-}
-
-
 .goal {
 	text-align: center;
 	font-family: "cwTeXYen", sans-serif;
-	font-size: 23px;
+	font-size: 24px;
 	font-weight: 100;
-	line-height: 2.3; /*行與行之間的垂直間距*/
+	line-height: 3; /*行與行之間的垂直間距*/
 	transition: all .3s ease; /*在屬性值變化時平滑過渡*/
-	color: #4D4D4D;
-}
-
-.goal-text {
-    font-size: 18px;
-    color: #8C8C8C;
-    padding: 10px 20px;
-    border-radius: 10px;
-    background-color: #f0f0f0;
 }
 
 .topic {
 	text-align: center;
 	font-family: "cwTeXYen", sans-serif;
-	font-size: 23px;
+	font-size: 24px;
 	font-weight: 100;
 	line-height: 3; /*行與行之間的垂直間距*/
 	transition: all .3s ease; /*在屬性值變化時平滑過渡*/
-	color: #4D4D4D;
 }
 
 .aboutMe {
 	text-align: center;
 	font-family: "cwTeXYen", sans-serif;
-	font-size: 23px;
+	font-size: 24px;
 	font-weight: 100;
 	line-height: 3; /*行與行之間的垂直間距*/
 	transition: all .3s ease; /*在屬性值變化時平滑過渡*/
-	color: #4D4D4D;	
 }
 
 .gender {
-    top: 0;
-	font-size: 20px;
-	color: #4D4D4D;
-}
-
-.gender-text {
-	font-size: 20px;
+	margin-right: 140px; /* 向右移動 20 像素 */
+	font-size: 21px;
 }
 
 .birthday {
-    top: 40px;
-	font-size: 20px;
-	color: #4D4D4D;
-}
-
-.date {
-	font-size: 18px;
+	margin-right: 140px; /* 向右移動 20 像素 */
+	font-size: 21px;
 }
 
 .starSign {
 	margin-right: 140px; /* 向右移動 20 像素 */
-	font-size: 18px;
+	font-size: 21px;
 }
 
 .bloodType {
-    top: 80px;
-	font-size: 20px;
-}
-
-.blood-type-value {
-		font-size: 19px;	
+	margin-right: 140px; /* 向右移動 20 像素 */
+	font-size: 21px;
 }
 
 .MBTI {
-    top: 120px;
-	font-size: 18px;	
+	margin-right: 140px; /* 向右移動 20 像素 */
+	font-size: 18px;
 }
 
 /*愛心跟X*/
@@ -885,52 +906,44 @@ img {
 }
 
 .tinder--buttons {
-  position: fixed;
+  position: relative;
   text-align: center;
-  bottom: 20px;
-  left: 49.5%;
-  transform: translateX(-50%);
-  z-index: 999;
+  margin-top: 850px;
+  margin-bottom: 100px;
 }
 
-
-
 #nope {
-  position: fixed;
-  left: -206px;
+  position: absolute;
   top: 50%;
-  transform: translateY(-120%);
+  left: 30%;
+  transform: translate(-60%, 10%);
 }
 
 #love {
-  position: fixed;
-  right: 20px;
+  position: absolute;
   top: 50%;
-  transform: translateY(-120%);
+  right: 30%;
+  transform: translate(200%, 10%);
 }
 
 .tinder--buttons button {
-  border-radius: 50%;
-  line-height: 60px;
-  width: 60px;
-  border: 0;
-  background-color: var(--button-bg);
-  display: inline-block;
-  margin: 0 20px;
-  box-shadow: var(--navigation-box-shadow);
-  transition: box-shadow 0.3s ease; /* 添加过渡效果 */
-}
-
-.tinder--buttons button:hover {
-  box-shadow: 0 0 10px 3px #EDEBEC; /* 添加懸停時的亮色邊框效果 */
+	border-radius: 50%;
+	line-height: 70px; /*愛心X長*/
+	width: 70px; /*愛心X寬*/
+	border: 0;
+	background-color: var(--button-bg);
+	display: inline-block;
+	margin: 0 8px;
+	box-shadow: var(--navigation-box-shadow);
 }
 
 .tinder--buttons button:focus {
 	outline: 0;
 }
+
 .tinder--buttons i {
-  font-size: 28px;
-  vertical-align: middle;
+	font-size: 32px;
+	vertical-align: middle;
 }
 
 .fa-heart {
@@ -1028,6 +1041,31 @@ img {
 	background: #eaeef0;
 }
 
+#search {
+	background: #e3e9ed
+		url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/search.png")
+		-11px 0 no-repeat;
+	height: 60px;
+	width: 330px; /*要跟#chatbox一樣*/
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
+
+#searchfield {
+	background: #e3e9ed;
+	margin: 21px 0 0 55px;
+	border: none;
+	padding: 0;
+	font-size: 16px;
+	font-family: "Open Sans", sans-serif;
+	font-weight: 400px;
+	color: #8198ac;
+}
+
+#searchfield:focus {
+	outline: 0;
+}
 
 #chatview {
 	width: 330px; /*要跟#friendslist一樣*/
@@ -1335,112 +1373,64 @@ div.message.right .corner {
 }
 
 
-.nav-link.icon {
-  border: none; 
-  background-color: transparent; 
-  padding: 0;
-}
 
-.nav-link.icon:focus {
-  outline: none;
-}
-    
-    
+
 </style>
-    
-    
+
 
 </head>
 
-<body id="page-top">
+<body>
+	<!--連結到 Google Fonts 的程式碼片段-->
+	<link href="https://fonts.googleapis.com/css?family=DM+Sans:400,500,700&display=swap" rel="stylesheet">
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-
-        <!--        <script src="js/test/Z_slider.js"></script>-->
-
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-
-            <!-- Main Content -->
-            <div id="content">
-
-                <!-- Topbar -->
-                <script src="js/layout/Z_TopBar.js"></script>
-
-                <!-- 主要內容 -->
-
-	
-	
-	
 	<!--組織和定位網頁中的內容-->
 	<div class="app-container">
 
+		<!--一個按鈕，用來在明亮模式和暗黑模式之間切換-->
+		<button class="mode-switch">
+			<svg class="sun" fill="none" stroke="#fbb046" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-sun" viewBox="0 0 24 24">
+				<defs/>
+				<circle cx="12" cy="12" r="5" />
+				<path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" /></svg>
+			<svg class="moon" fill="none" stroke="#ffffff" stroke-linecap="round"
+				stroke-linejoin="round" stroke-width="2"
+				class="feather feather-moon" viewBox="0 0 24 24">
+				<defs />
+				<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" /></svg>
+		</button>
+
+
+
+
+
+		<!--Test-->
+		
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+
+
+
 		<!--定位或樣式控制-->
-		<div id="menu">		
-			<div id="friendslist">																			<!--列出了一個朋友清單。這個清單可能是用來顯示聯繫人列表的-->			
-				<div id="leftmenu">				                                                            <!--包含了一個頂部菜單，裡面包含了三個 <span> 元素，每個 <span> 元素可能用於不同的操作，如顯示好友、聊天、或歷史記錄-->		
+		<div id="menu">
+			<!--列出了一個朋友清單。這個清單可能是用來顯示聯繫人列表的-->
+			<div id="friendslist">
+				<!--包含了一個頂部菜單，裡面包含了三個 <span> 元素，每個 <span> 元素可能用於不同的操作，如顯示好友、聊天、或歷史記錄-->
+				<div id="leftmenu">
+					<span class="friends"></span>
+					<!--<span class="chats"></span>
+                        <span class="history"></span>-->
+
 
 					<!--首頁-->
-					<a href="/newMatchPage" class="nav-link icon" id="home"> 
-					<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home" viewBox="0 0 24 24">
+					<a href="#" class="nav-link icon" id="home"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home" viewBox="0 0 24 24">
            			<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
            			<path d="M9 22V12h6v10" />
          			</svg>
-         			</a> 
-         			
-         			<!-- 好友 -->
-         			<a href="/matchFriends" class="nav-link icon" id="friends">          			
-         			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-heart" viewBox="0 0 16 16">
-				    <path d="M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4Zm13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276Z"/>
-					</svg>
-					
-         			<!-- 編輯 -->
-         			<a href="/editMatchProfile" class="nav-link icon" id="edit"> 
-					<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder" viewBox="0 0 24 24">
-		            <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z" />
- 		            </svg>          
+					</a> <a href="" class="nav-link icon" id="edit"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder" viewBox="0 0 24 24">
+            <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z" />
+          </svg>
+          
 					</a>
-					
-         			<!-- 篩選 -->	
-				    <!-- 觸發 Modal 的按鈕 -->
-					<a href="#" class="nav-link icon" id="filter" data-toggle="modal" data-target="#filterModal">
- 					   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
-					        <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z"/>
-					    </svg>
-					</a>
-
-					<!-- Modal 本體 -->
-					<div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
- 						   <div class="modal-dialog" role="document">
-					        <div class="modal-content">
-					            <div class="modal-header">
-					                <h5 class="modal-title" id="filterModalLabel">篩選設定</h5>
-					            </div>
-					            <div class="modal-body">
-				                <div class="custom-control custom-switch">
-				                    <input type="checkbox" class="custom-control-input" id="goalFilter">
-					                    <label class="custom-control-label" for="goalFilter">僅顯示與我的目標關係相同的用戶</label>
-					                </div>
-					            </div>
-					            <div class="modal-footer">
-					                <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-					                <button type="button" class="btn btn-primary">儲存變更</button>
-					            </div>
-					        </div>
-					    </div>
-					</div>	
-					
-					
-					<!-- 指定用戶按鈕 -->
-					<form action="/specificMatch" method="get">					
-					  <button class="nav-link icon" id="focus" type="submit">
-					  	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-heart" viewBox="0 0 16 16">
-						    <path fill-rule="evenodd" d="M8 4.41c1.387-1.425 4.854 1.07 0 4.277C3.146 5.48 6.613 2.986 8 4.412z"/>
-		 				    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
-				  		</svg>
-				  	  </button>
-				  	 </form>		
 				</div>
 			</div>
 		</div>
@@ -1453,10 +1443,10 @@ div.message.right .corner {
 
 			<!--照片-->
 			<div class="card-container">
-				<div class="carousel" id="userPhotos1"><img src="/localimages/${photos[0]}" alt="" style= "object-fit: cover;"></div>
-				<div class="carousel" id="userPhotos2"><img src="/localimages/${photos[1]}" alt="" style= "object-fit: cover;"></div>
-				<div class="carousel" id="userPhotos3"><img src="/localimages/${photos[2]}" alt="" style= "object-fit: cover;"></div>
-				<div class="carousel" id="userPhotos4"><img src="/localimages/${photos[3]}" alt="" style= "object-fit: cover;"></div>
+				<div class="carousel" id="userPhotos1"><img src="/localimages/${photos[0]}" alt="" style="width: 461px; height: 367.63px; object-fit: cover;"></div>
+				<div class="carousel" id="userPhotos2"><img src="/localimages/${photos[1]}" alt="" style="width: 461px; height: 367.63px; object-fit: cover;"></div>
+				<div class="carousel" id="userPhotos3"><img src="/localimages/${photos[2]}" alt="" style="width: 461px; height: 367.63px; object-fit: cover;"></div>
+				<div class="carousel" id="userPhotos4"><img src="/localimages/${photos[3]}" alt="" style="width: 461px; height: 367.63px; object-fit: cover;"></div>
 			</div>  
 
 
@@ -1464,47 +1454,43 @@ div.message.right .corner {
 			<!--按鈕-->
 			<div class="tinder">
 				<div class="tinder--buttons">
-					<form action="/dislike/${userBean.userNo}" method="post">
-						<button id="nope" type="submit">
-							<i class="fa fa-remove"></i>
-						</button>
-					</form>
-				
-					<form action="/like/${userBean.userNo}" method="post">
-						<button id="love" type="submit">
-							<i class="fa fa-heart"></i>
-						</button>
-					</form>
+					<form action="" method="get">
+					<button id="nope" type="submit">
+						<i class="fa fa-remove"></i>
+					</button>
+				</form>
+					<button id="love" type="submit">
+						<i class="fa fa-heart"></i>
+					</button>
 				</div>
 			</div>
 		</div>
 
 
 
-		<div class="right-side">
-			<div class="chat-container">
-				<div class="chat-header">
 
-					<div class="matchsname">${userBean.nickName} </div>
-					
-					<div class="tags">
-					    <c:forEach var="tagName" items="${tagNames}">
-				        	<span class="tag">#${tagName}</span>
-					    </c:forEach>
-					</div>
-					
+
+
+
+		<!--網頁的右側相關的內容，比如側邊欄、資訊面板或者其他相關元素-->
+		<div class="right-side">
+			<!--聊天框-->
+			<!--容納聊天的相關內容-->
+			<div class="chat-container">
+				<!--標題聊天的區域-->
+				<div class="chat-header">
+					<!--用於打開或關閉聊天視窗，其中顯示了 "Live Chat" 這個文本。-->
+
+					<div class="matchsname">${userBean.nickName}</div>
 					<div class="social">
-						<a href="#"><i class="fa fa-facebook"></i></a> 
-						<a href="#"> <i class="fa fa-twitter"></i></a> 
-						<a href="#"> <i class="fa fa-google-plus"></i></a>
+						<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"> <i
+							class="fa fa-twitter"></i></a> <a href="#"> <i
+							class="fa fa-google-plus"></i></a>
 						<hr class="hr">
 					</div>
 
-
 					<div class="goal">
-						尋找關係<br> 
-						
-						<span class="goal-text"><c:choose>
+						尋找關係 <span><c:choose>
 								<c:when test="${userBean.goalNo == 1}">不回答</c:when>
 								<c:when test="${userBean.goalNo == 2}">網友</c:when>
 								<c:when test="${userBean.goalNo == 3}">飯友</c:when>
@@ -1526,50 +1512,87 @@ div.message.right .corner {
 							</c:choose></span>
 						<hr class="hr">
 					</div>
-					
-					
 
-					<!-- <div class="topic">
+					<div class="topic">
 						我想聊的話題是
 						<hr class="hr">
-					</div> -->
-					
-					
+					</div>
 
 					<div class="aboutMe">
 						關於我
-						
-						
-					<div class="info-container">
+
 						<div class="gender">
-							性別&nbsp;&nbsp; <span class="gender-text"><c:choose>
+							性別 <span><c:choose>
 									<c:when test="${userBean.gender == 0}">生理女</c:when>
 									<c:otherwise>生理男</c:otherwise>
 								</c:choose></span>
 						</div>
 
-						<div class="birthday">
-						    生日&nbsp;&nbsp; <span class="date">${localDateTimeDateFormat.format(userBean.birthday)}</span>
-						</div>
-						<!-- <div class="starSign">星座 </div> -->
+						<div class="birthday">生日 ${userBean.birthday}</div>
 
-						<div class="bloodType">
-						    血型&nbsp;&nbsp; <span class="blood-type-value">${userBean.bloodType}</span>
-						</div>
-						
-						<div class="MBTI">
-							MBTI&nbsp; ${userBean.MBTI}
-						</div>
+						<!-- <div class="starSign">
+          星座 
+          </div> -->
+
+						<div class="bloodType">血型 ${userBean.bloodType}</div>
+
+						<div class="MBTI">MBTI ${userBean.MBTI}</div>
 					</div>
 				</div>
-			</div>
-		</div>		
-	</div>
-</div>
-		
-		
 
-<script>
+
+
+				<!--  
+        <button class="chat-header-button">
+         Live Chat
+        </button>
+      </div>-->
+
+
+				<!--容納聊天視窗或者聊天對話框的內容。在這個元素中，你可以放置聊天訊息、輸入框、發送按鈕等相關元素，以呈現一個完整的聊天介面。-->
+				<!--       <div class="chat-area">
+         <div class="message-wrapper">
+          <div class="profile-picture">
+            <img src="https://images.unsplash.com/photo-1576110397661-64a019d88a98?ixlib=rb-1.2.1&auto=format&fit=crop&w=1234&q=80" alt="pp">
+          </div>
+          <div class="message-content">
+            <p class="name">Tim Russel</p>-->
+				<!--顯示實際的訊息內容。在這個訊息中，可能包含了一個新的設計文件的連結，具有 CSS 類名為 "message-file"。該連結的內容包含了一個 SVG 圖示和相關的文件信息-->
+				<!--              <div class="rightmessage">New design document⬇️</div>
+            <div class="message-file">
+              <div class="icon sketch">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path fill="#ffd54f" d="M96 191.02v-144l160-30.04 160 30.04v144z"/>
+                  <path fill="#ffecb3" d="M96 191.02L256 16.98l160 174.04z"/>
+                  <path fill="#ffa000" d="M0 191.02l256 304 256-304z"/>
+                  <path fill="#ffca28" d="M96 191.02l160 304 160-304z"/>
+                  <g fill="#ffc107">
+                    <path d="M0 191.02l96-144v144zM416 47.02v144h96z"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="file-info">
+                <div class="file-name">NewYear.sketch</div>
+                <div class="file-size">120 MB</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        </div>-->
+				<!--顯示一個「擴展」的圖示-->
+				<!--    </div>
+  <button class="expand-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+    </button>-->
+
+
+
+
+
+				<script>
+				
+				
 				
 				'use strict';
 
@@ -1622,14 +1645,78 @@ div.message.right .corner {
 				        };
 				    }
 
-// 				    var nopeListener = createButtonListener(false);
-// 				    var loveListener = createButtonListener(true);
+				    var nopeListener = createButtonListener(false);
+				    var loveListener = createButtonListener(true);
 
-// 				    nope.on('click', nopeListener);
-// 				    love.on('click', loveListener);
+				    nope.on('click', nopeListener);
+				    love.on('click', loveListener);
 				});
 				
-			
+    
+    
+    
+/*				'use strict';
+
+				$(document).ready(function() {
+				    var currentUserNo;
+				    var nope = $('#nope');
+				    var love = $('#love');
+
+				    // 獲取當前用戶ID
+				    function getCurrentUserNo() {
+				        $.ajax({
+				            url: '/getCurrentUserNo',
+				            type: 'GET',
+				            async: false,
+				            success: function(userNo) {
+				                if (userNo !== null) {
+				                    currentUserNo = userNo;
+				                } else {
+				                    console.log('User not logged in');
+				                }
+				            },
+				            error: function(xhr, status, error) {
+				                console.error('Error getting current user ID:', error);
+				            }
+				        });
+				    }
+
+				    getCurrentUserNo();
+
+				    function createButtonListener(love) {
+				        return function(event) {
+				            var user2No = ${userBean.userNo}; // 獲取當前顯示的用戶編號
+
+				            var url = love ? '/like/' + user2No : '/dislike/' + user2No;
+
+				            $.ajax({
+				                url: url,
+				                type: 'POST',
+				                success: function(response) {
+				                    console.log(response);
+				                    // 重新載入當前頁面
+				                    location.reload();
+				                },
+				                error: function(xhr, status, error) {
+				                    console.error('Error updating match status:', error);
+				                }
+				            });
+
+				            event.preventDefault();
+				        };
+				    }
+
+				    var nopeListener = createButtonListener(false);
+				    var loveListener = createButtonListener(true);
+
+				    nope.on('click', nopeListener);
+				    love.on('click', loveListener);
+				});*/
+				
+				
+
+				
+				
 
 // 獲取所有按鈕和內容容器
 const buttons = document.querySelectorAll('.nav-link.icon');
@@ -1638,7 +1725,8 @@ const contentContainer = document.querySelector('.content-container');
 // 為每個按鈕添加點擊事件監聽器
 buttons.forEach(button => {
   button.addEventListener('click', () => {
-    contentContainer.innerHTML = '';                                                                         // 清空內容容器
+    // 清空內容容器
+    contentContainer.innerHTML = '';
 
     // 根據按鈕的 ID 或類別創建對應的內容
     const content = document.createElement('div');
@@ -1649,6 +1737,7 @@ buttons.forEach(button => {
       case 'messages':
         content.textContent = '這是訊息內容';
         break;
+      // 其他按鈕對應的內容
     }
 
     // 將內容添加到容器中
@@ -1658,6 +1747,9 @@ buttons.forEach(button => {
     contentContainer.style.display = contentContainer.style.display === 'none' ? 'block' : 'none';
   });
 });
+
+
+
 
 
 
@@ -1805,67 +1897,12 @@ buttons.forEach(button => {
       });
       
       
-      $(document).ready(function() {
-    	    // 初始化 Modal
-    	    $('#filterModal').modal({
-    	        backdrop: 'static',
-    	        keyboard: false
-    	    });
-    	});
+     
+
+
       
       
-   
-
-
-</script>
-
-
-
-
-
-                <!-- 主要內容結尾 -->
-
-            </div>
-            <!-- End of Main Content -->
-
-            <!-- footer -->
-            <script src="js/layout/Z_footer.js"></script>
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <script src="js/layout/Z_Logout Modal.js"></script>
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
-    
-    
-    
-
+    </script>
 
 </body>
-
 </html>

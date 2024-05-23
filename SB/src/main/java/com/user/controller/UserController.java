@@ -1,6 +1,7 @@
 package com.user.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -36,7 +37,9 @@ import com.match.bean.TagsBean;
 import com.user.bean.FriendStateBean;
 import com.user.bean.StateBean;
 import com.match.dto.UpdateTagsDTO;
+import com.match.service.MatchService;
 import com.match.service.SocialPhotosService;
+import com.match.service.TagsService;
 import com.user.bean.UserBean;
 import com.user.bean.UserBean_Vo;
 import com.user.bean.UserImageBean;
@@ -70,7 +73,15 @@ public class UserController {
 	
 	@Autowired
 	private UserMailService userMailService;
+	
+	@Autowired
 	private SocialPhotosService spService;
+	
+    @Autowired
+    private MatchService mService;
+    
+    @Autowired
+    private TagsService tagsService;
 
 	@PostMapping("/userSignUp")
 	public String processSignUpAction(@RequestParam("account") String account,
@@ -632,18 +643,6 @@ public class UserController {
 		}
 	}
 	
-    // 指定返回 JSON 格式的資料，以及資料的編碼格式為 UTF-8
-    // @GetMapping(path = "/getUserTags/{userNo}", produces = "application/json;charset=UTF-8"
-	
-	
-	// 獲取所有使用者及其關聯的標籤
-//	@GetMapping(path = "/getAllUsersWithTags")
-//	public ResponseEntity<List<Set<TagsBean>>> getAllUsersWithTags() {
-//	    List<Set<TagsBean>> userTags = uService.getAllUsersWithTags();
-//	    return ResponseEntity.ok(userTags);
-//	}
-	
-	
 	
 	// 獲取所有使用者及所有資料
 	@GetMapping(path = "/getAllUsersWithTags")
@@ -666,19 +665,6 @@ public class UserController {
 	}
 	
 	
-	
-	// 使用者添加一個或多個標籤 (只返回關聯的標籤資料)
-//	@PostMapping("/addUserTags/{userNo}/tags")
-//	public ResponseEntity<Set<TagsBean>> addTagsToUser(@PathVariable Integer userNo, @RequestBody List<Integer> tagNos) {
-//	    try {
-//	        UserBean updatedUser = uService.addTagsToUser(userNo, tagNos);
-//	        return ResponseEntity.ok(updatedUser.getTagsBeans());
-//	    } catch (IllegalArgumentException ex) {
-//	        return ResponseEntity.notFound().build();
-//	    }
-//	}
-	
-	
 
 	// 使用者移除一個或多個標籤 (返回標籤資料)
 	@DeleteMapping(path = "/deleteUserTags/{userNo}/tags")
@@ -691,15 +677,6 @@ public class UserController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-
-	// 更新與現有使用者關聯的標籤
-//	@PutMapping("/users/{userNo}/updateTags")
-//	public String updateUserWithTags(@PathVariable("userNo") int userNo, @RequestParam("tagNos") List<Integer> tagNos) {
-//		UserBean user = uService.getUserData(userNo);
-//		uService.updateUserWithTags(user, tagNos);
-//		return "redirect:/users/" + userNo;
-//	}
-	
 	
 	
 	
@@ -777,6 +754,7 @@ public class UserController {
 	
 	//當會員點擊 fa-solid fa-user-pen 按鈕時,表單將被提交到 /editMatchProfile 路徑,並由 processEditMatchProfile 方法處理。在該方法中,我們更新資料庫中的用戶資料,並跳轉到 MatchProfileEdit.jsp 頁面
 	
+	
 	                        //編輯交友資料的路徑     //傳資料到前端的方式
 	@RequestMapping(value = "/editMatchProfile", method = {RequestMethod.GET, RequestMethod.POST})
 	public String editMatchProfile(@RequestParam(value = "nickName", required = false) String nickName,   //將 @RequestParam 註解的 required 屬性設置為 false,表示這些參數是可選的。這樣即使在重新整理頁面時沒有傳遞這些參數,也不會拋出異常。
@@ -808,7 +786,17 @@ public class UserController {
 	    m.addAttribute("userBean", userBean);
 	    m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 	    m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-	    
+
+	    m.addAttribute("photo1", spService.findByUserNoAndPhotoThemePathString(userBean.getUserNo(), "我的照片"));
+	    m.addAttribute("photo2", spService.findByUserNoAndPhotoThemePathString(userBean.getUserNo(), "旅行壯遊"));
+	    m.addAttribute("photo3", spService.findByUserNoAndPhotoThemePathString(userBean.getUserNo(), "我的寵物"));
+	    m.addAttribute("photo4", spService.findByUserNoAndPhotoThemePathString(userBean.getUserNo(), "偉大紀錄"));
+	    m.addAttribute("photo5", spService.findByUserNoAndPhotoThemePathString(userBean.getUserNo(), "展露身材"));
+	    m.addAttribute("photo6", spService.findByUserNoAndPhotoThemePathString(userBean.getUserNo(), "我的收藏"));
+	    m.addAttribute("photo7", spService.findByUserNoAndPhotoThemePathString(userBean.getUserNo(), "最愛的電影"));
+	    m.addAttribute("photo8", spService.findByUserNoAndPhotoThemePathString(userBean.getUserNo(), "最愛的遊戲"));
+
+
 	    // 重設 session 中的 "userData" attribute
 	    session.setAttribute("userData", userBean);
 	    
@@ -817,108 +805,166 @@ public class UserController {
 	
 	
 	
-
-
-    						//配對頁面的路徑	      //傳資料到前端的方式
-	@RequestMapping(value = "/matchPage", method = {RequestMethod.GET, RequestMethod.POST})
-	public String matchPage(@RequestParam(value = "nickName", required = false) String nickName,
-	                        @RequestParam(value = "bloodType", required = false) String bloodType,
-	                        @RequestParam(value = "MBTI", required = false) String MBTI,
-	                        @RequestParam(value = "goalNo", required = false) Integer goalNo,
-	                        @RequestParam(value = "birthday", required = false) Integer birthday,
-
-	                        HttpSession session, Model m) {
-
-	    UserBean uBean = (UserBean)session.getAttribute("userData");
-	    Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
-	    UserBean userBean = dataById.get();
-	    
-	    // 如果請求參數為 null,則從 userBean 中獲取對應的屬性值
-	    nickName = (nickName != null) ? nickName : userBean.getNickName();
-	    bloodType = (bloodType != null) ? bloodType : userBean.getBloodType();
-	    MBTI = (MBTI != null) ? MBTI : userBean.getMBTI();
-	    goalNo = (goalNo != null) ? goalNo : userBean.getGoalNo();
-
-	    
-	    // 設置表單提交的數據到 UserBean 對象中
-	    userBean.setNickName(nickName);
-	    userBean.setBloodType(bloodType);
-	    userBean.setMBTI(MBTI);
-	    userBean.setGoalNo(goalNo);
-	    
-	    // 將更新後的用戶資料保存到資料庫
-	    uService.updateUser(userBean);
-	    
-	    // 載入已經儲存的資料到輸入框
-	    m.addAttribute("userBean", userBean);
-	    m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-	    m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-	    
-	    // 重設 session 中的 "userData" attribute
-	    session.setAttribute("userData", userBean);
-	    
-	    return "match/jsp/MatchPage.jsp";
-	}
-	
-	
-	
-	
+	// 配對頁面 (全部用戶)
 	@RequestMapping(value = "/newMatchPage", method = {RequestMethod.GET, RequestMethod.POST})
 	public String newMatchPage(HttpSession session, Model m) {
 		UserBean uBean = (UserBean)session.getAttribute("userData");
 		List<UserBean> allUsers = uService.getAllUserData();                            // 獲取所有用戶	  	    
 	    UserBean randomUser = getRandomUser(allUsers, uBean.getUserNo());     
+//		UserBean randomUser = uService.getUserData(11);
 	    
 	    List<String> photos = spService.findByUserNo(randomUser.getUserNo());
+	    List<String> tagNames = tagsService.findTagNamesByUserNo(randomUser.getUserNo());
 	    
 	    // 載入已經儲存的資料到輸入框
 	    m.addAttribute("userBean", randomUser);
 	    m.addAttribute("photos", photos);
+	    m.addAttribute("tagNames", tagNames); // 將標籤名稱列表添加到 Model 中
 	    m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 	    m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 	    
 	    return "match/jsp/NewMatchPage.jsp";
 	}
 	
+
+	
+	
+    // ----- 編輯資料 實作 -----
+
+	
+	
+	@PostMapping("/updateUserProfile")
+	public String updateUserProfile(@RequestParam("nickName") String nickName,
+	                                @RequestParam("gender") Integer gender,
+	                                @RequestParam("birthday") String birthday,
+	                                @RequestParam("bloodType") String bloodType,
+	                                @RequestParam("MBTI") String MBTI,
+	                                @RequestParam("goalNo") Integer goalNo,
+	                                HttpSession session) {
+	    // 從 session 中獲取當前登入的使用者
+	    UserBean userBean = (UserBean) session.getAttribute("userData");
+
+	    // 更新 userBean 的屬性
+	    userBean.setNickName(nickName);
+	    userBean.setGender(gender);
+	    userBean.setBirthday(LocalDateTime.parse(birthday, DateTimeFormatter.ofPattern("yyyy-MM-dd"))); // 使用 LocalDateTime.parse() 方法,並指定日期格式
+	    userBean.setBloodType(bloodType);
+	    userBean.setMBTI(MBTI);
+	    userBean.setGoalNo(goalNo);
+
+	    // 調用 service 方法更新資料庫中的使用者資料
+	    uService.updateUser(userBean);
+
+	    // 更新 session 中的 "userData" 屬性
+	    session.setAttribute("userData", userBean);
+
+	    // 重定向回基本資料頁面
+	    return "redirect:/MatchProfileEdit";
+	}
+	
+	
+	// 使用者編輯資料
+	@PostMapping("/editUserProfile")
+	public String editUserProfile(
+	    @RequestParam(value = "nickName", required = false) String nickName,
+	    @RequestParam(value = "gender", required = false) Integer gender,
+	    @RequestParam(value = "birthday", required = false) String birthday,
+	    @RequestParam(value = "bloodType", required = false) String bloodType,
+	    @RequestParam(value = "MBTI", required = false) String MBTI,
+	    @RequestParam(value = "goalNo", required = false) Integer goalNo,
+	    HttpSession session) {
+
+	    UserBean userBean = (UserBean) session.getAttribute("userData");
+
+	    if (nickName != null) {
+	        userBean.setNickName(nickName);
+	    }
+	    if (gender != null) {
+	        userBean.setGender(gender);
+	    }
+	    if (birthday != null) {
+	        userBean.setBirthday(LocalDate.parse(birthday, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay()); // 修改這一行
+	    }
+	    if (bloodType != null) {
+	        userBean.setBloodType(bloodType);
+	    }
+	    if (MBTI != null) {
+	        userBean.setMBTI(MBTI);
+	    }
+	    if (goalNo != null) {
+	        userBean.setGoalNo(goalNo);
+	    }
+
+	    uService.updateUser(userBean);
+	    session.setAttribute("userData", userBean);
+
+	    return "redirect:/editProfile";
+	}
+	
+	
+	@GetMapping("/editProfile")
+	public String showMatchProfileEditPage(HttpSession session, Model model) {
+	    UserBean userBean = (UserBean) session.getAttribute("userData");
+	    
+	    model.addAttribute("userBean", userBean);
+	    model.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	    
+	    return "match/jsp/MatchProfileEdit.jsp";
+	}
+	
+	
+
+	
+	
     // ----- Match 實作 -----
     
 
-	// 在控制器中實現獲取下一個隨機用戶及其照片的端點
-
-
+	// 實現獲取下一個隨機用戶及其照片的端點
 	@GetMapping("/nextUser")
 	public ResponseEntity<Map<String, Object>> getNextUser(@RequestParam("currentUserNo") Integer currentUserNo) {
 			   
-	    List<UserBean> allUsers = uService.getAllUserData();                            // 獲取所有用戶	  	    
-	    UserBean randomUser = getRandomUser(allUsers, currentUserNo);                   // 獲取下一個隨機用戶
+	    List<UserBean> allUsers = uService.getAllUserData();                           					// 獲取所有用戶	  	    
+	    UserBean randomUser = getRandomUser(allUsers, currentUserNo);                   				// 獲取下一個隨機用戶
 	    	    
-	    if (randomUser == null) {                                                       // 如果沒有其他用戶,返回404
+	    if (randomUser == null) {                                                       				// 如果沒有其他用戶,返回404
 	        return ResponseEntity.notFound().build();
 	    }
 	    	    
-	    List<String> photos = spService.findByUserNo(randomUser.getUserNo());            // 根據用戶編號查詢照片路徑	  	    
-	    Map<String, Object> response = new HashMap<>();                                  // 建立響應數據
+	    List<String> photos = spService.findByUserNo(randomUser.getUserNo());            				// 根據用戶編號查詢照片路徑	
+	    List<String> tagNames = tagsService.findTagNamesByUserNo(randomUser.getUserNo()); 				// 查詢使用者關聯的標籤名稱
+
+	    Map<String, Object> response = new HashMap<>();                                  				// 建立響應數據
 	    response.put("userNo", randomUser.getUserNo());
-	    response.put("photos", photos);		    
-	    return ResponseEntity.ok(response);                                              // 返回響應
+	    response.put("photos", photos);
+	    response.put("tagNames", tagNames);                                              				// 將標籤名稱加入響應資料中
+	    return ResponseEntity.ok(response);                                              				// 返回響應
 	}
 	
-	private UserBean getRandomUser(List<UserBean> users, int currentUserNo) {            // 從用戶列表中獲取下一個隨機用戶	    
-	    List<UserBean> otherUsers = new ArrayList<>();                                   // 過濾掉與當前用戶相同的用戶
+	
+	// 從用戶列表中獲取下一個隨機用戶
+	private UserBean getRandomUser(List<UserBean> users, int currentUserNo) {            					    
+	    List<UserBean> otherUsers = new ArrayList<>();                                   				// 過濾掉與當前用戶相同的用戶
+	    
+	    List<Integer> matchedUserNos = mService.getMyMatchedUserNos(currentUserNo);      				// 獲取所有已經配對成功的用戶編號,存儲在 matchedUserNos 列表中
+	    
 	    for (UserBean user : users) {
-	        if (user.getUserNo() != currentUserNo) {
-	            otherUsers.add(user);
+	        if (user.getUserNo() != currentUserNo) {                                     				// 排除當前用戶自己
+	        	
+	            if (!matchedUserNos.contains(user.getUserNo())) {                        				// 排除已經配對成功的用戶   => 使用 List 的 contains() 方法檢查 matchedUserNos 列表中是否包含當前用戶的編號。如果當前用戶的編號存在於 matchedUserNos 列表中,說明該用戶已經配對成功。   //如果 contains() 方法返回 true,表示當前用戶已經配對成功,! 運算符將結果取反為 false。
+	        	
+	            	otherUsers.add(user);                                                				// 將符合條件的用戶添加到 otherUsers 列表中
+	           }
 	        }
 	    }
 	    	    
-	    if (otherUsers.isEmpty()) {                                                      // 如果沒有其他用戶,返回null
+	    if (otherUsers.isEmpty()) {                                                     		 		// 如果沒有符合條件的其他用戶,返回null
 	        return null;
 	    }
 	    	    
-	    Random random = new Random();                                                    // 從其他用戶中隨機選擇一個
+	    Random random = new Random();                                                    		 		// 從其他用戶中隨機選擇一個
 	    int randomIndex = random.nextInt(otherUsers.size());
 	    return otherUsers.get(randomIndex);
-	}
+	    }
 	
 	
 	
@@ -931,9 +977,31 @@ public class UserController {
 	    if (userBean != null) {
 	        return userBean.getUserNo();
 	    }
-	    return null;                                                                      // 用戶未登錄
+	    return null;                                                                      				// 用戶未登錄
 	}
 	
+	
+	// 指定用戶
+	@GetMapping("/specificMatch")
+	public String specificMatch( Model m,HttpSession session) {
+		UserBean uBean = (UserBean)session.getAttribute("userData");
+		List<UserBean> allUsers = uService.getAllUserData();                             				// 獲取所有用戶	  	    
+//	    UserBean randomUser = getRandomUser(allUsers, uBean.getUserNo());     
+		UserBean randomUser = uService.getUserData(20);
+	    
+	    List<String> photos = spService.findByUserNo(randomUser.getUserNo());
+	    List<String> tagNames = tagsService.findTagNamesByUserNo(randomUser.getUserNo());	    
+	    																				 		
+	    m.addAttribute("userBean", randomUser);															// 載入已經儲存的資料到輸入框
+	    m.addAttribute("photos", photos);
+	    m.addAttribute("tagNames", tagNames); 															// 將標籤名稱列表添加到 Model 中
+	    m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	    m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+	    
+	    return "match/jsp/NewMatchPage.jsp";
+	}
+	
+
 	
 	
 

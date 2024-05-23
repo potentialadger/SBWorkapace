@@ -1,11 +1,19 @@
 package com.match.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.match.bean.TagsBean;
 import com.match.repository.TagsRepository;
+import com.user.bean.UserBean;
+import com.user.repository.UserRepository;
+
 import jakarta.transaction.Transactional;
 
 @Service
@@ -14,6 +22,9 @@ public class TagsService {
 
     @Autowired
     private TagsRepository tRepository;
+    
+	@Autowired
+	private UserRepository uRepository;
 
 
     // 查詢單個標籤
@@ -60,6 +71,29 @@ public class TagsService {
     
     public Optional<TagsBean> getOneById(Integer tagNo) {
         return tRepository.findById(tagNo);
+    }
+    
+    
+    // Match 實作
+    
+    
+    // 根據使用者編號查詢該使用者關聯的標籤名稱列表
+    public List<String> findTagNamesByUserNo(Integer userNo) {
+        Optional<UserBean> optionalUserBean = uRepository.findById(userNo);
+        
+        if (optionalUserBean.isPresent()) {
+            UserBean userBean = optionalUserBean.get();
+            Set<TagsBean> tagsBeans = userBean.getTagsBeans();
+            
+            List<String> tagNames = new ArrayList<>();
+            for (TagsBean tagsBean : tagsBeans) {
+                tagNames.add(tagsBean.getTagName());
+            }
+            
+            return tagNames;
+        }
+        
+        return Collections.emptyList();
     }
     
 

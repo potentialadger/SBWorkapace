@@ -5,209 +5,53 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<title>Document</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-<style>
-/*custom font*/
-@import url(https://fonts.googleapis.com/css?family=Montserrat);
+    <title>SB Admin 2 - Dashboard</title>
 
-/*basic reset*/
-* {
-	margin: 0;
-	padding: 0;
-}
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-html {
-	height: 100%;
-	/*Image only BG fallback*/
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+	<link rel="stylesheet" href="mycss/MatchCreate.css">
 
-	/*background = gradient + image pattern combo*/
-	/*background: 
-                linear-gradient(rgba(196, 102, 0, 0.6), rgba(155, 89, 182, 0.6)); 原本的背景色*/
-}
-
-body {
-	font-family: montserrat, arial, verdana;
-	/*新的背景色*/
-	background:
-		url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/38816/image-from-rawpixel-id-2042508-jpeg.jpg");
-	height: 100vh;
-	width: 100vw;
-	position: relative;
-	background-size: cover;
-	background-repeat: no-repeat;
-	display: grid;
-	justify-items: center;
-	align-items: center;
-}
-
-/*form styles*/
-#msform {
-	width: 400px; /*調表單的寬度*/
-	margin: 50px auto;
-	text-align: center;
-	/*position: relative;*/
-	position: absolute;
-	top: 40%;
-	left: 50%; /*調表單的位置*/
-	transform: translate(calc(-50% + 0px), -50%); /*平移*/
-}
-
-#msform fieldset {
-	background: white;
-	border: 0 none;
-	border-radius: 3px;
-	box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
-	padding: 20px 30px;
-	box-sizing: border-box;
-	width: 80%;
-	margin: 0 10%;
-	/*stacking fieldsets above each other*/
-	position: relative;
-}
-
-.form-control {
-	height: 50px; /*男女框大小*/
-}
-
-.icon-button {
-	border: none;
-	background: none;
-	padding: 0;
-	cursor: pointer;
-	outline: none;
-}
-
-.icon-button:focus {
-	outline: none;
-}
-
-/*Hide all except first fieldset*/
-#msform fieldset:not(:first-of-type) {
-	display: none;
-}
-
-/*inputs*/
-#msform input, #msform textarea {
-	padding: 15px;
-	border: 1px solid #ccc;
-	border-radius: 3px;
-	margin-bottom: 10px;
-	width: 100%;
-	box-sizing: border-box;
-	font-family: montserrat;
-	color: #2C3E50;
-	font-size: 13px;
-}
-
-/*buttons*/
-#msform .action-button {
-	width: 100px;
-	background: #27AE60;
-	font-weight: bold;
-	color: white;
-	border: 0 none;
-	border-radius: 1px;
-	cursor: pointer;
-	padding: 10px;
-	margin: 10px 5px;
-	text-decoration: none;
-	font-size: 14px;
-	display: inline-block;
-	/* Make it inline-block to match behavior of anchor tags */
-}
-
-#msform .action-button:hover, #msform .action-button:focus {
-	box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
-}
-
-/*headings*/
-.fs-title {
-	font-size: 23px;
-	text-transform: uppercase;
-	color: #2C3E50;
-	margin-bottom: 10px;
-}
-
-.fs-subtitle {
-	font-weight: normal;
-	font-size: 13px;
-	color: #666;
-	margin-bottom: 20px;
-}
-
-/*progressbar*/
-#progressbar {
-	margin-bottom: 30px;
-	overflow: hidden;
-	/*CSS counters to number the steps*/
-	counter-reset: step;
-	list-style-type: none;
-}
-
-#progressbar li {
-	color: white;
-	text-transform: uppercase;
-	font-size: 9px;
-	width: 33.33%;
-	float: left;
-	position: relative;
-}
-
-#progressbar li:before {
-	content: counter(step);
-	counter-increment: step;
-	width: 20px;
-	line-height: 20px;
-	display: block;
-	font-size: 10px;
-	color: #333;
-	background: white;
-	border-radius: 3px;
-	margin: 0 auto 5px auto;
-}
-
-/*progressbar connectors*/
-#progressbar li:after {
-	content: '';
-	width: 100%;
-	height: 2px;
-	background: white;
-	position: absolute;
-	left: -50%;
-	top: 9px;
-	z-index: -1; /*put it behind the numbers*/
-}
-
-#progressbar li:first-child:after {
-	/*connector not needed before the first step*/
-	content: none;
-}
-
-/*marking active/completed steps green*/
-/*The number of the step and the connector before it = green*/
-#progressbar li.active:before, #progressbar li.active:after {
-	background: #27AE60;
-	color: white;
-}
-/* Hide all fieldsets except the first one */
-fieldset:not(:first-of-type) {
-	display: none;
-}
-</style>
 </head>
 
-<body>
-	<!-- multistep form -->
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!--        <script src="js/test/Z_slider.js"></script>-->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <script src="js/layout/Z_TopBar.js"></script>
+
+                <!-- 主要內容 -->
+
+
+ <div id="custom-container">
+               
+  <!-- multistep form -->
 	<form id="msform" action="/editMatchProfile" method="post">
 		<!-- 表單提交時,請求會被發送到 editMatchProfile 路徑, -->
 		<!-- progressbar -->
@@ -331,10 +175,8 @@ fieldset:not(:first-of-type) {
 				</select>
 			</div>
 
-			<input type="button" name="previous" class="previous action-button"
-				value="Previous" onclick="prevStep()" /> <input type="button"
-				name="next" class="next action-button" value="Next"
-				onclick="nextStep()" />
+			<input type="button" name="previous" class="previous action-button" value="Previous" onclick="prevStep()" /> 
+			<input type="button" name="next" class="next action-button" value="Next" onclick="nextStep()" />
 		</fieldset>
 
 
@@ -344,20 +186,15 @@ fieldset:not(:first-of-type) {
 			<h3 class="fs-subtitle">We will never sell it</h3>
 			<div class="edit-match">
 				<!-- 路徑 -->
-				<button type="submit" name="targetPage" value="/editMatchProfile"
-					class="icon-button">
-					<i class="fa-solid fa-user-pen"
-						style="color: #8f8f8f; font-size: 4em; margin-right: 25px; margin-bottom: 66px;"></i>
+				<button type="submit" name="targetPage" value="/editMatchProfile" class="icon-button">
+					<i class="fa-solid fa-user-pen" style="color: #8f8f8f; font-size: 4em; margin-right: 25px; margin-bottom: 66px;"></i>
 				</button>
 				<!-- 路徑 -->
-				<button type="submit" name="targetPage" value="/matchPage"
-					class="icon-button">
-					<i class="fa-solid fa-heart-circle-xmark"
-						style="color: #8f8f8f; font-size: 4em; margin-top: 66px;"></i>
+				<button type="submit" name="targetPage" value="/newMatchPage" class="icon-button">
+					<i class="fa-solid fa-heart-circle-xmark" style="color: #8f8f8f; font-size: 4em; margin-top: 66px;"></i>
 				</button>
 			</div>
-			<input type="button" name="previous" class="previous action-button"
-				value="Previous" onclick="prevStep()" />
+			<input type="button" name="previous" class="previous action-button" value="Previous" onclick="prevStep()" />
 		</fieldset>
 
 
@@ -365,44 +202,83 @@ fieldset:not(:first-of-type) {
 		<input type="hidden" name="targetPage" id="targetPage" value="">
 
 	</form>
+	
+	</div>
 
-	<script>
-		// 表單內容
-		var formSteps = [ "step1", "step2", "step3" ];
 
-		var currentStep = 0; // 初始步驟
 
-		// 下一步
-		function nextStep() {
-			if (currentStep < formSteps.length - 1) {
-				document.getElementById(formSteps[currentStep]).style.display = "none";
-				document.getElementById(formSteps[currentStep + 1] + "Tab").classList
-						.add("active");
-				document.getElementById(formSteps[currentStep + 1] + "Tab").style.color = "#27AE60";
-				document.getElementById(formSteps[currentStep + 1] + "Tab").style.fontWeight = "bold";
-				currentStep++;
-				document.getElementById(formSteps[currentStep]).style.display = "block";
-			}
-		}
 
-		// 上一步
-		function prevStep() {
-			if (currentStep > 0) {
-				document.getElementById(formSteps[currentStep]).style.display = "none";
-				document.getElementById(formSteps[currentStep] + "Tab").classList
-						.remove("active");
-				document.getElementById(formSteps[currentStep] + "Tab").style.color = "white";
-				document.getElementById(formSteps[currentStep] + "Tab").style.fontWeight = "normal";
-				currentStep--;
-				document.getElementById(formSteps[currentStep]).style.display = "block";
-			}
-		}
-		
-		
-		
-		
 
-		
-	</script>
+
+
+
+                <!-- 主要內容結尾 -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- footer -->
+            <script src="js/layout/Z_footer.js"></script>
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <script src="js/layout/Z_Logout Modal.js"></script>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+<script src="js/demo/chart-area-demo.js"></script>
+<script src="js/demo/chart-pie-demo.js"></script>
+
+<script>
+    // 表單內容
+    var formSteps = [ "step1", "step2", "step3" ];
+    var currentStep = 0; // 初始步驟
+
+    // 下一步
+    function nextStep() {
+        if (currentStep < formSteps.length - 1) {
+            document.getElementById(formSteps[currentStep]).style.display = "none";
+            document.getElementById(formSteps[currentStep + 1] + "Tab").classList.add("active");
+            document.getElementById(formSteps[currentStep + 1] + "Tab").style.color = "#27AE60";
+            document.getElementById(formSteps[currentStep + 1] + "Tab").style.fontWeight = "bold";
+            currentStep++;
+            document.getElementById(formSteps[currentStep]).style.display = "block";
+        }
+    }
+
+    // 上一步
+    function prevStep() {
+        if (currentStep > 0) {
+            document.getElementById(formSteps[currentStep]).style.display = "none";
+            document.getElementById(formSteps[currentStep] + "Tab").classList.remove("active");
+            document.getElementById(formSteps[currentStep] + "Tab").style.color = "white";
+            document.getElementById(formSteps[currentStep] + "Tab").style.fontWeight = "normal";
+            currentStep--;
+            document.getElementById(formSteps[currentStep]).style.display = "block";
+        }
+    }
+</script>
+
 </body>
 </html>
