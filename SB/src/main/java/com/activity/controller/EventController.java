@@ -154,9 +154,9 @@ public class EventController {
         	EventBean event = new EventBean();
         	
         	HttpSession session = request.getSession();
-//    		UserBean userbean = (UserBean)session.getAttribute("userData");
+    		UserBean userbean = (UserBean)session.getAttribute("userData");
         	
-        	event.setHostUserNo(1);
+        	event.setHostUserNo(userbean.getUserNo());
         	event.setTitle(title);
         	event.setDescription(description);						
         	event.setActivityTime(activityTime);

@@ -108,8 +108,8 @@ public class EventRegistrationsController {
 //                mav.addObject("errorMessage", "您尚未登入。");
 //                return mav;
 //            }
-//            int userNo = userBean.getUserNo();
-            int userNo = 1;
+            int userNo = userBean.getUserNo();
+//            int userNo = 1;
 //            System.out.println(userNo);
             // 檢查是否已註冊
             List<EventRegistrationsBean> existingRegistrations = eventRegistrationsService.findByEventNoAndUserNo(eventNo, userNo);

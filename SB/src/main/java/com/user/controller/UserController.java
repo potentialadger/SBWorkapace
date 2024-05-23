@@ -845,7 +845,12 @@ public class UserController {
 	}
 
 // ----------前端創建資料-------
-
+	//創建交友資料的路徑
+    @GetMapping("/createMatchProfile")
+    public String createMatchProfile(HttpSession session, Model m) {
+        UserBean uBean = (UserBean)session.getAttribute("userData");     //從存使用者資料的session中取出它放資料的變數   //為什麼要轉成UserBean的型態?因為userData只有存資料，它不知道每個資料的型態是什麼，UserBean會設定每個屬性的型態
+        Optional<UserBean> dataById = uService.getDataById(uBean.getUserNo());
+        UserBean userBean = dataById.get();
         //載入已經儲存的資料到輸入框
         m.addAttribute("userBean", userBean);
         m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));

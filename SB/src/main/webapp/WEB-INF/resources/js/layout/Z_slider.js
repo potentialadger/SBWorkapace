@@ -47,7 +47,7 @@ slider = `<!-- Sidebar -->
         <div id="forumPages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">forum</h6>
-                <a class="collapse-item" href="login.html">論壇後台</a>
+                <a class="collapse-item" href="/CategoriesController/CategoriesAll">論壇後台</a>
             </div>
         </div>
     </li>
@@ -78,7 +78,7 @@ slider = `<!-- Sidebar -->
         <div id="activityPages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">activity</h6>
-                <a class="collapse-item" href="login.html">活動後台</a>
+                <a class="collapse-item" href="/activityHomepage">活動後台</a>
             </div>
         </div>
     </li>
@@ -93,7 +93,10 @@ slider = `<!-- Sidebar -->
         <div id="matchPages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">match</h6>
-                <a class="collapse-item" href="login.html">配對後台</a>
+                <a class="collapse-item" href="/goalsHP">尋找關係後台</a>
+                <a class="collapse-item" href="/tagsHP">個性標籤後台</a>
+                <a class="collapse-item" href="/socialPhotosHP">交友照片後台</a>
+                <a class="collapse-item" href="/matchHP">配對後台</a>
             </div>
         </div>
     </li>

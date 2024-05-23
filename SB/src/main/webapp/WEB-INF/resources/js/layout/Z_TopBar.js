@@ -6,7 +6,7 @@ Topbar = `<!-- Topbar -->
         <i class="fa fa-bars"></i>
     </button>
 
-    <a href="#"
+    <a href="/postsFrontDesk/AllPosts"
         class="m-b-5" title="首頁" style="color:#d1d3e2;">
         <i class="fas fa-home fa-2x fa-fw" aria-hidden="true"></i>
     </a>
@@ -148,15 +148,19 @@ Topbar = `<!-- Topbar -->
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     個人資料
                 </a>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="/activityList">
                     <i class="fas fa-calendar fa-sm fa-fw mr-2 text-gray-400"></i>
                     活動
+                </a>
+                <a class="dropdown-item" href="/group/groups">
+                    <i class="fa fa-shopping-cart fa-sm fa-fw mr-2 text-gray-400"></i>
+                    團購
                 </a>
                 <a class="dropdown-item" href="/group/mygroups">
                     <i class="fa fa-shopping-cart fa-sm fa-fw mr-2 text-gray-400"></i>
                     我的團購
                 </a>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="/match.HeartLoading">
                     <i class="fas fa-sign-language fa-sm fa-fw mr-2 text-gray-400"></i>
                     配對
                 </a>
