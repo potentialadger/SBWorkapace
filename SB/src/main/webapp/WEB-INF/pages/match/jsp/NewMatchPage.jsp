@@ -540,7 +540,7 @@ img {
 	position: absolute;
 	max-width: 800px; /*調框的寬度*/
 	width: 25%;
-	height: 26%; /*框跟圖片調這個-裡面全部圖片的長寬*/
+	height: 28%; /*框跟圖片調這個-裡面全部圖片的長寬*/
 }
 
 #userPhotos1 {
@@ -653,6 +653,20 @@ img {
 	left: -50px; /* 距左側 0px */
 }
 
+#filter {
+	margin-left: 38px;
+	position: absolute; /* 將按鈕設為絕對定位 */
+	top: 290px; /* 距頂部 20px */
+	left: -51px; /* 距左側 0px */
+}
+
+#focus {
+	margin-left: 38px;
+	position: absolute; /* 將按鈕設為絕對定位 */
+	top: 380px; /* 距頂部 20px */
+	left: -51px; /* 距左側 0px */
+}
+
 #leftmenu {
 	height: 69px;
 	width: 290px; /*可以調垂直或是水平*/
@@ -718,7 +732,7 @@ img {
 }
 
 .chat-header {
-	overflow-y: auto; /* 垂直滾輪 */
+	overflow-y: hidden;
 	background-color: 0;
 }
 
@@ -1319,6 +1333,17 @@ div.message.right .corner {
 	overflow: hidden;
 	border-radius: 6px;
 }
+
+
+.nav-link.icon {
+  border: none; 
+  background-color: transparent; 
+  padding: 0;
+}
+
+.nav-link.icon:focus {
+  outline: none;
+}
     
     
 </style>
@@ -1351,20 +1376,13 @@ div.message.right .corner {
 	<!--組織和定位網頁中的內容-->
 	<div class="app-container">
 
-
-
 		<!--定位或樣式控制-->
-		<div id="menu">
-			<!--列出了一個朋友清單。這個清單可能是用來顯示聯繫人列表的-->
-			<div id="friendslist">
-				<!--包含了一個頂部菜單，裡面包含了三個 <span> 元素，每個 <span> 元素可能用於不同的操作，如顯示好友、聊天、或歷史記錄-->
-				<div id="leftmenu">
-					<!--<span class="chats"></span>
-                        <span class="history"></span>-->
-
+		<div id="menu">		
+			<div id="friendslist">																			<!--列出了一個朋友清單。這個清單可能是用來顯示聯繫人列表的-->			
+				<div id="leftmenu">				                                                            <!--包含了一個頂部菜單，裡面包含了三個 <span> 元素，每個 <span> 元素可能用於不同的操作，如顯示好友、聊天、或歷史記錄-->		
 
 					<!--首頁-->
-					<a href="#" class="nav-link icon" id="home"> 
+					<a href="/newMatchPage" class="nav-link icon" id="home"> 
 					<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home" viewBox="0 0 24 24">
            			<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
            			<path d="M9 22V12h6v10" />
@@ -1383,6 +1401,46 @@ div.message.right .corner {
 		            <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z" />
  		            </svg>          
 					</a>
+					
+         			<!-- 篩選 -->	
+				    <!-- 觸發 Modal 的按鈕 -->
+					<a href="#" class="nav-link icon" id="filter" data-toggle="modal" data-target="#filterModal">
+ 					   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
+					        <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z"/>
+					    </svg>
+					</a>
+
+					<!-- Modal 本體 -->
+					<div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
+ 						   <div class="modal-dialog" role="document">
+					        <div class="modal-content">
+					            <div class="modal-header">
+					                <h5 class="modal-title" id="filterModalLabel">篩選設定</h5>
+					            </div>
+					            <div class="modal-body">
+				                <div class="custom-control custom-switch">
+				                    <input type="checkbox" class="custom-control-input" id="goalFilter">
+					                    <label class="custom-control-label" for="goalFilter">僅顯示與我的目標關係相同的用戶</label>
+					                </div>
+					            </div>
+					            <div class="modal-footer">
+					                <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+					                <button type="button" class="btn btn-primary">儲存變更</button>
+					            </div>
+					        </div>
+					    </div>
+					</div>	
+					
+					
+					<!-- 指定用戶按鈕 -->
+					<form action="/specificMatch" method="get">					
+					  <button class="nav-link icon" id="focus" type="submit">
+					  	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-heart" viewBox="0 0 16 16">
+						    <path fill-rule="evenodd" d="M8 4.41c1.387-1.425 4.854 1.07 0 4.277C3.146 5.48 6.613 2.986 8 4.412z"/>
+		 				    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+				  		</svg>
+				  	  </button>
+				  	 </form>		
 				</div>
 			</div>
 		</div>
@@ -1468,11 +1526,15 @@ div.message.right .corner {
 							</c:choose></span>
 						<hr class="hr">
 					</div>
+					
+					
 
-					<div class="topic">
+					<!-- <div class="topic">
 						我想聊的話題是
 						<hr class="hr">
-					</div>
+					</div> -->
+					
+					
 
 					<div class="aboutMe">
 						關於我
@@ -1567,7 +1629,7 @@ div.message.right .corner {
 // 				    love.on('click', loveListener);
 				});
 				
-
+			
 
 // 獲取所有按鈕和內容容器
 const buttons = document.querySelectorAll('.nav-link.icon');
@@ -1576,8 +1638,7 @@ const contentContainer = document.querySelector('.content-container');
 // 為每個按鈕添加點擊事件監聽器
 buttons.forEach(button => {
   button.addEventListener('click', () => {
-    // 清空內容容器
-    contentContainer.innerHTML = '';
+    contentContainer.innerHTML = '';                                                                         // 清空內容容器
 
     // 根據按鈕的 ID 或類別創建對應的內容
     const content = document.createElement('div');
@@ -1588,7 +1649,6 @@ buttons.forEach(button => {
       case 'messages':
         content.textContent = '這是訊息內容';
         break;
-      // 其他按鈕對應的內容
     }
 
     // 將內容添加到容器中
@@ -1598,9 +1658,6 @@ buttons.forEach(button => {
     contentContainer.style.display = contentContainer.style.display === 'none' ? 'block' : 'none';
   });
 });
-
-
-
 
 
 
@@ -1746,6 +1803,18 @@ buttons.forEach(button => {
               
           });
       });
+      
+      
+      $(document).ready(function() {
+    	    // 初始化 Modal
+    	    $('#filterModal').modal({
+    	        backdrop: 'static',
+    	        keyboard: false
+    	    });
+    	});
+      
+      
+   
 
 
 </script>
@@ -1792,6 +1861,9 @@ buttons.forEach(button => {
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+    
+    
+    
 
 
 </body>

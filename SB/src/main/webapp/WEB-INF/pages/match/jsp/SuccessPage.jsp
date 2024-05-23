@@ -179,6 +179,35 @@
   
 		        <a href="/newMatchPage" class="btn-view-orders" onclick="changePage()">回到配對頁面</a>
            </div>
+           
+           
+           
+               		<script>
+
+				document.addEventListener('DOMContentLoaded', function() {
+				    setTimeout(function() {
+				        document.getElementById('heart').classList.remove('loading');        
+				    }, 1000);
+				});
+
+				setInterval(function() {
+				    var heartElement = document.getElementById('heart');
+				    if (heartElement.classList.contains('loading')) {
+				        heartElement.classList.remove('loading');
+				    } else {
+				        heartElement.classList.add('loading');
+				    }
+				}, 5000);
+
+				</script>   
+				
+				
+				<script>
+  
+				function changePage() {
+				    JSReceiver.changePricing(500);
+				}
+				</script>  
                 
                 
                 <!-- 主要內容結尾 -->
@@ -221,32 +250,7 @@
 		    <script src="js/demo/chart-pie-demo.js"></script>
     
     
-    		<script>
 
-				document.addEventListener('DOMContentLoaded', function() {
-				    setTimeout(function() {
-				        document.getElementById('heart').classList.remove('loading');        
-				    }, 1000);
-				});
-
-				setInterval(function() {
-				    var heartElement = document.getElementById('heart');
-				    if (heartElement.classList.contains('loading')) {
-				        heartElement.classList.remove('loading');
-				    } else {
-				        heartElement.classList.add('loading');
-				    }
-				}, 5000);
-
-				</script>   
-				
-				
-				<script>
-  
-				function changePage() {
-				    JSReceiver.changePricing(500);
-				}
-				</script>  
 
 
 </body>

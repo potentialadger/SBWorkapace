@@ -643,18 +643,6 @@ public class UserController {
 		}
 	}
 	
-    // 指定返回 JSON 格式的資料，以及資料的編碼格式為 UTF-8
-    // @GetMapping(path = "/getUserTags/{userNo}", produces = "application/json;charset=UTF-8"
-	
-	
-	// 獲取所有使用者及其關聯的標籤
-//	@GetMapping(path = "/getAllUsersWithTags")
-//	public ResponseEntity<List<Set<TagsBean>>> getAllUsersWithTags() {
-//	    List<Set<TagsBean>> userTags = uService.getAllUsersWithTags();
-//	    return ResponseEntity.ok(userTags);
-//	}
-	
-	
 	
 	// 獲取所有使用者及所有資料
 	@GetMapping(path = "/getAllUsersWithTags")
@@ -677,19 +665,6 @@ public class UserController {
 	}
 	
 	
-	
-	// 使用者添加一個或多個標籤 (只返回關聯的標籤資料)
-//	@PostMapping("/addUserTags/{userNo}/tags")
-//	public ResponseEntity<Set<TagsBean>> addTagsToUser(@PathVariable Integer userNo, @RequestBody List<Integer> tagNos) {
-//	    try {
-//	        UserBean updatedUser = uService.addTagsToUser(userNo, tagNos);
-//	        return ResponseEntity.ok(updatedUser.getTagsBeans());
-//	    } catch (IllegalArgumentException ex) {
-//	        return ResponseEntity.notFound().build();
-//	    }
-//	}
-	
-	
 
 	// 使用者移除一個或多個標籤 (返回標籤資料)
 	@DeleteMapping(path = "/deleteUserTags/{userNo}/tags")
@@ -702,15 +677,6 @@ public class UserController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-
-	// 更新與現有使用者關聯的標籤
-//	@PutMapping("/users/{userNo}/updateTags")
-//	public String updateUserWithTags(@PathVariable("userNo") int userNo, @RequestParam("tagNos") List<Integer> tagNos) {
-//		UserBean user = uService.getUserData(userNo);
-//		uService.updateUserWithTags(user, tagNos);
-//		return "redirect:/users/" + userNo;
-//	}
-	
 	
 	
 	
@@ -839,7 +805,7 @@ public class UserController {
 	
 	
 	
-	                         // 配對頁面
+	// 配對頁面 (全部用戶)
 	@RequestMapping(value = "/newMatchPage", method = {RequestMethod.GET, RequestMethod.POST})
 	public String newMatchPage(HttpSession session, Model m) {
 		UserBean uBean = (UserBean)session.getAttribute("userData");
@@ -859,9 +825,8 @@ public class UserController {
 	    
 	    return "match/jsp/NewMatchPage.jsp";
 	}
+	
 
-	
-	
 	
 	
     // ----- 編輯資料 實作 -----
@@ -954,54 +919,52 @@ public class UserController {
     // ----- Match 實作 -----
     
 
-	// 在控制器中實現獲取下一個隨機用戶及其照片的端點
-
+	// 實現獲取下一個隨機用戶及其照片的端點
 	@GetMapping("/nextUser")
 	public ResponseEntity<Map<String, Object>> getNextUser(@RequestParam("currentUserNo") Integer currentUserNo) {
 			   
-	    List<UserBean> allUsers = uService.getAllUserData();                            // 獲取所有用戶	  	    
-	    UserBean randomUser = getRandomUser(allUsers, currentUserNo);                   // 獲取下一個隨機用戶
+	    List<UserBean> allUsers = uService.getAllUserData();                           					// 獲取所有用戶	  	    
+	    UserBean randomUser = getRandomUser(allUsers, currentUserNo);                   				// 獲取下一個隨機用戶
 	    	    
-	    if (randomUser == null) {                                                       // 如果沒有其他用戶,返回404
+	    if (randomUser == null) {                                                       				// 如果沒有其他用戶,返回404
 	        return ResponseEntity.notFound().build();
 	    }
 	    	    
-	    List<String> photos = spService.findByUserNo(randomUser.getUserNo());            // 根據用戶編號查詢照片路徑	
-	    List<String> tagNames = tagsService.findTagNamesByUserNo(randomUser.getUserNo()); // 查詢使用者關聯的標籤名稱
+	    List<String> photos = spService.findByUserNo(randomUser.getUserNo());            				// 根據用戶編號查詢照片路徑	
+	    List<String> tagNames = tagsService.findTagNamesByUserNo(randomUser.getUserNo()); 				// 查詢使用者關聯的標籤名稱
 
-	    Map<String, Object> response = new HashMap<>();                                  // 建立響應數據
+	    Map<String, Object> response = new HashMap<>();                                  				// 建立響應數據
 	    response.put("userNo", randomUser.getUserNo());
 	    response.put("photos", photos);
-	    response.put("tagNames", tagNames);                                              // 將標籤名稱加入響應資料中
-	    return ResponseEntity.ok(response);                                              // 返回響應
+	    response.put("tagNames", tagNames);                                              				// 將標籤名稱加入響應資料中
+	    return ResponseEntity.ok(response);                                              				// 返回響應
 	}
 	
 	
-
-	private UserBean getRandomUser(List<UserBean> users, int currentUserNo) {            // 從用戶列表中獲取下一個隨機用戶	    
-	    List<UserBean> otherUsers = new ArrayList<>();                                   // 過濾掉與當前用戶相同的用戶
+	// 從用戶列表中獲取下一個隨機用戶
+	private UserBean getRandomUser(List<UserBean> users, int currentUserNo) {            					    
+	    List<UserBean> otherUsers = new ArrayList<>();                                   				// 過濾掉與當前用戶相同的用戶
 	    
-	    List<Integer> matchedUserNos = mService.getMyMatchedUserNos(currentUserNo);      // 獲取所有已經配對成功的用戶編號,存儲在 matchedUserNos 列表中
+	    List<Integer> matchedUserNos = mService.getMyMatchedUserNos(currentUserNo);      				// 獲取所有已經配對成功的用戶編號,存儲在 matchedUserNos 列表中
 	    
 	    for (UserBean user : users) {
-	        if (user.getUserNo() != currentUserNo) {                                     // 排除當前用戶自己
+	        if (user.getUserNo() != currentUserNo) {                                     				// 排除當前用戶自己
 	        	
-	            if (!matchedUserNos.contains(user.getUserNo())) {                        // 排除已經配對成功的用戶   => 使用 List 的 contains() 方法檢查 matchedUserNos 列表中是否包含當前用戶的編號。如果當前用戶的編號存在於 matchedUserNos 列表中,說明該用戶已經配對成功。   //如果 contains() 方法返回 true,表示當前用戶已經配對成功,! 運算符將結果取反為 false。
+	            if (!matchedUserNos.contains(user.getUserNo())) {                        				// 排除已經配對成功的用戶   => 使用 List 的 contains() 方法檢查 matchedUserNos 列表中是否包含當前用戶的編號。如果當前用戶的編號存在於 matchedUserNos 列表中,說明該用戶已經配對成功。   //如果 contains() 方法返回 true,表示當前用戶已經配對成功,! 運算符將結果取反為 false。
 	        	
-	            	otherUsers.add(user);                                                    // 將符合條件的用戶添加到 otherUsers 列表中
+	            	otherUsers.add(user);                                                				// 將符合條件的用戶添加到 otherUsers 列表中
 	           }
 	        }
 	    }
 	    	    
-	    if (otherUsers.isEmpty()) {                                                      // 如果沒有符合條件的其他用戶,返回null
+	    if (otherUsers.isEmpty()) {                                                     		 		// 如果沒有符合條件的其他用戶,返回null
 	        return null;
 	    }
 	    	    
-	    Random random = new Random();                                                    // 從其他用戶中隨機選擇一個
+	    Random random = new Random();                                                    		 		// 從其他用戶中隨機選擇一個
 	    int randomIndex = random.nextInt(otherUsers.size());
 	    return otherUsers.get(randomIndex);
 	    }
-	    
 	
 	
 	
@@ -1014,25 +977,31 @@ public class UserController {
 	    if (userBean != null) {
 	        return userBean.getUserNo();
 	    }
-	    return null;                                                                      // 用戶未登錄
+	    return null;                                                                      				// 用戶未登錄
 	}
 	
 	
-	@GetMapping("/showSpecificMatch/{userNo}")
-	public String showSpecificMatch(@PathVariable("userNo") int userNo, Model model) {
-	    UserBean specificUser = uService.getUserData(userNo);
-	    List<String> photos = spService.findByUserNo(specificUser.getUserNo());
-	    List<String> tagNames = tagsService.findTagNamesByUserNo(specificUser.getUserNo());
-
-	    model.addAttribute("userBean", specificUser);
-	    model.addAttribute("photos", photos);
-	    model.addAttribute("tagNames", tagNames);
-	    model.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-	    model.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
+	// 指定用戶
+	@GetMapping("/specificMatch")
+	public String specificMatch( Model m,HttpSession session) {
+		UserBean uBean = (UserBean)session.getAttribute("userData");
+		List<UserBean> allUsers = uService.getAllUserData();                             				// 獲取所有用戶	  	    
+//	    UserBean randomUser = getRandomUser(allUsers, uBean.getUserNo());     
+		UserBean randomUser = uService.getUserData(20);
+	    
+	    List<String> photos = spService.findByUserNo(randomUser.getUserNo());
+	    List<String> tagNames = tagsService.findTagNamesByUserNo(randomUser.getUserNo());	    
+	    																				 		
+	    m.addAttribute("userBean", randomUser);															// 載入已經儲存的資料到輸入框
+	    m.addAttribute("photos", photos);
+	    m.addAttribute("tagNames", tagNames); 															// 將標籤名稱列表添加到 Model 中
+	    m.addAttribute("localDateTimeDateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	    m.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+	    
 	    return "match/jsp/NewMatchPage.jsp";
 	}
 	
+
 	
 	
 

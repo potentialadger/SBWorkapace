@@ -206,8 +206,8 @@
 			<c:forEach var="matchData" items="${matchedUsersData}">
 						  <div class="col-lg-6 mt-4 mt-lg-0">
 							<div class="member d-flex align-items-start">
-							  <div class="pic">
-							  	<img src="" class="img-fluid randomImgs" alt=""></div>
+								<div class="pic">
+								  <a href="/chatPage"><img src="" class="img-fluid randomImgs" alt=""></a></div>
 							  	  <div class="member-info">
 									<p class="member-heading">${matchData.nickName}</p>
 								

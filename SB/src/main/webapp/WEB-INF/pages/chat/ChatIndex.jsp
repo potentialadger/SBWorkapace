@@ -201,7 +201,7 @@ button.accent {
     margin-top: 30px;
     height: 650px;
     position: relative;
-    margin-bottom: 80px;
+    margin-bottom: 60px;
 }
 
 #chat-page ul {
@@ -376,7 +376,6 @@ button.accent {
     <div id="chat-page" class="hidden">
         <div class="chat-container">
             <div class="chat-header">
-                <h2></h2>
             </div>
             <div class="connecting">
                 Connecting...
