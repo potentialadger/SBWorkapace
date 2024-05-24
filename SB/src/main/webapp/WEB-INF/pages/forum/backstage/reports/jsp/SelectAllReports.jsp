@@ -74,7 +74,7 @@
 				-->
 
 							<div class="title-and-button">
-								<h1>全部檢舉信管理</h1>
+								<h1>全部檢舉管理</h1>
 
 
 							</div>

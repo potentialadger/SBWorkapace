@@ -94,7 +94,7 @@
                             </select>
                             
                             <label for="title">標題 :</label>
-                            <input type="text" name="title" value="${updateSelect.title}" class="form-control">
+                            <input type="text" name="title" value="${updateSelect.title}" class="form-control" maxlength="100">
                             
                             <label for="content">內文 :</label>
                             <textarea name="content" class="form-control" style="width: 100%; height: 400px; resize: none;">${updateSelect.content}</textarea>
