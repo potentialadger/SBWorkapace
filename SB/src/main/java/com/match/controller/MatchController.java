@@ -92,15 +92,15 @@ public class MatchController {
     
     
     
-	// 查詢編號+姓名 for GoalsHP.jsp
     @GetMapping("/queryMatchNo")
-    public String queryMatches(@RequestParam(required = false, name = "matchNo") Integer matchNo,
+    public String queryMatches(@RequestParam(required = false, name = "user1No") Integer user1No,
                                @RequestParam(required = false, name = "matchStatus") Integer matchStatus,
                                Model model) {
         List<MatchBean> matches;
-        if (matchNo != null) {
-            MatchBean bean = mService.getById(matchNo);
-            matches = bean != null ? Collections.singletonList(bean) : Collections.emptyList();
+        if (user1No != null && matchStatus != null) {
+            matches = mService.findByUser1NoAndMatchStatus(user1No, matchStatus);
+        } else if (user1No != null) {
+            matches = mService.findByUser1No(user1No);
         } else if (matchStatus != null) {
             matches = mService.findByMatchStatus(matchStatus);
         } else {

@@ -12,6 +12,7 @@ public interface MatchRepository extends JpaRepository<MatchBean, Integer> {
 	
 	List<MatchBean> findByUser1NoAndMatchStatus(Integer user1No, Integer matchStatus);
 	
-	
+	List<MatchBean> findByUser1No(Integer user1No);
+
 
 }

@@ -195,6 +195,14 @@ public class MatchService {
         return matchRepos.findByMatchStatus(matchStatus);
     }
     
+    
+    public List<MatchBean> findByUser1No(Integer user1No) {
+        return matchRepos.findByUser1No(user1No);
+    }
+    
+    public List<MatchBean> findByUser1NoAndMatchStatus(Integer user1No, Integer matchStatus) {
+        return matchRepos.findByUser1NoAndMatchStatus(user1No, matchStatus);
+    }
 	
 	
 }
