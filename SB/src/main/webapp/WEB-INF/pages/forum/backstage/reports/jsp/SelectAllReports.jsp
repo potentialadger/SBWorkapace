@@ -74,12 +74,9 @@
 				-->
 
 							<div class="title-and-button">
-								<h1>檢舉管理</h1>
+								<h1>全部檢舉信管理</h1>
 
-								<form method="get" action="/posts/CategoriesPosts">
-									<input type="hidden" name="categoryNo" value="${post.categoriesBean.category_no}">
-									<button type="submit" class="btn-green">返回</button>
-								</form>
+
 							</div>
 
 							<div class="table-container">
@@ -122,14 +119,14 @@
 													</td>
 
 													<td>
-														<form method="post" action="/reports/DeleteReports"
+														<form method="post" action="/reports/DeleteReportsForAll"
 															onsubmit="return confirm('確定要刪除嗎？');">
 															<input type="hidden" name="postNo"
 																value="${reports.postsBean.post_no}">
 															<input type="hidden" name="reportNo"
 																value="${reports.report_no}">
 															<input type="hidden" name="categoryNo"
-																value="${post.categoriesBean.category_no}">
+																value="${reports.postsBean.categoriesBean.category_no}">
 															<input type="hidden" name="_method" value="delete">
 															<button type="submit" class="btn-red">刪除</button>
 														</form>

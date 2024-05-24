@@ -48,6 +48,7 @@ slider = `<!-- Sidebar -->
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">forum</h6>
                 <a class="collapse-item" href="/CategoriesController/CategoriesAll">論壇後台</a>
+                <a class="collapse-item" href="/reports/AllReports">檢舉管理</a>
             </div>
         </div>
     </li>
