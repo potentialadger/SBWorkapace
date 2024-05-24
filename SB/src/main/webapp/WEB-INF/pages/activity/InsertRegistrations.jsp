@@ -186,7 +186,7 @@
 
     <script>
         document.getElementById('oneToInput').addEventListener('click', function () {
-            document.getElementsByName('participantName')[0].value = "雷霆驚龍霸天烈焰";
+            document.getElementsByName('participantName')[0].value = "黃哥";
             document.getElementsByName('contactInfo')[0].value = "0987654321";
         });
     </script>
