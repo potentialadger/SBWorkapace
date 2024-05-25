@@ -20,6 +20,8 @@ public class GroupDto {
 	private Integer userNo;
 	private Integer eventNo;
 	private Integer paymentMethod;
+	private Integer totalPrice;
+	private Integer totalAmount;
 	private List<OrderDto> groupOrders;
 	private String bank;
 	private String city;
@@ -121,6 +123,18 @@ public class GroupDto {
 	}
 	public void setArea(String area) {
 		this.area = area;
+	}
+	public Integer getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(Integer totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+	public Integer getTotalAmount() {
+		return totalAmount;
+	}
+	public void setTotalAmount(Integer totalAmount) {
+		this.totalAmount = totalAmount;
 	}
 
 	
