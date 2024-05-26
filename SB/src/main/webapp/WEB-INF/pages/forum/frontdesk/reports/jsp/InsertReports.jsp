@@ -22,6 +22,9 @@
 
                 <!-- Custom styles for this template-->
                 <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+                
+                <!-- SweetAlert2 CSS -->
+				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
                 <style>
                 
@@ -66,7 +69,7 @@
                             <div class="reports-container">
                                 <div class="forum-form-container">
                                     
-                                    <form  method="post" action="/reportsFrontDesk/InsertReports" onsubmit="return confirmPublish()">
+                                    <form  id="reportsInsert" method="post" action="/reportsFrontDesk/InsertReports" onsubmit="return confirmPublish()">
                                         
                                         <input type="hidden" name="post_no" value="${reportsPosts.post_no}">
                                         
@@ -126,14 +129,33 @@
                 <!-- Page level custom scripts -->
                 <script src="/js/demo/chart-area-demo.js"></script>
                 <script src="/js/demo/chart-pie-demo.js"></script>
+                
+                 <!-- SweetAlert2 js -->
+				<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
                 <script>
                 	
-                	function confirmPublish() {
-        				return confirm("確定要檢舉該文章嗎？");
-        			}
+              	//sweetalert
+            	async function confirmPublish(event) { 
+                      event.preventDefault();
+                      const result = await Swal.fire({
+                          title: '確定要檢舉這篇文章嗎？',
+                          icon: 'warning',
+                          showCancelButton: true,
+                          confirmButtonColor: '#3085d6',
+                          cancelButtonColor: '#d33',
+                          confirmButtonText: '確定',
+                          cancelButtonText: '取消'
+                      });
+
+                      if (result.isConfirmed) {
+                          event.target.submit();
+                      }
+                  }
                 
-                    function goBack() {
+            	document.getElementById('reportsInsert').addEventListener('submit', confirmPublish);
+                    
+            	function goBack() {
                         window.history.back();
                     }
                     

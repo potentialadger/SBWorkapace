@@ -27,6 +27,9 @@
 					<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
 						rel="stylesheet">
 					<link rel="stylesheet" type="text/css" href="/mycss/forum_OnePosts.css">
+					
+					<!-- SweetAlert2 CSS -->
+					<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
 					<style>
 						.input-group.position-relative {
@@ -119,11 +122,11 @@
 
 														<div class="box-tools col-6">
 															<form method="post" action="/postsFrontDesk/DeletePosts"
-																onsubmit="return confirm('確定要刪除此文章嗎？');">
+																id="deleteForm">
 																<input type="hidden" name="postsNo"
 																	value="${post.post_no}">
 																<input type="hidden" name="_method" value="delete">
-																<button type="submit"
+																<button  type="button" onclick="confirmDelete()"
 																	${post.userBean.userNo==userNo?"":"hidden"}>刪除</button>
 															</form>
 
@@ -258,9 +261,9 @@
 
 															<div class="delete-and-edit-replies">
 
-																<button class="delete-btn"
+																<button class="delete-btn" type="button"
 																	data-reply-id="${replies.reply_no}"
-																	onclick="confirmDelete(this)"
+																	onclick="confirmDeleteReply(this)"
 																	${replies.userBean.userNo==userNo?"":"hidden"}>刪除</button>
 
 																<form method="get"
@@ -333,7 +336,10 @@
 					<script src="/js/demo/chart-pie-demo.js"></script>
 
 					<script src='https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
-
+					
+					<!-- SweetAlert2 JavaScript -->
+					<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+					
 					<script>
 
 						//喜歡
@@ -443,14 +449,22 @@
 						}
 
 						//確定是否刪除回覆
-						function confirmDelete(button) {
-							var replyNo = $(button).data('reply-id');
-							var confirmation = confirm('確定要刪除此回覆嗎？');
-							if (confirmation) {
-								deleteReply(button); // 如果用戶確定刪除，則調用刪除回覆的函數
-							}
+						function confirmDeleteReply(button) {
+    					var replyNo = $(button).data('reply-id');
+   						Swal.fire({
+        				title: '確定要刪除此回覆嗎？',
+        				icon: 'warning',
+        				showCancelButton: true,
+        				confirmButtonText: '確定',
+        				cancelButtonText: '取消'
+    					}).then((result) => {
+        				if (result.isConfirmed) {
+            			deleteReply(button); // 在這裡將按鈕本身傳遞給 deleteReply 函數
+        				}
+    					});
 						}
-
+						
+						//編輯回覆
 						function editReply(replyId) {
 							// 獲取回覆內容的 div 元素
 							var replyContentDiv = document.getElementById('replyContent_' + replyId);
@@ -464,7 +478,22 @@
 							// 添加保存按鈕
 							replyContentDiv.innerHTML += '<button onclick="saveEditedReply(' + replyId + ')">保存</button>';
 						}
-
+						
+						//刪除文章 SweetAlert
+						   function confirmDelete() {
+						        Swal.fire({
+						            title: '確定要刪除此文章嗎？',
+						            icon: 'warning',
+						            showCancelButton: true,
+						            confirmButtonText: '確定',
+						            cancelButtonText: '取消'
+						        }).then((result) => {
+						            if (result.isConfirmed) {
+						                // 如果用戶確認刪除，則提交表單
+						                document.getElementById('deleteForm').submit();
+						            }
+						        });
+						    }
 					</script>
 
 				</body>
