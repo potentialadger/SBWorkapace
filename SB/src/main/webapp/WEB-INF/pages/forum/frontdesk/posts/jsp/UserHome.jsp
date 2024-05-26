@@ -133,6 +133,18 @@
 body {
 	font-family: Arial, sans-serif;
 }
+
+#floating-div {
+  position: fixed;
+  top: 100px;
+  left: 0;
+  width: 200px; /* 可以根據實際需求調整寬度 */
+  height: 200px; /* 設置高度為視窗高度 */
+  background-color: #f1f1f1; /* 設置背景顏色 */
+  padding: 10px; /* 設置內邊距 */
+  box-sizing: border-box; /* 包含邊框和內邊距在內的寬度 */
+  z-index: 9999; /* 設置 z-index 使其在最上層 */
+}
 </style>
 
 </head>
@@ -154,6 +166,22 @@ body {
 				<script src="/js/layout/Z_TopBar.js"></script>
 
 				<!-- 主要內容 -->
+
+				<div id="floating-div" class="fixed-top">
+					<div class="btn-group-vertical w-100">
+						<a href="/aboutMe" class="btn btn-primary text-left"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+							個人資料</a>
+						<a href="/activityList" class="btn btn-secondary text-left"><i class="fas fa-calendar fa-sm fa-fw mr-2 text-gray-400"></i>
+							活動</a>
+						<a href="/group/groups" class="btn btn-success text-left"><i class="fa fa-shopping-cart fa-sm fa-fw mr-2 text-gray-400"></i>
+							團購</a>
+						<a href="/group/mygroups" class="btn btn-info text-left"><i class="fa fa-shopping-cart fa-sm fa-fw mr-2 text-gray-400"></i>
+							我的團購</a>
+						<a href="/match.HeartLoading" class="btn btn-danger text-left"><i class="fas fa-sign-language fa-sm fa-fw mr-2 text-gray-400"></i>
+							配對</a>
+					</div>
+				</div>
+
 				<div class="container">
 					<div class="main-body p-0" style="padding-bottom: 1.5rem">
 						<div class="inner-wrapper">
