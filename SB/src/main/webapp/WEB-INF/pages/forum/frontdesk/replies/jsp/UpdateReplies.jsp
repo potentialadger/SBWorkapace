@@ -23,6 +23,9 @@
     <!-- Custom styles for this template-->
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
     
+    <!-- SweetAlert2 CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    
 <style>
 
 .input-group.position-relative {
@@ -67,7 +70,7 @@
 				<div class="replies-container">
 					<div class="forum-form-container">
 				
-				<form  method="post" action="/repliesFrontDesk/UpdateReplies" onsubmit="return confirmPublish()">
+				<form  id="repliesUpdate" method="post" action="/repliesFrontDesk/UpdateReplies" onsubmit="return confirmPublish()">
 					
 					<input type="hidden" name="_method" value="PUT">
 				    
@@ -84,7 +87,7 @@
 				    <input type="text" name="update_date" value="${updateSelect.update_date}" readonly/>
 				    
 				<div class="form-group">
-					<button type="submit" class="btn btn-primary">送出</button>
+					<button type="submit" class="btn btn-primary">修改</button>
 					<button type="button" class="btn btn-secondary" onclick="goBack()">返回</button>
 				</div>
 				
@@ -130,12 +133,31 @@
     <!-- Page level custom scripts -->
     <script src="/js/demo/chart-area-demo.js"></script>
     <script src="/js/demo/chart-pie-demo.js"></script>
+    
+    <!-- SweetAlert2 js -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
 	<script>
 	
-		function confirmPublish() {
-			return confirm("確定要修改嗎？");
-		}
+	//sweetalert
+	async function confirmPublish(event) { 
+          event.preventDefault();
+          const result = await Swal.fire({
+              title: '確定要修改這筆回覆嗎？',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: '確定',
+              cancelButtonText: '取消'
+          });
+
+          if (result.isConfirmed) {
+              event.target.submit();
+          }
+      }
+	
+	document.getElementById('repliesUpdate').addEventListener('submit', confirmPublish);
 
 		function goBack() {
 			window.history.back();

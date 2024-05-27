@@ -26,6 +26,9 @@
 <!-- Custom styles for this template-->
 <link href="/css/sb-admin-2.min.css" rel="stylesheet">
 
+<!-- SweetAlert2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
 <style>
 
 .input-group.position-relative {
@@ -79,7 +82,7 @@
 				
 				<div class="forum-container">
                     <div class="forum-form-container">
-                        <form method="post" action="/postsFrontDesk/UpdatePosts" enctype="multipart/form-data" onsubmit="return confirmPublish()">
+                        <form  id="forumUpdate" method="post" action="/postsFrontDesk/UpdatePosts" enctype="multipart/form-data" onsubmit="return confirmPublish()">
                             <input type="hidden" name="_method" value="PUT">
                             
                             <input type="hidden" name="post_no" value="${updateSelect.post_no}">
@@ -94,7 +97,7 @@
                             </select>
                             
                             <label for="title">標題 :</label>
-                            <input type="text" name="title" value="${updateSelect.title}" class="form-control">
+                            <input type="text" name="title" value="${updateSelect.title}" class="form-control" maxlength="100">
                             
                             <label for="content">內文 :</label>
                             <textarea name="content" class="form-control" style="width: 100%; height: 400px; resize: none;">${updateSelect.content}</textarea>
@@ -163,12 +166,31 @@
 	<!-- Page level custom scripts -->
 	<script src="/js/demo/chart-area-demo.js"></script>
 	<script src="/js/demo/chart-pie-demo.js"></script>
+	
+	<!-- SweetAlert2 js -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
 	<script>
 	
-		function confirmPublish() {
-			return confirm("確定要修改嗎？");
-		}
+	//sweetalert
+	async function confirmPublish(event) { 
+          event.preventDefault();
+          const result = await Swal.fire({
+              title: '確定要修改這篇文章嗎？',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: '確定',
+              cancelButtonText: '取消'
+          });
+
+          if (result.isConfirmed) {
+              event.target.submit();
+          }
+      }
+
+	document.getElementById('forumUpdate').addEventListener('submit', confirmPublish);
 		
 		function goBack() {
 			window.history.back();

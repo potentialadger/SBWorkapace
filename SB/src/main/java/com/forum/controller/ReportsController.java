@@ -32,12 +32,13 @@ public class ReportsController {
 	//後台 全部查詢
 	@GetMapping("/AllReports")
 	public String getAllReports(Model m) {
-
+		
+		
 		List<ReportsBean> reportsList = reportsService.getAllReports();
 
 		m.addAttribute("reportsM", reportsList);
 
-		return "/forum/backstage/reports/jsp/SelectReports.jsp";
+		return "/forum/backstage/reports/jsp/SelectAllReports.jsp";
 	}
 
 	//後台 單筆查詢 查詢該篇文章的檢舉用
@@ -70,6 +71,23 @@ public class ReportsController {
 		System.out.println(categoryNo);
 
 		return "redirect:/posts/CategoriesPosts?categoryNo="+categoryNo;
+
+	}
+	
+	@DeleteMapping("/DeleteReportsForAll")
+	public String deleteReportsForAll(
+			@RequestParam("reportNo") String reportNo, 
+			@RequestParam("postNo") String postNo,
+			@RequestParam("categoryNo") String categoryNo
+			) {
+
+		reportsService.deleteReports(Integer.parseInt(reportNo));
+
+		postsService.deletePostAndReplies(Integer.parseInt(postNo));
+		
+		System.out.println(categoryNo);
+
+		return "redirect:/reports/AllReports";
 
 	}
 	

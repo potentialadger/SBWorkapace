@@ -74,12 +74,9 @@
 				-->
 
 							<div class="title-and-button">
-								<h1>檢舉管理</h1>
+								<h1>全部檢舉管理</h1>
 
-								<form method="get" action="/posts/CategoriesPosts">
-									<input type="hidden" name="categoryNo" value="${post.categoriesBean.category_no}">
-									<button type="submit" class="btn-green">返回</button>
-								</form>
+
 							</div>
 
 							<div class="table-container">
@@ -88,6 +85,7 @@
 										<tr>
 											<th>文章標題</th>
 											<th>文章內容</th>
+											<th>文章圖片</th>
 											<th>檢舉人</th>
 											<th>檢舉人信箱</th>
 											<th>檢舉原因</th>
@@ -107,6 +105,7 @@
 														data-content="${reports.postsBean.content}">
 														<c:out value="${reports.postsBean.content}" />
 													</td>
+													<td class="image-cell" data-image-url="${reports.postsBean.image_url}"></td>
 													<td>
 														<c:out value="${reports.userBean.userChineseName}" />
 													</td>
@@ -122,14 +121,14 @@
 													</td>
 
 													<td>
-														<form method="post" action="/reports/DeleteReports"
+														<form method="post" action="/reports/DeleteReportsForAll"
 															onsubmit="return confirm('確定要刪除嗎？');">
 															<input type="hidden" name="postNo"
 																value="${reports.postsBean.post_no}">
 															<input type="hidden" name="reportNo"
 																value="${reports.report_no}">
 															<input type="hidden" name="categoryNo"
-																value="${post.categoriesBean.category_no}">
+																value="${reports.postsBean.categoriesBean.category_no}">
 															<input type="hidden" name="_method" value="delete">
 															<button type="submit" class="btn-red">刪除</button>
 														</form>
@@ -251,6 +250,26 @@
 						var reason = $(this).data('reason');
 						$('#reasonModalBody').text(reason);
 						$('#reasonModal').modal('show');
+					});
+					
+					//跳視窗顯示圖片
+					document.addEventListener("DOMContentLoaded", function() {
+					    var imageCells = document.querySelectorAll(".image-cell");
+					    imageCells.forEach(function(cell) {
+					        var imageUrl = cell.getAttribute("data-image-url");
+					        if (imageUrl) {
+					            var link = document.createElement('a');
+					            link.href = 'javascript:void(0);'; 
+					            link.addEventListener('click', function() {
+					                var popup = window.open('', 'popup', 'width=400,height=400');
+					                popup.document.body.innerHTML = '<img src="http://localhost:8080/localimages/' + imageUrl + '" style="max-width:100%; max-height:100%;">';
+					            });
+					            link.textContent = "查看圖片";
+					            cell.appendChild(link); 
+					        } else {
+					            cell.textContent = "無圖片";
+					        }
+					    });
 					});
 				</script>
 

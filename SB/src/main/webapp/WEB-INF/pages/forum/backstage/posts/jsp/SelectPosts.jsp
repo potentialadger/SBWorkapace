@@ -116,7 +116,7 @@
 				                        <td><c:out value="${categories.title_name}" /></td>
 				                        <td><c:out value="${posts.title}" /></td>
 				                        <td class="content" data-toggle="modal" data-target="#contentModal" onclick="showcontent(this)">${posts.content}</td>
-				                        <td><img src="http://localhost:8080/localimages/${posts.image_url}" alt="無圖片"></td>
+				                        <td class="image-cell" data-image-url="${posts.image_url}"></td>
 				                        <td><c:out value="${posts.update_date}" /></td>
 				                        <td><c:out value="${posts.userBean.userChineseName}" /></td>
 				                        <td><c:out value="${posts.userBean.email}" /></td>
@@ -226,11 +226,31 @@
 	</script>
 	
 	<script>
+	<!-- 文章內容模態框 -->
 	function showcontent(e) {
     let content = e.innerHTML
     let body = document.querySelector(".modal-body")
     body.innerHTML = content;
 	}
+	<!-- 圖片顯示框 -->
+	document.addEventListener("DOMContentLoaded", function() {
+	    var imageCells = document.querySelectorAll(".image-cell");
+	    imageCells.forEach(function(cell) {
+	        var imageUrl = cell.getAttribute("data-image-url");
+	        if (imageUrl) {
+	            var link = document.createElement('a');
+	            link.href = 'javascript:void(0);'; // 防止页面跳转
+	            link.addEventListener('click', function() {
+	                var popup = window.open('', 'popup', 'width=400,height=400');
+	                popup.document.body.innerHTML = '<img src="http://localhost:8080/localimages/' + imageUrl + '" style="max-width:100%; max-height:100%;">';
+	            });
+	            link.textContent = "查看圖片";
+	            cell.appendChild(link); // 添加超链接到单元格
+	        } else {
+	            cell.textContent = "無圖片";
+	        }
+	    });
+	});
 	</script>
 
 

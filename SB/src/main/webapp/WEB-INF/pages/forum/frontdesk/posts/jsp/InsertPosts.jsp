@@ -25,6 +25,9 @@
 <!-- Custom styles for this template-->
 <link href="/css/sb-admin-2.min.css" rel="stylesheet">
 
+<!-- SweetAlert CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
 <style>
 .input-group.position-relative {
 	display: none;
@@ -159,12 +162,31 @@
 	<!-- Page level custom scripts -->
 	<script src="/js/demo/chart-area-demo.js"></script>
 	<script src="/js/demo/chart-pie-demo.js"></script>
+	
+	<!-- 引入 SweetAlert2 JavaScript 腳本 -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 	<script>
 	
-        function confirmPublish() {
-            return confirm("確定要發佈這篇文章嗎？");
-        }
+	//sweetalert
+	  async function confirmPublish(event) { 
+          event.preventDefault();
+          const result = await Swal.fire({
+              title: '確定要發佈這篇文章嗎？',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: '確定',
+              cancelButtonText: '取消'
+          });
+
+          if (result.isConfirmed) {
+              event.target.submit();
+          }
+      }
+
+      document.getElementById('forumInsert').addEventListener('submit', confirmPublish); 
         
 		function goBack() {
 			window.history.back();
