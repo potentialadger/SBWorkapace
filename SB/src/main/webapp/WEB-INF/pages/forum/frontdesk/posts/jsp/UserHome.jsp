@@ -167,7 +167,7 @@ body {
 
 				<!-- 主要內容 -->
 
-				<div id="floating-div" class="fixed-top">
+				<!-- <div id="floating-div" class="fixed-top">
 					<div class="btn-group-vertical w-100">
 						<a href="/aboutMe" class="btn btn-primary text-left"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
 							個人資料</a>
@@ -180,7 +180,7 @@ body {
 						<a href="/match.HeartLoading" class="btn btn-danger text-left"><i class="fas fa-sign-language fa-sm fa-fw mr-2 text-gray-400"></i>
 							配對</a>
 					</div>
-				</div>
+				</div> -->
 
 				<div class="container">
 					<div class="main-body p-0" style="padding-bottom: 1.5rem">
