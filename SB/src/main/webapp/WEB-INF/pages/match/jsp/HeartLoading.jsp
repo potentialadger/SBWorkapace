@@ -162,7 +162,7 @@
     window.onload = function() {
         setTimeout(function() {
             window.location.href = "/createMatchProfile";
-        }, 3500); // 3000毫秒 = 3秒
+        }, 2800); // 3000毫秒 = 3秒
     };
     	
     
