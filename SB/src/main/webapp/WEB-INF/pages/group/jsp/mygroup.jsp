@@ -37,6 +37,13 @@
 										href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 
 									<style>
+										.sticky-header {
+											position: sticky;
+											top: 0;
+											background-color: white;
+											z-index: 1000;
+										}
+
 										.suggestions {
 											position: absolute;
 											top: 100%;
@@ -130,18 +137,22 @@
 																tabindex="0">
 																<table id="group_id" class="display"
 																	style="width: 100%;">
-																	<tr>
-																		<th>活動編號</th>
-																		<th>活動標題</th>
-																		<th>活動描述</th>
-																		<th>截團時間</th>
-																		<th>最小成團金額</th>
-																		<th>最小成團數量</th>
-																		<th>付款方式</th>
-																		<th>修改</th>
-																		<th>刪除</th>
-																		<th>結單</th>
-																	</tr>
+																	<thead>
+																		<tr class="sticky-header">
+																			<th>活動編號</th>
+																			<th>活動標題</th>
+																			<th>活動描述</th>
+																			<th>截團時間</th>
+																			<th>成團金額</th>
+																			<th>成團數量</th>
+																			<th>已訂購金額</th>
+																			<th>已訂購數量</th>
+																			<th>付款方式</th>
+																			<th>修改</th>
+																			<th>刪除</th>
+																			<th>結單</th>
+																		</tr>
+																	</thead>
 																	<% List<GroupDto> groups = (ArrayList<GroupDto>)
 																			request.getAttribute("groups");
 																			for (GroupDto group : groups) { %>
@@ -177,6 +188,12 @@
 																					<td>
 																						<%= group.getgMinTotalQuantity()
 																							%>
+																					</td>
+																					<td>
+																						<%= group.getTotalPrice() %>
+																					</td>
+																					<td>
+																						<%= group.getTotalAmount() %>
 																					</td>
 																					<% String paymentMethodDisplay="" ;
 																						switch

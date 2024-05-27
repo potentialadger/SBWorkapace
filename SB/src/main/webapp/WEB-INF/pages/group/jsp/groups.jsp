@@ -174,22 +174,18 @@
 															<br>
 															<!-- 分頁按鈕 -->
 															<nav aria-label="Page navigation example">
-															     <ul class="pagination justify-content-center">
-															        <% 
-															        // 獲取總頁數
-															        int totalPages = groups.getTotalPages();
-															        // 獲取當前頁面，0 基索引
-															        int currentPage = groups.getNumber();
-															        // 循環生成分頁按鈕
-															        for (int i = 0; i < totalPages; i++) { 
-															        %>
-															            <li class="page-item <%= (currentPage == i) ? "active" : "" %>">
-															                <a class="page-link" href="/group/groups?page=<%= i %>">
-															                    <%= i + 1 %> <!-- 顯示給用戶的頁碼是從 1 開始 -->
-															                </a>
-															            </li>
-															        <% } %>
-															    </ul>
+																<ul class="pagination justify-content-center">
+																	<% int totalPages=groups.getTotalPages();
+																		int currentPage=groups.getNumber();
+																		for (int i=0; i < totalPages; i++) { %>
+																		<li class="page-item <%= (currentPage == i) ? "active" : "" %>">
+																			<a class="page-link"
+																				href="/group/groups?page=<%= i %>">
+																				<%= i + 1 %> <!-- 顯示給用戶的頁碼是從 1 開始 -->
+																			</a>
+																		</li>
+																		<% } %>
+																</ul>
 															</nav>
 
 
@@ -579,15 +575,15 @@
 														$('#gMinTotalAmount').val(0);
 														$('#gMinTotalQuantity').val(0);
 														$('#bankAccount').val('123456789123456');
-														$('#groupAddress').val('中正路135巷11-1號');
+														$('#groupAddress').val('中山路二段286號');
 													})
-													
+
 													const currentUrl = window.location.href;
-													if(currentUrl.includes("groupsbystimeasc")){
+													if (currentUrl.includes("groupsbystimeasc")) {
 														$("#sortOptions").val("startTime");
-													}else if(currentUrl.includes("groupsbyetimeasc")){
+													} else if (currentUrl.includes("groupsbyetimeasc")) {
 														$("#sortOptions").val("endTime");
-													}else{
+													} else {
 														$("#sortOptions").val("origin");
 													}
 												});

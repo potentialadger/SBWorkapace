@@ -17,11 +17,15 @@ import com.group.repository.GroupRepository;
 import com.user.bean.UserBean;
 import com.user.repository.UserRepository;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,6 +37,9 @@ public class GroupService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private JavaMailSender mailSender;
 	
 //	查詢單筆活動
 	public Group findGroupByEventNo(Integer eventno) {
@@ -183,4 +190,16 @@ public class GroupService {
 		return groupRepository.save(group);
 	}
 	
+//	寄下架信
+	public void sendPlainText(String receicer, String subject, String context) throws MessagingException {
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message, true);
+		
+		helper.setTo(receicer);
+		helper.setSubject(subject);
+		helper.setText(context, true);
+		helper.setFrom("SocialBook 官方<eeit179socialbook@gmail.com>");
+		
+		mailSender.send(message);
+	}
 }

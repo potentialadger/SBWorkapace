@@ -36,6 +36,7 @@ import com.group.service.OrderService;
 import com.user.bean.UserBean;
 import com.user.service.UserService;
 
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -82,6 +83,8 @@ public class GroupController {
 		HttpSession session = request.getSession();
 		UserBean userbean = (UserBean)session.getAttribute("userData");
 		int userNo = userbean.getUserNo();
+		Integer totalPrice = 0;
+		Integer totalAmount = 0;
 //		Integer userNo = 1;
 		
 //		查詢我的團購
@@ -117,6 +120,9 @@ public class GroupController {
 					String specValue = groupOrderDetail.getItemSpec().getSpecValue();
 					Integer itemPrice = groupOrderDetail.getItem().getPrice();
 					
+					totalAmount += itemQuantity;
+					totalPrice += itemPrice * itemQuantity;
+					
 					OrderDetailsDto orderDetailsDto = new OrderDetailsDto();
 					orderDetailsDto.setItemNo(itemNo);
 					orderDetailsDto.setItemName(itemName);
@@ -149,12 +155,12 @@ public class GroupController {
 			groupDto.setgMinTotalAmount(minAmount.toString());
 			groupDto.setgMinTotalQuantity(minQuantity.toString());
 			groupDto.setGroupOrders(groupOrderDtos);
+			groupDto.setTotalAmount(totalAmount);
+			groupDto.setTotalPrice(totalPrice);
 			
 			groupDtos.add(groupDto);
 		}
 		
-
-//		查詢我的訂單
 		List<OrderDto> orders = orderService.findOrdersByUserNo(userNo);
 		
 		m.addAttribute("orders", orders);
@@ -273,8 +279,19 @@ public class GroupController {
 	
 //	後台下架團購活動
 	@PostMapping(value = "/bannedgroup/{eventno}")
-	public String bannedGroupByEventNo(@PathVariable("eventno") Integer eventno) {
+	public String bannedGroupByEventNo(@PathVariable("eventno") Integer eventno) throws MessagingException {
+		Group group = gService.findGroupByEventNo(eventno);
+		
+		String userEmail = group.getUser().getEmail();
+		String subject = "SocialBook 下架團購";
+		String mailContext = "<h1>你開的團購已被下架</h1>";
+		mailContext += "<p>你開的團購，團購標題為" + group.getTitle() + "</p>";
+		mailContext += "<p>已違反網路社群規範，故已緊急下架。</p>";
+		mailContext += "<p>請盡速處理後續的動作。</p>";
+		
+		gService.sendPlainText(userEmail, subject, mailContext);
 		gService.deleteGroup(eventno);
+		
 		return "redirect:/group/backgroups";
 	}
 	
