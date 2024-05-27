@@ -47,17 +47,18 @@
                                     <form class="user" method="post" action="userLogin">
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                                id="account" aria-describedby="emailHelp"
                                                 placeholder="Enter Your Account..." name="account">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password" name="password">
+                                                id="password" placeholder="Password" name="password">
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block">登入</button>
                                         <!--                                        <a href="index.html" class="btn btn-primary btn-user btn-block">-->
                                         <!--                                            Login-->
                                         <!--                                        </a>-->
+                                        
                                         <hr>
                                         <!-- <a href="index.html" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Login with Google
@@ -76,6 +77,19 @@
                                             data-shape="pill" data-logo_alignment="left"></div>
 
                                     </form>
+                                    <hr>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <button type="submit" class="btn btn-info btn-user btn-block" onclick="managerInfo()">管理者</button>
+                                            </div>
+                                            <div class="col-4">
+                                                <button type="submit" class="btn btn-info btn-user btn-block" onclick="userAInfo()">使用者A</button>
+                                            </div>
+                                            <div class="col-4">
+                                                <button type="submit" class="btn btn-info btn-user btn-block" onclick="userBInfo()">使用者B</button>
+                                            </div>
+
+                                        </div>
                                     <hr>
                                     <div class="text-center">
                                         <a class="small" href="/forgotPassword">忘記密碼？</a>
@@ -103,7 +117,22 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
+    <script>
+        function managerInfo(){
+            document.querySelector("#account").value = 'aaa';
+            document.querySelector("#password").value = '123';
+        }
 
+        function userAInfo(){
+            document.querySelector("#account").value = 'bbb';
+            document.querySelector("#password").value = '123';
+        }
+
+        function userBInfo(){
+            document.querySelector("#account").value = 'ccc';
+            document.querySelector("#password").value = '123';
+        }
+    </script>
 </body>
 
 </html>
